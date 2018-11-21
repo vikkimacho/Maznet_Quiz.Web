@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewBag.Title = "DashBoard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #dvUserSearch {
+        padding: 10px;
+        background-color: #becfff;
+    }
+
+    #dvDashboardText {
+        margin-bottom: 30px;
+    }
+
+    .headingText {
+        font-size: 22px;
+        color: #000;
+        font-weight: 600;
+    }
+
+    span.count {
+        font-size: 30px;
+        color:#fff;
+    }
+    span.category {
+        position: relative;
+        top: -6px;
+        font-size: 16px;
+        text-transform: uppercase;
+        font-weight: 600;
+        color:#fff;
+    }
+    span.catIcon {
+        color: #fff;
+        font-size: 40px;
+        margin-top: 0px;
+        position: relative;
+        top: 11px;
+    }
+    #dvScheduled {
+        background: #00adff;
+        padding: 10px;
+        background-clip: content-box;
+    }
+    #dvCompleted {
+        padding: 10px;
+        background: #b52cc5;
+        background-clip: content-box;
+    }
+    #dvSingleLogin {
+        padding: 10px;
+        background: #2a2a6b;
+        background-clip: content-box;
+    }
+    #dvStrongConsider {
+        padding: 10px;
+        background: #169816;
+        background-clip: content-box;
+    }
+    #dvInProgress {
+        padding: 10px;
+        background: #fbb22c;
+        background-clip: content-box;
+    }
+    #dvBulkLogin {
+        padding: 10px;
+        background: #f15e78;
+        background-clip: content-box;
+    }
+    #dvExpired {
+        padding: 10px;
+        background: #bbafb1;
+        background-clip: content-box;
+    }
+    #dvPending {
+        padding: 10px;
+        background: #f15e5e;
+        background-clip: content-box;
+    }
+    #dvCommonLogin {
+        padding: 10px;
+        background: #277b8e;
+        background-clip: content-box;
+    }
+    .seperator {
+        margin-bottom: 20px;
+    }
+</style>
+<div class="col-md-12">
+    <div class="row" id="dvDashboardText"> <span class="headingText">Dashboard</span> <button type="button" class="btn btn-primary pull-right">Create New Assessment</button> </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="well clearfix" id="dvUserSearch">
+            <div class="col-md-4">
+                <select class="form-control">
+                    <option>User</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" id="txtFromDate" />
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" id="txtToDate" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="">
+            <label>Create new assesments </label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search keyword..">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix seperator"></div>
+    <div class="row">
+        <div class="col-md-4" id="dvScheduled">
+            <div class="col-md-6"><span class="count">986</span></div> <div class="col-md-6"> <span class="catIcon glyphicon glyphicon-calendar pull-right"></span></div>
+            <div class="col-md-12">     <span class="category">scheduled</span></div>
+        </div>
+        <div class="col-md-4" id="dvCompleted">
+            <div class="col-md-6"><span class="count">682</span></div> <div class="col-md-6"> <span class="catIcon glyphicon glyphicon-list-alt pull-right"></span></div>
+            <div class="col-md-12">     <span class="category">Completed</span></div>
+        </div>
+        <div class="col-md-4" id="dvSingleLogin">
+            <div class="col-md-6"><span class="count">682</span></div> <div class="col-md-6"> <span class="catIcon glyphicon glyphicon-list-alt pull-right"></span></div>
+            <div class="col-md-12">     <span class="category">single login</span></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4" id="dvStrongConsider">
+            <div class="col-md-6"><span class="count">194</span></div> <div class="col-md-6"> <span class="catIcon fa fa-users  pull-right"></span></div>
+            <div class="col-md-12">     <span class="category">strong consider</span></div>
+        </div>
+        <div class="col-md-4" id="dvInProgress">
+            <div class="col-md-6"><span class="count">0</span></div> <div class="col-md-6"> <span class="catIcon fa fa-play-circle-o pull-right"></span></div>
+            <div class="col-md-12">     <span class="category">in progress</span></div>
+        </div>
+        <div class="col-md-4" id="dvBulkLogin">
+            <div class="col-md-6"><span class="count">682</span></div> <div class="col-md-6"> <span class="catIcon fa fa-play-circle-o pull-right"></span></div>
+            <div class="col-md-12">     <span class="category">bulk login</span></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4" id="dvExpired">
+            <div class="col-md-6"><span class="count">264</span></div> <div class="col-md-6"> <span class="catIcon fa fa-exclamation-triangle pull-right"></span></div>
+            <div class="col-md-12">     <span class="category">expired</span></div>
+        </div>
+        <div class="col-md-4" id="dvPending">
+            <div class="col-md-6"><span class="count">10</span></div> <div class="col-md-6"> <span class="catIcon fa fa-refresh pull-right"></span></div>
+            <div class="col-md-12">     <span class="category">pending</span></div>
+        </div>
+        <div class="col-md-4" id="dvCommonLogin">
+            <div class="col-md-6"><span class="count">10</span></div> <div class="col-md-6"> <span class="catIcon fa fa-refresh pull-right"></span></div>
+            <div class="col-md-12">     <span class="category">common login</span></div>
+        </div>
+    </div>
+</div>
+

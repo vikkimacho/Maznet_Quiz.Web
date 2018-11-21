@@ -23,18 +23,8 @@ namespace Quiz.Web.UI.Controllers
             HttpResponseMessage response = client.GetAsync(apiUrl + "/Login").Result;
             if (response.IsSuccessStatusCode)
             {
-
                 ViewBag.MyData = response.Content.ReadAsStringAsync().Result;
-
-
             }
-
-
-
-
-
-
-
             return View();
         }
     }

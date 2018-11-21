@@ -11,7 +11,6 @@ namespace Quiz.Web.DAL.Login
 
         public string Login()
         {
-
             return "Vignesh";
         }
     }
