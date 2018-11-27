@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiz.Web.DAL", "Quiz.Web.DA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiz.Web.BLL", "Quiz.Web.BLL\Quiz.Web.BLL.csproj", "{19CFB0D7-9A6D-442E-8CE8-1DDABA110AE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiz.Web.DTO", "Quiz.Web.DTO\Quiz.Web.DTO.csproj", "{28B4270A-80C4-4AC7-99C8-2AB5F6C5EA25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{19CFB0D7-9A6D-442E-8CE8-1DDABA110AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19CFB0D7-9A6D-442E-8CE8-1DDABA110AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19CFB0D7-9A6D-442E-8CE8-1DDABA110AE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28B4270A-80C4-4AC7-99C8-2AB5F6C5EA25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28B4270A-80C4-4AC7-99C8-2AB5F6C5EA25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28B4270A-80C4-4AC7-99C8-2AB5F6C5EA25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28B4270A-80C4-4AC7-99C8-2AB5F6C5EA25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

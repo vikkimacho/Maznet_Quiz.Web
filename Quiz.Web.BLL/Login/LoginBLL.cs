@@ -1,4 +1,4 @@
-﻿using Quiz.Web.DAL.Login;
+﻿using Quiz.Web.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +12,9 @@ namespace Quiz.Web.BLL.Login
 
         public string Login()
         {
-            LoginDAL obj = new LoginDAL();
-            var login = obj.Login();
-            return login;
+            //LoginDAL obj = new LoginDAL();
+            //var login = obj.Login();
+            return "";
         }       
         
     }

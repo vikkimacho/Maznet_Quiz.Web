@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TestEngineDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="QuestionBankMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="QuestionBankName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Duration" Type="time" Precision="7" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="QuestionBankDescription" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QuestionsDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="QuestionBankID" Type="uniqueidentifier" />
+          <Property Name="Question" Type="nvarchar(max)" />
+          <Property Name="OptionA" Type="nvarchar" MaxLength="50" />
+          <Property Name="OptionB" Type="nvarchar" MaxLength="50" />
+          <Property Name="OptionC" Type="nvarchar" MaxLength="50" />
+          <Property Name="OptionD" Type="nvarchar" MaxLength="50" />
+          <Property Name="Answer" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <Association Name="FK__Questions__Quest__398D8EEE">
+          <End Role="QuestionBankMaster" Type="Self.QuestionBankMaster" Multiplicity="0..1" />
+          <End Role="QuestionsDetails" Type="Self.QuestionsDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionBankMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QuestionsDetails">
+              <PropertyRef Name="QuestionBankID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestEngineDBModelStoreContainer">
+          <EntitySet Name="QuestionBankMaster" EntityType="Self.QuestionBankMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestionsDetails" EntityType="Self.QuestionsDetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Questions__Quest__398D8EEE" Association="Self.FK__Questions__Quest__398D8EEE">
+            <End Role="QuestionBankMaster" EntitySet="QuestionBankMaster" />
+            <End Role="QuestionsDetails" EntitySet="QuestionsDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestEngineDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="QuestionBankMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="QuestionBankName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Duration" Type="Time" Precision="7" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="QuestionBankDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="QuestionsDetails" Relationship="Self.FK__Questions__Quest__398D8EEE" FromRole="QuestionBankMaster" ToRole="QuestionsDetails" />
+        </EntityType>
+        <EntityType Name="QuestionsDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="QuestionBankID" Type="Guid" />
+          <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OptionA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OptionB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OptionC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OptionD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Answer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="QuestionBankMaster" Relationship="Self.FK__Questions__Quest__398D8EEE" FromRole="QuestionsDetails" ToRole="QuestionBankMaster" />
+        </EntityType>
+        <Association Name="FK__Questions__Quest__398D8EEE">
+          <End Role="QuestionBankMaster" Type="Self.QuestionBankMaster" Multiplicity="0..1" />
+          <End Role="QuestionsDetails" Type="Self.QuestionsDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionBankMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QuestionsDetails">
+              <PropertyRef Name="QuestionBankID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestEngineDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="QuestionBankMaster" EntityType="Self.QuestionBankMaster" />
+          <EntitySet Name="QuestionsDetails" EntityType="Self.QuestionsDetails" />
+          <AssociationSet Name="FK__Questions__Quest__398D8EEE" Association="Self.FK__Questions__Quest__398D8EEE">
+            <End Role="QuestionBankMaster" EntitySet="QuestionBankMaster" />
+            <End Role="QuestionsDetails" EntitySet="QuestionsDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TestEngineDBModelStoreContainer" CdmEntityContainer="TestEngineDBEntities">
+          <EntitySetMapping Name="QuestionBankMaster">
+            <EntityTypeMapping TypeName="TestEngineDBModel.QuestionBankMaster">
+              <MappingFragment StoreEntitySet="QuestionBankMaster">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="QuestionBankName" ColumnName="QuestionBankName" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="QuestionBankDescription" ColumnName="QuestionBankDescription" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionsDetails">
+            <EntityTypeMapping TypeName="TestEngineDBModel.QuestionsDetails">
+              <MappingFragment StoreEntitySet="QuestionsDetails">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="QuestionBankID" ColumnName="QuestionBankID" />
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="OptionA" ColumnName="OptionA" />
+                <ScalarProperty Name="OptionB" ColumnName="OptionB" />
+                <ScalarProperty Name="OptionC" ColumnName="OptionC" />
+                <ScalarProperty Name="OptionD" ColumnName="OptionD" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

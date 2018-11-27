@@ -12,5 +12,7 @@ namespace Quiz.Web.DAL.Home
         {
             return "Dashboard";
         }
+
+      
     }
 }

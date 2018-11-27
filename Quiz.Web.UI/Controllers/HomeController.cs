@@ -20,13 +20,16 @@ namespace Quiz.Web.UI.Controllers
         {
             HttpClient client = new HttpClient();
             //HttpContent inputContent = new StringContent(Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.GetAsync(apiUrl + "/DashBoar").Result;
+            HttpResponseMessage response = client.GetAsync(apiUrl + "/DashBoard").Result;
             if (response.IsSuccessStatusCode)
             {
                 ViewBag.MyData = response.Content.ReadAsStringAsync().Result;
             }
             return View();
         }
+
+       
+
 
     }
 }

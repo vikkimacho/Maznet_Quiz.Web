@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Quiz.Web.DTO.Models.QuestionBankView>
+ 
+
+<h3>Update Question Bank</h3>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.QuestionBankName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Duration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifiedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuestionBankDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.QuestionBankName
+            </td>
+            <td>
+                @item.Duration
+            </td>
+            <td>
+                @item.CreatedDate
+            </td>
+            <td>
+                @item.ModifiedDate
+            </td>
+            <td>
+                @item.IsDeleted
+            </td>
+            <td>
+                @item.QuestionBankDescription
+            </td>
+            <td>
+                @item.IsActive
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="container-fluid">
+    <div class="form-group">
+        <label>Question Bank Title</label>
+        <input type="text" class="form-control" id="txtQuestionBankTitle" placeholder="Enter Question Bank Name" />
+    </div>
+    <div class="form-group">
+        <label>Question Bank Description</label>
+        <textarea id="txtQuestionBankDescription" class="form-control" rows="7" cols="30"></textarea>
+    </div>
+    <div class="form-group">
+        <input type="file" class="form-control-file" id="flQuestionUpload" />
+    </div>
+    <div class="form-group">
+        <label>Status</label>
+        <select id="ddlStatusQuestionBank" class="form-control">
+            <option value="ACTIVE">Active</option>
+            <option value="NOTACTIVE">Not Active</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" id="btnUpdateQuestionBank">Update</button>
+    </div>
+</div>
