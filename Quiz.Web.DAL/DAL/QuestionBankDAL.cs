@@ -14,10 +14,10 @@ namespace Quiz.Web.DAL.Home
         public List<QuestionBankMaster> GetQuestionBank()
         {
             var questionBankData = new List<QuestionBankMaster>();
-            using (var QuizContext = new TestEngineDBEntities())
+            using (var QuizContext = new TestEngineEntities())
             {
                 QuizContext.Configuration.ProxyCreationEnabled = false;
-               questionBankData = QuizContext.QuestionBankMaster.ToList();
+               questionBankData = QuizContext.QuestionBankMasters.ToList();
             }
             return questionBankData;
         }

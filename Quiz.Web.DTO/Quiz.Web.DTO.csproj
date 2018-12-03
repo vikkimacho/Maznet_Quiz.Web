@@ -51,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\AdminDetails.cs" />
+    <Compile Include="Models\Custom.cs" />
+    <Compile Include="Models\DashBoardDetailsView.cs" />
     <Compile Include="Models\QuestionBankView.cs" />
     <Compile Include="Models\QuestionsDetailsView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

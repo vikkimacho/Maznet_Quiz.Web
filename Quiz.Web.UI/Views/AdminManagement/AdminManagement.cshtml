@@ -1,0 +1,141 @@
+﻿@model List<Quiz.Web.DTO.Models.AdminDetails>
+@{
+    ViewBag.Title = "DashBoard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        $('#AdminManagement').DataTable();
+        $('#hdnID').val('');
+        $('#btnAddAdmin').click(function () {
+            
+        });
+    });
+    function fnEditUser(id) {
+        $('#hdnID').val(id);
+    }
+    function fnDeleteUser(id) {
+    debugger;
+        $('#hdnID').val(id);
+        $('#dvModalDelete').modal("show");
+    }
+    $('#btndelete').click(function () {
+        var id = $('#hdnID').val();
+        $.ajax({
+            url: '@Url.Action("ValidateUser", "Login")',
+            data: JSON.stringify({ 'username': username, 'password': password }),
+            type: "POST",
+            async: false,
+            contentType: "application/json",
+            dataType: "json",
+            success: function (result) {
+                if (result != "FAILED") {
+                    status = result;
+                }
+            },
+            error: function (status) {
+            },
+            cache: false,
+            async: false
+        });
+    });
+</script>
+<div><button class="btn btn-primary" id="btnAddAdmin">Add</button></div>
+<table id="AdminManagement">
+    <thead>
+        <tr>
+            <td>USER NAME</td>
+            <td>ROLE</td>
+            <td>EMAIL</td>
+            <td>PHONE NUMBER</td>
+            <td>PASSWORD</td>
+            <td>Deleted</td>
+            <td>Edit/Delete</td>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tbody>
+            <tr>
+                <td>
+                    @item.UserName
+                </td>
+                <td>
+                    @item.Role
+                </td>
+                <td>
+                    @item.Email
+                </td>
+                <td>
+                    @item.PhoneNumber
+                </td>
+                <td>
+                    @item.Password
+                </td>
+                <td>
+                    @if (Convert.ToBoolean(item.Isdeleted))
+                    {
+                        <input class="form-control" type="checkbox" disabled checked />
+                    }
+                    else
+                    {
+                        <input type="checkbox" class="form-control" disabled />
+                    }
+                </td>
+                <td><a onclick="fnEditUser('@item.ID')" style="cursor:pointer">Edit</a>  /  <a style="cursor:pointer" onclick="fnDeleteUser('@item.ID')">Delete</a></td>
+            </tr>
+        </tbody>
+    }
+</table>
+
+<div id="dvModalAddAdmin" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center">Add Admin</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="txtLoginUserName" placeholder="UserName" />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="txtLoginPassWord" placeholder="Passoword" />
+                </div>                
+            </div>
+            <div class="modal-footer text-center">
+                <input type="submit" class="btn btn-primary" id="btnAdd" data-dismiss="modal" value="Add" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="dvModalDelete" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                   <p>Are you sure? Do you want to delete?</p>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <input type="submit" class="btn btn-primary" id="btndelete" data-dismiss="modal" value="Yes" />
+                <input type="submit" class="btn btn-primary" id="btnCancelDelete" data-dismiss="modal" value="No" />
+            </div>
+        </div>
+    </div>
+</div>
+<hidden id="hdnID"></hidden>
+
+
+

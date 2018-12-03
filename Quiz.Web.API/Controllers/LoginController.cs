@@ -10,6 +10,10 @@ namespace Quiz.Web.API.Controllers
 {
     public class LoginController : ApiController
     {
+        #region Declaration
+        private readonly string Success = "SUCCESS";
+        private readonly string Failed = "FAILED";
+        #endregion
         // GET api/<controller>
         public string Get()
         {
@@ -17,7 +21,22 @@ namespace Quiz.Web.API.Controllers
             var login = obj.Login();
             return login;
         }
-        
+        [HttpGet]
+        public string ValidateUser(string username, string password)
+        {
+            LoginBLL obj = new LoginBLL();
+            string result = Failed;
+            try
+            {
+                result = obj.ValidateUser(username, password);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
+
     }
 
 }

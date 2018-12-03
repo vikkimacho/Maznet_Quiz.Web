@@ -49,10 +49,45 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\HomeDAL.cs" />
+    <Compile Include="DAL\QuestionBankDAL.cs" />
+    <Compile Include="DataAccess\AdminDetail.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AssessmentDetailMaster.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AssessmentQuestionBankDetail.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\CustomRegistrationForm.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\DefaultRegistation.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EligibilityCriteriaDetail.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\ExamFinalReport.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\ExaminerAssessmentDetail.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\ExaminerMaster.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\ExaminerMasterDetail.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\GetDashBoardDetails_Result.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\QuestionBankMaster.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataAccess\QuestionsDetails.cs">
+    <Compile Include="DataAccess\QuestionsDetail.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\TestEngineEntity.Context.cs">
@@ -70,8 +105,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TestEngineEntity.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Home\HomeDAL.cs" />
-    <Compile Include="Home\QuestionBankDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -87,11 +120,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="DataAccess\TestEngineEntity.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>TestEngineEntity.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="App.Config" />
     <None Include="DataAccess\TestEngineEntity.edmx.diagram">
       <DependentUpon>TestEngineEntity.edmx</DependentUpon>
     </None>

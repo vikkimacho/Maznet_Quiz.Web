@@ -4,7 +4,128 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TestEngineDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TestEngineDBContext.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdminDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Role" Type="varchar" MaxLength="50" />
+          <Property Name="UserName" Type="varchar" MaxLength="100" />
+          <Property Name="Password" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Isdeleted" Type="bit" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AssessmentDetailMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AssessmentName" Type="varchar" MaxLength="100" />
+          <Property Name="IsBrowserLock" Type="bit" />
+          <Property Name="IsPrintScreenLock" Type="bit" />
+          <Property Name="EligibilityCriteriaId" Type="uniqueidentifier" />
+          <Property Name="ScheduledStartDatetime" Type="datetime" />
+          <Property Name="ScheduledEndDatetime" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="AssessmentQuestionBankDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AssessmentID" Type="uniqueidentifier" />
+          <Property Name="QuestionBankID" Type="uniqueidentifier" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="CustomRegistrationForm">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CustomField1" Type="varchar" MaxLength="100" />
+          <Property Name="IsMandatory" Type="bit" />
+          <Property Name="DisplayName" Type="varchar" MaxLength="100" />
+          <Property Name="FieldType" Type="varchar" MaxLength="100" />
+          <Property Name="Option1" Type="varchar" MaxLength="100" />
+          <Property Name="Option2" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="DefaultRegistation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="EligibilityCriteriaDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="QuestionBankID" Type="uniqueidentifier" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="NotConsider" Type="bigint" />
+          <Property Name="MayConsider" Type="bigint" />
+          <Property Name="StrongConsider" Type="bigint" />
+        </EntityType>
+        <EntityType Name="ExamFinalReport">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ExaminerID" Type="uniqueidentifier" />
+          <Property Name="QuestionID" Type="uniqueidentifier" />
+          <Property Name="AssessmentID" Type="uniqueidentifier" />
+          <Property Name="Score" Type="bigint" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsStrongConsider" Type="bit" />
+          <Property Name="IsMayConsider" Type="bit" />
+          <Property Name="IsNotConsider" Type="bit" />
+        </EntityType>
+        <EntityType Name="ExaminerAssessmentDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AssessmentID" Type="uniqueidentifier" />
+          <Property Name="ExaminerID" Type="uniqueidentifier" />
+          <Property Name="QuestionBankID" Type="uniqueidentifier" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ExaminerMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ExaminerName" Type="varchar" MaxLength="100" />
+          <Property Name="Iscommon" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ExaminerMasterDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ExaminerID" Type="uniqueidentifier" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="100" />
+          <Property Name="Institution" Type="varchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="QuestionBankMaster">
           <Key>
             <PropertyRef Name="ID" />
@@ -34,7 +155,7 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" />
         </EntityType>
-        <Association Name="FK__Questions__Quest__398D8EEE">
+        <Association Name="FK__Questions__Quest__3A81B327">
           <End Role="QuestionBankMaster" Type="Self.QuestionBankMaster" Multiplicity="0..1" />
           <End Role="QuestionsDetails" Type="Self.QuestionsDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -46,18 +167,277 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="TestEngineDBModelStoreContainer">
+        <Association Name="FK_AssessmentDetailMaster_EligibilityCriteriaDetails">
+          <End Role="EligibilityCriteriaDetails" Type="Self.EligibilityCriteriaDetails" Multiplicity="0..1" />
+          <End Role="AssessmentDetailMaster" Type="Self.AssessmentDetailMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EligibilityCriteriaDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AssessmentDetailMaster">
+              <PropertyRef Name="EligibilityCriteriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssessmentQuestionBankDetail_AssessmentDetailMaster">
+          <End Role="AssessmentDetailMaster" Type="Self.AssessmentDetailMaster" Multiplicity="0..1" />
+          <End Role="AssessmentQuestionBankDetail" Type="Self.AssessmentQuestionBankDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssessmentDetailMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AssessmentQuestionBankDetail">
+              <PropertyRef Name="AssessmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssessmentQuestionBankDetail_QuestionBankMaster">
+          <End Role="QuestionBankMaster" Type="Self.QuestionBankMaster" Multiplicity="0..1" />
+          <End Role="AssessmentQuestionBankDetail" Type="Self.AssessmentQuestionBankDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionBankMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AssessmentQuestionBankDetail">
+              <PropertyRef Name="QuestionBankID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EligibilityCriteriaDetails_QuestionBankMaster">
+          <End Role="QuestionBankMaster" Type="Self.QuestionBankMaster" Multiplicity="0..1" />
+          <End Role="EligibilityCriteriaDetails" Type="Self.EligibilityCriteriaDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionBankMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EligibilityCriteriaDetails">
+              <PropertyRef Name="QuestionBankID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExamFinalReport_AssessmentDetailMaster">
+          <End Role="AssessmentDetailMaster" Type="Self.AssessmentDetailMaster" Multiplicity="0..1" />
+          <End Role="ExamFinalReport" Type="Self.ExamFinalReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssessmentDetailMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExamFinalReport">
+              <PropertyRef Name="AssessmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExamFinalReport_QuestionBankMaster">
+          <End Role="QuestionBankMaster" Type="Self.QuestionBankMaster" Multiplicity="0..1" />
+          <End Role="ExamFinalReport" Type="Self.ExamFinalReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionBankMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExamFinalReport">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExaminerMasterDetails_ExaminerMaster">
+          <End Role="ExaminerMaster" Type="Self.ExaminerMaster" Multiplicity="0..1" />
+          <End Role="ExaminerMasterDetails" Type="Self.ExaminerMasterDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExaminerMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExaminerMasterDetails">
+              <PropertyRef Name="ExaminerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetDashBoardDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StarDatetime" Type="varchar" Mode="In" />
+          <Parameter Name="EndDatetime" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="TestEngineDBContextStoreContainer">
+          <EntitySet Name="AdminDetails" EntityType="Self.AdminDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssessmentDetailMaster" EntityType="Self.AssessmentDetailMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssessmentQuestionBankDetail" EntityType="Self.AssessmentQuestionBankDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomRegistrationForm" EntityType="Self.CustomRegistrationForm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DefaultRegistation" EntityType="Self.DefaultRegistation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EligibilityCriteriaDetails" EntityType="Self.EligibilityCriteriaDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExamFinalReport" EntityType="Self.ExamFinalReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExaminerAssessmentDetail" EntityType="Self.ExaminerAssessmentDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExaminerMaster" EntityType="Self.ExaminerMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExaminerMasterDetails" EntityType="Self.ExaminerMasterDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuestionBankMaster" EntityType="Self.QuestionBankMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuestionsDetails" EntityType="Self.QuestionsDetails" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Questions__Quest__398D8EEE" Association="Self.FK__Questions__Quest__398D8EEE">
+          <AssociationSet Name="FK__Questions__Quest__3A81B327" Association="Self.FK__Questions__Quest__3A81B327">
             <End Role="QuestionBankMaster" EntitySet="QuestionBankMaster" />
             <End Role="QuestionsDetails" EntitySet="QuestionsDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_AssessmentDetailMaster_EligibilityCriteriaDetails" Association="Self.FK_AssessmentDetailMaster_EligibilityCriteriaDetails">
+            <End Role="EligibilityCriteriaDetails" EntitySet="EligibilityCriteriaDetails" />
+            <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssessmentQuestionBankDetail_AssessmentDetailMaster" Association="Self.FK_AssessmentQuestionBankDetail_AssessmentDetailMaster">
+            <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMaster" />
+            <End Role="AssessmentQuestionBankDetail" EntitySet="AssessmentQuestionBankDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssessmentQuestionBankDetail_QuestionBankMaster" Association="Self.FK_AssessmentQuestionBankDetail_QuestionBankMaster">
+            <End Role="QuestionBankMaster" EntitySet="QuestionBankMaster" />
+            <End Role="AssessmentQuestionBankDetail" EntitySet="AssessmentQuestionBankDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EligibilityCriteriaDetails_QuestionBankMaster" Association="Self.FK_EligibilityCriteriaDetails_QuestionBankMaster">
+            <End Role="QuestionBankMaster" EntitySet="QuestionBankMaster" />
+            <End Role="EligibilityCriteriaDetails" EntitySet="EligibilityCriteriaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExamFinalReport_AssessmentDetailMaster" Association="Self.FK_ExamFinalReport_AssessmentDetailMaster">
+            <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMaster" />
+            <End Role="ExamFinalReport" EntitySet="ExamFinalReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExamFinalReport_QuestionBankMaster" Association="Self.FK_ExamFinalReport_QuestionBankMaster">
+            <End Role="QuestionBankMaster" EntitySet="QuestionBankMaster" />
+            <End Role="ExamFinalReport" EntitySet="ExamFinalReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExaminerMasterDetails_ExaminerMaster" Association="Self.FK_ExaminerMasterDetails_ExaminerMaster">
+            <End Role="ExaminerMaster" EntitySet="ExaminerMaster" />
+            <End Role="ExaminerMasterDetails" EntitySet="ExaminerMasterDetails" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="TestEngineDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="TestEngineDBContext" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdminDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Isdeleted" Type="Boolean" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="AssessmentDetailMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="AssessmentName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsBrowserLock" Type="Boolean" />
+          <Property Name="IsPrintScreenLock" Type="Boolean" />
+          <Property Name="EligibilityCriteriaId" Type="Guid" />
+          <Property Name="ScheduledStartDatetime" Type="DateTime" Precision="3" />
+          <Property Name="ScheduledEndDatetime" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="EligibilityCriteriaDetail" Relationship="Self.FK_AssessmentDetailMaster_EligibilityCriteriaDetails" FromRole="AssessmentDetailMaster" ToRole="EligibilityCriteriaDetails" />
+          <NavigationProperty Name="AssessmentQuestionBankDetails" Relationship="Self.FK_AssessmentQuestionBankDetail_AssessmentDetailMaster" FromRole="AssessmentDetailMaster" ToRole="AssessmentQuestionBankDetail" />
+          <NavigationProperty Name="ExamFinalReports" Relationship="Self.FK_ExamFinalReport_AssessmentDetailMaster" FromRole="AssessmentDetailMaster" ToRole="ExamFinalReport" />
+        </EntityType>
+        <EntityType Name="AssessmentQuestionBankDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="AssessmentID" Type="Guid" />
+          <Property Name="QuestionBankID" Type="Guid" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="AssessmentDetailMaster" Relationship="Self.FK_AssessmentQuestionBankDetail_AssessmentDetailMaster" FromRole="AssessmentQuestionBankDetail" ToRole="AssessmentDetailMaster" />
+          <NavigationProperty Name="QuestionBankMaster" Relationship="Self.FK_AssessmentQuestionBankDetail_QuestionBankMaster" FromRole="AssessmentQuestionBankDetail" ToRole="QuestionBankMaster" />
+        </EntityType>
+        <EntityType Name="CustomRegistrationForm">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="CustomField1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsMandatory" Type="Boolean" />
+          <Property Name="DisplayName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FieldType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Option1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Option2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DefaultRegistation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="EligibilityCriteriaDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="QuestionBankID" Type="Guid" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NotConsider" Type="Int64" />
+          <Property Name="MayConsider" Type="Int64" />
+          <Property Name="StrongConsider" Type="Int64" />
+          <NavigationProperty Name="AssessmentDetailMasters" Relationship="Self.FK_AssessmentDetailMaster_EligibilityCriteriaDetails" FromRole="EligibilityCriteriaDetails" ToRole="AssessmentDetailMaster" />
+          <NavigationProperty Name="QuestionBankMaster" Relationship="Self.FK_EligibilityCriteriaDetails_QuestionBankMaster" FromRole="EligibilityCriteriaDetails" ToRole="QuestionBankMaster" />
+        </EntityType>
+        <EntityType Name="ExamFinalReport">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="ExaminerID" Type="Guid" />
+          <Property Name="QuestionID" Type="Guid" />
+          <Property Name="AssessmentID" Type="Guid" />
+          <Property Name="Score" Type="Int64" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsStrongConsider" Type="Boolean" />
+          <Property Name="IsMayConsider" Type="Boolean" />
+          <Property Name="IsNotConsider" Type="Boolean" />
+          <NavigationProperty Name="AssessmentDetailMaster" Relationship="Self.FK_ExamFinalReport_AssessmentDetailMaster" FromRole="ExamFinalReport" ToRole="AssessmentDetailMaster" />
+          <NavigationProperty Name="QuestionBankMaster" Relationship="Self.FK_ExamFinalReport_QuestionBankMaster" FromRole="ExamFinalReport" ToRole="QuestionBankMaster" />
+        </EntityType>
+        <EntityType Name="ExaminerAssessmentDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="AssessmentID" Type="Guid" />
+          <Property Name="ExaminerID" Type="Guid" />
+          <Property Name="QuestionBankID" Type="Guid" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ExaminerMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="ExaminerName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Iscommon" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ExaminerMasterDetails" Relationship="Self.FK_ExaminerMasterDetails_ExaminerMaster" FromRole="ExaminerMaster" ToRole="ExaminerMasterDetails" />
+        </EntityType>
+        <EntityType Name="ExaminerMasterDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="ExaminerID" Type="Guid" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Institution" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ExaminerMaster" Relationship="Self.FK_ExaminerMasterDetails_ExaminerMaster" FromRole="ExaminerMasterDetails" ToRole="ExaminerMaster" />
+        </EntityType>
         <EntityType Name="QuestionBankMaster">
           <Key>
             <PropertyRef Name="ID" />
@@ -70,9 +450,12 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="QuestionBankDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="QuestionsDetails" Relationship="Self.FK__Questions__Quest__398D8EEE" FromRole="QuestionBankMaster" ToRole="QuestionsDetails" />
+          <NavigationProperty Name="AssessmentQuestionBankDetails" Relationship="Self.FK_AssessmentQuestionBankDetail_QuestionBankMaster" FromRole="QuestionBankMaster" ToRole="AssessmentQuestionBankDetail" />
+          <NavigationProperty Name="EligibilityCriteriaDetails" Relationship="Self.FK_EligibilityCriteriaDetails_QuestionBankMaster" FromRole="QuestionBankMaster" ToRole="EligibilityCriteriaDetails" />
+          <NavigationProperty Name="ExamFinalReports" Relationship="Self.FK_ExamFinalReport_QuestionBankMaster" FromRole="QuestionBankMaster" ToRole="ExamFinalReport" />
+          <NavigationProperty Name="QuestionsDetails" Relationship="Self.FK__Questions__Quest__3A81B327" FromRole="QuestionBankMaster" ToRole="QuestionsDetails" />
         </EntityType>
-        <EntityType Name="QuestionsDetails">
+        <EntityType Name="QuestionsDetail">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -87,11 +470,95 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" />
-          <NavigationProperty Name="QuestionBankMaster" Relationship="Self.FK__Questions__Quest__398D8EEE" FromRole="QuestionsDetails" ToRole="QuestionBankMaster" />
+          <NavigationProperty Name="QuestionBankMaster" Relationship="Self.FK__Questions__Quest__3A81B327" FromRole="QuestionsDetails" ToRole="QuestionBankMaster" />
         </EntityType>
-        <Association Name="FK__Questions__Quest__398D8EEE">
+        <Association Name="FK_AssessmentDetailMaster_EligibilityCriteriaDetails">
+          <End Role="EligibilityCriteriaDetails" Type="Self.EligibilityCriteriaDetail" Multiplicity="0..1" />
+          <End Role="AssessmentDetailMaster" Type="Self.AssessmentDetailMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EligibilityCriteriaDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AssessmentDetailMaster">
+              <PropertyRef Name="EligibilityCriteriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssessmentQuestionBankDetail_AssessmentDetailMaster">
+          <End Role="AssessmentDetailMaster" Type="Self.AssessmentDetailMaster" Multiplicity="0..1" />
+          <End Role="AssessmentQuestionBankDetail" Type="Self.AssessmentQuestionBankDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssessmentDetailMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AssessmentQuestionBankDetail">
+              <PropertyRef Name="AssessmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExamFinalReport_AssessmentDetailMaster">
+          <End Role="AssessmentDetailMaster" Type="Self.AssessmentDetailMaster" Multiplicity="0..1" />
+          <End Role="ExamFinalReport" Type="Self.ExamFinalReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssessmentDetailMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExamFinalReport">
+              <PropertyRef Name="AssessmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssessmentQuestionBankDetail_QuestionBankMaster">
           <End Role="QuestionBankMaster" Type="Self.QuestionBankMaster" Multiplicity="0..1" />
-          <End Role="QuestionsDetails" Type="Self.QuestionsDetails" Multiplicity="*" />
+          <End Role="AssessmentQuestionBankDetail" Type="Self.AssessmentQuestionBankDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionBankMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AssessmentQuestionBankDetail">
+              <PropertyRef Name="QuestionBankID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EligibilityCriteriaDetails_QuestionBankMaster">
+          <End Role="QuestionBankMaster" Type="Self.QuestionBankMaster" Multiplicity="0..1" />
+          <End Role="EligibilityCriteriaDetails" Type="Self.EligibilityCriteriaDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionBankMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EligibilityCriteriaDetails">
+              <PropertyRef Name="QuestionBankID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExamFinalReport_QuestionBankMaster">
+          <End Role="QuestionBankMaster" Type="Self.QuestionBankMaster" Multiplicity="0..1" />
+          <End Role="ExamFinalReport" Type="Self.ExamFinalReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionBankMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExamFinalReport">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExaminerMasterDetails_ExaminerMaster">
+          <End Role="ExaminerMaster" Type="Self.ExaminerMaster" Multiplicity="0..1" />
+          <End Role="ExaminerMasterDetails" Type="Self.ExaminerMasterDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExaminerMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExaminerMasterDetails">
+              <PropertyRef Name="ExaminerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Questions__Quest__3A81B327">
+          <End Role="QuestionBankMaster" Type="Self.QuestionBankMaster" Multiplicity="0..1" />
+          <End Role="QuestionsDetails" Type="Self.QuestionsDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="QuestionBankMaster">
               <PropertyRef Name="ID" />
@@ -101,22 +568,206 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="TestEngineDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="QuestionBankMaster" EntityType="Self.QuestionBankMaster" />
-          <EntitySet Name="QuestionsDetails" EntityType="Self.QuestionsDetails" />
-          <AssociationSet Name="FK__Questions__Quest__398D8EEE" Association="Self.FK__Questions__Quest__398D8EEE">
-            <End Role="QuestionBankMaster" EntitySet="QuestionBankMaster" />
+        <EntityContainer Name="TestEngineEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdminDetails" EntityType="Self.AdminDetail" />
+          <EntitySet Name="AssessmentDetailMasters" EntityType="Self.AssessmentDetailMaster" />
+          <EntitySet Name="AssessmentQuestionBankDetails" EntityType="Self.AssessmentQuestionBankDetail" />
+          <EntitySet Name="CustomRegistrationForms" EntityType="Self.CustomRegistrationForm" />
+          <EntitySet Name="DefaultRegistations" EntityType="Self.DefaultRegistation" />
+          <EntitySet Name="EligibilityCriteriaDetails" EntityType="Self.EligibilityCriteriaDetail" />
+          <EntitySet Name="ExamFinalReports" EntityType="Self.ExamFinalReport" />
+          <EntitySet Name="ExaminerAssessmentDetails" EntityType="Self.ExaminerAssessmentDetail" />
+          <EntitySet Name="ExaminerMasters" EntityType="Self.ExaminerMaster" />
+          <EntitySet Name="ExaminerMasterDetails" EntityType="Self.ExaminerMasterDetail" />
+          <EntitySet Name="QuestionBankMasters" EntityType="Self.QuestionBankMaster" />
+          <EntitySet Name="QuestionsDetails" EntityType="Self.QuestionsDetail" />
+          <AssociationSet Name="FK_AssessmentDetailMaster_EligibilityCriteriaDetails" Association="Self.FK_AssessmentDetailMaster_EligibilityCriteriaDetails">
+            <End Role="EligibilityCriteriaDetails" EntitySet="EligibilityCriteriaDetails" />
+            <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssessmentQuestionBankDetail_AssessmentDetailMaster" Association="Self.FK_AssessmentQuestionBankDetail_AssessmentDetailMaster">
+            <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMasters" />
+            <End Role="AssessmentQuestionBankDetail" EntitySet="AssessmentQuestionBankDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExamFinalReport_AssessmentDetailMaster" Association="Self.FK_ExamFinalReport_AssessmentDetailMaster">
+            <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMasters" />
+            <End Role="ExamFinalReport" EntitySet="ExamFinalReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssessmentQuestionBankDetail_QuestionBankMaster" Association="Self.FK_AssessmentQuestionBankDetail_QuestionBankMaster">
+            <End Role="QuestionBankMaster" EntitySet="QuestionBankMasters" />
+            <End Role="AssessmentQuestionBankDetail" EntitySet="AssessmentQuestionBankDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EligibilityCriteriaDetails_QuestionBankMaster" Association="Self.FK_EligibilityCriteriaDetails_QuestionBankMaster">
+            <End Role="QuestionBankMaster" EntitySet="QuestionBankMasters" />
+            <End Role="EligibilityCriteriaDetails" EntitySet="EligibilityCriteriaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExamFinalReport_QuestionBankMaster" Association="Self.FK_ExamFinalReport_QuestionBankMaster">
+            <End Role="QuestionBankMaster" EntitySet="QuestionBankMasters" />
+            <End Role="ExamFinalReport" EntitySet="ExamFinalReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExaminerMasterDetails_ExaminerMaster" Association="Self.FK_ExaminerMasterDetails_ExaminerMaster">
+            <End Role="ExaminerMaster" EntitySet="ExaminerMasters" />
+            <End Role="ExaminerMasterDetails" EntitySet="ExaminerMasterDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Questions__Quest__3A81B327" Association="Self.FK__Questions__Quest__3A81B327">
+            <End Role="QuestionBankMaster" EntitySet="QuestionBankMasters" />
             <End Role="QuestionsDetails" EntitySet="QuestionsDetails" />
           </AssociationSet>
+          <FunctionImport Name="GetDashBoardDetails" ReturnType="Collection(TestEngineDBContext.GetDashBoardDetails_Result)">
+            <Parameter Name="StarDatetime" Mode="In" Type="String" />
+            <Parameter Name="EndDatetime" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="GetDashBoardDetails_Result">
+          <Property Type="Int32" Name="Scheduled" Nullable="true" />
+          <Property Type="Int32" Name="Completed" Nullable="true" />
+          <Property Type="Int32" Name="StrongConsider" Nullable="false" />
+          <Property Type="Int32" Name="InProgress" Nullable="false" />
+          <Property Type="Int32" Name="Expired" Nullable="false" />
+          <Property Type="Int32" Name="Pending" Nullable="false" />
+          <Property Type="Int32" Name="SingleLogin" Nullable="false" />
+          <Property Type="Int32" Name="BulkLogin" Nullable="false" />
+          <Property Type="Int32" Name="CommonLogin" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TestEngineDBModelStoreContainer" CdmEntityContainer="TestEngineDBEntities">
-          <EntitySetMapping Name="QuestionBankMaster">
-            <EntityTypeMapping TypeName="TestEngineDBModel.QuestionBankMaster">
+        <EntityContainerMapping StorageEntityContainer="TestEngineDBContextStoreContainer" CdmEntityContainer="TestEngineEntities">
+          <EntitySetMapping Name="AdminDetails">
+            <EntityTypeMapping TypeName="TestEngineDBContext.AdminDetail">
+              <MappingFragment StoreEntitySet="AdminDetails">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Isdeleted" ColumnName="Isdeleted" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssessmentDetailMasters">
+            <EntityTypeMapping TypeName="TestEngineDBContext.AssessmentDetailMaster">
+              <MappingFragment StoreEntitySet="AssessmentDetailMaster">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AssessmentName" ColumnName="AssessmentName" />
+                <ScalarProperty Name="IsBrowserLock" ColumnName="IsBrowserLock" />
+                <ScalarProperty Name="IsPrintScreenLock" ColumnName="IsPrintScreenLock" />
+                <ScalarProperty Name="EligibilityCriteriaId" ColumnName="EligibilityCriteriaId" />
+                <ScalarProperty Name="ScheduledStartDatetime" ColumnName="ScheduledStartDatetime" />
+                <ScalarProperty Name="ScheduledEndDatetime" ColumnName="ScheduledEndDatetime" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssessmentQuestionBankDetails">
+            <EntityTypeMapping TypeName="TestEngineDBContext.AssessmentQuestionBankDetail">
+              <MappingFragment StoreEntitySet="AssessmentQuestionBankDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AssessmentID" ColumnName="AssessmentID" />
+                <ScalarProperty Name="QuestionBankID" ColumnName="QuestionBankID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomRegistrationForms">
+            <EntityTypeMapping TypeName="TestEngineDBContext.CustomRegistrationForm">
+              <MappingFragment StoreEntitySet="CustomRegistrationForm">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CustomField1" ColumnName="CustomField1" />
+                <ScalarProperty Name="IsMandatory" ColumnName="IsMandatory" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="FieldType" ColumnName="FieldType" />
+                <ScalarProperty Name="Option1" ColumnName="Option1" />
+                <ScalarProperty Name="Option2" ColumnName="Option2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DefaultRegistations">
+            <EntityTypeMapping TypeName="TestEngineDBContext.DefaultRegistation">
+              <MappingFragment StoreEntitySet="DefaultRegistation">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EligibilityCriteriaDetails">
+            <EntityTypeMapping TypeName="TestEngineDBContext.EligibilityCriteriaDetail">
+              <MappingFragment StoreEntitySet="EligibilityCriteriaDetails">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="QuestionBankID" ColumnName="QuestionBankID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NotConsider" ColumnName="NotConsider" />
+                <ScalarProperty Name="MayConsider" ColumnName="MayConsider" />
+                <ScalarProperty Name="StrongConsider" ColumnName="StrongConsider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExamFinalReports">
+            <EntityTypeMapping TypeName="TestEngineDBContext.ExamFinalReport">
+              <MappingFragment StoreEntitySet="ExamFinalReport">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ExaminerID" ColumnName="ExaminerID" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="AssessmentID" ColumnName="AssessmentID" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsStrongConsider" ColumnName="IsStrongConsider" />
+                <ScalarProperty Name="IsMayConsider" ColumnName="IsMayConsider" />
+                <ScalarProperty Name="IsNotConsider" ColumnName="IsNotConsider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExaminerAssessmentDetails">
+            <EntityTypeMapping TypeName="TestEngineDBContext.ExaminerAssessmentDetail">
+              <MappingFragment StoreEntitySet="ExaminerAssessmentDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AssessmentID" ColumnName="AssessmentID" />
+                <ScalarProperty Name="ExaminerID" ColumnName="ExaminerID" />
+                <ScalarProperty Name="QuestionBankID" ColumnName="QuestionBankID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExaminerMasters">
+            <EntityTypeMapping TypeName="TestEngineDBContext.ExaminerMaster">
+              <MappingFragment StoreEntitySet="ExaminerMaster">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ExaminerName" ColumnName="ExaminerName" />
+                <ScalarProperty Name="Iscommon" ColumnName="Iscommon" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExaminerMasterDetails">
+            <EntityTypeMapping TypeName="TestEngineDBContext.ExaminerMasterDetail">
+              <MappingFragment StoreEntitySet="ExaminerMasterDetails">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ExaminerID" ColumnName="ExaminerID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="Institution" ColumnName="Institution" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionBankMasters">
+            <EntityTypeMapping TypeName="TestEngineDBContext.QuestionBankMaster">
               <MappingFragment StoreEntitySet="QuestionBankMaster">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="QuestionBankName" ColumnName="QuestionBankName" />
@@ -130,7 +781,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="QuestionsDetails">
-            <EntityTypeMapping TypeName="TestEngineDBModel.QuestionsDetails">
+            <EntityTypeMapping TypeName="TestEngineDBContext.QuestionsDetail">
               <MappingFragment StoreEntitySet="QuestionsDetails">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="QuestionBankID" ColumnName="QuestionBankID" />
@@ -146,6 +797,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetDashBoardDetails" FunctionName="TestEngineDBContext.Store.GetDashBoardDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TestEngineDBContext.GetDashBoardDetails_Result">
+                <ScalarProperty Name="Scheduled" ColumnName="Scheduled" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="StrongConsider" ColumnName="StrongConsider" />
+                <ScalarProperty Name="InProgress" ColumnName="InProgress" />
+                <ScalarProperty Name="Expired" ColumnName="Expired" />
+                <ScalarProperty Name="Pending" ColumnName="Pending" />
+                <ScalarProperty Name="SingleLogin" ColumnName="SingleLogin" />
+                <ScalarProperty Name="BulkLogin" ColumnName="BulkLogin" />
+                <ScalarProperty Name="CommonLogin" ColumnName="CommonLogin" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -160,8 +826,8 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

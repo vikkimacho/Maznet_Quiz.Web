@@ -12,20 +12,13 @@ namespace Quiz.Web.DAL.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class QuestionsDetails
+    public partial class ExaminerAssessmentDetail
     {
         public System.Guid ID { get; set; }
+        public Nullable<System.Guid> AssessmentID { get; set; }
+        public Nullable<System.Guid> ExaminerID { get; set; }
         public Nullable<System.Guid> QuestionBankID { get; set; }
-        public string Question { get; set; }
-        public string OptionA { get; set; }
-        public string OptionB { get; set; }
-        public string OptionC { get; set; }
-        public string OptionD { get; set; }
-        public string Answer { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
-    
-        public virtual QuestionBankMaster QuestionBankMaster { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿
+﻿@model Quiz.Web.DTO.Models.DashBoardDetailsView
 @{
     ViewBag.Title = "DashBoard";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -87,6 +87,65 @@
         margin-bottom: 20px;
     }
 </style>
+<script src="~/Scripts/Code_Js/DashBoard.js"></script>
+<script>
+    var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+    $(document).ready(function () {
+        
+        displayTodayDate();
+        //$('#EndDate').datepicker({
+        //    dateFormat: 'yy/mm/dd',
+        //    changeMonth: true,
+        //    changeYear: true
+
+        //});
+        //$('#StartDate').datepicker({
+        //    dateFormat: 'yy/mm/dd',
+        //    changeMonth: true,
+        //    changeYear: true
+
+        //});
+        //$('#StartDate').change(function () {
+        //    var tstdt;
+        //    var splitDate = $('#StartDate').val().split('/');
+        //    var getDay = splitDate[2];
+        //    var getMonth = splitDate[1];
+        //    var getYear = splitDate[0];
+        //    var ele = "1|2|3|4|5|6|7|8|9";
+        //    if (ele.indexOf(getDay) > -1) {
+        //        tstdt = getYear + '/' + getMonth + '/0' + getDay;
+        //    }
+        //    else {
+        //        tstdt = getYear + '/' + getMonth + '/' + getDay;
+        //    }
+        //    $('#StartDate').val(tstdt);
+        //});
+        //$('#EndDate').change(function () {
+        //    var tstdt;
+        //    var splitDate = $('#EndDate').val().split('/');
+        //    var getDay = splitDate[2];
+        //    var getMonth = splitDate[1];
+        //    var getYear = splitDate[0];
+        //    var ele = "1|2|3|4|5|6|7|8|9";
+        //    if (ele.indexOf(getDay) > -1) {
+        //        tstdt = getYear + '/' + getMonth + '/0' + getDay;
+        //    }
+        //    else {
+        //        tstdt = getYear + '/' + getMonth + '/' + getDay;
+        //    }
+        //    $('#EndDate').val(tstdt);
+        //});
+    });
+    function displayTodayDate() {
+        debugger;
+        var param1 = new Date();
+        var From_Date = param1.getFullYear() + '/' + months[param1.getMonth()] + '/' + param1.getDate();
+        var To_Date = param1.getFullYear() + '/' + months[param1.getMonth()] + '/' + param1.getDate();
+        $('#StartDate').val(From_Date);
+        $('#EndDate').val(To_Date);        
+
+    }
+</script>
 <div class="col-md-12">
     <div class="row" id="dvDashboardText"> <span class="headingText">Dashboard</span> <button type="button" class="btn btn-primary pull-right">Create New Assessment</button> </div>
     <div class="clearfix"></div>
@@ -116,48 +175,58 @@
             </div>
         </div>
     </div>
-    <div class="clearfix seperator"></div>
     <div class="row">
-        <div class="col-md-4" id="dvScheduled">
-            <div class="col-md-6"><span class="count">986</span></div> <div class="col-md-6"> <span class="catIcon glyphicon glyphicon-calendar pull-right"></span></div>
-            <div class="col-md-12">     <span class="category">scheduled</span></div>
+        <div class="input-group date">
+            <input type="text" class="form-control" value="12-02-2012">
+            <div class="input-group-addon">
+                <span class="glyphicon glyphicon-th"></span>
+            </div>
         </div>
-        <div class="col-md-4" id="dvCompleted">
-            <div class="col-md-6"><span class="count">682</span></div> <div class="col-md-6"> <span class="catIcon glyphicon glyphicon-list-alt pull-right"></span></div>
-            <div class="col-md-12">     <span class="category">Completed</span></div>
+        <input id="StartDate" type="date"/>
+        <input id="EndDate" type="date"/>
+        <input type="button" class="btn btn-primary" value="Search" onclick="DashBoardFetch()" />
+    </div>
+        <div class="clearfix seperator"></div>
+        <div class="row">
+            <div class="col-md-4" id="dvScheduled">
+                <div class="col-md-6"><span id="Scheduled" class="count">@Model.Scheduled</span></div> <div class="col-md-6"> <span class="catIcon glyphicon glyphicon-calendar pull-right"></span></div>
+                <div class="col-md-12">     <span class="category">scheduled</span></div>
+            </div>
+            <div class="col-md-4" id="dvCompleted">
+                <div class="col-md-6"><span id="Completed" class="count">@Model.Completed</span></div> <div class="col-md-6"> <span class="catIcon glyphicon glyphicon-list-alt pull-right"></span></div>
+                <div class="col-md-12">     <span class="category">Completed</span></div>
+            </div>
+            <div class="col-md-4" id="dvSingleLogin">
+                <div class="col-md-6"><span id="SingleLogin" class="count">@Model.SingleLogin</span></div> <div class="col-md-6"> <span class="catIcon glyphicon glyphicon-list-alt pull-right"></span></div>
+                <div class="col-md-12">     <span class="category">single login</span></div>
+            </div>
         </div>
-        <div class="col-md-4" id="dvSingleLogin">
-            <div class="col-md-6"><span class="count">682</span></div> <div class="col-md-6"> <span class="catIcon glyphicon glyphicon-list-alt pull-right"></span></div>
-            <div class="col-md-12">     <span class="category">single login</span></div>
+        <div class="row">
+            <div class="col-md-4" id="dvStrongConsider">
+                <div class="col-md-6"><span id="StrongConsider" class="count">@Model.StrongConsider</span></div> <div class="col-md-6"> <span class="catIcon fa fa-users  pull-right"></span></div>
+                <div class="col-md-12">     <span class="category">strong consider</span></div>
+            </div>
+            <div class="col-md-4" id="dvInProgress">
+                <div class="col-md-6"><span id="InProgress" class="count">@Model.InProgress</span></div> <div class="col-md-6"> <span class="catIcon fa fa-play-circle-o pull-right"></span></div>
+                <div class="col-md-12">     <span class="category">in progress</span></div>
+            </div>
+            <div class="col-md-4" id="dvBulkLogin">
+                <div class="col-md-6"><span id="BulkLogin" class="count">@Model.BulkLogin</span></div> <div class="col-md-6"> <span class="catIcon fa fa-play-circle-o pull-right"></span></div>
+                <div class="col-md-12">     <span class="category">bulk login</span></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" id="dvExpired">
+                <div class="col-md-6"><span id="Expired" class="count">@Model.Expired</span></div> <div class="col-md-6"> <span class="catIcon fa fa-exclamation-triangle pull-right"></span></div>
+                <div class="col-md-12">     <span class="category">expired</span></div>
+            </div>
+            <div class="col-md-4" id="dvPending">
+                <div class="col-md-6"><span id="Pending" class="count">@Model.Pending</span></div> <div class="col-md-6"> <span class="catIcon fa fa-refresh pull-right"></span></div>
+                <div class="col-md-12">     <span class="category">pending</span></div>
+            </div>
+            <div class="col-md-4" id="dvCommonLogin">
+                <div class="col-md-6"><span id="CommonLogin" class="count">@Model.CommonLogin</span></div> <div class="col-md-6"> <span class="catIcon fa fa-refresh pull-right"></span></div>
+                <div class="col-md-12">     <span class="category">common login</span></div>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4" id="dvStrongConsider">
-            <div class="col-md-6"><span class="count">194</span></div> <div class="col-md-6"> <span class="catIcon fa fa-users  pull-right"></span></div>
-            <div class="col-md-12">     <span class="category">strong consider</span></div>
-        </div>
-        <div class="col-md-4" id="dvInProgress">
-            <div class="col-md-6"><span class="count">0</span></div> <div class="col-md-6"> <span class="catIcon fa fa-play-circle-o pull-right"></span></div>
-            <div class="col-md-12">     <span class="category">in progress</span></div>
-        </div>
-        <div class="col-md-4" id="dvBulkLogin">
-            <div class="col-md-6"><span class="count">682</span></div> <div class="col-md-6"> <span class="catIcon fa fa-play-circle-o pull-right"></span></div>
-            <div class="col-md-12">     <span class="category">bulk login</span></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4" id="dvExpired">
-            <div class="col-md-6"><span class="count">264</span></div> <div class="col-md-6"> <span class="catIcon fa fa-exclamation-triangle pull-right"></span></div>
-            <div class="col-md-12">     <span class="category">expired</span></div>
-        </div>
-        <div class="col-md-4" id="dvPending">
-            <div class="col-md-6"><span class="count">10</span></div> <div class="col-md-6"> <span class="catIcon fa fa-refresh pull-right"></span></div>
-            <div class="col-md-12">     <span class="category">pending</span></div>
-        </div>
-        <div class="col-md-4" id="dvCommonLogin">
-            <div class="col-md-6"><span class="count">10</span></div> <div class="col-md-6"> <span class="catIcon fa fa-refresh pull-right"></span></div>
-            <div class="col-md-12">     <span class="category">common login</span></div>
-        </div>
-    </div>
-</div>
-

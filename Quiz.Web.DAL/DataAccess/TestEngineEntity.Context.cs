@@ -12,11 +12,13 @@ namespace Quiz.Web.DAL.DataAccess
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
-    public partial class TestEngineDBEntities : DbContext
+    public partial class TestEngineEntities : DbContext
     {
-        public TestEngineDBEntities()
-            : base("name=TestEngineDBEntities")
+        public TestEngineEntities()
+            : base("name=TestEngineEntities")
         {
         }
     
@@ -25,7 +27,30 @@ namespace Quiz.Web.DAL.DataAccess
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<QuestionBankMaster> QuestionBankMaster { get; set; }
-        public virtual DbSet<QuestionsDetails> QuestionsDetails { get; set; }
+        public virtual DbSet<AdminDetail> AdminDetails { get; set; }
+        public virtual DbSet<AssessmentDetailMaster> AssessmentDetailMasters { get; set; }
+        public virtual DbSet<AssessmentQuestionBankDetail> AssessmentQuestionBankDetails { get; set; }
+        public virtual DbSet<CustomRegistrationForm> CustomRegistrationForms { get; set; }
+        public virtual DbSet<DefaultRegistation> DefaultRegistations { get; set; }
+        public virtual DbSet<EligibilityCriteriaDetail> EligibilityCriteriaDetails { get; set; }
+        public virtual DbSet<ExamFinalReport> ExamFinalReports { get; set; }
+        public virtual DbSet<ExaminerAssessmentDetail> ExaminerAssessmentDetails { get; set; }
+        public virtual DbSet<ExaminerMaster> ExaminerMasters { get; set; }
+        public virtual DbSet<ExaminerMasterDetail> ExaminerMasterDetails { get; set; }
+        public virtual DbSet<QuestionBankMaster> QuestionBankMasters { get; set; }
+        public virtual DbSet<QuestionsDetail> QuestionsDetails { get; set; }
+    
+        public virtual ObjectResult<GetDashBoardDetails_Result> GetDashBoardDetails(string starDatetime, string endDatetime)
+        {
+            var starDatetimeParameter = starDatetime != null ?
+                new ObjectParameter("StarDatetime", starDatetime) :
+                new ObjectParameter("StarDatetime", typeof(string));
+    
+            var endDatetimeParameter = endDatetime != null ?
+                new ObjectParameter("EndDatetime", endDatetime) :
+                new ObjectParameter("EndDatetime", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDashBoardDetails_Result>("GetDashBoardDetails", starDatetimeParameter, endDatetimeParameter);
+        }
     }
 }

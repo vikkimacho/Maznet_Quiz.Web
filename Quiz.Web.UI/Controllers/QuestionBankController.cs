@@ -17,7 +17,7 @@ namespace Quiz.Web.UI.Controllers
 {
     public class QuestionBankController : Controller
     {
-        private static readonly string apiUrl = "http://localhost:58491/api/";
+        private static readonly string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
         private DataTable dt = new DataTable();
         // GET: QuestionBank
         public ActionResult QuestionBank()

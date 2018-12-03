@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@{
+    string username = string.Empty;
+    if(HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        username = HttpContext.Current.User.Identity.Name;
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -9,9 +16,12 @@
     <title>Quiz</title>
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
     <!-- Custom CSS -->
 
+
     <link href="~/Content/CSS/sb-admin.css" rel="stylesheet" />
+    <link href="~/Content/CSS/datatable.css" rel="stylesheet" />
     <!-- Custom Fonts -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -23,8 +33,12 @@
     <script src="https://code.jquery.com/jquery-2.2.4.js"
             integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
             crossorigin="anonymous"></script>
+    @*<script src="~/Scripts/jquery-3.3.1.js"></script>*@
+    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/jquery.dataTables.js"></script>
     <style>
         .side-nav {
             width: 240px;
@@ -145,8 +159,13 @@
             <ul class="nav navbar-right top-nav">
 
 
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith </a>
+                <li class="dropdown">      
+                    <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-user">@username</i></a>
+                    <ul id="demo" class="collapse">
+                        <li>
+                            <a href='@Url.Action("Logout","Login")'>Logout</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
@@ -160,7 +179,9 @@
                             </li>
                         </ul>
                     </li>
-
+                    <li>
+                        <a href='@Url.Action("AdminManagement","AdminManagement")'><i class="fa fa-fw fa-arrows-v"></i> Admin Management <i class="fa fa-fw fa-caret-down"></i></a>             
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

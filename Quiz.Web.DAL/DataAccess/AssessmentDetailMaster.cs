@@ -12,33 +12,30 @@ namespace Quiz.Web.DAL.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class QuestionBankMaster
+    public partial class AssessmentDetailMaster
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public QuestionBankMaster()
+        public AssessmentDetailMaster()
         {
             this.AssessmentQuestionBankDetails = new HashSet<AssessmentQuestionBankDetail>();
-            this.EligibilityCriteriaDetails = new HashSet<EligibilityCriteriaDetail>();
             this.ExamFinalReports = new HashSet<ExamFinalReport>();
-            this.QuestionsDetails = new HashSet<QuestionsDetail>();
         }
     
         public System.Guid ID { get; set; }
-        public string QuestionBankName { get; set; }
-        public Nullable<System.TimeSpan> Duration { get; set; }
+        public string AssessmentName { get; set; }
+        public Nullable<bool> IsBrowserLock { get; set; }
+        public Nullable<bool> IsPrintScreenLock { get; set; }
+        public Nullable<System.Guid> EligibilityCriteriaId { get; set; }
+        public Nullable<System.DateTime> ScheduledStartDatetime { get; set; }
+        public Nullable<System.DateTime> ScheduledEndDatetime { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
-        public string QuestionBankDescription { get; set; }
-        public bool IsActive { get; set; }
     
+        public virtual EligibilityCriteriaDetail EligibilityCriteriaDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AssessmentQuestionBankDetail> AssessmentQuestionBankDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EligibilityCriteriaDetail> EligibilityCriteriaDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExamFinalReport> ExamFinalReports { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<QuestionsDetail> QuestionsDetails { get; set; }
     }
 }
