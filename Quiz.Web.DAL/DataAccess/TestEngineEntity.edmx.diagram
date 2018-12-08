@@ -4,11 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f6a21faf3529465ab9bc32888d478952" Name="Diagram1" ZoomLevel="88">
+      <Diagram DiagramId="f6a21faf3529465ab9bc32888d478952" Name="Diagram1" ZoomLevel="69">
         <EntityTypeShape EntityType="TestEngineDBContext.AdminDetail" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TestEngineDBContext.AssessmentDetailMaster" Width="1.5" PointX="5.25" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="TestEngineDBContext.AssessmentQuestionBankDetail" Width="1.5" PointX="7.5" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestEngineDBContext.CustomRegistrationForm" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TestEngineDBContext.DefaultRegistation" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TestEngineDBContext.EligibilityCriteriaDetail" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TestEngineDBContext.ExamFinalReport" Width="1.5" PointX="10.5" PointY="5.875" IsExpanded="true" />
@@ -25,6 +24,14 @@
         <AssociationConnector Association="TestEngineDBContext.FK_ExamFinalReport_QuestionBankMaster" ManuallyRouted="false" />
         <AssociationConnector Association="TestEngineDBContext.FK_ExaminerMasterDetails_ExaminerMaster" ManuallyRouted="false" />
         <AssociationConnector Association="TestEngineDBContext.FK__Questions__Quest__3A81B327" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TestEngineDBContext.InputControlMaster" Width="1.5" PointX="9.75" PointY="13.25" />
+        <EntityTypeShape EntityType="TestEngineDBContext.RegistrationFormControl" Width="1.5" PointX="12" PointY="1" />
+        <EntityTypeShape EntityType="TestEngineDBContext.sysdiagram" Width="1.5" PointX="5.375" PointY="12.75" />
+        <AssociationConnector Association="TestEngineDBContext.FK_RegistrationFormControls_InputControlMaster" />
+        <EntityTypeShape EntityType="TestEngineDBContext.CustomRegistrationForm" Width="1.5" PointX="13.375" PointY="4.875" />
+        <AssociationConnector Association="TestEngineDBContext.FK_RegistrationFormControls_CustomRegistrationForm1" />
+        <EntityTypeShape EntityType="TestEngineDBContext.UserDetailMaster" Width="1.5" PointX="12.375" PointY="10.75" />
+        <AssociationConnector Association="TestEngineDBContext.FK_DefaultRegistation_UserDetailMaster" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

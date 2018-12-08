@@ -1,0 +1,183 @@
+﻿@model List<Quiz.Web.DTO.Models.UsersDetails>
+@{
+    ViewBag.Title = "UserManagement";
+}
+<script>
+    $(document).ready(function () {
+        $('#Usersview').DataTable();
+    });
+</script>
+<button type="button" class="btn btn-info btn-sm"  data-toggle="modal" data-target="#myModal">Add Users</button>
+
+<div class="container-fluid">
+    
+    <table class="form-group" id="Usersview">
+        <thead>
+            <tr>
+                <td><b>USER TITLE</b></td>
+                <td><b>CREATED DATE</b></td>
+                <td><b>MODIFIED DATE</b></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td id="@item.Id">
+                        <a href="@Url.Action("UserManagementList","UserManagement",new { UserDetailId = item.Id})">@item.UserTitleName</a>
+                    </td>
+                    <td>
+                        @item.CreatedDateTime
+                    </td>
+                    <td>
+                        @item.ModifiedDateTime
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@*<div class="container-fluid">
+    <div class="form-group">
+        <label>User Title</label>
+        <input type="text" class="form-control" id="txtUserTitle" placeholder="Enter User" />
+    </div>
+    <div class="form-group">
+        <input type="file" class="form-control-file" id="flUsersUpload" />
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" id="btnUpdateUsers">Update</button>
+    </div>
+</div>*@
+
+
+        
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Users Upload</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>User Title</label>
+                    <input type="text" class="form-control" id="txtUserTitle" placeholder="Enter User" />
+                    <span style="color:red;display:none" id="Er_txtUserTitle">User Title is Required</span>
+                </div>
+                <div class="form-group">
+                    <input type="file" class="form-control-file" id="flUsersUpload" />
+                    <span style="color:red;display:none" id="Er_flUsersUpload">Please Upload File</span>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" id="btnUpdateUsers">Update</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+        </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var files;
+        $(document).on('change', '#flUsersUpload', function (e) {
+            debugger;
+            files = e.target.files;
+            var isValidFiles = true;
+            var UserTitle = $("#txtUserTitle").val();
+            var finalStatus = false;
+            $('#file-error1').text('');
+            var file_size = $('#flUsersUpload')[0].files[0].size;
+            if (file_size < 120000) {
+                $(files).each(function () {
+                    var filename = this.name;
+                    if ((filename.toUpperCase().indexOf(".XLSX") == -1) || (filename.toUpperCase().indexOf(".XLS")) == -1) {
+                        isValidFiles = false;
+                    }
+                });
+                if (isValidFiles) {
+                    ContactFile = e.target.files;
+
+                }
+                else {
+                    $('#mdlmessage').text('Choose Only .xlsx or xlx File');
+                    $('#modalPopUp').addClass("is-visible");
+                    $("#chooseContactsFile").val("");
+                }
+            }
+            else {
+                $('.box-error').css("border-color", "#FF0000");
+                $('#file-error1').text('File size must be less than 120KB');
+                $("#chooseContactsFile").val("");
+            }
+        });
+
+        $("#btnUpdateUsers").click(function () {
+
+            var UserTitle = $("#txtUserTitle").val();
+            $("#Er_txtUserTitle").hide();
+            $("#Er_flUsersUpload").hide();
+            var flag = true;
+            if (!UserTitle) {
+                $("#Er_txtUserTitle").show();
+                flag = false;
+            }
+
+            var data = new FormData();
+            if (files) {
+                for (var x = 0; x < files.length; x++) {
+                    data.append("file" + x, ContactFile[x]);
+                }
+            } else {
+                $("#Er_flUsersUpload").show();
+                flag = false;
+            }
+            
+            if (flag) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("UploadUserDetail", "UserManagement")?UserNameTitle=' + UserTitle,
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    beforeSend: function () {
+                        uploaded = 1;
+                    },
+                    complete: function () {
+
+                    },
+                    success: function (result) {
+                        debugger;
+                        if (result.data.Result) {
+                            alert("Users Uploaded Succesfully");
+                            window.location.reload();
+                        }
+                        else {
+                            alert("Users Upload Failed");
+                            window.location.reload();
+                        }
+
+                    },
+                    error: function (xhr, status, p3, p4) {
+                        var err = "Error " + " " + status + " " + p3 + " " + p4;
+                        if (xhr.responseText && xhr.responseText[0] == "{")
+                            err = JSON.parse(xhr.responseText).Message;
+
+                    },
+                    cache: false
+                });
+            } else {
+                return false;
+            }
+
+        });
+
+    });
+
+</script>

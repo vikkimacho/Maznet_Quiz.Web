@@ -14,6 +14,12 @@ namespace Quiz.Web.UI.Controllers
     [AuthorizationFilter]
     public class AdminManagementController : Controller
     {
+        #region Declaration
+        private readonly string Success = "SUCCESS";
+        private readonly string Failed = "FAILED";
+        Logger logger = new Logger();
+        
+        #endregion
         // GET: AdminManagement
         public ActionResult AdminManagement()
         {
@@ -39,7 +45,8 @@ namespace Quiz.Web.UI.Controllers
 
         public ActionResult EditAdminDtails(string id)
         {
-            AdminDetails admin = new AdminDetails();
+            AdminDetails adminDetails = new AdminDetails();
+            
             try
             {
                 string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
@@ -49,43 +56,43 @@ namespace Quiz.Web.UI.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var result = response.Content.ReadAsStringAsync().Result;
-                    var adminDetails = JsonConvert.DeserializeObject<List<AdminDetails>>(result);
+                    var list = JsonConvert.DeserializeObject<List<AdminDetails>>(result);
                     Guid adminID = new Guid(id);
-                    admin = adminDetails.FirstOrDefault(x => x.ID == adminID);
+                    adminDetails = list.FirstOrDefault(x => x.ID == adminID);
                 }
             }
             catch(Exception ex)
             {
 
             }
-            return Json(admin, JsonRequestBehavior.AllowGet);
+            return Json(adminDetails, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SaveAdminDetails(AdminDetails adminDetail)
         {
-            List<AdminDetails> adminDetails = new List<AdminDetails>();
+            string result = Failed;
             try
             {
                 string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
                 HttpClient client = new HttpClient();
                 //HttpContent inputContent = new StringContent(Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.GetAsync(apiUrl + "/AdminManagement/GetAdminList").Result;
+                HttpResponseMessage response = client.PostAsJsonAsync(apiUrl + "/AdminManagement/SaveAdminDetails", adminDetail).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = response.Content.ReadAsStringAsync().Result;
-                    adminDetails = JsonConvert.DeserializeObject<List<AdminDetails>>(result);
+                    result = response.Content.ReadAsStringAsync().Result;
+                    
                 }
             }
             catch(Exception ex)
             {
 
             }
-            return View(adminDetails);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult DeleteAdminDetails(string id)
         {
-            List<AdminDetails> adminDetails = new List<AdminDetails>();
+            string result = Failed;
             try
             {
                 string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
@@ -94,15 +101,15 @@ namespace Quiz.Web.UI.Controllers
                 HttpResponseMessage response = client.GetAsync(apiUrl + "/AdminManagement/GetAdminList").Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = response.Content.ReadAsStringAsync().Result;
-                    adminDetails = JsonConvert.DeserializeObject<List<AdminDetails>>(result);
+                     result = response.Content.ReadAsStringAsync().Result;
+                    
                 }
             }
             catch(Exception ex)
             {
 
             }
-            return View(adminDetails);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

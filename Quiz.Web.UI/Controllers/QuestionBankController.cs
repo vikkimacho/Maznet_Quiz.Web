@@ -12,13 +12,14 @@ using Excel;
 using Quiz.Web.DTO.Models;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
+using Quiz.Web.UI.Helper;
 
 namespace Quiz.Web.UI.Controllers
 {
     public class QuestionBankController : Controller
     {
         private static readonly string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
-        private DataTable dt = new DataTable();
+        
         // GET: QuestionBank
         public ActionResult QuestionBank()
         {
@@ -61,7 +62,7 @@ namespace Quiz.Web.UI.Controllers
                 var questionBankDetail = new QuestionBankDetail();
                 if (fileextension == ".xlsx" || fileextension == ".xls" || fileextension == ".csv")
                 {
-                    dt = ConvertFileToDateTable(hpf);
+                    var dt = Common.ConvertFileToDateTable(hpf, "QuestionUploadFile");
                     List<QuestionsDetailsView> questionsDetailsView = new List<QuestionsDetailsView>();
                     var rowCount = dt.Rows.Count;
                     for (int i = 0; i < rowCount; i++)
@@ -118,40 +119,7 @@ namespace Quiz.Web.UI.Controllers
 
 
 
-        public DataTable ConvertFileToDateTable(HttpPostedFileBase hpf)
-        {
-            if (!String.IsNullOrEmpty(hpf.FileName))
-            {
-                //string FilePath = System.Configuration.ConfigurationManager.AppSettings["UnitUploadFilePath"].ToString() + hpf.FileName;
-                string FilePath = System.Web.Hosting.HostingEnvironment.MapPath(System.Configuration.ConfigurationManager.AppSettings["QuestionUploadFile"].ToString()) + hpf.FileName;
-                int count = 1;
-                string newFullPath = FilePath;
-                while (System.IO.File.Exists(newFullPath))
-                {
-                    string tempFileName = string.Format("{0}({1})", Path.GetFileNameWithoutExtension(FilePath), count++);
-                    newFullPath = Path.Combine(Path.GetDirectoryName(FilePath), tempFileName + Path.GetExtension(FilePath));
-                }
-                hpf.SaveAs(newFullPath);
-                FileStream stream = new FileStream(newFullPath, FileMode.Open, FileAccess.ReadWrite);
-                hpf.InputStream.CopyTo(stream);
-
-                string fileExtension = Path.GetExtension(hpf.FileName);
-                IExcelDataReader excelReader;
-                excelReader = fileExtension == ".xlsx" ? ExcelReaderFactory.CreateOpenXmlReader(stream) : ExcelReaderFactory.CreateBinaryReader(stream);
-                stream.Close();
-                excelReader.IsFirstRowAsColumnNames = true;
-
-                DataSet ds = excelReader.AsDataSet();
-                dt = ds.Tables[0];
-                excelReader.Close();
-                dt = dt.Rows.Cast<DataRow>().Where(row => !row.ItemArray.All(field => field is System.DBNull || string.Compare((Convert.ToString(field)).Trim(), string.Empty) == 0)).CopyToDataTable();
-                //dt = dt.Rows.Cast<DataRow>().Where(row => !row.ItemArray.All(field => field is System.DBNull || string.Compare((field as string).Trim(), string.Empty) == 0)).CopyToDataTable();
-                TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
-                foreach (DataColumn column in dt.Columns)
-                    column.ColumnName = ti.ToTitleCase(column.ColumnName);
-            }
-            return dt;
-        }
+       
 
     }
 }

@@ -118,6 +118,11 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CSS\datatable.css" />
+    <Content Include="Content\CSS\sort_asc.png" />
+    <Content Include="Content\CSS\sort_asc_disabled.png" />
+    <Content Include="Content\CSS\sort_both.png" />
+    <Content Include="Content\CSS\sort_desc.png" />
+    <Content Include="Content\CSS\sort_desc_disabled.png" />
     <Content Include="Content\Icons\logo.jpg" />
     <Content Include="Content\Images\LoginImage.jpg" />
     <Content Include="Content\login.css" />
@@ -128,6 +133,7 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Code_Js\Common.js" />
     <Content Include="Scripts\Code_Js\DashBoard.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
@@ -174,11 +180,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\QuestionBankController.cs" />
+    <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\AESEncryption.cs" />
     <Compile Include="Helper\AuthorizationFilter.cs" />
+    <Compile Include="Helper\Common.cs" />
     <Compile Include="Helper\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -203,6 +211,8 @@
     <Content Include="Views\QuestionBank\QuestionBank.cshtml" />
     <Content Include="Views\Login\AdminLogin.cshtml" />
     <Content Include="Views\AdminManagement\AdminManagement.cshtml" />
+    <Content Include="Views\UserManagement\UserManagement.cshtml" />
+    <Content Include="Views\UserManagement\UserManagementList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -212,6 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Files\UserDetails\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

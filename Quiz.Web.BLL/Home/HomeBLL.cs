@@ -43,6 +43,7 @@ namespace Quiz.Web.BLL.Home
                         details.Password = x.Password;
                         details.PhoneNumber = x.PhoneNumber;
                         details.Role = x.Role;
+                        details.Name = x.Name;
                         details.UserName = x.UserName;
                         adminDetails.Add(details);
                     });
@@ -68,7 +69,8 @@ namespace Quiz.Web.BLL.Home
                     adminDetail.Password = data.Password;
                     adminDetail.PhoneNumber = data.PhoneNumber;
                     adminDetail.Role = data.Role;
-                    adminDetail.UserName = data.Role;
+                    adminDetail.UserName = data.UserName;
+                    adminDetail.Name = data.Name;
                     result = homeDAL.SaveAdminDetails(adminDetail);
                 }
             }

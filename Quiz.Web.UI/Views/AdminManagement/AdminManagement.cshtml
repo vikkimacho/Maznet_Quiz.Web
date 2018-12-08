@@ -7,56 +7,163 @@
     $(document).ready(function () {
         $('#AdminManagement').DataTable();
         $('#hdnID').val('');
-        $('#btnAddAdmin').click(function () {
-            
+
+        $('#btnAddAdmin').click(function () { $('#dvModalAddAdmin').modal('show'); });
+        $('#btnAdd').click(function () {
+            debugger;
+            var name = $('#txtAddName').val();
+            var username = $('#txtAddUserName').val();
+            var role = $('#txtAddRole').val();
+            var email = $('#txtAddEmail').val();
+            var phone = $('#txtAddPhone').val();
+            var password = $('#txtAddPassword').val();
+            var status = true;
+            if (!name) {
+                status = false;
+            }
+            else if (!username) {
+
+            }
+            else if (!role) {
+
+            }
+            else if (!email) {
+
+            }
+            else if (!phone) {
+
+            }
+            if (status) {
+                var id = $('#hdnID').val();
+                var objData = { Name: name, UserName: username, Role: role, Email: email, PhoneNumber: phone, ID: id, Password: password };
+                fnSaveAdminDetails(objData);
+            }
+        });
+        $('#btnSave').click(function () {
+            debugger;
+            var name = $('#txtEditName').val();
+            var username = $('#txtEditUserName').val();
+            var role = $('#txtEditRole').val();
+            var email = $('#txtEditEmail').val();
+            var phone = $('#txtEditPhone').val();
+            var password = $('#txtEditPassword').val();
+            var status = true;
+            if (!name) {
+                status = false;
+            }
+            else if (!username) {
+
+            }
+            else if (!role) {
+
+            }
+            else if (!email) {
+
+            }
+            else if (!phone) {
+
+            }
+            if (status) {
+                var id = $('#hdnID').val();
+                var objData = { Name: name, UserName: username, Role: role, Email: email, PhoneNumber: phone, ID: id, Password: password};
+                fnSaveAdminDetails(objData);
+            }
+
+        });
+        $('#btndelete').click(function () {
+            var id = $('#hdnID').val();
+            $.ajax({
+                url: '@Url.Action("DeleteAdminDetails", "AdminManagement")?id=' + id,
+                type: "POST",
+
+                contentType: "application/json",
+                dataType: "json",
+                success: function (result) {
+                    if (result != "FAILED") {
+                        location.reload();
+                    }
+                },
+                error: function (status) {
+                },
+                cache: false,
+
+            });
         });
     });
     function fnEditUser(id) {
         $('#hdnID').val(id);
+        $.ajax({
+            url: '@Url.Action("EditAdminDtails", "AdminManagement")?id=' + id,
+            type: "POST",
+
+            contentType: "application/json",
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (result != null) {
+                    fnDisplayEditModal(result);
+                }
+            },
+            error: function (status) {
+            },
+            cache: false,
+
+        });
+    }
+    function fnSaveAdminDetails(data) {
+        $.ajax({
+            url: '@Url.Action("SaveAdminDetails", "AdminManagement")',
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (result) {
+                if (result != "FAILED") {
+                    location.reload();
+                }
+            },
+            error: function (status) {
+            },
+            cache: false,
+
+        });
+    }
+    function fnDisplayEditModal(result) {
+        $('#txtEditName').val(result.Name);
+        $('#txtEditUserName').val(result.UserName);
+        $('#txtEditRole').val(result.Role);
+        $('#txtEditEmail').val(result.Email);
+        $('#txtEditPhone').val(result.PhoneNumber);
+        $('#txtEditPassword').val(result.Password);
+        $('#dvModalEdit').modal("show");
     }
     function fnDeleteUser(id) {
     debugger;
         $('#hdnID').val(id);
         $('#dvModalDelete').modal("show");
     }
-    $('#btndelete').click(function () {
-        var id = $('#hdnID').val();
-        $.ajax({
-            url: '@Url.Action("ValidateUser", "Login")',
-            data: JSON.stringify({ 'username': username, 'password': password }),
-            type: "POST",
-            async: false,
-            contentType: "application/json",
-            dataType: "json",
-            success: function (result) {
-                if (result != "FAILED") {
-                    status = result;
-                }
-            },
-            error: function (status) {
-            },
-            cache: false,
-            async: false
-        });
-    });
+
 </script>
 <div><button class="btn btn-primary" id="btnAddAdmin">Add</button></div>
 <table id="AdminManagement">
     <thead>
         <tr>
+            <td>NAME</td>
             <td>USER NAME</td>
             <td>ROLE</td>
             <td>EMAIL</td>
             <td>PHONE NUMBER</td>
-            <td>PASSWORD</td>
-            <td>Deleted</td>
-            <td>Edit/Delete</td>
+            <td>Status</td>
+            <td>Actions</td>
         </tr>
     </thead>
     @foreach (var item in Model)
     {
         <tbody>
             <tr>
+                <td>
+                    @item.Name
+                </td>
                 <td>
                     @item.UserName
                 </td>
@@ -69,19 +176,16 @@
                 <td>
                     @item.PhoneNumber
                 </td>
-                <td>
-                    @item.Password
-                </td>
-                <td>
-                    @if (Convert.ToBoolean(item.Isdeleted))
-                    {
-                        <input class="form-control" type="checkbox" disabled checked />
-                    }
-                    else
-                    {
-                        <input type="checkbox" class="form-control" disabled />
-                    }
-                </td>
+
+                @if (Convert.ToBoolean(item.Isdeleted))
+                {
+                    <td>Deleted</td>
+                }
+                else
+                {
+                    <td>Active</td>
+                }
+
                 <td><a onclick="fnEditUser('@item.ID')" style="cursor:pointer">Edit</a>  /  <a style="cursor:pointer" onclick="fnDeleteUser('@item.ID')">Delete</a></td>
             </tr>
         </tbody>
@@ -100,14 +204,28 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="txtLoginUserName" placeholder="UserName" />
+                    <div class="input-text-wrap is-required">
+                        <input type="text" id="txtAddName" name="Name" placeholder="Name" />
+                    </div>
+                    <div class="input-text-wrap is-required">
+                        <input type="text" id="txtAddUserName" name="UserName" placeholder="UserName" />
+                    </div>
+                    <div class="input-text-wrap is-required">
+                        <input type="text" id="txtAddPassword" name="Password" placeholder="Password" />
+                    </div>
+                    <div class="input-text-wrap is-required">
+                        <input type="text" id="txtAddRole" name="Role" placeholder="Role" />
+                    </div>
+                    <div class="input-text-wrap is-required">
+                        <input type="text" id="txtAddEmail" name="Email" placeholder="Email" />
+                    </div>
+                    <div class="input-text-wrap is-required">
+                        <input type="text" id="txtAddPhone" name="Email" placeholder="Phone" />
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="txtLoginPassWord" placeholder="Passoword" />
-                </div>                
             </div>
             <div class="modal-footer text-center">
-                <input type="submit" class="btn btn-primary" id="btnAdd" data-dismiss="modal" value="Add" />
+                <input type="button" class="btn btn-primary" id="btnAdd" value="Add" />
             </div>
         </div>
     </div>
@@ -121,16 +239,55 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title text-center">Alert</h4>
+                <h4 class="modal-title text-center">Warning</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                   <p>Are you sure? Do you want to delete?</p>
+                    <p>Are you sure? Do you want to delete?</p>
                 </div>
             </div>
             <div class="modal-footer text-center">
                 <input type="submit" class="btn btn-primary" id="btndelete" data-dismiss="modal" value="Yes" />
                 <input type="submit" class="btn btn-primary" id="btnCancelDelete" data-dismiss="modal" value="No" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="dvModalEdit" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center">Admin Details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="input-text-wrap is-required">
+                        <input type="text" id="txtEditName" name="Name" placeholder="Name" />
+                    </div>
+                    <div class="input-text-wrap is-required">
+                        <input type="text" id="txtEditUserName" name="UserName" placeholder="UserName" />
+                    </div>
+                    <div class="input-text-wrap is-required">
+                        <input type="text" id="txtEditPassword" name="Password" placeholder="Password" />
+                    </div>
+                    <div class="input-text-wrap is-required">
+                        <input type="text" id="txtEditRole" name="Role" placeholder="Role" />
+                    </div>
+                    <div class="input-text-wrap is-required">
+                        <input type="text" id="txtEditEmail" name="Email" placeholder="Email" />
+                    </div>
+                    <div class="input-text-wrap is-required">
+                        <input type="text" id="txtEditPhone" name="Email" placeholder="Phone" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <input type="button" class="btn btn-primary" id="btnSave" value="Save" />
             </div>
         </div>
     </div>

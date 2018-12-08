@@ -18,5 +18,7 @@ namespace Quiz.Web.DTO.Models
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
 
+        public string Name { get; set; }
+
     }
 }

@@ -1,6 +1,6 @@
 ﻿@{
     string username = string.Empty;
-    if(HttpContext.Current.User.Identity.IsAuthenticated)
+    if (HttpContext.Current.User.Identity.IsAuthenticated)
     {
         username = HttpContext.Current.User.Identity.Name;
     }
@@ -159,7 +159,7 @@
             <ul class="nav navbar-right top-nav">
 
 
-                <li class="dropdown">      
+                <li class="dropdown">
                     <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-user">@username</i></a>
                     <ul id="demo" class="collapse">
                         <li>
@@ -172,15 +172,20 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Create Assesment <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
-                            <li>
-                                <a href='@Url.Action("QuestionBank","QuestionBank")'>Question Bank</a>
-                            </li>
-                        </ul>
+                        @*<a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Create Assesment <i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="demo" class="collapse">
+                                <li>
+                                    <a href='@Url.Action("QuestionBank","QuestionBank")'>Question Bank</a>
+                                </li>
+                            </ul>*@
+                        <a href='@Url.Action("QuestionBank","QuestionBank")'><i class="fa fa-fw fa-arrows-v"></i>Question Bank<i class="fa fa-fw fa-caret-down"></i></a>
                     </li>
                     <li>
-                        <a href='@Url.Action("AdminManagement","AdminManagement")'><i class="fa fa-fw fa-arrows-v"></i> Admin Management <i class="fa fa-fw fa-caret-down"></i></a>             
+                        <a href='@Url.Action("UserManagement","UserManagement")'><i class="fa fa-fw fa-arrows-v"></i> User Management <i class="fa fa-fw fa-caret-down"></i></a>
+                    </li>
+
+                    <li>
+                        <a href='@Url.Action("AdminManagement","AdminManagement")'><i class="fa fa-fw fa-arrows-v"></i> Admin Management <i class="fa fa-fw fa-caret-down"></i></a>
                     </li>
                 </ul>
             </div>
@@ -199,10 +204,9 @@
         <!-- /.container-fluid -->
     </div>
     <!-- /#page-wrapper -->
-    
     <!-- /#wrapper -->
     <!-- jQuery -->
     <!-- jQuery library -->
-   
+
 </body>
 </html>

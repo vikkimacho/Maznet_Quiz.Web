@@ -28,7 +28,7 @@ namespace Quiz.Web.UI.Controllers
         {
 
             //code 
-            string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
+            string apiUrl = ConfigurationManager.AppSettings["WebApiUrl"];
 
             HttpClient client = new HttpClient();
             //HttpContent inputContent = new StringContent(Encoding.UTF8, "application/json");
@@ -46,7 +46,7 @@ namespace Quiz.Web.UI.Controllers
             string result = Failed;
             try
             {
-                string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
+                string apiUrl = ConfigurationManager.AppSettings["WebApiUrl"];
 
                 HttpClient client = new HttpClient();
                 //HttpContent inputContent = new StringContent(Encoding.UTF8, "application/json");
@@ -81,7 +81,7 @@ namespace Quiz.Web.UI.Controllers
                 if (!string.IsNullOrEmpty(username))
                 {
                     
-                    string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
+                    string apiUrl = ConfigurationManager.AppSettings["WebApiUrl"];
 
                     HttpClient client = new HttpClient();
                     //HttpContent inputContent = new StringContent(Encoding.UTF8, "application/json");
