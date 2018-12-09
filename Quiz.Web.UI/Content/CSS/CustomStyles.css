@@ -64,6 +64,9 @@
     background: rgb(212,229,239) !important;
     border-color: rgb(212,229,239) !important;
 }
+.font-weight-600{
+    font-weight:600 !important ;
+}
 
 /*Check box CSS */
 /* The switch - the box around the slider */

@@ -169,11 +169,42 @@
     .seperator {
         margin-bottom: 15px;
     }
+
+    .paraText {
+        font-weight: 600;
+        font-size: 12px;
+    }
+
+    #spnNotConsider {
+        height:20px;
+        width:20px;
+        background:red;
+        display:inline-block;
+        position:relative;
+        top:5px;
+    }
+    #spnMayConsider {
+        height: 20px;
+        width: 20px;
+        background: yellow;
+        display: inline-block;
+        position: relative;
+        top: 5px;
+    }
+    #spnStrongConsider {
+        height: 20px;
+        width: 20px;
+        background: green;
+        display: inline-block;
+        position: relative;
+        top: 5px;
+    }
 </style>
 <script type="text/javascript">
 
     $(document).ready(function () {
         $("#stepTwo").hide();
+        $("#stepThree").hide();
         $("#btnStepOneNext").click(function () {
             if ($("#dvStepOne").hasClass("active")) {
                 $("#dvStepOne").removeClass("active").addClass("complete");
@@ -182,6 +213,15 @@
 
             $("#stepOne").hide();
             $("#stepTwo").show();
+        });
+
+        $("#btnStepTwoNext").click(function () {
+            if ($("#dvStepTwo").hasClass("active")) {
+                $("#dvStepTwo").removeClass("active").addClass("complete");
+                $("#dvStepThree").removeClass("disabled").addClass("active");
+            }
+            $("#stepTwo").hide();
+            $("#stepThree").show();
         });
     });
 
@@ -483,6 +523,41 @@
         <div class="col-md-12 text-right">
             <button class="btn ds_Expired" id="btnStepOneBack"> Back </button>
             <button class="btn ds_darkBlue" id="btnStepTwoNext">Save & Next </button>
+        </div>
+    </div>
+</section>
+
+
+<section id="stepThree">
+    <div class="row">
+        <div class="col-md-12 ds_lightBlue AssessMentHeading">
+            <p class="pull-left" style="margin:0px;">Short List Criteria</p>
+            <span class="pull-right">
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="margin-top:30px;">
+            <p class="paraText">Do you want to create a new form or use an existing one ?</p>
+            <span> <span style="padding:5px"> <input type="radio" name="rbnNewOrUpdateScheduling" id="rbnCreateNewSchedule" /> Create New  </span> <span style="padding:5px"> <input type="radio" name="rbnNewOrUpdateScheduling" id="rbnSelectExistingSchedule" /> Select Existing  </span> <span style="padding:5px;"> <input type="radio" name="rbnNewOrUpdateScheduling" id="rbnSelectExistingSchedule" /> Custom    </span> </span>
+        </div>
+    </div>
+    <div class="seperator clearfix"></div>
+    <div class="form-group">
+        <div class="col-md-7">
+            <input type="text" class="form-control" value="Enter a name to see cutoff" />
+        </div>
+    </div>
+    <div class="seperator clearfix"></div>
+    <div class="row ds_lightBlue AssessMentHeading">
+        <div class="">
+            <div class="col-md-12 ">
+                <div class="font-weight-600"><span id="spnNotConsider"></span> Not Consider <span id="spnMayConsider"></span> May Consider <span id="spnStrongConsider"></span> Strong Consider </div>
+            </div>
         </div>
     </div>
 </section>
