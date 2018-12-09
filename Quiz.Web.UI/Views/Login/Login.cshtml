@@ -36,10 +36,32 @@
     }
 </style>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnLogin").click(function () {
+            debugger;
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("AdminLogin", "Login")',
+                dataType: 'html',
+                success: function (data) {
+                    debugger;
+                    $("#dvLoginContent").empty();
+                    $("#dvLoginContent").html(data);
+                },
+                complete: function () {
+                    $("#mdlLogin").modal("show");
+                },
+                async: true,
+                cache:false
+            });
+        });
 
+    });
+</script>
 <div class="container-fluid">
-    <div class="" id="dvLoginSection">
-        @Html.ActionLink("Login", "AdminLogin", "Login")
+    <div id="dvLoginSection">
+        <button class=" btn btn-primary pull-right" id="btnLogin">Login</button>
     </div>
     <div class="img-fluid">
         <img src="~/Content/Images/LoginImage.jpg" id="imgLoginImage" class="img-thumbnail" alt="Login Image">
@@ -48,7 +70,21 @@
 </div>
 
 <!-- Login Modal -->
+<div id="mdlLogin" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <h3 class="text-center">Welcome</h3>
+            <div class="modal-body" id="dvLoginContent">
+            </div>
+            
+        </div>
 
+    </div>
+</div>
 
 
 

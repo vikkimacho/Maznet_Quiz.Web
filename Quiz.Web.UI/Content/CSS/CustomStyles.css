@@ -1,0 +1,65 @@
+﻿/* colors are mentioned as per the dashboard UX RGB Colors */
+
+.ds_Scheduled {
+    background: rgb(019,181,241);
+    border-color: rgb(019,181,241);
+}
+
+.ds_Completed {
+    background: rgb(100,002,141);
+    border-color: rgb(100,002,141);
+}
+
+.ds_SingleLogin {
+    background: rgb(002,053,141);
+    border-color: rgb(002,053,141);
+}
+
+.ds_StrongConsider {
+    background: rgb(069,173,078);
+    border-color: rgb(069,173,078);
+}
+
+.ds_InProgress {
+    background: rgb(222,145,030);
+    border-color: rgb(222,145,030);
+}
+
+.ds_BulkLogin {
+    background: rgb(222,030,171);
+    border-color: rgb(222,030,171);
+}
+
+.ds_Expired {
+    background: rgb(121,124,126);
+    border-color: rgb(121,124,126);
+    color:#fff;
+}
+
+.ds_Pending {
+    background: rgb(241,036,036);
+    border-color: rgb(241,036,036);
+}
+
+.ds_CommonLogin {
+    background: rgb(008,140,155);
+    border-color: rgb(008,140,155);
+}
+
+#imgLoginUser {
+    width: 45px;
+}
+
+.lnkBlack {
+    color: #fff;
+}
+
+.ds_darkBlue {
+    background: rgb(024,023,069) !important;
+    border-color: rgb(024,023,069) !important;
+    color:#fff;
+}
+.ds_lightBlue {
+    background: rgb(212,229,239) !important;
+    border-color: rgb(212,229,239) !important;
+}

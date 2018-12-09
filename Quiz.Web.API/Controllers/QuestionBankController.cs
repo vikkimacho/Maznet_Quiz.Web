@@ -13,6 +13,7 @@ namespace Quiz.Web.API.Controllers
     {
         private QuestionBankBLL objQuestionBank = new QuestionBankBLL();
          
+        [HttpPost]
         public IHttpActionResult GetQuestionBank()
         {
             IList<QuestionBankView> questionBankMasters = null;

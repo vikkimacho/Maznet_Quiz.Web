@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\AssessMentDAL.cs" />
     <Compile Include="DAL\HomeDAL.cs" />
     <Compile Include="DAL\QuestionBankDAL.cs" />
     <Compile Include="DataAccess\AdminDetail.cs">

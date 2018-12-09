@@ -123,7 +123,7 @@ namespace Quiz.Web.UI.Controllers
         public ActionResult AdminLogin()
         {
             AdminLogin login = new AdminLogin();
-            return View("AdminLogin", login);
+            return PartialView("AdminLogin", login);
         }
 
         public ActionResult LogOut()

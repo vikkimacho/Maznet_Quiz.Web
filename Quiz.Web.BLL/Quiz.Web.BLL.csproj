@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Home\AssessMentBLL.cs" />
     <Compile Include="Home\HomeBLL.cs" />
     <Compile Include="Home\QuestionBankBLL.cs" />
     <Compile Include="Login\LoginBLL.cs" />

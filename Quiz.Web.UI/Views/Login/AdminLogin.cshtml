@@ -1,13 +1,11 @@
 ﻿@model Quiz.Web.DTO.Models.AdminLogin
-@{
-    Layout = null;
-}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="~/Content/login.css">
+
+
+
 <script>
     $('#isauth').val(false);
 
-    
+
     function checkvalue() {
 
         $('#UILoader').show();
@@ -37,7 +35,7 @@
                 $('#password').addClass('error-highlight');
             }
         });
-        
+
         if (username == "" || username == undefined) {
             status = false;
             $('#username').addClass('error-highlight');
@@ -102,87 +100,84 @@
     if (HttpContext.Current.User.Identity.IsAuthenticated)
     {
 
-        <div class="container dvlogincontainer">
-
-
+        <div class="container-fluid dvlogincontainer">
             <div class="row">
                 <div class="logincontent">
                     <div class="login-container">
                         <div class="login">
 
-
-                            <div class="header-module__signup-top___1R-fm" style=""><h3 class="signup-title" data-role="header-title">Login</h3></div>
                             <div data-role="login-form-error-container" id="divLoginError" class="login-form-errors" style="display:none">
-                                <div class="row">
-                                    <div class="col-12" width="100%">
+                                <div class="form-group">
+                                    <div class="col-md-12" width="100%">
                                         <span class="login-form-error" data-role="login-form-error-text">Your username or password is invalid.</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="input-text-wrap is-required">
-                                @Html.TextBoxFor(m => m.username, new { @class = "form-control", @placeholder = "User Name", @oninput = "deleteSpecialChar(this)" })
+                            <div class="form-group">
+                                <div class="input-text-wrap is-required">
+                                    @Html.TextBoxFor(m => m.username, new { @class = "form-control", @placeholder = "User Name", @oninput = "deleteSpecialChar(this)" })
+                                </div>
                             </div>
-                            <div class="input-text-wrap is-required">
-                                <input type="password" oninput="deleteSpecialChar(this),deleteSpecialCharForPWD(this)" id="password" name="Password" placeholder="Password" />
+                            <div class="form-group">
+                                <div class="input-text-wrap is-required">
+                                    <input type="password" class="form-control" oninput="deleteSpecialChar(this),deleteSpecialCharForPWD(this)" id="password" name="Password" placeholder="Password" />
+                                </div>
                             </div>
-                            <a href="~/forgot_password/" style="float: right;padding-right:20px">Forgot your password?</a>
-
-                        </div><div style="padding-left:30%">
-                            <center><input type="submit" class="btn button-submit" id="btnLogin" style="margin-bottom: 30px" value="Log In" /></center>
+                            <div class="form-group">
+                                <a href="~/forgot_password/" class="pull-right">Forgot Password?</a>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="row form-group text-center">
+                            <center><input type="submit" class="btn btn-primary" id="btnLogin" style="margin-bottom: 30px" value="Login" /></center>
                             <input type="hidden" id="isauth" name="isauth" />
                         </div>
-                        
                     </div>
-
                 </div>
-                
-
             </div>
-
-
-
-
-
-
-
-
         </div>
 
     }
     else
     {
 
-        <div class="container dvlogincontainer">
+        <div class="container-fluid dvlogincontainer">
 
             <div class="row">
                 <div class="logincontent">
                     <div class="login-container">
                         <div class="login">
-
-                            <div class="header-module__signup-top___1R-fm" style=""><h3 class="signup-title" data-role="header-title">Login</h3></div>
+                            @*<div class="header-module__signup-top___1R-fm" style=""><h3 class="signup-title" data-role="header-title">Login</h3></div>*@
                             <div data-role="login-form-error-container" id="divLoginError" class="login-form-errors" style="display:none">
-                                <div class="row">
-                                    <div class="col-12" width="100%">
+                                <div class="form-group">
+                                    <div class="col-md-12" width="100%">
                                         <span class="login-form-error" data-role="login-form-error-text">Your username or password is invalid.</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="input-text-wrap is-required">
-                                @Html.TextBoxFor(m => m.username, new { @class = "form-control", @placeholder = "User Name" })
+                            <div class="form-group">
+                                <div class="input-text-wrap is-required">
+                                    @Html.TextBoxFor(m => m.username, new { @class = "form-control", @placeholder = "User Name" })
 
+                                </div>
                             </div>
-                            <div class="input-text-wrap is-required">
-                                <input type="password" id="password" name="Password" placeholder="Password" />
+                            <div class="form-group">
+                                <div class="input-text-wrap is-required">
+                                    <input type="password" class="form-control" id="password" name="Password" placeholder="Password" />
+                                </div>
                             </div>
-                            <a href="~/forgot_password/" style="float: right;padding-right:20px">Forgot your password?</a>
-
-                        </div><div style="padding-left:30%">
-                            <center><input type="submit" class="btn button-submit" id="btnLogin" style="margin-bottom: 30px" value="Log In" /></center>
+                            <div class="form-group">
+                                <a href="~/forgot_password/" class="pull-right">Forgot Password?</a>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="row form-group text-center">
+                            <input type="submit" class="btn btn-primary" id="btnLogin" style="margin-bottom: 30px" value="Login" />
                             <input type="hidden" id="isauth" name="isauth" />
                         </div>
-                        
+
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
 

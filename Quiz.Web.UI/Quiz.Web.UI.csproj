@@ -117,8 +117,33 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\CSS\CustomStyles.css" />
     <Content Include="Content\CSS\datatable.css" />
+    <Content Include="Content\Icons\Adding Icon.png" />
+    <Content Include="Content\Icons\BulkLogin.png" />
+    <Content Include="Content\Icons\Button_Off.png" />
+    <Content Include="Content\Icons\Button_On.png" />
+    <Content Include="Content\Icons\Calendar.png" />
+    <Content Include="Content\Icons\Common Login.png" />
+    <Content Include="Content\Icons\Completed.png" />
+    <Content Include="Content\Icons\Delete Icon.png" />
+    <Content Include="Content\Icons\Edit Icon.png" />
+    <Content Include="Content\Icons\Expired.png" />
+    <Content Include="Content\Icons\Form Icon.png" />
+    <Content Include="Content\Icons\In Progress.png" />
+    <Content Include="Content\Icons\Login Icon.png" />
     <Content Include="Content\Icons\logo.jpg" />
+    <Content Include="Content\Icons\Password.png" />
+    <Content Include="Content\Icons\Pending.png" />
+    <Content Include="Content\Icons\Quit Test.png" />
+    <Content Include="Content\Icons\Schedule.png" />
+    <Content Include="Content\Icons\Search Icon.png" />
+    <Content Include="Content\Icons\Settings Icon.png" />
+    <Content Include="Content\Icons\Single Login.png" />
+    <Content Include="Content\Icons\Strong Consider.png" />
+    <Content Include="Content\Icons\Submit Module Icon.png" />
+    <Content Include="Content\Icons\Time.png" />
+    <Content Include="Content\Icons\User name.png" />
     <Content Include="Content\Images\LoginImage.jpg" />
     <Content Include="Content\login.css" />
     <Content Include="Content\Site.css" />
@@ -171,6 +196,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminManagementController.cs" />
+    <Compile Include="Controllers\AssessMentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\QuestionBankController.cs" />
@@ -203,6 +229,7 @@
     <Content Include="Views\QuestionBank\QuestionBank.cshtml" />
     <Content Include="Views\Login\AdminLogin.cshtml" />
     <Content Include="Views\AdminManagement\AdminManagement.cshtml" />
+    <Content Include="Views\AssessMent\CreateAssessMent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

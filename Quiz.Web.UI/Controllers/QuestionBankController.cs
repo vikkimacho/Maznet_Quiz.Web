@@ -91,22 +91,22 @@ namespace Quiz.Web.UI.Controllers
                             questionBankDetail.Description = Description;
                             questionBankDetail.QuestionBankName = QuestionBankName;
                             questionBankDetail.Status = Status;
-                            questionBankDetail.Duration=  new TimeSpan(0, 0, 13, 0, 0);
+                            questionBankDetail.Duration = new TimeSpan(0, 0, 13, 0, 0);
                             client.BaseAddress = new Uri(apiUrl);
                             var jsonSerialiser = new JavaScriptSerializer();
                             var json = JsonConvert.SerializeObject(questionsDetailsView);
-                            var responseTask = client.GetAsync("QuestionBankUpload?QuestionsDetailsView="+ questionsDetailsView);
+                            var responseTask = client.GetAsync("QuestionBankUpload?QuestionsDetailsView=" + questionsDetailsView);
                             responseTask.Wait();
                             var result = responseTask.Result;
                             if (result.IsSuccessStatusCode)
                             {
-                                
+
                             }
                             else //web api sent error response 
                             {
                                 //log response status here..
 
-                                
+
                             }
                         }
 

@@ -39,52 +39,57 @@
         top: 11px;
     }
     #dvScheduled {
-        background: #00adff;
-        padding: 10px;
+       
+        padding: 13px;
         background-clip: content-box;
     }
     #dvCompleted {
-        padding: 10px;
-        background: #b52cc5;
+        padding: 13px;
+       
         background-clip: content-box;
     }
     #dvSingleLogin {
-        padding: 10px;
-        background: #2a2a6b;
+        padding: 13px;
+       
         background-clip: content-box;
     }
     #dvStrongConsider {
-        padding: 10px;
-        background: #169816;
+        padding: 13px;
+       
         background-clip: content-box;
     }
     #dvInProgress {
-        padding: 10px;
-        background: #fbb22c;
+        padding: 13px;
+        
         background-clip: content-box;
     }
     #dvBulkLogin {
-        padding: 10px;
-        background: #f15e78;
+        padding: 13px;
+         
         background-clip: content-box;
     }
     #dvExpired {
-        padding: 10px;
-        background: #bbafb1;
+        padding: 13px;
+        
         background-clip: content-box;
     }
     #dvPending {
-        padding: 10px;
-        background: #f15e5e;
+        padding: 13px;
+        
         background-clip: content-box;
     }
     #dvCommonLogin {
-        padding: 10px;
-        background: #277b8e;
+        padding: 13px;
+         
         background-clip: content-box;
     }
     .seperator {
         margin-bottom: 20px;
+    }
+    .dsImage
+    {
+       float:right;
+       margin-top:13px;
     }
 </style>
 <script src="~/Scripts/Code_Js/DashBoard.js"></script>
@@ -170,62 +175,62 @@
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search keyword..">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    <button class="btn btn-default ds_darkBlue" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                 </span>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="input-group date">
+        @*<div class="input-group date">
             <input type="text" class="form-control" value="12-02-2012">
             <div class="input-group-addon">
                 <span class="glyphicon glyphicon-th"></span>
             </div>
-        </div>
+        </div>*@
         <input id="StartDate" type="date"/>
         <input id="EndDate" type="date"/>
         <input type="button" class="btn btn-primary" value="Search" onclick="DashBoardFetch()" />
     </div>
         <div class="clearfix seperator"></div>
         <div class="row">
-            <div class="col-md-4" id="dvScheduled">
-                <div class="col-md-6"><span id="Scheduled" class="count">@Model.Scheduled</span></div> <div class="col-md-6"> <span class="catIcon glyphicon glyphicon-calendar pull-right"></span></div>
+            <div class="col-md-4 ds_Scheduled" id="dvScheduled">
+                <div class="col-md-6"><span id="Scheduled" class="count">@Model.Scheduled</span></div> <div class="col-md-6"><img class="dsImage" style="width:55px;" src="~/Content/Icons/Schedule.png" /> </div>
                 <div class="col-md-12">     <span class="category">scheduled</span></div>
             </div>
-            <div class="col-md-4" id="dvCompleted">
-                <div class="col-md-6"><span id="Completed" class="count">@Model.Completed</span></div> <div class="col-md-6"> <span class="catIcon glyphicon glyphicon-list-alt pull-right"></span></div>
+            <div class="col-md-4 ds_Completed" id="dvCompleted">
+                <div class="col-md-6"><span id="Completed" class="count">@Model.Completed</span></div> <div class="col-md-6"> <img class="dsImage" style="width:51px;" src="~/Content/Icons/Completed.png" /> </div>
                 <div class="col-md-12">     <span class="category">Completed</span></div>
             </div>
-            <div class="col-md-4" id="dvSingleLogin">
-                <div class="col-md-6"><span id="SingleLogin" class="count">@Model.SingleLogin</span></div> <div class="col-md-6"> <span class="catIcon glyphicon glyphicon-list-alt pull-right"></span></div>
+            <div class="col-md-4 ds_SingleLogin" id="dvSingleLogin">
+                <div class="col-md-6"><span id="SingleLogin" class="count">@Model.SingleLogin</span></div> <div class="col-md-6"> <img class="dsImage" style="width:42px;" src="~/Content/Icons/Single Login.png" /> </div>
                 <div class="col-md-12">     <span class="category">single login</span></div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4" id="dvStrongConsider">
-                <div class="col-md-6"><span id="StrongConsider" class="count">@Model.StrongConsider</span></div> <div class="col-md-6"> <span class="catIcon fa fa-users  pull-right"></span></div>
+            <div class="col-md-4 ds_StrongConsider" id="dvStrongConsider">
+                <div class="col-md-6"><span id="StrongConsider" class="count">@Model.StrongConsider</span></div> <div class="col-md-6"> <img class="dsImage" style="width:53px;" src="~/Content/Icons/Strong Consider.png" /> </div>
                 <div class="col-md-12">     <span class="category">strong consider</span></div>
             </div>
-            <div class="col-md-4" id="dvInProgress">
-                <div class="col-md-6"><span id="InProgress" class="count">@Model.InProgress</span></div> <div class="col-md-6"> <span class="catIcon fa fa-play-circle-o pull-right"></span></div>
+            <div class="col-md-4 ds_InProgress" id="dvInProgress">
+                <div class="col-md-6"><span id="InProgress" class="count">@Model.InProgress</span></div> <div class="col-md-6"> <img class="dsImage" style="width:69px;" src="~/Content/Icons/In Progress.png" /> </div>
                 <div class="col-md-12">     <span class="category">in progress</span></div>
             </div>
-            <div class="col-md-4" id="dvBulkLogin">
-                <div class="col-md-6"><span id="BulkLogin" class="count">@Model.BulkLogin</span></div> <div class="col-md-6"> <span class="catIcon fa fa-play-circle-o pull-right"></span></div>
+            <div class="col-md-4 ds_BulkLogin" id="dvBulkLogin">
+                <div class="col-md-6"><span id="BulkLogin" class="count">@Model.BulkLogin</span></div> <div class="col-md-6"> <img class="dsImage" style="width:65px;" src="~/Content/Icons/BulkLogin.png" /> </div>
                 <div class="col-md-12">     <span class="category">bulk login</span></div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4" id="dvExpired">
-                <div class="col-md-6"><span id="Expired" class="count">@Model.Expired</span></div> <div class="col-md-6"> <span class="catIcon fa fa-exclamation-triangle pull-right"></span></div>
+            <div class="col-md-4 ds_Expired" id="dvExpired">
+                <div class="col-md-6"><span id="Expired" class="count">@Model.Expired</span></div> <div class="col-md-6"> <img class="dsImage" style="width:60px;" src="~/Content/Icons/Expired.png" /> </div>
                 <div class="col-md-12">     <span class="category">expired</span></div>
             </div>
-            <div class="col-md-4" id="dvPending">
-                <div class="col-md-6"><span id="Pending" class="count">@Model.Pending</span></div> <div class="col-md-6"> <span class="catIcon fa fa-refresh pull-right"></span></div>
+            <div class="col-md-4 ds_Pending" id="dvPending">
+                <div class="col-md-6"><span id="Pending" class="count">@Model.Pending</span></div> <div class="col-md-6"> <img class="dsImage" style="width:50px;" src="~/Content/Icons/Pending.png" /></div>
                 <div class="col-md-12">     <span class="category">pending</span></div>
             </div>
-            <div class="col-md-4" id="dvCommonLogin">
-                <div class="col-md-6"><span id="CommonLogin" class="count">@Model.CommonLogin</span></div> <div class="col-md-6"> <span class="catIcon fa fa-refresh pull-right"></span></div>
+            <div class="col-md-4 ds_CommonLogin" id="dvCommonLogin">
+                <div class="col-md-6"><span id="CommonLogin" class="count">@Model.CommonLogin</span></div> <div class="col-md-6"> <img class="dsImage" style="width:51px;" src="~/Content/Icons/Common Login.png" /> </div>
                 <div class="col-md-12">     <span class="category">common login</span></div>
             </div>
         </div>

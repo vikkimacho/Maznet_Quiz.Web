@@ -1,6 +1,6 @@
 ﻿@{
     string username = string.Empty;
-    if(HttpContext.Current.User.Identity.IsAuthenticated)
+    if (HttpContext.Current.User.Identity.IsAuthenticated)
     {
         username = HttpContext.Current.User.Identity.Name;
     }
@@ -16,14 +16,10 @@
     <title>Quiz</title>
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
     <!-- Custom CSS -->
-
-
     <link href="~/Content/CSS/sb-admin.css" rel="stylesheet" />
     <link href="~/Content/CSS/datatable.css" rel="stylesheet" />
-    <!-- Custom Fonts -->
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <!-- jQuery library -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -39,6 +35,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script src="~/Scripts/jquery.dataTables.js"></script>
+    <!-- Custom Fonts -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="~/Content/CSS/CustomStyles.css" rel="stylesheet" />
     <style>
         .side-nav {
             width: 240px;
@@ -49,21 +48,26 @@
         }
 
         #page-wrapper {
-            margin-top: 70px;
+            margin-top: 45px;
         }
 
         .navbar {
-            background: blue;
+            background: rgb(032,123,178);
         }
 
         .navbar-header {
             background: #fff;
-            border-color: #fff;
+            /*border-color: #fff;*/
             width: 239px;
+            padding: 13px;
+        }
+
+        .navbar {
+            border: none;
         }
     </style>
     <script type="text/javascript">
-    $(document).ready(function() {
+        $(document).ready(function () {
         $("#flQuestionUpload").on('change', function (e) {
             debugger;
             var files = e.target.files;
@@ -142,7 +146,7 @@
     </script>
 </head>
 <body>
-    <div id="wrapper">
+    <div id="wrapper" class="container-fluid">
         <!-- Navigation -->
         <nav class="navbar navbar-fixed-top" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -159,9 +163,9 @@
             <ul class="nav navbar-right top-nav">
 
 
-                <li class="dropdown">      
-                    <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-user">@username</i></a>
-                    <ul id="demo" class="collapse">
+                <li class="dropdown">
+                    <a href="javascript:;" class="lnkBlack"> @username <img id="imgLoginUser" src="~/Content/Icons/Login Icon.png" /></a>
+                    <ul id="logout" class="collapse">
                         <li>
                             <a href='@Url.Action("Logout","Login")'>Logout</a>
                         </li>
@@ -172,15 +176,17 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Create Assesment <i class="fa fa-fw fa-caret-down"></i></a>
+                        <a href="#" data-toggle="collapse" data-target="#demo">  Assessments <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
+                            <li><a href='@Url.Action("CreateAssessment","AssessMent")'>Create Assessments</a></li>
+                            <li><a href='@Url.Action("QuestionBank","QuestionBank")'>My Assessments</a></li>
                             <li>
                                 <a href='@Url.Action("QuestionBank","QuestionBank")'>Question Bank</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href='@Url.Action("AdminManagement","AdminManagement")'><i class="fa fa-fw fa-arrows-v"></i> Admin Management <i class="fa fa-fw fa-caret-down"></i></a>             
+                        <a href='@Url.Action("AdminManagement","AdminManagement")'>  Admin Management <i class="fa fa-fw fa-caret-down"></i></a>
                     </li>
                 </ul>
             </div>
@@ -199,10 +205,8 @@
         <!-- /.container-fluid -->
     </div>
     <!-- /#page-wrapper -->
-    
     <!-- /#wrapper -->
     <!-- jQuery -->
-    <!-- jQuery library -->
-   
+    
 </body>
 </html>

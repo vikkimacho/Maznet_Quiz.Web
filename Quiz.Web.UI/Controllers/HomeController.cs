@@ -31,7 +31,7 @@ namespace Quiz.Web.UI.Controllers
             dashBoardRange.EndDatetime = "";
             //HttpContent inputContent = new StringContent(Encoding.UTF8, "application/json");
             var response = client.PostAsJsonAsync(apiUrl + "/DashBoard/GetDashBoard", dashBoardRange).Result;
-
+            
             if (response.IsSuccessStatusCode)
             {
                 Result = response.Content.ReadAsStringAsync().Result;
