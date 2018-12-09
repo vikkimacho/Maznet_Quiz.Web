@@ -52,6 +52,7 @@
     <Compile Include="DAL\AssessMentDAL.cs" />
     <Compile Include="DAL\HomeDAL.cs" />
     <Compile Include="DAL\QuestionBankDAL.cs" />
+    <Compile Include="DAL\UserManagementDAL.cs" />
     <Compile Include="DataAccess\AdminDetail.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
@@ -85,10 +86,19 @@
     <Compile Include="DataAccess\GetDashBoardDetails_Result.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\InputControlMaster.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\QuestionBankMaster.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\QuestionsDetail.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\RegistrationFormControl.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\sysdiagram.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\TestEngineEntity.Context.cs">
@@ -105,6 +115,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TestEngineEntity.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\UserDetailMaster.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

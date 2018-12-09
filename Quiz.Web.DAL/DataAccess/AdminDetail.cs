@@ -23,5 +23,7 @@ namespace Quiz.Web.DAL.DataAccess
         public string PhoneNumber { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public string Name { get; set; }
+        public Nullable<bool> IsSuperAdmin { get; set; }
     }
 }

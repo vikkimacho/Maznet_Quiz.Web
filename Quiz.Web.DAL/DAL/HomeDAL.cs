@@ -69,7 +69,7 @@ namespace Quiz.Web.DAL.Home
             {
                 using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
                 {
-                    adminDetails = TestEngineDBContext.AdminDetails.Where(x => x.Role.ToUpper().Trim() != "SUPERADMIN").ToList();
+                    adminDetails = TestEngineDBContext.AdminDetails.Where(x => x.IsSuperAdmin == false).ToList();
                 }
             }
             catch (Exception ex)
@@ -98,6 +98,8 @@ namespace Quiz.Web.DAL.Home
                         admin.Password = adminDetail.Password;
                         admin.PhoneNumber = adminDetail.PhoneNumber;
                         admin.Role = adminDetail.Role;
+                        admin.Name = adminDetail.Name;
+                        admin.IsSuperAdmin = false;
                         TestEngineDBContext.AdminDetails.Add(admin);
                     }
                     else
@@ -108,6 +110,7 @@ namespace Quiz.Web.DAL.Home
                         admin.PhoneNumber = adminDetail.PhoneNumber;
                         admin.Role = adminDetail.Role;
                         admin.UserName = adminDetail.UserName;
+                        admin.Name = adminDetail.Name;
                     }
                     TestEngineDBContext.SaveChanges();
                     result = Success;

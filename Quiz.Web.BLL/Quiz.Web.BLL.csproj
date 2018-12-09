@@ -48,6 +48,7 @@
     <Compile Include="Home\QuestionBankBLL.cs" />
     <Compile Include="Login\LoginBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserManagement\UserManagementBLL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Quiz.Web.DAL\Quiz.Web.DAL.csproj">

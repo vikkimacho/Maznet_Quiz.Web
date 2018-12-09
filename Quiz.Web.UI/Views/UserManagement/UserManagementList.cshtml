@@ -1,0 +1,62 @@
+﻿@model List<Quiz.Web.DTO.Models.UsersDetailsModel>
+@{
+    ViewBag.Title = "UserManagementList";
+}
+<script>
+    $(document).ready(function () {
+        $('#UsersDetailview').DataTable();
+    });
+</script>
+
+<div class="container-fluid">
+    <table class="form-group" id="UsersDetailview">
+        <thead>
+            <tr>
+                <td><b>NAME</b></td>
+                <td><b>EMAIL</b></td>
+                <td><b>MOBILE NUMBER</b></td>
+                <td><b>DEGREE</b></td>
+                <td><b>INSTITUTION</b></td>
+                <td><b>PERCENTAGE</b></td>
+                <td><b>GENDER</b></td>
+                <td><b>ADDRESS</b></td>
+            </tr>
+        </thead>
+        
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td id="@item.Id">
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Email
+                    </td>
+                    <td>
+                        @item.MobileNumber
+                    </td>
+                    <td>
+                        @item.Degree/@item.Major
+                    </td>
+                    <td>
+                        @item.Institution
+                    </td>
+                    <td>
+                        @item.Percentage
+                    </td>
+                    <td>
+                        @item.Gender
+                    </td>
+                    <td>
+                        @item.Address
+                    </td>
+                </tr>
+
+            }
+        </tbody>    
+
+    </table>
+</div>
+

@@ -30,7 +30,6 @@ namespace Quiz.Web.DAL.DataAccess
         public virtual DbSet<AdminDetail> AdminDetails { get; set; }
         public virtual DbSet<AssessmentDetailMaster> AssessmentDetailMasters { get; set; }
         public virtual DbSet<AssessmentQuestionBankDetail> AssessmentQuestionBankDetails { get; set; }
-        public virtual DbSet<CustomRegistrationForm> CustomRegistrationForms { get; set; }
         public virtual DbSet<DefaultRegistation> DefaultRegistations { get; set; }
         public virtual DbSet<EligibilityCriteriaDetail> EligibilityCriteriaDetails { get; set; }
         public virtual DbSet<ExamFinalReport> ExamFinalReports { get; set; }
@@ -39,6 +38,11 @@ namespace Quiz.Web.DAL.DataAccess
         public virtual DbSet<ExaminerMasterDetail> ExaminerMasterDetails { get; set; }
         public virtual DbSet<QuestionBankMaster> QuestionBankMasters { get; set; }
         public virtual DbSet<QuestionsDetail> QuestionsDetails { get; set; }
+        public virtual DbSet<InputControlMaster> InputControlMasters { get; set; }
+        public virtual DbSet<RegistrationFormControl> RegistrationFormControls { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<CustomRegistrationForm> CustomRegistrationForms { get; set; }
+        public virtual DbSet<UserDetailMaster> UserDetailMasters { get; set; }
     
         public virtual ObjectResult<GetDashBoardDetails_Result> GetDashBoardDetails(string starDatetime, string endDatetime)
         {

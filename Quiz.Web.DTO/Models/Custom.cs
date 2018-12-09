@@ -11,4 +11,10 @@ namespace Quiz.Web.DTO.Models
         public string username { get; set; }
         public string password { get; set; }
     }
+
+    public class APIResponse
+    {
+        public bool Result { get; set; }
+        public string Message { get; set; }
+    }
 }
