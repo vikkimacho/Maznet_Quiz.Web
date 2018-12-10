@@ -16,6 +16,7 @@ using Quiz.Web.UI.Helper;
 
 namespace Quiz.Web.UI.Controllers
 {
+    [AuthorizationFilter]
     public class QuestionBankController : Controller
     {
         private static readonly string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];

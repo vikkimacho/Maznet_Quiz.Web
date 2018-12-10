@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Quiz.Web.UI.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace Quiz.Web.UI.Controllers
 {
+    [AuthorizationFilter]
     public class AssessMentController : Controller
     {
         // GET: AssessMent

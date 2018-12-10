@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiz.Web.BLL", "Quiz.Web.BL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiz.Web.DTO", "Quiz.Web.DTO\Quiz.Web.DTO.csproj", "{28B4270A-80C4-4AC7-99C8-2AB5F6C5EA25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiz.Web.ExamPortal", "Quiz.Web.ExamPortal\Quiz.Web.ExamPortal.csproj", "{BAD117EB-BDD2-48C1-9C0C-4D5A2AAB5264}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{28B4270A-80C4-4AC7-99C8-2AB5F6C5EA25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28B4270A-80C4-4AC7-99C8-2AB5F6C5EA25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28B4270A-80C4-4AC7-99C8-2AB5F6C5EA25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAD117EB-BDD2-48C1-9C0C-4D5A2AAB5264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD117EB-BDD2-48C1-9C0C-4D5A2AAB5264}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD117EB-BDD2-48C1-9C0C-4D5A2AAB5264}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAD117EB-BDD2-48C1-9C0C-4D5A2AAB5264}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

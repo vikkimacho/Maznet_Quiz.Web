@@ -54,6 +54,7 @@
     <Compile Include="Models\AdminDetails.cs" />
     <Compile Include="Models\Custom.cs" />
     <Compile Include="Models\DashBoardDetailsView.cs" />
+    <Compile Include="Models\GoogleMail.cs" />
     <Compile Include="Models\QuestionBankView.cs" />
     <Compile Include="Models\QuestionsDetailsView.cs" />
     <Compile Include="Models\UsersDetails.cs" />

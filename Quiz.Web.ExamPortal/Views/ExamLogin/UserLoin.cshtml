@@ -1,0 +1,186 @@
+﻿@model Quiz.Web.ExamPortal.Models.ExamLogin
+
+
+
+<script>
+    $('#isauth').val(false);
+
+
+    function checkvalue() {
+
+        $('#UILoader').show();
+        $('#isauth').val(false);
+        var status = true;
+        var username = $('#username').val();
+        var password = $('#password').val();
+        $("#username").focusin(function () {
+            $('#username').addClass('error-highlight-off');
+            $('#username').removeClass('error-highlight');
+            $('#username-info').hide();
+        });
+        $("#password").focusin(function () {
+            $('#password').addClass('error-highlight-off');
+            $('#password').removeClass('error-highlight');
+            $('#password-info').css("color", "#546b81");
+        });
+        $("#username").focusout(function () {
+            if (username == "" || username == undefined) {
+                $('#username').removeClass('error-highlight-off');
+                $('#username').addClass('error-highlight');
+            }
+        });
+        $("#password").focusout(function () {
+            if (password == "" || password == undefined) {
+                $('#password').removeClass('error-highlight-off');
+                $('#password').addClass('error-highlight');
+            }
+        });
+
+        if (username == "" || username == undefined) {
+            status = false;
+            $('#username').addClass('error-highlight');
+        }
+        if (password == "" || password == undefined) {
+            status = false;
+            $('#password').addClass('error-highlight');
+        }
+        if (status == true) {
+
+            $('#btnLogin').prop('disabled', true);
+            $('#btnLogin').val("Loading...");
+            var message = validateuser(username, password);
+            if (message != "FAILED") {
+                $('#isauth').val(true);
+                $('#divLoginError').hide();
+                return true;
+            }
+            else {
+                $('#password').addClass('error-highlight');
+                $('#username').addClass('error-highlight');
+                $('#divLoginError').show();
+                $('#btnLogin').val("Log In");
+                $('#btnLogin').prop('disabled', false);
+                $('#UILoader').hide();
+                return false;
+            }
+        }
+        else {
+            $('#UILoader').hide();
+            return false;
+        }
+    }
+    function validateuser(username, password) {
+
+        var status = "FAILED";
+        $.ajax({
+            url: '@Url.Action("ValidateUser", "Login")',
+            data: JSON.stringify({ 'username': username, 'password': password }),
+            type: "POST",
+            async: false,
+            contentType: "application/json",
+            dataType: "json",
+            success: function (result) {
+                if (result != "FAILED") {
+                    status = result;
+                }
+            },
+            error: function (status) {
+            },
+            cache: false,
+            async: false
+        });
+        return status;
+    }
+</script>
+
+@using (Html.BeginForm("PostLogin", "Login", FormMethod.Post, new { id = "globalloginform", @class = "login-form margin-clear", onsubmit = "return checkvalue(this)" }))
+{
+
+    @Html.AntiForgeryToken()
+    if (HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+
+        <div class="container-fluid dvlogincontainer">
+            <div class="row">
+                <div class="logincontent">
+                    <div class="login-container">
+                        <div class="login">
+
+                            <div data-role="login-form-error-container" id="divLoginError" class="login-form-errors" style="display:none">
+                                <div class="form-group">
+                                    <div class="col-md-12" width="100%">
+                                        <span class="login-form-error" data-role="login-form-error-text">Your username or password is invalid.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-text-wrap is-required">
+                                    @Html.TextBoxFor(m => m.username, new { @class = "form-control", @placeholder = "User Name", @oninput = "deleteSpecialChar(this)" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-text-wrap is-required">
+                                    <input type="password" class="form-control" oninput="deleteSpecialChar(this),deleteSpecialCharForPWD(this)" id="password" name="Password" placeholder="Password" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <a href="~/forgot_password/" class="pull-right">Forgot Password?</a>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="row form-group text-center">
+                            <center><input type="submit" class="btn btn-primary" id="btnLogin" style="margin-bottom: 30px" value="Login" /></center>
+                            <input type="hidden" id="isauth" name="isauth" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+    else
+    {
+
+        <div class="container-fluid dvlogincontainer">
+
+            <div class="row">
+                <div class="logincontent">
+                    <div class="login-container">
+                        <div class="login">
+                            @*<div class="header-module__signup-top___1R-fm" style=""><h3 class="signup-title" data-role="header-title">Login</h3></div>*@
+                            <div data-role="login-form-error-container" id="divLoginError" class="login-form-errors" style="display:none">
+                                <div class="form-group">
+                                    <div class="col-md-12" width="100%">
+                                        <span class="login-form-error" data-role="login-form-error-text">Your username or password is invalid.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-text-wrap is-required">
+                                    @Html.TextBoxFor(m => m.username, new { @class = "form-control", @placeholder = "User Name" })
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-text-wrap is-required">
+                                    <input type="password" class="form-control" id="password" name="Password" placeholder="Password" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <a href="~/forgot_password/" class="pull-right">Forgot Password?</a>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="row form-group text-center">
+                            <input type="submit" class="btn btn-primary" id="btnLogin" style="margin-bottom: 30px" value="Login" />
+                            <input type="hidden" id="isauth" name="isauth" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+}
+

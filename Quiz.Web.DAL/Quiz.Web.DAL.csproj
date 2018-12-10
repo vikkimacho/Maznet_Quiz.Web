@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\AssessMentDAL.cs" />
+    <Compile Include="DAL\ExamDLL.cs" />
     <Compile Include="DAL\HomeDAL.cs" />
     <Compile Include="DAL\QuestionBankDAL.cs" />
     <Compile Include="DAL\UserManagementDAL.cs" />

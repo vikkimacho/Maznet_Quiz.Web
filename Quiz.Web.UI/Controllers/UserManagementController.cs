@@ -12,6 +12,7 @@ using System.Web.Script.Serialization;
 
 namespace Quiz.Web.UI.Controllers
 {
+    [AuthorizationFilter]
     public class UserManagementController : Controller
     {
         string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
