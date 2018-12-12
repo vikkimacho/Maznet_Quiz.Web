@@ -19,5 +19,17 @@ namespace Quiz.Web.API.Controllers
             return result;
         }
 
+        [HttpGet]
+        public AssesmentPageModal GetAssessmentPageModal()
+        {
+            try
+            {
+                return ObjAssessmentBll.GetAssessmentPageModal();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

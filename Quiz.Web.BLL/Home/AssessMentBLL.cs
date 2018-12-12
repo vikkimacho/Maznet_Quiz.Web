@@ -18,5 +18,12 @@ namespace Quiz.Web.BLL.Home
             var result= ObjAssessMentDAL.CreateAssessMent();
             return result;
         }
+
+        public AssesmentPageModal GetAssessmentPageModal()
+        {
+            var result = ObjAssessMentDAL.GetAssessmentPageModal();
+            return result;
+        }
     }
+
 }
