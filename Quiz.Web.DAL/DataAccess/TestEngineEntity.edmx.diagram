@@ -32,6 +32,9 @@
         <AssociationConnector Association="TestEngineDBContext.FK_RegistrationFormControls_CustomRegistrationForm1" />
         <EntityTypeShape EntityType="TestEngineDBContext.UserDetailMaster" Width="1.5" PointX="12.375" PointY="10.75" />
         <AssociationConnector Association="TestEngineDBContext.FK_DefaultRegistation_UserDetailMaster" />
+        <EntityTypeShape EntityType="TestEngineDBContext.AssessmentUserDetail" Width="1.5" PointX="14.625" PointY="8.5" />
+        <AssociationConnector Association="TestEngineDBContext.FK_AssessmentUserDetail_AssessmentDetailMaster" />
+        <AssociationConnector Association="TestEngineDBContext.FK_AssessmentUserDetail_UserDetailMaster" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

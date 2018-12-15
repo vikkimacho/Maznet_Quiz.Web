@@ -43,6 +43,7 @@ namespace Quiz.Web.DAL.DataAccess
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<CustomRegistrationForm> CustomRegistrationForms { get; set; }
         public virtual DbSet<UserDetailMaster> UserDetailMasters { get; set; }
+        public virtual DbSet<AssessmentUserDetail> AssessmentUserDetails { get; set; }
     
         public virtual ObjectResult<GetDashBoardDetails_Result> GetDashBoardDetails(string starDatetime, string endDatetime)
         {

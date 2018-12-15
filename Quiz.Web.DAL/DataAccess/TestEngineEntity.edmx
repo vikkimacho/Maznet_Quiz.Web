@@ -47,6 +47,17 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" />
         </EntityType>
+        <EntityType Name="AssessmentUserDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AssessmentID" Type="uniqueidentifier" />
+          <Property Name="UserID" Type="uniqueidentifier" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
         <EntityType Name="CustomRegistrationForm">
           <Key>
             <PropertyRef Name="ID" />
@@ -81,6 +92,7 @@
           <Property Name="CustomField8" Type="varchar" MaxLength="100" />
           <Property Name="CustomField9" Type="varchar" MaxLength="100" />
           <Property Name="CustomField10" Type="varchar" MaxLength="100" />
+          <Property Name="Password" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="EligibilityCriteriaDetails">
           <Key>
@@ -262,6 +274,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AssessmentUserDetail_AssessmentDetailMaster">
+          <End Role="AssessmentDetailMaster" Type="Self.AssessmentDetailMaster" Multiplicity="0..1" />
+          <End Role="AssessmentUserDetail" Type="Self.AssessmentUserDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssessmentDetailMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AssessmentUserDetail">
+              <PropertyRef Name="AssessmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssessmentUserDetail_UserDetailMaster">
+          <End Role="UserDetailMaster" Type="Self.UserDetailMaster" Multiplicity="0..1" />
+          <End Role="AssessmentUserDetail" Type="Self.AssessmentUserDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetailMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssessmentUserDetail">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DefaultRegistation_UserDetailMaster">
           <End Role="UserDetailMaster" Type="Self.UserDetailMaster" Multiplicity="1" />
           <End Role="DefaultRegistation" Type="Self.DefaultRegistation" Multiplicity="*" />
@@ -386,6 +422,7 @@
           <EntitySet Name="AdminDetails" EntityType="Self.AdminDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AssessmentDetailMaster" EntityType="Self.AssessmentDetailMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AssessmentQuestionBankDetail" EntityType="Self.AssessmentQuestionBankDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssessmentUserDetail" EntityType="Self.AssessmentUserDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomRegistrationForm" EntityType="Self.CustomRegistrationForm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DefaultRegistation" EntityType="Self.DefaultRegistation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EligibilityCriteriaDetails" EntityType="Self.EligibilityCriteriaDetails" Schema="dbo" store:Type="Tables" />
@@ -414,6 +451,14 @@
           <AssociationSet Name="FK_AssessmentQuestionBankDetail_QuestionBankMaster" Association="Self.FK_AssessmentQuestionBankDetail_QuestionBankMaster">
             <End Role="QuestionBankMaster" EntitySet="QuestionBankMaster" />
             <End Role="AssessmentQuestionBankDetail" EntitySet="AssessmentQuestionBankDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssessmentUserDetail_AssessmentDetailMaster" Association="Self.FK_AssessmentUserDetail_AssessmentDetailMaster">
+            <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMaster" />
+            <End Role="AssessmentUserDetail" EntitySet="AssessmentUserDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssessmentUserDetail_UserDetailMaster" Association="Self.FK_AssessmentUserDetail_UserDetailMaster">
+            <End Role="UserDetailMaster" EntitySet="UserDetailMaster" />
+            <End Role="AssessmentUserDetail" EntitySet="AssessmentUserDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_DefaultRegistation_UserDetailMaster" Association="Self.FK_DefaultRegistation_UserDetailMaster">
             <End Role="UserDetailMaster" EntitySet="UserDetailMaster" />
@@ -481,6 +526,7 @@
           <NavigationProperty Name="EligibilityCriteriaDetail" Relationship="Self.FK_AssessmentDetailMaster_EligibilityCriteriaDetails" FromRole="AssessmentDetailMaster" ToRole="EligibilityCriteriaDetails" />
           <NavigationProperty Name="AssessmentQuestionBankDetails" Relationship="Self.FK_AssessmentQuestionBankDetail_AssessmentDetailMaster" FromRole="AssessmentDetailMaster" ToRole="AssessmentQuestionBankDetail" />
           <NavigationProperty Name="ExamFinalReports" Relationship="Self.FK_ExamFinalReport_AssessmentDetailMaster" FromRole="AssessmentDetailMaster" ToRole="ExamFinalReport" />
+          <NavigationProperty Name="AssessmentUserDetails" Relationship="TestEngineDBContext.FK_AssessmentUserDetail_AssessmentDetailMaster" FromRole="AssessmentDetailMaster" ToRole="AssessmentUserDetail" />
         </EntityType>
         <EntityType Name="AssessmentQuestionBankDetail">
           <Key>
@@ -521,6 +567,7 @@
           <Property Name="CustomField10" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="UserDetailId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="UserDetailMaster" Relationship="TestEngineDBContext.FK_DefaultRegistation_UserDetailMaster" FromRole="DefaultRegistation" ToRole="UserDetailMaster" />
+          <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="EligibilityCriteriaDetail">
           <Key>
@@ -816,6 +863,15 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="AssessmentUserDetails" EntityType="TestEngineDBContext.AssessmentUserDetail" />
+          <AssociationSet Name="FK_AssessmentUserDetail_AssessmentDetailMaster" Association="TestEngineDBContext.FK_AssessmentUserDetail_AssessmentDetailMaster">
+            <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMasters" />
+            <End Role="AssessmentUserDetail" EntitySet="AssessmentUserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssessmentUserDetail_UserDetailMaster" Association="TestEngineDBContext.FK_AssessmentUserDetail_UserDetailMaster">
+            <End Role="UserDetailMaster" EntitySet="UserDetailMasters" />
+            <End Role="AssessmentUserDetail" EntitySet="AssessmentUserDetails" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetDashBoardDetails_Result">
           <Property Type="Int32" Name="Scheduled" Nullable="true" />
@@ -906,6 +962,7 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" />
           <NavigationProperty Name="DefaultRegistations" Relationship="TestEngineDBContext.FK_DefaultRegistation_UserDetailMaster" FromRole="UserDetailMaster" ToRole="DefaultRegistation" />
+          <NavigationProperty Name="AssessmentUserDetails" Relationship="TestEngineDBContext.FK_AssessmentUserDetail_UserDetailMaster" FromRole="UserDetailMaster" ToRole="AssessmentUserDetail" />
         </EntityType>
         <Association Name="FK_DefaultRegistation_UserDetailMaster">
           <End Type="TestEngineDBContext.UserDetailMaster" Role="UserDetailMaster" Multiplicity="1" />
@@ -939,6 +996,43 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="AssessmentUserDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="AssessmentID" Type="Guid" />
+          <Property Name="UserID" Type="Guid" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="AssessmentDetailMaster" Relationship="TestEngineDBContext.FK_AssessmentUserDetail_AssessmentDetailMaster" FromRole="AssessmentUserDetail" ToRole="AssessmentDetailMaster" />
+          <NavigationProperty Name="UserDetailMaster" Relationship="TestEngineDBContext.FK_AssessmentUserDetail_UserDetailMaster" FromRole="AssessmentUserDetail" ToRole="UserDetailMaster" />
+        </EntityType>
+        <Association Name="FK_AssessmentUserDetail_AssessmentDetailMaster">
+          <End Type="TestEngineDBContext.AssessmentDetailMaster" Role="AssessmentDetailMaster" Multiplicity="0..1" />
+          <End Type="TestEngineDBContext.AssessmentUserDetail" Role="AssessmentUserDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssessmentDetailMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AssessmentUserDetail">
+              <PropertyRef Name="AssessmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssessmentUserDetail_UserDetailMaster">
+          <End Type="TestEngineDBContext.UserDetailMaster" Role="UserDetailMaster" Multiplicity="0..1" />
+          <End Type="TestEngineDBContext.AssessmentUserDetail" Role="AssessmentUserDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetailMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssessmentUserDetail">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -993,6 +1087,7 @@
           <EntitySetMapping Name="DefaultRegistations">
             <EntityTypeMapping TypeName="TestEngineDBContext.DefaultRegistation">
               <MappingFragment StoreEntitySet="DefaultRegistation">
+                <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserDetailId" ColumnName="UserDetailId" />
                 <ScalarProperty Name="CustomField10" ColumnName="CustomField10" />
                 <ScalarProperty Name="CustomField9" ColumnName="CustomField9" />
@@ -1222,6 +1317,18 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="TestEngineDBContext.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="TestEngineDBContext.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="AssessmentUserDetails">
+            <EntityTypeMapping TypeName="TestEngineDBContext.AssessmentUserDetail">
+              <MappingFragment StoreEntitySet="AssessmentUserDetail">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="AssessmentID" ColumnName="AssessmentID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

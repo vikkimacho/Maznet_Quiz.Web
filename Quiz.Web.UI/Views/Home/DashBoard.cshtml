@@ -98,18 +98,18 @@
     $(document).ready(function () {
         
         displayTodayDate();
-        //$('#EndDate').datepicker({
-        //    dateFormat: 'yy/mm/dd',
-        //    changeMonth: true,
-        //    changeYear: true
+        $('#EndDate').datepicker({
+            dateFormat: 'yy/mm/dd',
+            changeMonth: true,
+            changeYear: true
 
-        //});
-        //$('#StartDate').datepicker({
-        //    dateFormat: 'yy/mm/dd',
-        //    changeMonth: true,
-        //    changeYear: true
+        });
+        $('#StartDate').datepicker({
+            dateFormat: 'yy/mm/dd',
+            changeMonth: true,
+            changeYear: true
 
-        //});
+        });
         //$('#StartDate').change(function () {
         //    var tstdt;
         //    var splitDate = $('#StartDate').val().split('/');
@@ -162,10 +162,12 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <input type="text" class="form-control" id="txtFromDate" />
+                <input id="StartDate" type="text" class="form-control" />
+                @*<input type="text" class="form-control" id="txtFromDate" />*@
             </div>
             <div class="col-md-4">
-                <input type="text" class="form-control" id="txtToDate" />
+                <input id="EndDate" type="text" class="form-control" />
+                @*<input type="text" class="form-control" id="txtToDate" />*@
             </div>
         </div>
     </div>
@@ -175,7 +177,7 @@
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search keyword..">
                 <span class="input-group-btn">
-                    <button class="btn btn-default ds_darkBlue" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    <button class="btn btn-default ds_darkBlue" type="button" onclick="DashBoardFetch()" ><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                 </span>
             </div>
         </div>
@@ -187,9 +189,6 @@
                 <span class="glyphicon glyphicon-th"></span>
             </div>
         </div>*@
-        <input id="StartDate" type="date"/>
-        <input id="EndDate" type="date"/>
-        <input type="button" class="btn btn-primary" value="Search" onclick="DashBoardFetch()" />
     </div>
         <div class="clearfix seperator"></div>
         <div class="row">
