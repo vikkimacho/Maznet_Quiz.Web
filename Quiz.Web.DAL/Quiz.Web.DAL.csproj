@@ -57,6 +57,9 @@
     <Compile Include="DataAccess\AdminDetail.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\Assesmentpagemodal_Result.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\AssessmentDetailMaster.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
@@ -97,6 +100,12 @@
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\RegistrationFormControl.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\sp_helpdiagrams_Result.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\sysdiagram.cs">
