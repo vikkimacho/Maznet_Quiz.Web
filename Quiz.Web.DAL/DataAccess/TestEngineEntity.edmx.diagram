@@ -35,6 +35,11 @@
         <EntityTypeShape EntityType="TestEngineDBContext.AssessmentUserDetail" Width="1.5" PointX="14.625" PointY="8.5" />
         <AssociationConnector Association="TestEngineDBContext.FK_AssessmentUserDetail_AssessmentDetailMaster" />
         <AssociationConnector Association="TestEngineDBContext.FK_AssessmentUserDetail_UserDetailMaster" />
+        <EntityTypeShape EntityType="TestEngineDBContext.UserAssessmentAnswerdetail" Width="1.5" PointX="15.625" PointY="4.625" />
+        <AssociationConnector Association="TestEngineDBContext.FK_UserAssessmentAnswerdetail_AssessmentDetailMaster" />
+        <AssociationConnector Association="TestEngineDBContext.FK_UserAssessmentAnswerdetail_QuestionBankMaster" />
+        <AssociationConnector Association="TestEngineDBContext.FK_UserAssessmentAnswerdetail_UserDetailMaster" />
+        <EntityTypeShape EntityType="TestEngineDBContext.CandidateAssesmentDetailsForm" Width="1.5" PointX="14.375" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

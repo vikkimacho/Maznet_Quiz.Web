@@ -20,6 +20,7 @@ namespace Quiz.Web.DAL.DataAccess
             this.AssessmentQuestionBankDetails = new HashSet<AssessmentQuestionBankDetail>();
             this.ExamFinalReports = new HashSet<ExamFinalReport>();
             this.AssessmentUserDetails = new HashSet<AssessmentUserDetail>();
+            this.UserAssessmentAnswerdetails = new HashSet<UserAssessmentAnswerdetail>();
         }
     
         public System.Guid ID { get; set; }
@@ -40,5 +41,7 @@ namespace Quiz.Web.DAL.DataAccess
         public virtual ICollection<ExamFinalReport> ExamFinalReports { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AssessmentUserDetail> AssessmentUserDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserAssessmentAnswerdetail> UserAssessmentAnswerdetails { get; set; }
     }
 }

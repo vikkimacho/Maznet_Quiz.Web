@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\AssessMentDAL.cs" />
-    <Compile Include="DAL\ExamDLL.cs" />
+    <Compile Include="DAL\ExamDAL.cs" />
     <Compile Include="DAL\HomeDAL.cs" />
     <Compile Include="DAL\QuestionBankDAL.cs" />
     <Compile Include="DAL\UserManagementDAL.cs" />
@@ -67,6 +67,9 @@
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\AssessmentUserDetail.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\CandidateAssesmentDetailsForm.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\CustomRegistrationForm.cs">
@@ -128,6 +131,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TestEngineEntity.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\UserAssessmentAnswerdetail.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\UserDetailMaster.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
