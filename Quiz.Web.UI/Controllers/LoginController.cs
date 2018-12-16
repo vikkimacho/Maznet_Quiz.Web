@@ -100,13 +100,13 @@ namespace Quiz.Web.UI.Controllers
                         string port = Convert.ToString(Request.Url.Port);
 
 
-                        if (url.Contains("localhost"))
+                        if (!string.IsNullOrEmpty(url))
                         {
-                            return Redirect("http://localhost:" + port + "/home/dashboard");
+                            return RedirectToAction("Dashboard" ,"Home");
                         }
                         else
                         {
-                            return Redirect("~/home/");
+                            return RedirectToAction("Index", "Home");
                         }
                     }
                 }

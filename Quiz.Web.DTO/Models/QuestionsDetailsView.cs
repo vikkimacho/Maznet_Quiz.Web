@@ -15,18 +15,23 @@ namespace Quiz.Web.DTO.Models
         public string OptionB { get; set; }
         public string OptionC { get; set; }
         public string OptionD { get; set; }
+        public string OptionE { get; set; }
         public string Answer { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public bool? IsDeleted { get; set; }
         
     }
 
     public class QuestionBankDetail
     {
+        public Guid ID { get; set; }
         public string QuestionBankName { get; set; }
-        public Nullable<System.TimeSpan> Duration { get; set; }
+        public TimeSpan? Duration { get; set; }
         public string Description { get; set; }
+        public string ModifiedDate { get; set; }
         public bool Status { get; set; }
+
+        public  List<QuestionsDetailsView> questionsDetailsViews { get; set; }
     }
 }

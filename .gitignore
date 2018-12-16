@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/Quiz.Web.API/Properties/PublishProfiles
+/Quiz.Web.UI/Properties/PublishProfiles

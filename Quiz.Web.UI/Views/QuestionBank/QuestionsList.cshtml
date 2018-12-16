@@ -1,0 +1,249 @@
+﻿@model IEnumerable<Quiz.Web.DTO.Models.QuestionsDetailsView>
+<script>
+    $(document).ready(function () {
+        $('#QuestionBank').DataTable();
+    });
+</script>
+<div class="container-fluid">
+    <h3>Question List</h3>
+    <table class="table" id="QuestionBank">
+        <thead>
+            <tr>
+                <td>
+                    Question
+                </td>
+                <td>
+                    Option A
+                </td>
+                <td>
+                    Option B
+                </td>
+                <td>
+                    Option C
+                </td>
+                <td>
+                    Option D
+                </td>
+                <td>
+                    Option E
+                </td>
+                <td>
+                    Answer
+                </td>
+                <td>
+                    Action
+                </td>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Question
+                </td>
+                <td>
+                    @item.OptionA
+                </td>
+                <td>
+                    @item.OptionB
+                </td>
+                <td>
+                    @item.OptionC
+                </td>
+                <td>
+                    @item.OptionD
+                </td>
+                <td>
+                    @item.OptionE
+                </td>
+                <td>
+                    @item.Answer
+                </td>
+                <td>
+                    <a onclick="GetQuestionsEdit('@item.ID')">Edit</a> / 
+                    <a onclick="QuestionsDelete('@item.ID')">Delete</a>
+                </td>
+            </tr>
+
+        }
+
+    </table>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Question Detail</h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="QuestionId" />
+                <div class="form-group">
+                    <label>Question</label>
+                    <textarea class="form-control" id="Question"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Option A</label>
+                    <input id="OptionA" class="form-control" rows="7" cols="30" />
+                </div>
+
+                <div class="form-group">
+                    <label>Option B</label>
+                    <input id="OptionB" class="form-control" rows="7" cols="30" />
+                </div>
+
+                <div class="form-group">
+                    <label>Option C</label>
+                    <input id="OptionC" class="form-control" rows="7" cols="30" />
+                </div>
+
+                <div class="form-group">
+                    <label>Option D</label>
+                    <input id="OptionD" class="form-control" rows="7" cols="30" />
+                </div>
+
+                <div class="form-group">
+                    <label>Option E</label>
+                    <input id="OptionE" class="form-control" rows="7" cols="30" />
+                </div>
+
+                <div class="form-group">
+                    <label>Answer</label>
+                    <input id="Answer" class="form-control" rows="7" cols="30" />
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-primary" id="UpdateQuestion">Update</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+    $(document).ready(function () {
+
+
+        $("#UpdateQuestion").click(function () {
+
+            var QuestionId = $("#QuestionId").val();
+            var Question = $("#Question").val();
+            var OptionA = $("#OptionA").val();
+            var OptionB = $("#OptionB").val();
+            var OptionC = $("#OptionC").val();
+            var OptionD = $("#OptionD").val();
+            var OptionE = $("#OptionE").val();
+            var Answer = $("#Answer").val();
+
+            data = {
+                ID: QuestionId,
+                Question: Question,
+                OptionA: OptionA,
+                OptionB: OptionB,
+                OptionC: OptionC,
+                OptionD: OptionD,
+                OptionE: OptionE,
+                Answer: Answer
+            }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UpdateQuestion", "QuestionBank")',
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(data),
+                success: function (Result) {
+                    if (Result.Result == true) {
+                        alert("Question Details Updated Succesfully");                        
+                    }
+                    else {
+                        alert("Update Failed");                        
+                    }
+                    window.location.reload();
+                },
+                error: function (xhr, status, p3, p4) {
+                    var err = "Error " + " " + status + " " + p3 + " " + p4;
+                    if (xhr.responseText && xhr.responseText[0] == "{")
+                        err = JSON.parse(xhr.responseText).Message;
+
+                },
+                cache: false
+            });
+        });
+    });
+
+
+
+    function QuestionsDelete(QuestionId) {
+
+        //confirm("Are you Sure to delete Question ");
+
+        if (confirm("Are you Sure to Delete this Question ")) {
+            $.ajax({
+            type: "GET",
+            url: '@Url.Action("QuestionsDelete", "QuestionBank")?QuestionId=' + QuestionId,
+            contentType: false,
+            processData: false,
+            async: false,
+                success: function (Result) {
+                    if (Result.Result == true) {
+
+                        alert("Question Deleted Succesfully.");
+
+                        window.reload();
+                }
+            },
+            error: function (xhr, status, p3, p4) {
+                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                if (xhr.responseText && xhr.responseText[0] == "{")
+                    err = JSON.parse(xhr.responseText).Message;
+
+            },
+            cache: false
+        });
+        }       
+        
+    }
+
+
+        function GetQuestionsEdit(QuestionId) {
+        
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("QuestionsEdit", "QuestionBank")?QuestionId=' + QuestionId,
+            contentType: false,
+            processData: false,
+            async: false,
+            success: function (result) {
+                if (result) {
+
+                    $("#myModal").modal("show");
+                    $("#QuestionId").val(result.ID);
+                    $("#Question").val(result.Question);
+                    $("#OptionA").val(result.OptionA);
+                    $("#OptionB").val(result.OptionB);
+                    $("#OptionC").val(result.OptionC);
+                    $("#OptionD").val(result.OptionD);
+                    $("#OptionE").val(result.OptionE);
+                    $("#Answer").val(result.Answer);
+                }
+            },
+            error: function (xhr, status, p3, p4) {
+                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                if (xhr.responseText && xhr.responseText[0] == "{")
+                    err = JSON.parse(xhr.responseText).Message;
+
+            },
+            cache: false
+        });
+
+    }
+
+
+</script>

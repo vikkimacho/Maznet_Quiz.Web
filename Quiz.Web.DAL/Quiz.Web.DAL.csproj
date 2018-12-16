@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\AssessMentDAL.cs" />
-    <Compile Include="DAL\ExamDLL.cs" />
+    <Compile Include="DAL\ExamDAL.cs" />
     <Compile Include="DAL\HomeDAL.cs" />
     <Compile Include="DAL\QuestionBankDAL.cs" />
     <Compile Include="DAL\UserManagementDAL.cs" />
@@ -112,6 +112,12 @@
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\RegistrationFormControl.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\sp_helpdiagrams_Result.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\sysdiagram.cs">

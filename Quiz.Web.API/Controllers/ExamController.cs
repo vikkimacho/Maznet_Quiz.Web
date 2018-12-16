@@ -4,36 +4,31 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Quiz.Web.BLL.Exam;
 
 namespace Quiz.Web.API.Controllers
 {
     public class ExamController : ApiController
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
+        public string GetPortalLogin(Guid assessmentID)
         {
-            return new string[] { "value1", "value2" };
+            ExamBLL examBLL = new ExamBLL();
+            var result = examBLL.GetExamPortal(assessmentID);
+            return result;
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
+        public string ValidateExaminer(string username, string password, string assessmentID)
         {
-            return "value";
-        }
+            string result = "Failed";
+            try
+            {
 
-        // POST api/<controller>
-        public void Post([FromBody]string value)
-        {
-        }
+            }
+            catch (Exception ex)
+            {
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
+            }
+            return result;
         }
     }
 }

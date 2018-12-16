@@ -1,11 +1,13 @@
 ﻿@model Quiz.Web.ExamPortal.Models.ExamLogin
-
+@{
+    string assessmentID = Model.assessmentid;
+}
 
 
 <script>
     $('#isauth').val(false);
 
-
+    var assessmentID = '@assessmentID';
     function checkvalue() {
 
         $('#UILoader').show();
@@ -48,7 +50,7 @@
 
             $('#btnLogin').prop('disabled', true);
             $('#btnLogin').val("Loading...");
-            var message = validateuser(username, password);
+            var message = ValidateExaminer(username, password);
             if (message != "FAILED") {
                 $('#isauth').val(true);
                 $('#divLoginError').hide();
@@ -69,12 +71,12 @@
             return false;
         }
     }
-    function validateuser(username, password) {
+    function ValidateExaminer(username, password) {
 
         var status = "FAILED";
         $.ajax({
-            url: '@Url.Action("ValidateUser", "Login")',
-            data: JSON.stringify({ 'username': username, 'password': password }),
+            url: '@Url.Action("ExamLogin", "ValidateExaminer")',
+            data: JSON.stringify({ 'username': username, 'password': password, 'assessmentID': assessmentID}),
             type: "POST",
             async: false,
             contentType: "application/json",

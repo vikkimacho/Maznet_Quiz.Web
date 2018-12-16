@@ -162,6 +162,7 @@
     <Content Include="packagejson\credentials.json" />
     <Content Include="packagejson\credentialsnew.json\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user" />
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
