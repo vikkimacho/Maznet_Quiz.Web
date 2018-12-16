@@ -66,6 +66,9 @@
     <Compile Include="DataAccess\AssessmentQuestionBankDetail.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\AssessmentUserDetail.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\CustomRegistrationForm.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
