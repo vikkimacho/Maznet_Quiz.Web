@@ -29,16 +29,20 @@
     <script src="https://code.jquery.com/jquery-2.2.4.js"
             integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
             crossorigin="anonymous"></script>
-    
+
     <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script src="~/Scripts/jquery.dataTables.js"></script>
-     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    @*<script src="~/Scripts/jquery.dataTables.js"></script>*@
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+   
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <!-- Custom Fonts -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="~/Content/CSS/CustomStyles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" />
+ 
     <style>
         .side-nav {
             width: 240px;
@@ -66,49 +70,49 @@
         .navbar {
             border: none;
         }
-        #ui-datepicker-div
-        {
-            z-index:4 !important;
+
+        #ui-datepicker-div {
+            z-index: 4 !important;
         }
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
-        $("#flQuestionUpload").on('change', function (e) {
-            debugger;
-            var files = e.target.files;
-            var isValidFiles = true;
-            
-            $('#file-error1').text('');
-            var file_size = $('#flQuestionUpload')[0].files[0].size;
-            if (file_size < 120000) {
-                $(files).each(function () {
-                    var filename = this.name;
-                    if ((filename.toUpperCase().indexOf(".XLSX") == -1) || (filename.toUpperCase().indexOf(".XLS")) == -1) {
-                        isValidFiles = false;
-                    }
-                });
-                if (isValidFiles) {
-                    ContactFile = e.target.files;
+            $("#flQuestionUpload").on('change', function (e) {
+                debugger;
+                var files = e.target.files;
+                var isValidFiles = true;
 
+                $('#file-error1').text('');
+                var file_size = $('#flQuestionUpload')[0].files[0].size;
+                if (file_size < 120000) {
+                    $(files).each(function () {
+                        var filename = this.name;
+                        if ((filename.toUpperCase().indexOf(".XLSX") == -1) || (filename.toUpperCase().indexOf(".XLS")) == -1) {
+                            isValidFiles = false;
+                        }
+                    });
+                    if (isValidFiles) {
+                        ContactFile = e.target.files;
+
+                    }
+                    else {
+                        $('#mdlmessage').text('Choose Only .xlsx or xlx File');
+                        $('#modalPopUp').addClass("is-visible");
+                        $("#chooseContactsFile").val("");
+                    }
                 }
                 else {
-                    $('#mdlmessage').text('Choose Only .xlsx or xlx File');
-                    $('#modalPopUp').addClass("is-visible");
+                    $('.box-error').css("border-color", "#FF0000");
+                    $('#file-error1').text('File size must be less than 120KB');
                     $("#chooseContactsFile").val("");
                 }
-            }
-            else {
-                $('.box-error').css("border-color", "#FF0000");
-                $('#file-error1').text('File size must be less than 120KB');
-                $("#chooseContactsFile").val("");
-            }
             });
 
             $("#lnkLogout").click(function () {
                 $("#dvLogOutModal").modal("show");
             });
 
-    });
+        });
     </script>
 </head>
 <body>
