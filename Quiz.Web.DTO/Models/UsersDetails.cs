@@ -35,7 +35,7 @@ namespace Quiz.Web.DTO.Models
 
     public class UsersDetails
     {
-        public Guid? Id { get; set; }
+        public Guid? Id { get; set; }   
         public string UserTitleName { get; set; }
         public string CreatedDateTime { get; set; }
         public string ModifiedDateTime { get; set; }

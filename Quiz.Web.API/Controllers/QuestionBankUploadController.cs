@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Quiz.Web.BLL;
+using Quiz.Web.BLL.Home;
 using Quiz.Web.DTO.Models;
 
 namespace Quiz.Web.API.Controllers
@@ -16,5 +17,6 @@ namespace Quiz.Web.API.Controllers
 
             return Ok("");
         }
+
     }
 }

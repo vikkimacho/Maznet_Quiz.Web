@@ -65,6 +65,9 @@
         .navbar {
             border: none;
         }
+        .fa{
+            cursor:pointer;
+        }
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -72,13 +75,7 @@
             debugger;
             var files = e.target.files;
             var isValidFiles = true;
-            var questionBankName = $("#txtQuestionBankTitle").val();
-            var questionBankDescription = $("#txtQuestionBankDescription").val();
-            var status = $("#ddlStatusQuestionBank").val();
-            var finalStatus = false;
-            if (status == "ACTIVE") {
-                finalStatus = true;
-            }
+            
             $('#file-error1').text('');
             var file_size = $('#flQuestionUpload')[0].files[0].size;
             if (file_size < 120000) {
@@ -90,44 +87,6 @@
                 });
                 if (isValidFiles) {
                     ContactFile = e.target.files;
-                    var data = new FormData();
-                    for (var x = 0; x < ContactFile.length; x++) {
-                        data.append("file" + x, ContactFile[x]);
-                    }
-                    $.ajax({
-                        type: "POST",
-                        url: '@Url.Action("UploadQuestionBank", "QuestionBank")?QuestionBankName=' + questionBankName + '&Duration=' + null + '&Description=' + questionBankDescription + '&Status=' + finalStatus,
-                        contentType: false,
-                        processData: false,
-                        data: data,
-                        beforeSend: function () {
-
-                            uploaded = 1;
-                        },
-                        complete: function () {
-
-                        },
-                        success: function (result) {
-                            debugger;
-                            if (result.Result == "Failed") {
-                                //
-                            }
-                            else {
-                                if (result.Message == "Contacts Uploaded Successfully") {
-                                    //
-                                }
-                            }
-                        },
-                        error: function (xhr, status, p3, p4) {
-                            var err = "Error " + " " + status + " " + p3 + " " + p4;
-                            if (xhr.responseText && xhr.responseText[0] == "{")
-                                err = JSON.parse(xhr.responseText).Message;
-
-                        },
-                        cache: false
-                    });
-
-
 
                 }
                 else {
