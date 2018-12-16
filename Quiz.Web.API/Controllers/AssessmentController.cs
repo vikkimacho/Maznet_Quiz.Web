@@ -31,5 +31,43 @@ namespace Quiz.Web.API.Controllers
                 return null;
             }
         }
+
+        public string PostCreateAssessment(PostAssessmentModal postAssessmentModal)
+        {
+
+            try
+            {
+                var newAssessemntGuid = Guid.NewGuid();
+                //Need to send notification emails based on the selection.
+
+                return ObjAssessmentBll.PostCreateAssessment(postAssessmentModal, newAssessemntGuid);
+            }
+            catch (Exception ex)
+            {
+                return "Failed";
+            }
+
+        }
+
+        public string PostUpdateEligibleCriteria(List<PostEligibilityCriteria> lstpostAssessmentModal)
+        {
+
+            try
+            {
+                var newAssessemntGuid = Guid.NewGuid();
+                //Need to send notification emails based on the selection.
+
+                return ObjAssessmentBll.PostUpdateEligibleCriteria(lstpostAssessmentModal);
+            }
+            catch (Exception ex)
+            {
+                return "Failed";
+            }
+
+        }
+
+
+
+        
     }
 }

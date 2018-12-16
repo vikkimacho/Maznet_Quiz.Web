@@ -35,6 +35,7 @@ namespace Quiz.Web.DAL.DataAccess
         public string CustomField9 { get; set; }
         public string CustomField10 { get; set; }
         public System.Guid UserDetailId { get; set; }
+        public string Password { get; set; }
     
         public virtual UserDetailMaster UserDetailMaster { get; set; }
     }

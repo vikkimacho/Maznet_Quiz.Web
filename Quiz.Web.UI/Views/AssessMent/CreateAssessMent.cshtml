@@ -2,12 +2,23 @@
 @{
     ViewBag.Title = "CreateAssessMent";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+
 }
 
 @if (Model != null)
 {
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">*@
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 
 
 
@@ -175,6 +186,17 @@
 
     <div id="divStep1">
         <div class="row">
+
+
+            <div class="form-group col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                <div class="col-md-4"> <label id="lblAssessMentName">Name your assessment </label></div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="txtAssessmentName" placeholder="ex:Software Engineer" />
+                    <span style="color:red;" id="errorAssName"></span>
+                </div>
+            </div>
+
+
             <div class="col-md-12">
                 <div class="well ds_lightBlue">
                     <div class="input-group">
@@ -186,20 +208,13 @@
                 </div>
             </div>
 
-            <div class="form-group col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                <div class="col-md-4"> <label id="lblAssessMentName">Name your assessment </label></div>
-                <div class="col-md-6">
-                    <input type="text" class="form-control" id="txtAssessmentName" placeholder="ex:Software Engineer" />
-                    <span style="color:red;" id="errorAssName"></span>
-                </div>
-            </div>
         </div>
 
         <hr />
         <div class="row">
             <div class="col-md-12 ds_darkBlue" id="dvAddMoreText">
-                <label class="pull-left">Add More Text</label>
-                <span class="pull-right"><img id="imgAddMoreText" src="~/Content/Icons/Adding Icon.png" /></span>
+                <label class="pull-left">Uploaded Question Banks</label>
+                <span hidden class="pull-right"><img id="imgAddMoreText" src="~/Content/Icons/Adding Icon.png" /></span>
             </div>
         </div>
 
@@ -230,13 +245,13 @@
                                 <input id=@item.Id type="checkbox" class="chkExamSubjectSelection" />
                             </td>
                             <td>
-                                @item.QuestionBankName - @item.QuestionBankDescription
+                                <span id="spnQuestionBankName_@item.Id">@item.QuestionBankName - @item.QuestionBankDescription </span>
                             </td>
                             <td>
-                                @item.NoOfQuestions
+                                <span id='spnNoOfQuestions_@item.Id'>@item.NoOfQuestions</span>
                             </td>
                             <td>
-                                @item.Duration
+                                <span id='spnDuration_@item.Id'>@item.Duration </span>
                             </td>
                         </tr>
 
@@ -324,14 +339,7 @@
 
                     </tr>
                 </thead>
-                <tbody id="tbodySelectedAssesments">
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>English</td>
-                    </tr>
-                </tbody>
+                <tbody id="tbodySelectedAssesments"></tbody>
             </table>
 
 
@@ -340,9 +348,9 @@
 
 
             <h4>Candidates details form</h4>
-            <span>   Do you want to create a new form or use an existing one? </span>
-            <input type="radio" name="FormSelection" id="radExistingForm" />Select Existing
-            <input type="radio" name="FormSelection" id="radNewForm" checked />Create New
+            @*<span>   Do you want to create a new form or use an existing one? </span>
+                <input type="radio" name="FormSelection" id="radExistingForm" />Select Existing
+                <input type="radio" name="FormSelection" id="radNewForm" checked />Create New*@
 
             <table class="table table-striped">
                 <thead>
@@ -355,12 +363,35 @@
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td>Name</td>
-                        <td>Text Box</td>
-                        <td></td>
-                        <td><input type="checkbox" id="ismandatory" checked /> </td>
-                    </tr>
+                    @foreach (var item in Model.LstCandidateAssesmentDetailsForm)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="clsFormSelection" id="@item.id" checked />
+                                <input type="hidden" id="hdnFormId_@item.id" value="@item.id" />
+                                @item.DisplayFieldName
+                            </td>
+                            <td>@item.FieldType</td>
+                            <td>@item.Values</td>
+
+                            @if (item.IsEnabled)
+                            {
+                                if (item.IsLocked)
+                                {
+                                    <td><input type="checkbox" disabled id="mandatory_@item.id" checked /> It is Locked</td>
+                                }
+                                else
+                                {
+                                    <td><input type="checkbox" id="mandatory_@item.id" checked /> </td>
+                                }
+                            }
+                            else
+                            {
+                                <td><input type="checkbox" id="mandatory_@item.id" /> </td>
+                            }
+                        </tr>
+                    }
+
                 </tbody>
             </table>
 
@@ -382,12 +413,22 @@
         <div>
             Do you want to create a new shortlisting criteria or use an existing one?
             <br />
-            <input type="radio" name="ShortListCriteria" id="radExistingShortListCriteria" />Select Existing
-            <input type="radio" name="ShortListCriteria" id="radNewShortListingCriteria" checked />Create New
-            <input type="radio" name="ShortListCriteria" id="radCustomShortListingCriteria" />Custom
+            <input type="radio" name="ShortListCriteria" id="radExistingShortListCriteria" value="EXISTING" />Select Existing
+
+
+
+            <input type="radio" name="ShortListCriteria" id="radNewShortListingCriteria" value="NEW" checked />Create New
+            @*<input type="radio" name="ShortListCriteria" id="radCustomShortListingCriteria" />Custom*@
             <br />
-            Enter a name to save the cutoff
-            <input type="text" id="txtShortListCriteria" placeholder="Enter a name to save the cutoff" />
+
+            <div id="divNewShortListCriteria">
+                Enter a name to save the cutoff
+
+                <input type="text" id="txtShortListCriteria" placeholder="Enter a name to save the cutoff" />
+                <input type="button" class="btn btn-info" id="btnSaveCriteria" value="Save New Cutoff" />
+                <span id="spnSLErrorMsg" style="color:red;"></span>
+
+            </div>
             <br />
             <select id="ddlExistingShortListCriteria" style="display:none;">
                 <option>--Select--</option>
@@ -409,27 +450,23 @@
                     <span class="blue" style="background: rgb(69, 173, 78);"></span>
                     Strong Consider
                 </span>
-                <button style="position: absolute; top: 6px; right: 10px;" type="button" class="btn-secondary">Reset to recommended<div class="disabled-overlay"></div></button>
+                <button style="display:none; position: absolute; top: 6px; right: 10px;" type="button" class="btn-secondary">Reset to recommended<div class="disabled-overlay"></div></button>
             </div>
         </div>
 
 
+        <div id="divSliderSetup">
+            @foreach (var item in Model.LQuestionBankModal)
+            {
+                <p>
+                    <label for="amount">@item.QuestionBankName - @item.QuestionBankDescription</label>
+                    <input class="clsSlider" type="text" id="txtSlider_@item.Id" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                </p>
 
-        <p>
-            <label for="amount">Customer Service Situational Judgment Test</label>
-            <input type="text" id="txt1" readonly style="border:0; color:#f6931f; font-weight:bold;">
-        </p>
+                <div id="slider-range_@item.Id"></div>
+            }
 
-        <div id="slider-range1"></div>
-
-
-        <p>
-            <label for="amount">Basic Computer Literacy</label>
-            <input type="text" id="txt2" readonly style="border:0; color:#f6931f; font-weight:bold;">
-        </p>
-
-        <div id="slider-range2"></div>
-
+        </div>
 
         <div class="row">
             <div class="col-md-12 text-right">
@@ -437,6 +474,8 @@
                 <button id="btnNext1" onclick="return ShowStep4()" class="btn ds_darkBlue">Save & Next </button>
             </div>
         </div>
+
+
     </div>
 
 
@@ -449,6 +488,177 @@
 
         <div>Welcome to Step 4 - Scheduling</div>
 
+
+        <div>
+            Date and time details
+
+            <br />
+
+            <label> Country </label> <label>India</label>
+
+            <label> Time Zone </label> <label>(UTC + 5:30) Bombay, Calcutta, Chennai, New Delhi </label>
+
+            <br />
+
+            <div>
+                <div class='input-group date' id='dtFrom'>
+                    <input type='text' id="txtDtFrom" class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+
+                <div class='input-group date' id='dtTo'>
+                    <input type='text' id="txtDtTo" class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+
+
+            </div>
+
+            <br />
+            <br />
+
+            <div>Choose your mode of scheduling </div>
+
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#divbulkschedule" role="tab" aria-controls="home" aria-selected="true">Bulk Schedule</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#divSingleSchedule" role="tab" aria-controls="profile" aria-selected="false">Single Schedule</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#divCommonLogin" role="tab" aria-controls="contact" aria-selected="false">Common Login</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="divbulkschedule" role="tabpanel" aria-labelledby="home-tab">
+
+                    @*<input type="file" id="flUploadXLS" /> Upload File
+                        <br />
+                        Download Sample
+                        <a id="lnkDownloadSample" href="~/Content/sample.xlsx">Download here</a>*@
+
+                    Uploaded Candidates List
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Title
+                                </th>
+                                <th>
+                                    Uploaded on
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+
+                            @foreach (var item in Model.LstUserDetailMaster)
+                            {
+                                <tr>
+                                    <td><input type="checkbox" id="@item.Id" class="clsUploadedStudents" />  @item.UserTitle</td>
+                                    <td>@item.CreatedDate.ToShortDateString()</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+
+
+
+                </div>
+
+                <div class="tab-pane fade" id="divSingleSchedule" role="tabpanel" aria-labelledby="profile-tab">
+                    Candidate Detail
+                    <br />
+
+                    First Name <input type="text" id="txtFirstName" /><br />
+
+                    Last Name <input type="text" id="txtLastName" /><br />
+
+                    Email <input type="text" id="txtEmail" /><br />
+
+                    User Name * <input type="text" id="txtUserName" /><br />
+
+                    Password * <input type="password" id="txtPassword" /><br />
+
+                    Mobile <input type="text" id="txtMobile" /><br />
+
+                    Date of birth
+
+                    <div class='input-group date' id='txtDOB'>
+                        <input type='text' class="form-control" id='txtDOBSingle' />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+
+                    <br />
+
+
+
+                </div>
+
+
+                <div class="tab-pane fade" id="divCommonLogin" role="tabpanel" aria-labelledby="contact-tab">
+                    User Name * <input type="text" id="txtCommonLoginUserName" />
+                    <br />
+                    Password * <input type="password" id="txtCommonLoginPassword" />
+                    <br />
+
+                    No of Candidates * <input type="text" id="txtCLNoOfCandidates" />
+                    <br />
+
+                    Send Login Details to  (Enter comma seperated email list.) *
+
+                    <textarea id="txtCLSendLoginDetailsto"> </textarea>
+
+
+
+
+                    <br />
+                </div>
+            </div>
+
+
+        </div>
+
+        <div>
+            Assessment completion alert    <input type="checkbox" id="chkAlertEmail" /><br />
+
+            <textarea style="display:none;" id="txtAreaAlertEmail" placeholder="Please enter comma separated email id's to receive assessment completion alert. e.g. test@gmail.com,test@yahoo.com">
+            </textarea>
+
+            <br />
+            <br /><br />
+            Candidate Notifications
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Email</th>
+                        <th>Content</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><span id="spnNotificationType"> Assesment Details</span> </td>
+                        <td><input type="checkbox" id="chkNotificationEmail" checked /> </td>
+                        <td><button id="btnEmailTemplate" style="border: 0;float: none;" tooltip="Select template" class="icon fa fa-pencil action-icon pointer"><div class="disabled-overlay"></div></button></td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
 
 
         <div class="row">
@@ -464,6 +674,201 @@
 
     <script type="text/javascript">
 
+        var modelListQB = @Html.Raw(Json.Encode(Model.LQuestionBankModal));
+
+        function ConstructJsonModal()
+        {
+            debugger;
+            var assesmentName = $('#txtAssessmentName').val();
+            var LstQuestionBankSelected = new Array();
+            for (var i = 0; i < selectedExamSyllabus.length; i++)
+            {
+                LstQuestionBankSelected.push(selectedExamSyllabus[i].id);
+            }
+            var IsBrowserLockEnabled =  $('#chkBrowserLockOn').is(':checked');
+            var IsPrintScreenLockEnabled = $('#chkPrintScreenLockOn').is(':checked');
+            var LstCandidateFormSelectedFields = GetLstCandidateFormSelectedFields();
+            var SelectedShortListCriteria = $('#hdnSelectedShortListCriteria').val();
+            var ScheduleFrom = $('#txtDtFrom').val();
+            var ScheduleTo = $('#txtDtTo').val();
+            var schedulePlan = $('#hdnSchedulePlan').val();
+
+            var lstBulkScheduleIds = GetBulkUploadStudentData();
+
+            var SingleScheduleModal = GetSingleScheduleModal();
+
+            var commonLoginModal = GetCommonLoginModal();
+
+            var IsAssessmentCompletionAlertEnabled = $('#chkAlertEmail').is(':checked');
+            var AssesmentAlertEmail = $('#txtAreaAlertEmail').val();
+            var AssessmentStudentAlertModal = GetAssessmentStudentAlertModal();
+
+
+
+
+
+            var postModal = new Array();
+            postModal = { AssessmentName : assesmentName,LstQuestionBankSelected:LstQuestionBankSelected,IsBrowserLockEnabled:IsBrowserLockEnabled,
+                IsPrintScreenLockEnabled :IsPrintScreenLockEnabled, LstCandidateFormSelectedFields:LstCandidateFormSelectedFields,
+                SelectedShortListCriteria :SelectedShortListCriteria,ScheduleFrom:ScheduleFrom,ScheduleTo:ScheduleTo,
+                SchedulePlan : schedulePlan,lstBulkScheduleIds:lstBulkScheduleIds,SingleScheduleModal:SingleScheduleModal,IsAssessmentCompletionAlertEnabled:IsAssessmentCompletionAlertEnabled
+                ,AssesmentAlertEmail:AssesmentAlertEmail,AssessmentStudentAlertModal:AssessmentStudentAlertModal,CommonLoginModal:commonLoginModal
+            };
+            return postModal;
+
+        }
+
+
+        function GetCommonLoginModal()
+        {
+            debugger;
+            var txtCommonLoginUserName = $('#txtCommonLoginUserName').val();
+            var txtCommonLoginPassword = $('#txtCommonLoginPassword').val();
+            var txtCLNoOfCandidates = $('#txtCLNoOfCandidates').val();
+            var txtCLSendLoginDetailsto = $('#txtCLSendLoginDetailsto').val();
+            var postData = new Array();
+            postData= {CommonLoginUserName:txtCommonLoginUserName, CommonLoginPassword:txtCommonLoginPassword, CLNoOfCandidates:txtCLNoOfCandidates,CLSendLoginDetailsto:txtCLSendLoginDetailsto};
+            return postData;
+
+        }
+
+
+        function GetLstCandidateFormSelectedFields()
+        {
+            debugger;
+            var postData = new Array();
+            $('.clsFormSelection').each(function (i, obj) {
+                var elementId = obj.id;
+                if($('#'+elementId).is(':checked'))
+                {
+                    var isMandatory = $('#mandatory_'+elementId).is(':checked');
+                    var selectedData = {IsMandatory :isMandatory , FormId : elementId  };
+                    postData.push(selectedData);
+                }
+            });
+            return postData;
+        }
+
+
+        function GetBulkUploadStudentData()
+        {
+            var postData = new Array();
+            $('.clsUploadedStudents').each(function (i, obj) {
+                var elementId = obj.id;
+                if($('#'+elementId).is(':checked'))
+                {
+                    postData.push(elementId);
+                }
+            });
+            return postData;
+
+        }
+
+
+
+        function GetSingleScheduleModal()
+        {
+            debugger;
+            var FirstName = $('#txtFirstName').val();
+            var LastName = $('#txtLastName').val();
+            var Email = $('#txtEmail').val();
+            var UserName = $('#txtUserName').val();
+            var Password = $('#txtPassword').val();
+            var Mobile = $('#txtMobile').val();
+            var DOB = $('#txtDOBSingle').val();
+            var postData = new Array();
+            postData= {FirstName:FirstName, LastName:LastName, Email:Email,UserName:UserName,Password:Password,Mobile:Mobile,DOB:DOB};
+            return postData;
+        }
+
+
+        function GetAssessmentStudentAlertModal()
+        {
+            var chkNotificationEmail =  $('#chkNotificationEmail').is(':checked');
+            var txtCCEMail = $('#txtCCEMail').val();
+            var txtBCCEMail = $('#txtBCCEMail').val();
+            var emailBody = $('#emailBody').val();
+            var type = $('#spnNotificationType').text();
+            var CommunicationType = 'EMAIL';
+
+            var postData = new Array();
+
+            postData= {IsEnabled : chkNotificationEmail , Type : type, CommunicationType:CommunicationType , BodyofMessage:emailBody,CC: txtCCEMail ,
+                BCC:txtBCCEMail};
+
+            return postData;
+
+
+        }
+
+
+
+        function ValidateFormSubmission()
+        {
+            debugger;
+            return true;
+        }
+
+
+        function submitData()
+        {
+            debugger;
+            if(ValidateFormSubmission())
+            {
+                var postData =  ConstructJsonModal();
+                var postPreferenceData = JSON.stringify({
+                    'postAssessmentModal': postData
+                });
+
+                try {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("PostCreateAssessment", "AssessMent")",
+                        contentType: 'application/json; charset=utf-8',
+                        data: postPreferenceData,
+                        beforeSend: function () {
+
+                        },
+                        complete: function () {
+
+                        },
+                        success: function (data) {
+                            if(data.Result == 'Success')
+                            {
+                                alert("Assessment Created Successfully.");
+                                window.location.reload();
+                            }
+                            else{
+                                alert("Something went wrong.")
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.log(xhr.status);
+                            console.log(xhr.responseText);
+                            console.log(thrownError);
+                        },
+                        cache: false
+                    });
+                }
+                catch (err) {
+                    console.log(err);
+                }
+            }
+            else{
+                alert("Please fill all mandatory fields.");
+            }
+        }
+
+
+
+        $(function () {
+            $('#dtFrom').datetimepicker();
+            $('#dtTo').datetimepicker();
+            $('#txtDOB').datetimepicker();
+        });
+
+
+        var selectedExamSyllabus = new Array();
         function ShowStep1() {
             $('#divStep1').show();
             $('#divStep2').hide();
@@ -486,6 +891,35 @@
                 $('#divStep2').show();
                 $('#divStep3').hide();
                 $('#divStep4').hide();
+                debugger;
+                $('#tbodySelectedAssesments').empty();
+                for (var i = 0; i < selectedExamSyllabus.length; i++)
+                {
+                    $('#tbodySelectedAssesments').append('<tr>');
+                    var questBankname = selectedExamSyllabus[i].QuestionBankName;
+                    var noOfQues = selectedExamSyllabus[i].NoOfQuestions;
+                    var duration = selectedExamSyllabus[i].Duration;
+                    $('#tbodySelectedAssesments').append('<td>' + questBankname + '</td>');
+                    $('#tbodySelectedAssesments').append('<td>' + noOfQues + '</td>');
+                    $('#tbodySelectedAssesments').append('<td>' + duration + '</td>');
+                    $('#tbodySelectedAssesments').append('<td>English</td>');
+                    $('#tbodySelectedAssesments').append('</tr>');
+
+
+                }
+
+                $('.chkExamSubjectSelection').each(function (i, obj) {
+                    if ($('#' + obj.id).is(':checked')) {
+
+                    }
+                    else
+                    {
+                        $('#slider-range_'+ obj.id).hide();
+                    }
+                });
+
+
+
 
                 $('#dvStepOne').addClass('active').removeClass('disabled');
                 $('#dvStepTwo').addClass('active').removeClass('disabled');
@@ -585,20 +1019,109 @@
         }
 
 
-        function submitData() {
 
-
-
-        }
 
 
 
 
         $(document).ready(function () {
+
+
+            $("#btnSaveCriteria").click(function () {
+                debugger;
+                var txtShortListCriteria = $('#txtShortListCriteria').val();
+                if(txtShortListCriteria == '')
+                {
+                    $('#spnSLErrorMsg').text('Please give valid name for new criteria');
+                    return false;
+                }
+                else{
+
+                    var postDataForEligibilityCriteria = new Array();
+                    $('.chkExamSubjectSelection').each(function (i, obj) {
+                        //$('#' + obj.id).prop('checked', true);
+                        if ($('#' + obj.id).is(':checked')) {
+                            //NotConsider	MayConsider	StrongConsider
+                            debugger;
+                            var sliderVal = $('#txtSlider_'+ obj.id).val();
+                            if(sliderVal != '')
+                            {   
+                                var NotConsider = sliderVal.split("-")[0];
+                                var MayConsider = sliderVal.split("-")[1];
+                                var StrongConsider = 0;
+                                var postData = {QuestionBankID :  obj.id , Name : txtShortListCriteria, NotConsider :NotConsider , MayConsider : MayConsider,StrongConsider:StrongConsider };
+                                postDataForEligibilityCriteria.push(postData);
+                            }
+                        }
+                    });
+         
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("SaveEligibleCriteria", "AssessMent")",
+                        contentType: 'application/json; charset=utf-8',
+                        data: postDataForEligibilityCriteria,
+                        beforeSend: function () {
+
+                        },
+                        complete: function () {
+
+                        },
+                        success: function (data) {
+                            if(data.Result == 'Success')
+                            {
+                                $('#hdnSelectedShortListCriteria').val(data.AssesmentCriteriaId);
+                                alert("Eligibility Criteria Created Successfully.");                                 
+                            }
+                            else{
+                                alert("Something went wrong.")
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.log(xhr.status);
+                            console.log(xhr.responseText);
+                            console.log(thrownError);
+                        },
+                        cache: false
+                    });
+
+         
+                }
+
+
+            });
+
+
+
+            $("input[name='ShortListCriteria']").change(function () {
+                debugger;
+                var selectedShortList = $('input[name=ShortListCriteria][type="radio"]:checked').val();
+                if(selectedShortList == 'EXISTING')
+                {
+                    $('#divNewShortListCriteria').hide();
+                    $('#ddlExistingShortListCriteria').show();
+                }
+                else{
+                    $('#ddlExistingShortListCriteria').hide();
+                    $('#divNewShortListCriteria').show();
+                }
+            });
+
+
+
+
+            $('#home-tab').click();
+
             $('#chkCheckAllAssessMent').change(function () {
+                selectedExamSyllabus = new Array();
                 if ($('#chkCheckAllAssessMent').is(':checked')) {
                     $('.chkExamSubjectSelection').each(function (i, obj) {
                         $('#' + obj.id).prop('checked', true);
+                        var elementId = obj.id;
+                        var QuestionBankName = $('#spnQuestionBankName_' + obj.id).text();
+                        var NoOfQuestions = $('#spnNoOfQuestions_' + obj.id).text();
+                        var Duration = $('#spnDuration_' + obj.id).text();
+                        var elementSelection = { id : elementId, QuestionBankName: QuestionBankName, NoOfQuestions: NoOfQuestions, Duration: Duration };
+                        selectedExamSyllabus.push(elementSelection);
                     });
                 }
                 else {
@@ -607,33 +1130,152 @@
                     });
                 }
             });
+
+            $('#chkAlertEmail').change(function () {
+                if ($('#chkAlertEmail').is(':checked')) {
+                    $('#txtAreaAlertEmail').show();
+                }
+                else{
+                    $('#txtAreaAlertEmail').hide();
+                }
+            });
+
+
+            $('.chkExamSubjectSelection').change(function () {
+                selectedExamSyllabus = new Array();
+                $('.chkExamSubjectSelection').each(function (i, obj) {
+                    //$('#' + obj.id).prop('checked', true);
+                    if ($('#' + obj.id).is(':checked')) {
+                        var elementId = obj.id;
+                        var QuestionBankName = $('#spnQuestionBankName_' + obj.id).text();
+                        var NoOfQuestions = $('#spnNoOfQuestions_' + obj.id).text();
+                        var Duration = $('#spnDuration_' + obj.id).text();
+                        var elementSelection = { id: elementId, QuestionBankName: QuestionBankName, NoOfQuestions: NoOfQuestions, Duration: Duration };
+                        selectedExamSyllabus.push(elementSelection);
+                    }
+                });
+
+
+
+
+            });
+
+
+
+            $('#btnEmailTemplate').click(function () {
+                $('#modalEmailTemplate').modal('show');
+            });
+
+
+
         });
 
-        $(function () {
-            $("#slider-range1").slider({
-                range: true,
-                min: 0,
-                max: 500,
-                values: [75, 300],
-                slide: function (event, ui) {
-                    $("#txt1").val("" + ui.values[0] + " - " + ui.values[1]);
-                }
-            });
-            $("#txt1").val("" + $("#slider-range1").slider("values", 0) + " -" + $("#slider-range1").slider("values", 1));
 
-            $("#slider-range2").slider({
-                range: true,
-                min: 0,
-                max: 500,
-                values: [75, 300],
-                slide: function (event, ui) {
-                    $("#txt2").val("" + ui.values[0] + " - " + ui.values[1]);
-                }
-            });
-            $("#txt2").val("" + $("#slider-range2").slider("values", 0) + " - " + $("#slider-range2").slider("values", 1));
+
+
+
+        $(function () {
+
+            debugger;
+
+            for(var items = 0 ; items < modelListQB.length;items++ )
+            {
+                var halfScore =  modelListQB[items].NoOfQuestions / 2;
+                var fullScore = modelListQB[items].NoOfQuestions;
+                $("#slider-range_"+ modelListQB[items].Id).slider({
+                    range: true,
+                    min: 0,
+                    max: fullScore,
+                    values: [halfScore, fullScore],
+                    slide: function (event, ui) {
+                        $("#txtSlider_"+ modelListQB[items].Id).val("" + ui.values[0] + "-" + ui.values[1]);
+                    }
+                });
+                $("#txtSlider_"+ modelListQB[items].Id).val("" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 0) + "-" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 1));
+            }
+
+
+
+            //$('.clsSlider').slider({
+            //    range: true,
+            //    min: 0,
+            //    max: 500,
+            //    values: [75, 300],
+            //    slide: function (event, ui) {
+            //        $(this).val("" + ui.values[0] + " - " + ui.values[1]);
+            //    }
+            //});
+
+
         });
     </script>
 
 
 
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalEmailTemplate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Assessment Alert Content</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    Template <select>
+                        <option selected>Default Template</option>
+                    </select>
+                    <br />
+
+                    CC <input type="text" id="txtCCEMail" />
+                    <br />
+                    BCC <input type="text" id="txtBCCEMail" />
+                    <br />
+                    Email Body
+                    <textarea id="emailBody">
+
+  Hi,
+
+This is an auto generated e-mail containing your login details for %companyName% hiring assessment.
+
+URL to login - %testUrl%
+User Name - %username%
+Password - %password%
+Assessment Name - %assessmentName%
+
+The above login details are valid from %startDateTime% to %endDateTime%. You need to begin the test within the specified time interval.
+
+Kindly read the instructions given before you proceed.
+1) Do not copy paste the User Name and Password. Always type in.
+2) Complete the test in one go.
+3) This is a timed test, it is essential to keep track of time while answering the questions.
+4) Answer all the questions and complete all the modules.
+
+Please note that you can attempt the test only once using this User ID and Password
+
+Thanks
+
+</textarea>
+                    <br />
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="saveContent">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 }
+
+
+
+
+<input type="hidden" id="hdnSelectedShortListCriteria" />

@@ -57,10 +57,25 @@
     <Compile Include="DataAccess\AdminDetail.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\AssesmentMasterDetailsForm.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AssessmentAdminEmailNotification.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\AssessmentDetailMaster.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\AssessmentQuestionBankDetail.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AssessmentStudentNotification.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\AssessmentUserDetail.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\CandidateAssesmentDetailsForm.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\CustomRegistrationForm.cs">
@@ -116,6 +131,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TestEngineEntity.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\UserAssessmentAnswerdetail.cs">
+      <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\UserDetailMaster.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>

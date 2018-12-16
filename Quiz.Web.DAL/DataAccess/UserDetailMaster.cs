@@ -18,6 +18,8 @@ namespace Quiz.Web.DAL.DataAccess
         public UserDetailMaster()
         {
             this.DefaultRegistations = new HashSet<DefaultRegistation>();
+            this.AssessmentUserDetails = new HashSet<AssessmentUserDetail>();
+            this.UserAssessmentAnswerdetails = new HashSet<UserAssessmentAnswerdetail>();
         }
     
         public System.Guid Id { get; set; }
@@ -28,5 +30,9 @@ namespace Quiz.Web.DAL.DataAccess
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DefaultRegistation> DefaultRegistations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AssessmentUserDetail> AssessmentUserDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserAssessmentAnswerdetail> UserAssessmentAnswerdetails { get; set; }
     }
 }

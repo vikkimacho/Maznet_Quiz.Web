@@ -12,18 +12,21 @@ namespace Quiz.Web.DAL.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class AssessmentQuestionBankDetail
+    public partial class AssessmentStudentNotification
     {
-        public System.Guid ID { get; set; }
-        public Nullable<System.Guid> AssessmentID { get; set; }
-        public Nullable<System.Guid> QuestionBankID { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public System.Guid id { get; set; }
+        public System.Guid AssessmentId { get; set; }
+        public bool IsEnabled { get; set; }
+        public string Type { get; set; }
+        public string CommunicationType { get; set; }
+        public string BodyofMessage { get; set; }
+        public string CC { get; set; }
+        public string BCC { get; set; }
+        public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
-        public Nullable<System.TimeSpan> Duration { get; set; }
-        public string QuestionBankName { get; set; }
+        public string Remarks { get; set; }
+        public string ModHistory { get; set; }
     
         public virtual AssessmentDetailMaster AssessmentDetailMaster { get; set; }
-        public virtual QuestionBankMaster QuestionBankMaster { get; set; }
     }
 }
