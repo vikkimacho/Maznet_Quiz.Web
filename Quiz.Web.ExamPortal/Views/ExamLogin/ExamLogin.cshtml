@@ -4,6 +4,12 @@
 
     Layout = null;
     ViewBag.Title = "Login";
+    var loginStatus = ViewBag.LoginStatus;
+    bool status = loginStatus == "Success" ? true : false;
+    string queryString = HttpContext.Current.Request.Url.PathAndQuery;
+    var splitData = queryString.Split('=');
+    string assessmentID = splitData.Count() > 1 ? splitData[1] : string.Empty;
+
 }
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -34,57 +40,46 @@
         top: 25%;
         max-width: 350px;
     }
+
+    .dvlogincontainer {
+        max-width: 350px;
+        padding: 45px;
+        margin-top: 103px;
+        border: 1px solid #dadada;
+    }
+
+    #dvImageSection {
+        margin-top: 30px;
+    }
 </style>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#btnLogin").click(function () {
-            debugger;
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("UserLogin", "ExamLogin")',
-                dataType: 'html',
-                success: function (data) {
-                    debugger;
-                    $("#dvLoginContent").empty();
-                    $("#dvLoginContent").html(data);
-                },
-                complete: function () {
-                    $("#mdlLogin").modal("show");
-                },
-                async: true,
-                cache:false
-            });
-        });
 
-    });
-</script>
-<div class="container-fluid">
-    <div id="dvLoginSection">
-        <button class=" btn btn-primary pull-right" id="btnLogin">Login</button>
-    </div>
-    <div class="img-fluid">
-        <img src="~/Content/Images/LoginImage.jpg" id="imgLoginImage" class="img-thumbnail" alt="Login Image">
-    </div>
-
-</div>
-
-<!-- Login Modal -->
-<div id="mdlLogin" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <h3 class="text-center">Welcome</h3>
-            <div class="modal-body" id="dvLoginContent">
-            </div>
-
+@if (status)
+{
+    <div class="container">
+        <div class="row text-left" id="dvImageSection">
+            <img class="img-responsive" src="~/Content/Images/logo.jpg" />
         </div>
 
+        @{ Html.RenderPartial("UserLoin", new { assessmentID = assessmentID }); }
     </div>
-</div>
+}
+else
+{
+    <script>
+        $(document).ready(function () {
+            $('#dvModalRestriction').modal('show');
+        });
+    </script>
+    <div class="modal fade bs-example-modal-sm" id="dvModalRestriction" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <p>You don't have permission to access this page.</p>
+            </div>
+        </div>
+    </div>
+}
+
 
 
 

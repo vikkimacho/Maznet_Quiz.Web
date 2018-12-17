@@ -44,6 +44,11 @@ namespace Quiz.Web.DAL.DataAccess
         public virtual DbSet<CustomRegistrationForm> CustomRegistrationForms { get; set; }
         public virtual DbSet<UserDetailMaster> UserDetailMasters { get; set; }
         public virtual DbSet<AssessmentUserDetail> AssessmentUserDetails { get; set; }
+        public virtual DbSet<CandidateAssesmentDetailsForm> CandidateAssesmentDetailsForms { get; set; }
+        public virtual DbSet<UserAssessmentAnswerdetail> UserAssessmentAnswerdetails { get; set; }
+        public virtual DbSet<AssesmentMasterDetailsForm> AssesmentMasterDetailsForms { get; set; }
+        public virtual DbSet<AssessmentStudentNotification> AssessmentStudentNotifications { get; set; }
+        public virtual DbSet<AssessmentAdminEmailNotification> AssessmentAdminEmailNotifications { get; set; }
     
         public virtual ObjectResult<GetDashBoardDetails_Result> GetDashBoardDetails(string starDatetime, string endDatetime)
         {

@@ -21,6 +21,44 @@
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
           <Property Name="IsSuperAdmin" Type="bit" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AssesmentMasterDetailsForm">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="FormId" />
+            <PropertyRef Name="DisplayFieldName" />
+            <PropertyRef Name="FieldName" />
+            <PropertyRef Name="FieldType" />
+            <PropertyRef Name="IsMandatory" />
+            <PropertyRef Name="ModifiedDate" />
+            <PropertyRef Name="IsLocked" />
+            <PropertyRef Name="IsEnabled" />
+            <PropertyRef Name="Createddate" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FormId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DisplayFieldName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FieldName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="FieldType" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="IsMandatory" Type="bit" Nullable="false" />
+          <Property Name="Values" Type="nvarchar" MaxLength="250" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="ModificationHistory" Type="nvarchar(max)" />
+          <Property Name="IsLocked" Type="bit" Nullable="false" />
+          <Property Name="IsEnabled" Type="bit" Nullable="false" />
+          <Property Name="Createddate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AssessmentAdminEmailNotification">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AssessmentId" Type="uniqueidentifier" />
+          <Property Name="IsAdminEmailCompletionAlertEnabled" Type="bit" Nullable="false" />
+          <Property Name="EmailId" Type="nvarchar" MaxLength="250" />
+        </EntityType>
         <EntityType Name="AssessmentDetailMaster">
           <Key>
             <PropertyRef Name="ID" />
@@ -46,6 +84,25 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" />
+          <Property Name="Duration" Type="time" Precision="7" />
+          <Property Name="QuestionBankName" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="AssessmentStudentNotification">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AssessmentId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsEnabled" Type="bit" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="CommunicationType" Type="nvarchar" MaxLength="50" />
+          <Property Name="BodyofMessage" Type="nvarchar(max)" />
+          <Property Name="CC" Type="nvarchar" MaxLength="100" />
+          <Property Name="BCC" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="ModHistory" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="AssessmentUserDetail">
           <Key>
@@ -57,6 +114,25 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="CandidateAssesmentDetailsForm">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FormId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DisplayFieldName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FieldName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="FieldType" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="IsMandatory" Type="bit" Nullable="false" />
+          <Property Name="Values" Type="nvarchar" MaxLength="250" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="ModificationHistory" Type="nvarchar(max)" />
+          <Property Name="IsLocked" Type="bit" Nullable="false" />
+          <Property Name="IsEnabled" Type="bit" Nullable="false" />
+          <Property Name="Createddate" Type="datetime" Nullable="false" />
+          <Property Name="AssessmentId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="CustomRegistrationForm">
           <Key>
@@ -216,6 +292,19 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="UserAssessmentAnswerdetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AssessmentID" Type="uniqueidentifier" />
+          <Property Name="QuestionBankID" Type="uniqueidentifier" />
+          <Property Name="UserID" Type="uniqueidentifier" />
+          <Property Name="Answer" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
         <EntityType Name="UserDetailMaster">
           <Key>
             <PropertyRef Name="Id" />
@@ -235,6 +324,18 @@
             </Principal>
             <Dependent Role="QuestionsDetails">
               <PropertyRef Name="QuestionBankID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssessmentAdminEmailNotification_AssessmentDetailMaster">
+          <End Role="AssessmentDetailMaster" Type="Self.AssessmentDetailMaster" Multiplicity="0..1" />
+          <End Role="AssessmentAdminEmailNotification" Type="Self.AssessmentAdminEmailNotification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssessmentDetailMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AssessmentAdminEmailNotification">
+              <PropertyRef Name="AssessmentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -271,6 +372,18 @@
             </Principal>
             <Dependent Role="AssessmentQuestionBankDetail">
               <PropertyRef Name="QuestionBankID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssessmentStudentNotification_AssessmentDetailMaster">
+          <End Role="AssessmentDetailMaster" Type="Self.AssessmentDetailMaster" Multiplicity="1" />
+          <End Role="AssessmentStudentNotification" Type="Self.AssessmentStudentNotification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssessmentDetailMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AssessmentStudentNotification">
+              <PropertyRef Name="AssessmentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -382,8 +495,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="Assesmentpagemodal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Association Name="FK_UserAssessmentAnswerdetail_AssessmentDetailMaster">
+          <End Role="AssessmentDetailMaster" Type="Self.AssessmentDetailMaster" Multiplicity="0..1" />
+          <End Role="UserAssessmentAnswerdetail" Type="Self.UserAssessmentAnswerdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssessmentDetailMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserAssessmentAnswerdetail">
+              <PropertyRef Name="AssessmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAssessmentAnswerdetail_QuestionBankMaster">
+          <End Role="QuestionBankMaster" Type="Self.QuestionBankMaster" Multiplicity="0..1" />
+          <End Role="UserAssessmentAnswerdetail" Type="Self.UserAssessmentAnswerdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionBankMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserAssessmentAnswerdetail">
+              <PropertyRef Name="QuestionBankID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAssessmentAnswerdetail_UserDetailMaster">
+          <End Role="UserDetailMaster" Type="Self.UserDetailMaster" Multiplicity="0..1" />
+          <End Role="UserAssessmentAnswerdetail" Type="Self.UserAssessmentAnswerdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetailMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAssessmentAnswerdetail">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="GetDashBoardDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StarDatetime" Type="varchar" Mode="In" />
           <Parameter Name="EndDatetime" Type="varchar" Mode="In" />
@@ -420,9 +567,12 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="TestEngineDBContextStoreContainer">
           <EntitySet Name="AdminDetails" EntityType="Self.AdminDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssessmentAdminEmailNotification" EntityType="Self.AssessmentAdminEmailNotification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AssessmentDetailMaster" EntityType="Self.AssessmentDetailMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AssessmentQuestionBankDetail" EntityType="Self.AssessmentQuestionBankDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssessmentStudentNotification" EntityType="Self.AssessmentStudentNotification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AssessmentUserDetail" EntityType="Self.AssessmentUserDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CandidateAssesmentDetailsForm" EntityType="Self.CandidateAssesmentDetailsForm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomRegistrationForm" EntityType="Self.CustomRegistrationForm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DefaultRegistation" EntityType="Self.DefaultRegistation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EligibilityCriteriaDetails" EntityType="Self.EligibilityCriteriaDetails" Schema="dbo" store:Type="Tables" />
@@ -435,10 +585,32 @@
           <EntitySet Name="QuestionsDetails" EntityType="Self.QuestionsDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RegistrationFormControls" EntityType="Self.RegistrationFormControls" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAssessmentAnswerdetail" EntityType="Self.UserAssessmentAnswerdetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDetailMaster" EntityType="Self.UserDetailMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssesmentMasterDetailsForm" EntityType="Self.AssesmentMasterDetailsForm" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AssesmentMasterDetailsForm].[id] AS [id], 
+    [AssesmentMasterDetailsForm].[FormId] AS [FormId], 
+    [AssesmentMasterDetailsForm].[DisplayFieldName] AS [DisplayFieldName], 
+    [AssesmentMasterDetailsForm].[FieldName] AS [FieldName], 
+    [AssesmentMasterDetailsForm].[FieldType] AS [FieldType], 
+    [AssesmentMasterDetailsForm].[IsMandatory] AS [IsMandatory], 
+    [AssesmentMasterDetailsForm].[Values] AS [Values], 
+    [AssesmentMasterDetailsForm].[ModifiedDate] AS [ModifiedDate], 
+    [AssesmentMasterDetailsForm].[Remarks] AS [Remarks], 
+    [AssesmentMasterDetailsForm].[ModificationHistory] AS [ModificationHistory], 
+    [AssesmentMasterDetailsForm].[IsLocked] AS [IsLocked], 
+    [AssesmentMasterDetailsForm].[IsEnabled] AS [IsEnabled], 
+    [AssesmentMasterDetailsForm].[Createddate] AS [Createddate]
+    FROM [dbo].[AssesmentMasterDetailsForm] AS [AssesmentMasterDetailsForm]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__Questions__Quest__6DCC4D03" Association="Self.FK__Questions__Quest__6DCC4D03">
             <End Role="QuestionBankMaster" EntitySet="QuestionBankMaster" />
             <End Role="QuestionsDetails" EntitySet="QuestionsDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssessmentAdminEmailNotification_AssessmentDetailMaster" Association="Self.FK_AssessmentAdminEmailNotification_AssessmentDetailMaster">
+            <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMaster" />
+            <End Role="AssessmentAdminEmailNotification" EntitySet="AssessmentAdminEmailNotification" />
           </AssociationSet>
           <AssociationSet Name="FK_AssessmentDetailMaster_EligibilityCriteriaDetails" Association="Self.FK_AssessmentDetailMaster_EligibilityCriteriaDetails">
             <End Role="EligibilityCriteriaDetails" EntitySet="EligibilityCriteriaDetails" />
@@ -451,6 +623,10 @@
           <AssociationSet Name="FK_AssessmentQuestionBankDetail_QuestionBankMaster" Association="Self.FK_AssessmentQuestionBankDetail_QuestionBankMaster">
             <End Role="QuestionBankMaster" EntitySet="QuestionBankMaster" />
             <End Role="AssessmentQuestionBankDetail" EntitySet="AssessmentQuestionBankDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssessmentStudentNotification_AssessmentDetailMaster" Association="Self.FK_AssessmentStudentNotification_AssessmentDetailMaster">
+            <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMaster" />
+            <End Role="AssessmentStudentNotification" EntitySet="AssessmentStudentNotification" />
           </AssociationSet>
           <AssociationSet Name="FK_AssessmentUserDetail_AssessmentDetailMaster" Association="Self.FK_AssessmentUserDetail_AssessmentDetailMaster">
             <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMaster" />
@@ -487,6 +663,18 @@
           <AssociationSet Name="FK_RegistrationFormControls_InputControlMaster" Association="Self.FK_RegistrationFormControls_InputControlMaster">
             <End Role="InputControlMaster" EntitySet="InputControlMaster" />
             <End Role="RegistrationFormControls" EntitySet="RegistrationFormControls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAssessmentAnswerdetail_AssessmentDetailMaster" Association="Self.FK_UserAssessmentAnswerdetail_AssessmentDetailMaster">
+            <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMaster" />
+            <End Role="UserAssessmentAnswerdetail" EntitySet="UserAssessmentAnswerdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAssessmentAnswerdetail_QuestionBankMaster" Association="Self.FK_UserAssessmentAnswerdetail_QuestionBankMaster">
+            <End Role="QuestionBankMaster" EntitySet="QuestionBankMaster" />
+            <End Role="UserAssessmentAnswerdetail" EntitySet="UserAssessmentAnswerdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAssessmentAnswerdetail_UserDetailMaster" Association="Self.FK_UserAssessmentAnswerdetail_UserDetailMaster">
+            <End Role="UserDetailMaster" EntitySet="UserDetailMaster" />
+            <End Role="UserAssessmentAnswerdetail" EntitySet="UserAssessmentAnswerdetail" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -527,6 +715,9 @@
           <NavigationProperty Name="AssessmentQuestionBankDetails" Relationship="Self.FK_AssessmentQuestionBankDetail_AssessmentDetailMaster" FromRole="AssessmentDetailMaster" ToRole="AssessmentQuestionBankDetail" />
           <NavigationProperty Name="ExamFinalReports" Relationship="Self.FK_ExamFinalReport_AssessmentDetailMaster" FromRole="AssessmentDetailMaster" ToRole="ExamFinalReport" />
           <NavigationProperty Name="AssessmentUserDetails" Relationship="TestEngineDBContext.FK_AssessmentUserDetail_AssessmentDetailMaster" FromRole="AssessmentDetailMaster" ToRole="AssessmentUserDetail" />
+          <NavigationProperty Name="UserAssessmentAnswerdetails" Relationship="TestEngineDBContext.FK_UserAssessmentAnswerdetail_AssessmentDetailMaster" FromRole="AssessmentDetailMaster" ToRole="UserAssessmentAnswerdetail" />
+          <NavigationProperty Name="AssessmentStudentNotifications" Relationship="TestEngineDBContext.FK_AssessmentStudentNotification_AssessmentDetailMaster" FromRole="AssessmentDetailMaster" ToRole="AssessmentStudentNotification" />
+          <NavigationProperty Name="AssessmentAdminEmailNotifications" Relationship="TestEngineDBContext.FK_AssessmentAdminEmailNotification_AssessmentDetailMaster" FromRole="AssessmentDetailMaster" ToRole="AssessmentAdminEmailNotification" />
         </EntityType>
         <EntityType Name="AssessmentQuestionBankDetail">
           <Key>
@@ -540,6 +731,8 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <NavigationProperty Name="AssessmentDetailMaster" Relationship="Self.FK_AssessmentQuestionBankDetail_AssessmentDetailMaster" FromRole="AssessmentQuestionBankDetail" ToRole="AssessmentDetailMaster" />
           <NavigationProperty Name="QuestionBankMaster" Relationship="Self.FK_AssessmentQuestionBankDetail_QuestionBankMaster" FromRole="AssessmentQuestionBankDetail" ToRole="QuestionBankMaster" />
+          <Property Name="Duration" Type="Time" Precision="7" />
+          <Property Name="QuestionBankName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="DefaultRegistation">
           <Key>
@@ -652,6 +845,7 @@
           <NavigationProperty Name="ExamFinalReports" Relationship="Self.FK_ExamFinalReport_QuestionBankMaster" FromRole="QuestionBankMaster" ToRole="ExamFinalReport" />
           <NavigationProperty Name="QuestionsDetails" Relationship="Self.FK__Questions__Quest__3A81B327" FromRole="QuestionBankMaster" ToRole="QuestionsDetails" />
           <Property Name="NoOfQuestions" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserAssessmentAnswerdetails" Relationship="TestEngineDBContext.FK_UserAssessmentAnswerdetail_QuestionBankMaster" FromRole="QuestionBankMaster" ToRole="UserAssessmentAnswerdetail" />
         </EntityType>
         <EntityType Name="QuestionsDetail">
           <Key>
@@ -832,38 +1026,8 @@
             <End Role="UserDetailMaster" EntitySet="UserDetailMasters" />
             <End Role="DefaultRegistation" EntitySet="DefaultRegistations" />
           </AssociationSet>
-          <FunctionImport Name="Assesmentpagemodal" ReturnType="Collection(TestEngineDBContext.Assesmentpagemodal_Result)" />
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(TestEngineDBContext.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(TestEngineDBContext.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
           <EntitySet Name="AssessmentUserDetails" EntityType="TestEngineDBContext.AssessmentUserDetail" />
+          <EntitySet Name="CandidateAssesmentDetailsForms" EntityType="TestEngineDBContext.CandidateAssesmentDetailsForm" />
           <AssociationSet Name="FK_AssessmentUserDetail_AssessmentDetailMaster" Association="TestEngineDBContext.FK_AssessmentUserDetail_AssessmentDetailMaster">
             <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMasters" />
             <End Role="AssessmentUserDetail" EntitySet="AssessmentUserDetails" />
@@ -871,6 +1035,30 @@
           <AssociationSet Name="FK_AssessmentUserDetail_UserDetailMaster" Association="TestEngineDBContext.FK_AssessmentUserDetail_UserDetailMaster">
             <End Role="UserDetailMaster" EntitySet="UserDetailMasters" />
             <End Role="AssessmentUserDetail" EntitySet="AssessmentUserDetails" />
+          </AssociationSet>
+          <EntitySet Name="UserAssessmentAnswerdetails" EntityType="TestEngineDBContext.UserAssessmentAnswerdetail" />
+          <EntitySet Name="AssesmentMasterDetailsForms" EntityType="TestEngineDBContext.AssesmentMasterDetailsForm" />
+          <AssociationSet Name="FK_UserAssessmentAnswerdetail_AssessmentDetailMaster" Association="TestEngineDBContext.FK_UserAssessmentAnswerdetail_AssessmentDetailMaster">
+            <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMasters" />
+            <End Role="UserAssessmentAnswerdetail" EntitySet="UserAssessmentAnswerdetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAssessmentAnswerdetail_QuestionBankMaster" Association="TestEngineDBContext.FK_UserAssessmentAnswerdetail_QuestionBankMaster">
+            <End Role="QuestionBankMaster" EntitySet="QuestionBankMasters" />
+            <End Role="UserAssessmentAnswerdetail" EntitySet="UserAssessmentAnswerdetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAssessmentAnswerdetail_UserDetailMaster" Association="TestEngineDBContext.FK_UserAssessmentAnswerdetail_UserDetailMaster">
+            <End Role="UserDetailMaster" EntitySet="UserDetailMasters" />
+            <End Role="UserAssessmentAnswerdetail" EntitySet="UserAssessmentAnswerdetails" />
+          </AssociationSet>
+          <EntitySet Name="AssessmentStudentNotifications" EntityType="TestEngineDBContext.AssessmentStudentNotification" />
+          <AssociationSet Name="FK_AssessmentStudentNotification_AssessmentDetailMaster" Association="TestEngineDBContext.FK_AssessmentStudentNotification_AssessmentDetailMaster">
+            <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMasters" />
+            <End Role="AssessmentStudentNotification" EntitySet="AssessmentStudentNotifications" />
+          </AssociationSet>
+          <EntitySet Name="AssessmentAdminEmailNotifications" EntityType="TestEngineDBContext.AssessmentAdminEmailNotification" />
+          <AssociationSet Name="FK_AssessmentAdminEmailNotification_AssessmentDetailMaster" Association="TestEngineDBContext.FK_AssessmentAdminEmailNotification_AssessmentDetailMaster">
+            <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMasters" />
+            <End Role="AssessmentAdminEmailNotification" EntitySet="AssessmentAdminEmailNotifications" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetDashBoardDetails_Result">
@@ -963,6 +1151,7 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <NavigationProperty Name="DefaultRegistations" Relationship="TestEngineDBContext.FK_DefaultRegistation_UserDetailMaster" FromRole="UserDetailMaster" ToRole="DefaultRegistation" />
           <NavigationProperty Name="AssessmentUserDetails" Relationship="TestEngineDBContext.FK_AssessmentUserDetail_UserDetailMaster" FromRole="UserDetailMaster" ToRole="AssessmentUserDetail" />
+          <NavigationProperty Name="UserAssessmentAnswerdetails" Relationship="TestEngineDBContext.FK_UserAssessmentAnswerdetail_UserDetailMaster" FromRole="UserDetailMaster" ToRole="UserAssessmentAnswerdetail" />
         </EntityType>
         <Association Name="FK_DefaultRegistation_UserDetailMaster">
           <End Type="TestEngineDBContext.UserDetailMaster" Role="UserDetailMaster" Multiplicity="1" />
@@ -976,26 +1165,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="Assesmentpagemodal_Result">
-          <Property Type="Guid" Name="Id" Nullable="false" />
-          <Property Type="String" Name="QuestionBankName" Nullable="true" MaxLength="100" />
-          <Property Type="Time" Name="Duration" Nullable="true" />
-          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="QuestionBankDescription" Nullable="true" />
-          <Property Type="Int32" Name="NoOfQuestions" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
         <EntityType Name="AssessmentUserDetail">
           <Key>
             <PropertyRef Name="ID" />
@@ -1008,6 +1177,25 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <NavigationProperty Name="AssessmentDetailMaster" Relationship="TestEngineDBContext.FK_AssessmentUserDetail_AssessmentDetailMaster" FromRole="AssessmentUserDetail" ToRole="AssessmentDetailMaster" />
           <NavigationProperty Name="UserDetailMaster" Relationship="TestEngineDBContext.FK_AssessmentUserDetail_UserDetailMaster" FromRole="AssessmentUserDetail" ToRole="UserDetailMaster" />
+        </EntityType>
+        <EntityType Name="CandidateAssesmentDetailsForm">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="FormId" Type="Guid" Nullable="false" />
+          <Property Name="DisplayFieldName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FieldName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FieldType" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsMandatory" Type="Boolean" Nullable="false" />
+          <Property Name="Values" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ModificationHistory" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocked" Type="Boolean" Nullable="false" />
+          <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="Createddate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AssessmentId" Type="Guid" Nullable="false" />
         </EntityType>
         <Association Name="FK_AssessmentUserDetail_AssessmentDetailMaster">
           <End Type="TestEngineDBContext.AssessmentDetailMaster" Role="AssessmentDetailMaster" Multiplicity="0..1" />
@@ -1030,6 +1218,137 @@
             </Principal>
             <Dependent Role="AssessmentUserDetail">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserAssessmentAnswerdetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="AssessmentID" Type="Guid" />
+          <Property Name="QuestionBankID" Type="Guid" />
+          <Property Name="UserID" Type="Guid" />
+          <Property Name="Answer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="AssessmentDetailMaster" Relationship="TestEngineDBContext.FK_UserAssessmentAnswerdetail_AssessmentDetailMaster" FromRole="UserAssessmentAnswerdetail" ToRole="AssessmentDetailMaster" />
+          <NavigationProperty Name="QuestionBankMaster" Relationship="TestEngineDBContext.FK_UserAssessmentAnswerdetail_QuestionBankMaster" FromRole="UserAssessmentAnswerdetail" ToRole="QuestionBankMaster" />
+          <NavigationProperty Name="UserDetailMaster" Relationship="TestEngineDBContext.FK_UserAssessmentAnswerdetail_UserDetailMaster" FromRole="UserAssessmentAnswerdetail" ToRole="UserDetailMaster" />
+        </EntityType>
+        <EntityType Name="AssesmentMasterDetailsForm">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="FormId" />
+            <PropertyRef Name="DisplayFieldName" />
+            <PropertyRef Name="FieldName" />
+            <PropertyRef Name="FieldType" />
+            <PropertyRef Name="IsMandatory" />
+            <PropertyRef Name="ModifiedDate" />
+            <PropertyRef Name="IsLocked" />
+            <PropertyRef Name="IsEnabled" />
+            <PropertyRef Name="Createddate" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="FormId" Type="Guid" Nullable="false" />
+          <Property Name="DisplayFieldName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FieldName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FieldType" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsMandatory" Type="Boolean" Nullable="false" />
+          <Property Name="Values" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ModificationHistory" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocked" Type="Boolean" Nullable="false" />
+          <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="Createddate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK_UserAssessmentAnswerdetail_AssessmentDetailMaster">
+          <End Type="TestEngineDBContext.AssessmentDetailMaster" Role="AssessmentDetailMaster" Multiplicity="0..1" />
+          <End Type="TestEngineDBContext.UserAssessmentAnswerdetail" Role="UserAssessmentAnswerdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssessmentDetailMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserAssessmentAnswerdetail">
+              <PropertyRef Name="AssessmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAssessmentAnswerdetail_QuestionBankMaster">
+          <End Type="TestEngineDBContext.QuestionBankMaster" Role="QuestionBankMaster" Multiplicity="0..1" />
+          <End Type="TestEngineDBContext.UserAssessmentAnswerdetail" Role="UserAssessmentAnswerdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionBankMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserAssessmentAnswerdetail">
+              <PropertyRef Name="QuestionBankID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAssessmentAnswerdetail_UserDetailMaster">
+          <End Type="TestEngineDBContext.UserDetailMaster" Role="UserDetailMaster" Multiplicity="0..1" />
+          <End Type="TestEngineDBContext.UserAssessmentAnswerdetail" Role="UserAssessmentAnswerdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetailMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAssessmentAnswerdetail">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AssessmentStudentNotification">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="AssessmentId" Type="Guid" Nullable="false" />
+          <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CommunicationType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BodyofMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BCC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ModHistory" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AssessmentDetailMaster" Relationship="TestEngineDBContext.FK_AssessmentStudentNotification_AssessmentDetailMaster" FromRole="AssessmentStudentNotification" ToRole="AssessmentDetailMaster" />
+        </EntityType>
+        <Association Name="FK_AssessmentStudentNotification_AssessmentDetailMaster">
+          <End Type="TestEngineDBContext.AssessmentDetailMaster" Role="AssessmentDetailMaster" Multiplicity="1" />
+          <End Type="TestEngineDBContext.AssessmentStudentNotification" Role="AssessmentStudentNotification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssessmentDetailMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AssessmentStudentNotification">
+              <PropertyRef Name="AssessmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AssessmentAdminEmailNotification">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="AssessmentId" Type="Guid" />
+          <Property Name="IsAdminEmailCompletionAlertEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="EmailId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AssessmentDetailMaster" Relationship="TestEngineDBContext.FK_AssessmentAdminEmailNotification_AssessmentDetailMaster" FromRole="AssessmentAdminEmailNotification" ToRole="AssessmentDetailMaster" />
+        </EntityType>
+        <Association Name="FK_AssessmentAdminEmailNotification_AssessmentDetailMaster">
+          <End Type="TestEngineDBContext.AssessmentDetailMaster" Role="AssessmentDetailMaster" Multiplicity="0..1" />
+          <End Type="TestEngineDBContext.AssessmentAdminEmailNotification" Role="AssessmentAdminEmailNotification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssessmentDetailMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AssessmentAdminEmailNotification">
+              <PropertyRef Name="AssessmentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1075,6 +1394,8 @@
           <EntitySetMapping Name="AssessmentQuestionBankDetails">
             <EntityTypeMapping TypeName="TestEngineDBContext.AssessmentQuestionBankDetail">
               <MappingFragment StoreEntitySet="AssessmentQuestionBankDetail">
+                <ScalarProperty Name="QuestionBankName" ColumnName="QuestionBankName" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="AssessmentID" ColumnName="AssessmentID" />
                 <ScalarProperty Name="QuestionBankID" ColumnName="QuestionBankID" />
@@ -1280,43 +1601,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="Assesmentpagemodal" FunctionName="TestEngineDBContext.Store.Assesmentpagemodal">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TestEngineDBContext.Assesmentpagemodal_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="QuestionBankName" ColumnName="QuestionBankName" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="QuestionBankDescription" ColumnName="QuestionBankDescription" />
-                <ScalarProperty Name="NoOfQuestions" ColumnName="NoOfQuestions" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="TestEngineDBContext.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="TestEngineDBContext.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="TestEngineDBContext.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="TestEngineDBContext.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TestEngineDBContext.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="TestEngineDBContext.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TestEngineDBContext.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="TestEngineDBContext.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="TestEngineDBContext.Store.sp_upgraddiagrams" />
           <EntitySetMapping Name="AssessmentUserDetails">
             <EntityTypeMapping TypeName="TestEngineDBContext.AssessmentUserDetail">
               <MappingFragment StoreEntitySet="AssessmentUserDetail">
@@ -1326,6 +1610,87 @@
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="AssessmentID" ColumnName="AssessmentID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CandidateAssesmentDetailsForms">
+            <EntityTypeMapping TypeName="TestEngineDBContext.CandidateAssesmentDetailsForm">
+              <MappingFragment StoreEntitySet="CandidateAssesmentDetailsForm">
+                <ScalarProperty Name="AssessmentId" ColumnName="AssessmentId" />
+                <ScalarProperty Name="Createddate" ColumnName="Createddate" />
+                <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="ModificationHistory" ColumnName="ModificationHistory" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="Values" ColumnName="Values" />
+                <ScalarProperty Name="IsMandatory" ColumnName="IsMandatory" />
+                <ScalarProperty Name="FieldType" ColumnName="FieldType" />
+                <ScalarProperty Name="FieldName" ColumnName="FieldName" />
+                <ScalarProperty Name="DisplayFieldName" ColumnName="DisplayFieldName" />
+                <ScalarProperty Name="FormId" ColumnName="FormId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAssessmentAnswerdetails">
+            <EntityTypeMapping TypeName="TestEngineDBContext.UserAssessmentAnswerdetail">
+              <MappingFragment StoreEntitySet="UserAssessmentAnswerdetail">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="QuestionBankID" ColumnName="QuestionBankID" />
+                <ScalarProperty Name="AssessmentID" ColumnName="AssessmentID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssesmentMasterDetailsForms">
+            <EntityTypeMapping TypeName="TestEngineDBContext.AssesmentMasterDetailsForm">
+              <MappingFragment StoreEntitySet="AssesmentMasterDetailsForm">
+                <ScalarProperty Name="Createddate" ColumnName="Createddate" />
+                <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="ModificationHistory" ColumnName="ModificationHistory" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="Values" ColumnName="Values" />
+                <ScalarProperty Name="IsMandatory" ColumnName="IsMandatory" />
+                <ScalarProperty Name="FieldType" ColumnName="FieldType" />
+                <ScalarProperty Name="FieldName" ColumnName="FieldName" />
+                <ScalarProperty Name="DisplayFieldName" ColumnName="DisplayFieldName" />
+                <ScalarProperty Name="FormId" ColumnName="FormId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssessmentStudentNotifications">
+            <EntityTypeMapping TypeName="TestEngineDBContext.AssessmentStudentNotification">
+              <MappingFragment StoreEntitySet="AssessmentStudentNotification">
+                <ScalarProperty Name="ModHistory" ColumnName="ModHistory" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="BCC" ColumnName="BCC" />
+                <ScalarProperty Name="CC" ColumnName="CC" />
+                <ScalarProperty Name="BodyofMessage" ColumnName="BodyofMessage" />
+                <ScalarProperty Name="CommunicationType" ColumnName="CommunicationType" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
+                <ScalarProperty Name="AssessmentId" ColumnName="AssessmentId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssessmentAdminEmailNotifications">
+            <EntityTypeMapping TypeName="TestEngineDBContext.AssessmentAdminEmailNotification">
+              <MappingFragment StoreEntitySet="AssessmentAdminEmailNotification">
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="IsAdminEmailCompletionAlertEnabled" ColumnName="IsAdminEmailCompletionAlertEnabled" />
+                <ScalarProperty Name="AssessmentId" ColumnName="AssessmentId" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

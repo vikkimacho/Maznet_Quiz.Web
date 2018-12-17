@@ -24,6 +24,28 @@ namespace Quiz.Web.BLL.Home
             var result = ObjAssessMentDAL.GetAssessmentPageModal();
             return result;
         }
+
+
+        public string PostCreateAssessment(PostAssessmentModal postAssessmentModal,Guid AssessmentId)
+        {
+            var result = ObjAssessMentDAL.PostCreateAssessment(postAssessmentModal, AssessmentId);
+            //Need to send notification emails based on the selection.
+
+            return result;
+        }
+
+
+
+        public string PostUpdateEligibleCriteria(List<PostEligibilityCriteria> lstpostAssessmentModal)
+        {
+            var result = ObjAssessMentDAL.PostUpdateEligibleCriteria(lstpostAssessmentModal);
+     
+
+            return result;
+        }
+
+
+
     }
 
 }

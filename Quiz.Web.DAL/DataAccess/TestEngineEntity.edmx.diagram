@@ -33,8 +33,18 @@
         <EntityTypeShape EntityType="TestEngineDBContext.UserDetailMaster" Width="1.5" PointX="12.375" PointY="10.75" />
         <AssociationConnector Association="TestEngineDBContext.FK_DefaultRegistation_UserDetailMaster" />
         <EntityTypeShape EntityType="TestEngineDBContext.AssessmentUserDetail" Width="1.5" PointX="14.625" PointY="8.5" />
+        <EntityTypeShape EntityType="TestEngineDBContext.CandidateAssesmentDetailsForm" Width="1.5" PointX="14.375" PointY="12.75" />
         <AssociationConnector Association="TestEngineDBContext.FK_AssessmentUserDetail_AssessmentDetailMaster" />
         <AssociationConnector Association="TestEngineDBContext.FK_AssessmentUserDetail_UserDetailMaster" />
+        <EntityTypeShape EntityType="TestEngineDBContext.UserAssessmentAnswerdetail" Width="1.5" PointX="16" PointY="4.625" />
+        <EntityTypeShape EntityType="TestEngineDBContext.AssesmentMasterDetailsForm" Width="1.5" PointX="0.75" PointY="15.75" />
+        <AssociationConnector Association="TestEngineDBContext.FK_UserAssessmentAnswerdetail_AssessmentDetailMaster" />
+        <AssociationConnector Association="TestEngineDBContext.FK_UserAssessmentAnswerdetail_QuestionBankMaster" />
+        <AssociationConnector Association="TestEngineDBContext.FK_UserAssessmentAnswerdetail_UserDetailMaster" />
+        <EntityTypeShape EntityType="TestEngineDBContext.AssessmentStudentNotification" Width="1.5" PointX="7.5" PointY="15.625" />
+        <AssociationConnector Association="TestEngineDBContext.FK_AssessmentStudentNotification_AssessmentDetailMaster" />
+        <EntityTypeShape EntityType="TestEngineDBContext.AssessmentAdminEmailNotification" Width="1.5" PointX="7.5" PointY="20.5" />
+        <AssociationConnector Association="TestEngineDBContext.FK_AssessmentAdminEmailNotification_AssessmentDetailMaster" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
