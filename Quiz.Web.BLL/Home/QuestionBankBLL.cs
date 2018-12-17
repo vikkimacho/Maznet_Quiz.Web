@@ -118,6 +118,49 @@ namespace Quiz.Web.BLL.Home
             return aPIResponse;
         }
 
+
+        public APIResponse QuestionsBankDelete(Guid? QuestionBankId)
+        {
+            try
+            {
+                aPIResponse = objQuestion.QuestionsBankDelete(QuestionBankId);
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return aPIResponse;
+        }
+
+        public QuestionBankDetail QuestionsBankEdit(Guid? QuestionBankId)
+        {
+
+            QuestionBankDetail detail = new QuestionBankDetail();
+            try
+            {
+                var data = objQuestion.QuestionsBankEdit(QuestionBankId);
+                detail.ID = data.ID;
+                detail.Description = data.QuestionBankDescription;
+                detail.Duration = data.Duration;
+                detail.QuestionBankName = data.QuestionBankName;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return detail;
+        }
+
+        public APIResponse UpdateQuestionBank(QuestionBankDetail questionsDetails)
+        {
+            APIResponse aPIResponse = new APIResponse();
+            QuestionBankDAL questionBankDAL = new QuestionBankDAL();
+            aPIResponse = questionBankDAL.UpdateQuestionBank(questionsDetails);
+
+            return aPIResponse;
+        }
+
         public APIResponse QuestionBankUpload(QuestionBankDetail questionsDetailsData)
         {
             APIResponse aPIResponse = new APIResponse();

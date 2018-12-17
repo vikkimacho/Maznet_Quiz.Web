@@ -5,7 +5,7 @@
     });
 </script>
 <div class="container-fluid">
-    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Add Users</button>
+    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Upload Question Bank</button>
     <h3>Update Question Bank</h3>
     <table class="table" id="QuestionBank">
         <thead>
@@ -21,6 +21,9 @@
             </td>
             <td>
                 Modified Date
+            </td>
+            <td>
+                Action
             </td>
             </tr>
         </thead>
@@ -40,6 +43,11 @@
             <td>
                 @item.ModifiedDate
             </td>
+            <td>
+                <a onclick="GetQuestionsBankEdit('@item.ID')">Edit</a> /
+                <a onclick="QuestionsBankDelete('@item.ID')">Delete</a>
+            </td>
+           
         </tr>
         }
 
@@ -83,13 +91,16 @@
                 <div class="form-group">
                     <label>Question Bank Title</label>
                     <input type="text" class="form-control" id="txtQuestionBankTitle" placeholder="Enter Question Bank Name" />
+                    <span style="color:red;display:none" id="Er_txtQuestionBankTitle">Question Bank Title is Required</span>
                 </div>
                 <div class="form-group">
                     <label>Question Bank Description</label>
                     <textarea id="txtQuestionBankDescription" class="form-control" rows="7" cols="30"></textarea>
+                    <span style="color:red;display:none" id="Er_txtQuestionBankDescription">Question Bank Description is Required</span>
                 </div>
                 <div class="form-group">
                     <input type="file" class="form-control-file" id="flQuestionUpload" />
+                    <span style="color:red;display:none" id="Er_flQuestionUpload">Upload Question Bank</span>
                 </div>
                 <div class="form-group">
                     <label>Status</label>
@@ -108,24 +119,128 @@
         </div>
     </div>
 </div>
+
+
+
+
+<div class="modal fade" id="EditModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Question Bank</h4>
+                <input type="hidden" id="Edit_QuestionBankId"/>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Question Bank Title</label>
+                    <input type="text" class="form-control" id="EdittxtQuestionBankTitle" placeholder="Enter Question Bank Name" />
+                    <span style="color:red;display:none" id="Er_EdittxtQuestionBankTitle">Question Bank Title is Required</span>
+                </div>
+                <div class="form-group">
+                    <label>Question Bank Description</label>
+                    <textarea id="EdittxtQuestionBankDescription" class="form-control" rows="7" cols="30"></textarea>
+                    <span style="color:red;display:none" id="Er_EdittxtQuestionBankDescription">Question Bank Description is Required</span>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="ddlEditStatusQuestionBank" class="form-control">
+                        <option value="ACTIVE">Active</option>
+                        <option value="NOTACTIVE">Not Active</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" id="btnEditQuestionBank">Update</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
 
+        var files;
+        $("#flQuestionUpload").on('change', function (e) {
+            debugger;
+             files = e.target.files;
+            var isValidFiles = true;
+
+            $('#file-error1').text('');
+            var file_size = $('#flQuestionUpload')[0].files[0].size;
+            if (file_size < 120000) {
+                $(files).each(function () {
+                    var filename = this.name;
+                    if ((filename.toUpperCase().indexOf(".XLSX") == -1) || (filename.toUpperCase().indexOf(".XLS")) == -1) {
+                        isValidFiles = false;
+                    }
+                });
+                if (isValidFiles) {
+                    ContactFile = e.target.files;
+
+                }
+                else {
+                    $('#mdlmessage').text('Choose Only .xlsx or xlx File');
+                    $('#modalPopUp').addClass("is-visible");
+                    $("#chooseContactsFile").val("");
+                }
+            }
+            else {
+                $('.box-error').css("border-color", "#FF0000");
+                $('#file-error1').text('File size must be less than 120KB');
+                $("#chooseContactsFile").val("");
+            }
+        });
+
         $("#btnUpdateQuestionBank").click(function () {
 
+
+
+            
             var questionBankName = $("#txtQuestionBankTitle").val();
             var questionBankDescription = $("#txtQuestionBankDescription").val();
-            var status = $("#ddlStatusQuestionBank").val();
+            var status = $("#ddlEditStatusQuestionBank").val();
             var finalStatus = false;
             if (status == "ACTIVE") {
                 finalStatus = true;
             }
-            
-            var data = new FormData();
-            for (var x = 0; x < ContactFile.length; x++) {
-                data.append("file" + x, ContactFile[x]);
+            $("#Er_txtQuestionBankTitle").hide();
+            $("#Er_txtQuestionBankDescription").hide();
+            $("#Er_flQuestionUpload").hide();
+
+            var Flag = true;
+
+
+            if (!questionBankName) {
+
+                $("#Er_txtQuestionBankTitle").show();
+                Flag = false;
+
             }
-            ;
+
+            if (!questionBankDescription) {
+
+                $("#Er_txtQuestionBankDescription").show();
+                Flag = false;
+
+            }
+
+            if (files) {
+                var data = new FormData();
+                for (var x = 0; x < ContactFile.length; x++) {
+                    data.append("file" + x, ContactFile[x]);
+                }
+            }
+            else {
+                $("#Er_flQuestionUpload").show();
+                flag = false;
+            }
+            if (Flag) {
+
                 $.ajax({
                         type: "POST",
                         url: '@Url.Action("UploadQuestionBank", "QuestionBank")?QuestionBankName=' + questionBankName + '&Duration=' + null + '&Description=' + questionBankDescription + '&Status=' + finalStatus,
@@ -140,14 +255,13 @@
 
                         },
                         success: function (result) {
-                            debugger;
-                            if (result.Result == "Failed") {
-                                //
+                            if (result.data.Result) {
+                                alert("Question bank Uploaded Succesfully");
+                                window.location.reload();
                             }
                             else {
-                                if (result.Message == "Contacts Uploaded Successfully") {
-                                    //
-                                }
+                                alert("Question bank Upload Failed");
+                                window.location.reload();
                             }
                         },
                         error: function (xhr, status, p3, p4) {
@@ -158,8 +272,163 @@
                         },
                         cache: false
                     })
+
+
+
+            }
+            
+                
+        })
+
+
+
+
+
+
+        $("#btnEditQuestionBank").click(function () {
+
+            var QuestionBankId = $("#Edit_QuestionBankId").val();
+            var questionBankName = $("#EdittxtQuestionBankTitle").val();
+            var questionBankDescription = $("#EdittxtQuestionBankDescription").val();
+            var status = $("#ddlStatusQuestionBank").val();
+            var finalStatus = false;
+            if (status == "ACTIVE") {
+                finalStatus = true;
+            }
+            $("#Er_EdittxtQuestionBankTitle").hide();
+            $("#Er_EdittxtQuestionBankDescription").hide();
+            $("#Er_EditflQuestionUpload").hide();
+
+            var Flag = true;
+
+
+            if (!questionBankName) {
+
+                $("#Er_EdittxtQuestionBankTitle").show();
+                Flag = false;
+
+            }
+
+            if (!questionBankDescription) {
+
+                $("#Er_EdittxtQuestionBankDescription").show();
+                Flag = false;
+
+            }
+
+
+            data = {
+                ID: QuestionBankId,
+                QuestionBankName: questionBankName,
+                Description: questionBankDescription,
+                Status: finalStatus,
+            }
+
+            if (Flag) {
+
+                $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("UpdateQuestionBank", "QuestionBank")',
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify(data),
+                        complete: function () {
+
+                        },
+                        success: function (result) {
+                            if (result.Result) {
+                                alert("Question bank Updated Succesfully");
+                                window.location.reload();
+                            }
+                            else {
+                                alert("Question bank Update Failed");
+                                window.location.reload();
+                            }
+                        },
+                        error: function (xhr, status, p3, p4) {
+                            var err = "Error " + " " + status + " " + p3 + " " + p4;
+                            if (xhr.responseText && xhr.responseText[0] == "{")
+                                err = JSON.parse(xhr.responseText).Message;
+
+                        },
+                        cache: false
+                    })
+
+
+
+            }
+            
+                
     })
 
-            })
+
+
+
+
+
+    })
+
+
+    function GetQuestionsBankEdit(QuestionBankId) {
+        
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("QuestionsBankEdit", "QuestionBank")?QuestionBankId=' + QuestionBankId,
+            contentType: false,
+            processData: false,
+            async: false,
+            success: function (result) {
+                if (result) {
+
+                    debugger;
+
+                    $("#EditModal").modal("show");
+                    $("#Edit_QuestionBankId").val(result.ID);
+                    $("#EdittxtQuestionBankTitle").val(result.QuestionBankName);
+                    $("#EdittxtQuestionBankDescription").val(result.Description);
+                }
+            },
+            error: function (xhr, status, p3, p4) {
+                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                if (xhr.responseText && xhr.responseText[0] == "{")
+                    err = JSON.parse(xhr.responseText).Message;
+
+            },
+            cache: false
+        });
+
+    }
+
+
+    function QuestionsBankDelete(QuestionBankId) {
+
+        //confirm("Are you Sure to delete Question ");
+
+        if (confirm("Are you Sure to Delete this Question Bank")) {
+            $.ajax({
+            type: "GET",
+                url: '@Url.Action("QuestionsBankDelete", "QuestionBank")?QuestionBankId=' + QuestionBankId,
+            contentType: false,
+            processData: false,
+            async: false,
+                success: function (Result) {
+                    if (Result.Result == true) {
+
+                        alert("Question Bank Deleted Succesfully.");
+
+                        window.location.reload();
+                }
+            },
+            error: function (xhr, status, p3, p4) {
+                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                if (xhr.responseText && xhr.responseText[0] == "{")
+                    err = JSON.parse(xhr.responseText).Message;
+
+            },
+            cache: false
+        });
+        }       
+        
+    }
 
 </script>

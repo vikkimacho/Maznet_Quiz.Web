@@ -124,6 +124,92 @@ namespace Quiz.Web.DAL.Home
             return response;
         }
 
+        public QuestionBankMaster QuestionsBankEdit(Guid? QuestionBankId)
+        {
+            QuestionBankMaster details = new QuestionBankMaster();
+            APIResponse response = new APIResponse();
+            try
+            {
+                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                {
+                    details = testEngineEntities.QuestionBankMasters.Where(x => x.ID == QuestionBankId && x.IsDeleted == false).FirstOrDefault();
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return details;
+        }
+
+        public APIResponse QuestionsBankDelete(Guid? QuestionBankId)
+        {
+            APIResponse response = new APIResponse();
+            response.Result = false;
+            try
+            {
+                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                {
+                    var data = testEngineEntities.QuestionBankMasters.Where(x => x.ID == QuestionBankId && x.IsDeleted == false).FirstOrDefault();
+                    var questions = testEngineEntities.QuestionsDetails.Where(x => x.ID == QuestionBankId && x.IsDeleted == false).FirstOrDefault();
+                    if (data != null)
+                    {
+                        data.IsDeleted = true;
+                        testEngineEntities.SaveChanges();
+                        response.Result = true;
+
+                        if(questions!= null)
+                        {
+                            questions.IsDeleted = true;
+                            testEngineEntities.SaveChanges();
+                            response.Result = true;
+
+                        }
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return response;
+        }
+
+        public APIResponse UpdateQuestionBank(QuestionBankDetail questionsDetailsView)
+        {
+            APIResponse response = new APIResponse();
+            response.Result = false;
+            try
+            {
+                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                {
+                    var data = testEngineEntities.QuestionBankMasters.Where(x => x.ID == questionsDetailsView.ID && x.IsDeleted == false).FirstOrDefault();
+                    if (data != null)
+                    {
+                        data.QuestionBankDescription = questionsDetailsView.Description;
+                        data.Duration = questionsDetailsView.Duration;
+                        data.QuestionBankName= questionsDetailsView.QuestionBankName;
+                        testEngineEntities.SaveChanges();
+                        response.Result = true;
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return response;
+        }
+
 
         public List<DefaultRegistation> GetUsersDetailList(Guid? UserDetailId)
         {

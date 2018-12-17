@@ -74,6 +74,23 @@ namespace Quiz.Web.UI.Controllers
             return Json(questionsDetailsView,JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult QuestionsBankEdit(Guid? QuestionBankId)
+        {
+            QuestionBankDetail questionsDetailsView = new QuestionBankDetail();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiUrl);
+                var result = client.GetAsync(apiUrl + "/QuestionBank/QuestionsBankEdit?QuestionBankId=" + QuestionBankId).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var Result = result.Content.ReadAsStringAsync().Result;
+
+                    questionsDetailsView = JsonConvert.DeserializeObject<QuestionBankDetail>(Result);
+                }
+            }
+            return Json(questionsDetailsView, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult UpdateQuestion(QuestionsDetailsView questionsDetailsView)
         {            
@@ -90,6 +107,25 @@ namespace Quiz.Web.UI.Controllers
             }
             return Json(APIResponse, JsonRequestBehavior.AllowGet);
         }
+
+
+        [HttpPost]
+        public ActionResult UpdateQuestionBank(QuestionBankDetail questionsDetailsView)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiUrl);
+                var result = client.PostAsJsonAsync(apiUrl + "/QuestionBank/UpdateQuestionBank", questionsDetailsView).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var Result = result.Content.ReadAsStringAsync().Result;
+
+                    APIResponse = JsonConvert.DeserializeObject<APIResponse>(Result);
+                }
+            }
+            return Json(APIResponse, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult QuestionsDelete(Guid? QuestionId)
         {            
             using (var client = new HttpClient())
@@ -106,6 +142,23 @@ namespace Quiz.Web.UI.Controllers
             return Json(APIResponse, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult QuestionsBankDelete(Guid? QuestionBankId)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiUrl);
+                var result = client.GetAsync(apiUrl + "/QuestionBank/QuestionsBankDelete?QuestionBankId=" + QuestionBankId).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var Result = result.Content.ReadAsStringAsync().Result;
+
+                    APIResponse = JsonConvert.DeserializeObject<APIResponse>(Result);
+                }
+            }
+            return Json(APIResponse, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         public ActionResult UploadQuestionBank(string QuestionBankName, string Duration, string Description, bool Status)
         {
             string Result = "Failed";
@@ -170,7 +223,7 @@ namespace Quiz.Web.UI.Controllers
                     }
                 }
             
-            return Json("");
+            return Json(new { data = response });
         }
 
 

@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 /Quiz.Web.API/Properties/PublishProfiles
 /Quiz.Web.UI/Properties/PublishProfiles
+/Quiz.Web.UI/Files/QuestionBank

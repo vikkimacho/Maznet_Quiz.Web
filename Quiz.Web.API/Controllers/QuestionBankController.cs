@@ -40,17 +40,33 @@ namespace Quiz.Web.API.Controllers
         [System.Web.Http.HttpGet]
         public QuestionsDetailsView QuestionsEdit(Guid? QuestionId)
         {
-            QuestionsDetailsView usersDetails = new QuestionsDetailsView();
+            QuestionsDetailsView detailsView = new QuestionsDetailsView();
             try
             {
-                usersDetails = objQuestionBank.QuestionsEdit(QuestionId);
+                detailsView = objQuestionBank.QuestionsEdit(QuestionId);
             }
             catch (Exception ex)
             {
 
                 throw;
             }
-            return usersDetails;
+            return detailsView;
+        }
+
+        [System.Web.Http.HttpGet]
+        public QuestionBankDetail QuestionsBankEdit(Guid? QuestionBankId)
+        {
+            QuestionBankDetail questionBankDetail  = new QuestionBankDetail();
+            try
+            {
+                questionBankDetail = objQuestionBank.QuestionsBankEdit(QuestionBankId);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return questionBankDetail;
         }
 
         [System.Web.Http.HttpPost]
@@ -68,6 +84,21 @@ namespace Quiz.Web.API.Controllers
             return APIResponse;
         }
 
+        [System.Web.Http.HttpPost]
+        public APIResponse UpdateQuestionBank(QuestionBankDetail questionsDetailsView)
+        {
+            try
+            {
+                APIResponse = objQuestionBank.UpdateQuestionBank(questionsDetailsView);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return APIResponse;
+        }
+
         [System.Web.Http.HttpGet]
         public APIResponse QuestionsDelete(Guid? QuestionId)
         {
@@ -75,6 +106,22 @@ namespace Quiz.Web.API.Controllers
             try
             {
                 APIResponse = objQuestionBank.QuestionsDelete(QuestionId);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return APIResponse;
+        }
+
+        [System.Web.Http.HttpGet]
+        public APIResponse QuestionsBankDelete(Guid? QuestionBankId)
+        {
+            APIResponse.Result = false;
+            try
+            {
+                APIResponse = objQuestionBank.QuestionsBankDelete(QuestionBankId);
             }
             catch (Exception ex)
             {
