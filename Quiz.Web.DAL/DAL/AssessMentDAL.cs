@@ -84,7 +84,7 @@ namespace Quiz.Web.DAL.Home
             {
                 using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
                 {
-                    var assesmentDetailMaster = new AssessmentDetailMaster();
+                    var assesmentDetailMaster = new DataAccess.AssessmentDetailMaster();
                     assesmentDetailMaster.AssessmentName = postAssessmentModal.AssessmentName;
                     assesmentDetailMaster.ID = AssessmentId;
                     assesmentDetailMaster.CreatedDate = DateTime.Now;

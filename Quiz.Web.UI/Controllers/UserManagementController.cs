@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using System.Configuration;
 
 namespace Quiz.Web.UI.Controllers
 {
@@ -16,6 +17,8 @@ namespace Quiz.Web.UI.Controllers
     public class UserManagementController : Controller
     {
         string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
+
+        private APIResponse APIResponse = new APIResponse();
         // GET: UserManagement
         public ActionResult UserManagement()
         {           
@@ -119,7 +122,123 @@ namespace Quiz.Web.UI.Controllers
             }
             return Json(new { data = response });
         }
+        
+
+        public ActionResult UserDetailEdit(Guid? UserDetailId)
+        {
+            UsersDetails usersDetails = new UsersDetails();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiUrl);
+                var result = client.GetAsync(apiUrl + "/UserManagement/UserDetailEdit?UserDetailId=" + UserDetailId).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var Result = result.Content.ReadAsStringAsync().Result;
+
+                    usersDetails = JsonConvert.DeserializeObject<UsersDetails>(Result);
+                }
+            }
+            return Json(usersDetails, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult UserEdit(Guid? UserId)
+        {
+            UsersDetailsModel usersDetailsModel = new UsersDetailsModel();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiUrl);
+                var result = client.GetAsync(apiUrl + "/UserManagement/UserEdit?UserId=" + UserId).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var Result = result.Content.ReadAsStringAsync().Result;
+
+                    usersDetailsModel = JsonConvert.DeserializeObject<UsersDetailsModel>(Result);
+                }
+            }
+            return Json(usersDetailsModel, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateUserDetail(UsersDetails usersDetails)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiUrl);
+                var result = client.PostAsJsonAsync(apiUrl + "/UserManagement/UpdateUserDetail", usersDetails).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var Result = result.Content.ReadAsStringAsync().Result;
+
+                    APIResponse = JsonConvert.DeserializeObject<APIResponse>(Result);
+                }
+            }
+            return Json(APIResponse, JsonRequestBehavior.AllowGet);
+        }
 
 
+        [HttpPost]
+        public ActionResult UpdateUser(UsersDetailsModel usersDetailsModel)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiUrl);
+                var result = client.PostAsJsonAsync(apiUrl + "/UserManagement/UpdateUser", usersDetailsModel).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var Result = result.Content.ReadAsStringAsync().Result;
+
+                    APIResponse = JsonConvert.DeserializeObject<APIResponse>(Result);
+                }
+            }
+            return Json(APIResponse, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult UserDetailDelete(Guid? UserDetailId)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiUrl);
+                var result = client.GetAsync(apiUrl + "/UserManagement/UserDetailDelete?UserDetailId=" + UserDetailId).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var Result = result.Content.ReadAsStringAsync().Result;
+
+                    APIResponse = JsonConvert.DeserializeObject<APIResponse>(Result);
+                }
+            }
+            return Json(APIResponse, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult UserDelete(Guid? UserId)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiUrl);
+                var result = client.GetAsync(apiUrl + "/UserManagement/UserDelete?UserId=" + UserId).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var Result = result.Content.ReadAsStringAsync().Result;
+
+                    APIResponse = JsonConvert.DeserializeObject<APIResponse>(Result);
+                }
+            }
+            return Json(APIResponse, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult DownloadTemplate()
+        {
+            string FilePath = "";
+            try
+            {
+                string UserTemplate = ConfigurationManager.AppSettings["UserTemplate"];
+                FilePath = System.Web.Hosting.HostingEnvironment.MapPath(UserTemplate);
+            }
+            catch (Exception ex)
+            {
+                
+            }
+            return File(FilePath, "application/vnd.ms-excel", Path.GetFileName(FilePath));
+        }
     }
 }

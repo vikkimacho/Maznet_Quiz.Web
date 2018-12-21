@@ -75,6 +75,7 @@ namespace Quiz.Web.DAL.Home
                     if(data != null)
                     {
                         data.IsDeleted = true;
+                        data.ModifiedDate = DateTime.UtcNow;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
                     }                    
@@ -102,13 +103,13 @@ namespace Quiz.Web.DAL.Home
                     if (data != null)
                     {
                         data.Answer = questionsDetailsView.Answer;
-                        data.ModifiedDate = questionsDetailsView.ModifiedDate;
                         data.OptionA = questionsDetailsView.OptionA;
                         data.OptionB = questionsDetailsView.OptionB;
                         data.OptionC = questionsDetailsView.OptionC;
                         data.OptionD = questionsDetailsView.OptionD;
                         data.OptionE = questionsDetailsView.OptionE;
                         data.Question = questionsDetailsView.Question;
+                        data.ModifiedDate = DateTime.UtcNow;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
                     }
@@ -158,12 +159,14 @@ namespace Quiz.Web.DAL.Home
                     if (data != null)
                     {
                         data.IsDeleted = true;
+                        data.ModifiedDate = DateTime.UtcNow;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
 
                         if(questions!= null)
                         {
                             questions.IsDeleted = true;
+                            questions.ModifiedDate = DateTime.UtcNow;
                             testEngineEntities.SaveChanges();
                             response.Result = true;
 
@@ -195,6 +198,7 @@ namespace Quiz.Web.DAL.Home
                         data.QuestionBankDescription = questionsDetailsView.Description;
                         data.Duration = questionsDetailsView.Duration;
                         data.QuestionBankName= questionsDetailsView.QuestionBankName;
+                        data.ModifiedDate = DateTime.UtcNow;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
                     }

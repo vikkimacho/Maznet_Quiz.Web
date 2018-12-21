@@ -12,11 +12,12 @@ namespace Quiz.Web.API.Controllers
 {
     public class UserManagementController : ApiController
     {
+        private UserManagementBLL userManagementBLL = new UserManagementBLL();
+        APIResponse response = new APIResponse();
         [System.Web.Http.HttpGet]
         public List<UsersDetails> GetUsersList()
         {
             List<UsersDetails> usersDetails = new List<UsersDetails>();
-            UserManagementBLL userManagementBLL = new UserManagementBLL();
             try
             {
                 usersDetails = userManagementBLL.GetUsersList();
@@ -52,7 +53,7 @@ namespace Quiz.Web.API.Controllers
         public APIResponse UploadUserDetail(UsersDetails usersDetails)
         {
             UsersDetailsModel details = new UsersDetailsModel();
-            APIResponse response = new APIResponse();
+            
             UserManagementBLL userManagementBLL = new UserManagementBLL();
             try
             {
@@ -63,6 +64,98 @@ namespace Quiz.Web.API.Controllers
 
                 throw;
             }            
+            return response;
+        }
+
+        [System.Web.Http.HttpGet]
+        public UsersDetails UserDetailEdit(Guid? UserDetailId)
+        {
+            UsersDetails detailsView = new UsersDetails();
+            try
+            {
+                detailsView = userManagementBLL.UserDetailEdit(UserDetailId);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return detailsView;
+        }
+
+        [System.Web.Http.HttpGet]
+        public UsersDetailsModel UserEdit(Guid? UserId)
+        {
+            UsersDetailsModel usersDetailsModel = new UsersDetailsModel();
+            try
+            {
+                usersDetailsModel = userManagementBLL.UserEdit(UserId);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return usersDetailsModel;
+        }
+
+        [System.Web.Http.HttpPost]
+        public APIResponse UpdateUserDetail(UsersDetails usersDetails)
+        {
+            try
+            {
+                response = userManagementBLL.UpdateUserDetail(usersDetails);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return response;
+        }
+
+        [System.Web.Http.HttpPost]
+        public APIResponse UpdateUser(UsersDetailsModel usersDetailsModel)
+        {
+            try
+            {
+                response = userManagementBLL.UpdateUser(usersDetailsModel);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return response;
+        }
+
+        [System.Web.Http.HttpGet]
+        public APIResponse UserDetailDelete(Guid? UserDetailId)
+        {
+            try
+            {
+                response = userManagementBLL.UserDetailDelete(UserDetailId);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return response;
+        }
+
+        [System.Web.Http.HttpGet]
+        public APIResponse UserDelete(Guid? UserId)
+        {
+            try
+            {
+                response = userManagementBLL.UserDelete(UserId);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
             return response;
         }
 

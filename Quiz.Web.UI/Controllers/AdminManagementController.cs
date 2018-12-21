@@ -18,7 +18,7 @@ namespace Quiz.Web.UI.Controllers
         private readonly string Success = "SUCCESS";
         private readonly string Failed = "FAILED";
         Logger logger = new Logger();
-        
+
         #endregion
         // GET: AdminManagement
         public ActionResult AdminManagement()
@@ -36,7 +36,7 @@ namespace Quiz.Web.UI.Controllers
                     adminDetails = JsonConvert.DeserializeObject<List<AdminDetails>>(result);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -46,7 +46,7 @@ namespace Quiz.Web.UI.Controllers
         public ActionResult EditAdminDtails(string id)
         {
             AdminDetails adminDetails = new AdminDetails();
-            
+
             try
             {
                 string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
@@ -61,7 +61,7 @@ namespace Quiz.Web.UI.Controllers
                     adminDetails = list.FirstOrDefault(x => x.ID == adminID);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -80,10 +80,10 @@ namespace Quiz.Web.UI.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     result = response.Content.ReadAsStringAsync().Result;
-                    
+                    result = JsonConvert.DeserializeObject<string>(result);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -98,14 +98,14 @@ namespace Quiz.Web.UI.Controllers
                 string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
                 HttpClient client = new HttpClient();
                 //HttpContent inputContent = new StringContent(Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.GetAsync(apiUrl + "/AdminManagement/GetAdminList").Result;
+                HttpResponseMessage response = client.PostAsJsonAsync(apiUrl + "/AdminManagement/DeleteAdmin?id=", id).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                     result = response.Content.ReadAsStringAsync().Result;
-                    
+                    result = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(result);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }

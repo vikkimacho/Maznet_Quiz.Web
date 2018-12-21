@@ -242,6 +242,7 @@
     <Content Include="Views\UserManagement\UserManagementList.cshtml" />
     <Content Include="Views\AssessMent\CreateAssessMent.cshtml" />
     <Content Include="Views\QuestionBank\QuestionsList.cshtml" />
+    <Content Include="Views\Login\forgot_password.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -251,6 +252,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Files\Template\" />
     <Folder Include="Files\UserDetails\" />
     <Folder Include="Models\" />
   </ItemGroup>

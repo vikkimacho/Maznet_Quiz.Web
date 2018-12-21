@@ -70,7 +70,6 @@ namespace Quiz.Web.BLL.Home
 
         public APIResponse QuestionsDelete(Guid? QuestionId)
         {
-            List<QuestionsDetailsView> detaillist = new List<QuestionsDetailsView>();
             try
             {
                 aPIResponse = objQuestion.QuestionsDelete(QuestionId);

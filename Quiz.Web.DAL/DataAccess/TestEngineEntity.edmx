@@ -169,6 +169,9 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <Property Name="CustomField9" Type="varchar" MaxLength="100" />
           <Property Name="CustomField10" Type="varchar" MaxLength="100" />
           <Property Name="Password" Type="nvarchar" MaxLength="250" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="EligibilityCriteriaDetails">
           <Key>
@@ -761,6 +764,9 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <Property Name="UserDetailId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="UserDetailMaster" Relationship="TestEngineDBContext.FK_DefaultRegistation_UserDetailMaster" FromRole="DefaultRegistation" ToRole="UserDetailMaster" />
           <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
         </EntityType>
         <EntityType Name="EligibilityCriteriaDetail">
           <Key>
@@ -1408,6 +1414,9 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <EntitySetMapping Name="DefaultRegistations">
             <EntityTypeMapping TypeName="TestEngineDBContext.DefaultRegistation">
               <MappingFragment StoreEntitySet="DefaultRegistation">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserDetailId" ColumnName="UserDetailId" />
                 <ScalarProperty Name="CustomField10" ColumnName="CustomField10" />
