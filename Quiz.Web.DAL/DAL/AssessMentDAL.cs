@@ -55,7 +55,7 @@ namespace Quiz.Web.DAL.Home
                     foreach (var item in lstpostAssessmentModal)
                     {
                         EligibilityCriteriaDetail eligibilityCriteriaDetail = new EligibilityCriteriaDetail();
-                        eligibilityCriteriaDetail.ID = Guid.NewGuid();
+                        eligibilityCriteriaDetail.ID = item.EligibilityGuid;
                         eligibilityCriteriaDetail.MayConsider = item.MayConsider;
                         eligibilityCriteriaDetail.Name = item.Name;
                         eligibilityCriteriaDetail.NotConsider = item.NotConsider;
@@ -84,7 +84,7 @@ namespace Quiz.Web.DAL.Home
             {
                 using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
                 {
-                    var assesmentDetailMaster = new AssessmentDetailMaster();
+                    var assesmentDetailMaster = new DataAccess.AssessmentDetailMaster();
                     assesmentDetailMaster.AssessmentName = postAssessmentModal.AssessmentName;
                     assesmentDetailMaster.ID = AssessmentId;
                     assesmentDetailMaster.CreatedDate = DateTime.Now;
@@ -258,7 +258,7 @@ namespace Quiz.Web.DAL.Home
                         AssessmentStudentNotification assessmentStudentNotification = new AssessmentStudentNotification();
                         assessmentStudentNotification.AssessmentId = assesmentDetailMaster.ID;
                         assessmentStudentNotification.BCC = postAssessmentModal.AssessmentStudentAlertModal.BCC;
-                        assessmentStudentNotification.BodyofMessage = postAssessmentModal.AssessmentStudentAlertModal.BCC;
+                        assessmentStudentNotification.BodyofMessage = postAssessmentModal.AssessmentStudentAlertModal.BodyofMessage;
                         assessmentStudentNotification.CC = postAssessmentModal.AssessmentStudentAlertModal.CC;
                         assessmentStudentNotification.CommunicationType = postAssessmentModal.AssessmentStudentAlertModal.CommunicationType;
                         assessmentStudentNotification.CreatedDate = DateTime.Now;
@@ -284,5 +284,54 @@ namespace Quiz.Web.DAL.Home
             return result;
         }
 
+
+
+        public string ValidateAssesmentName(string assesmentName)
+        {
+            String result = "Failed";
+            using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+            {
+                var assesmentInfo = TestEngineDBContext.AssessmentDetailMasters.FirstOrDefault(x => x.AssessmentName.Trim().ToUpper() == assesmentName.Trim().ToUpper());
+                if(assesmentInfo != null)
+                {
+                    return "AVAILABLE";
+                }
+
+            }                 
+            return result;
+        }
+
+        public List<MyAssesmentModal> GetListMyAssesment()
+        {
+            try
+            {
+                using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+                {
+                    var returnResult = TestEngineDBContext.Database.SqlQuery<MyAssesmentModal>("exec GetMyAssesments").ToList();
+                    return returnResult;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+           
+        }
+
+        public List<QuestionBankModal> LQuestionBankModal()
+        {
+            try
+            {
+                using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+                {
+                    var LQuestionBankModal = TestEngineDBContext.Database.SqlQuery<QuestionBankModal>("exec Assesmentpagemodal").ToList();
+                    return LQuestionBankModal;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

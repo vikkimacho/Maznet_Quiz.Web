@@ -31,6 +31,7 @@ namespace Quiz.Web.API.Controllers
                 return null;
             }
         }
+        [AcceptVerbs("Get", "Post")]
 
         public string PostCreateAssessment(PostAssessmentModal postAssessmentModal)
         {
@@ -48,15 +49,13 @@ namespace Quiz.Web.API.Controllers
             }
 
         }
+        [AcceptVerbs("Get", "Post")]
 
         public string PostUpdateEligibleCriteria(List<PostEligibilityCriteria> lstpostAssessmentModal)
         {
 
             try
-            {
-                var newAssessemntGuid = Guid.NewGuid();
-                //Need to send notification emails based on the selection.
-
+            {                
                 return ObjAssessmentBll.PostUpdateEligibleCriteria(lstpostAssessmentModal);
             }
             catch (Exception ex)
@@ -66,8 +65,51 @@ namespace Quiz.Web.API.Controllers
 
         }
 
+        [AcceptVerbs("Get", "Post")]
+
+        public string ValidateAssesmentName(AssesmentName assesmentName)
+        {
+            try
+            {
+                return ObjAssessmentBll.ValidateAssesmentName(assesmentName.ValidateAssesmentName);
+            }
+            catch (Exception ex)
+            {
+                return "Failed";
+            }
+
+        }
+
+        [AcceptVerbs("Get", "Post")]
+
+        public List<MyAssesmentModal> ListMyAssesments()
+        {
+            try
+            {
+                return ObjAssessmentBll.GetListMyAssesment();
+            }
+            catch (Exception ex)
+            {
+                return new List<MyAssesmentModal>();
+            }
+        }
+
+        [HttpGet]
+        public List<QuestionBankModal> LQuestionBankModal()
+        {
+            try
+            {
+                return ObjAssessmentBll.LQuestionBankModal();
+            }
+            catch (Exception ex)
+            {
+                return new List<QuestionBankModal>();
+            }
+
+        }
 
 
-        
+
+
     }
 }

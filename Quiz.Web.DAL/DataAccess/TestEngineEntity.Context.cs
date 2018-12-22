@@ -62,12 +62,12 @@ namespace Quiz.Web.DAL.DataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDashBoardDetails_Result>("GetDashBoardDetails", starDatetimeParameter, endDatetimeParameter);
         }
-    
+
         public virtual ObjectResult<Assesmentpagemodal_Result> Assesmentpagemodal()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Assesmentpagemodal_Result>("Assesmentpagemodal");
         }
-    
+
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
             var diagramnameParameter = diagramname != null ?

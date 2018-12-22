@@ -1,0 +1,47 @@
+﻿@model List<Quiz.Web.DTO.Models.MyAssesmentModal>
+
+@{
+    ViewBag.Title = "LoadMyAssesments";
+}
+
+<h2>My Assesments</h2>
+
+<div class="row">
+    <table class="table table-striped">
+
+        <tbody>
+
+            @foreach (var items in Model)
+            {
+                <tr>
+                    <td>
+                        @items.AssesmentName
+                    <br />
+                    Assessment Sections: @items.AssesmentSection<br />
+                    Test Duration: @items.totaltimeDuration<br />
+                    Created By:@items.CreatedBy<br />
+                    Last modified: @items.LastModified<br />
+                    Credits:@items.Credits<br />
+
+
+                    </td>
+                    <td>@items.Scheduled </td>
+                    <td>@items.Completed</td>
+                    <td>@items.StrongConsider</td>
+                    <td>@items.MayConsider</td>
+                    <td><a> Candidate Details</a>                       
+                    </td>
+                    <td><a> Edit Assesment</a></td>
+                    <td> <input type="button" id="btnLnkDeleteOrEdit"  value="|"/> </td>
+                     
+                </tr>
+
+            }
+
+
+        </tbody>
+
+
+    </table>
+
+</div>

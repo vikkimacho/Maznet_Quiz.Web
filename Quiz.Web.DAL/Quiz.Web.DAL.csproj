@@ -60,6 +60,7 @@
     <Compile Include="DataAccess\AssesmentMasterDetailsForm.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\Assesmentpagemodal_Result.cs" />
     <Compile Include="DataAccess\AssessmentAdminEmailNotification.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>

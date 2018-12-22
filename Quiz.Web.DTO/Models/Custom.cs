@@ -80,7 +80,7 @@ namespace Quiz.Web.DTO.Models
 
     public class PostEligibilityCriteria
     {
-
+        public Guid EligibilityGuid { get; set; }
         public Guid QuestionBankID { get; set; }
         public string Name { get; set; }
         public long NotConsider { get; set; }
@@ -174,4 +174,26 @@ namespace Quiz.Web.DTO.Models
     }
 
 
+    public class MyAssesmentModal
+    {
+        public Guid AssesmentId { get; set; }
+        public string AssesmentName{ get; set; }
+        public string AssesmentSection { get; set; }
+        public string totaltimeDuration { get; set; }
+        public DateTime LastModified { get; set; }
+        public string CreatedBy { get; set; }
+        public string Credits { get; set; }
+        public int Scheduled { get; set; }
+        public int Completed { get; set; }
+        public int StrongConsider { get; set; }
+        public int MayConsider { get; set; }
+          
+    }
+
+
+    public class AssesmentName
+    {
+        public string ValidateAssesmentName { get; set; }
+
+    }
 }

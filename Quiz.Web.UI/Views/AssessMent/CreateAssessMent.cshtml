@@ -200,10 +200,11 @@
             <div class="col-md-12">
                 <div class="well ds_lightBlue">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search keyword eg : sales,software engineer etc">
-                        <span class="input-group-btn">
+                        <input type="text" id="txtQuestionBankSearch" class="form-control" placeholder="Search keyword eg : sales,software engineer etc">
+                        <input type="hidden" id="hdnQuestionBankSearch" />
+                        @*<span class="input-group-btn">
                             <button class="btn btn-default ds_darkBlue" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                        </span>
+                        </span>*@
                     </div>
                 </div>
             </div>
@@ -240,7 +241,7 @@
 
                     @foreach (var item in Model.LQuestionBankModal)
                     {
-                        <tr>
+                        <tr class="trClsExamSelection" id="trIdExamSelection_@item.Id">
                             <td>
                                 <input id=@item.Id type="checkbox" class="chkExamSubjectSelection" />
                             </td>
@@ -367,14 +368,21 @@
                     {
                         <tr>
                             <td>
-                                <input type="checkbox" class="clsFormSelection" id="@item.id" checked />
+                                @if (item.IsEnabled)
+                                {
+                                    <input type="checkbox" class="clsFormSelection" id="@item.id" checked />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" class="clsFormSelection" id="@item.id" />
+                                }
                                 <input type="hidden" id="hdnFormId_@item.id" value="@item.id" />
                                 @item.DisplayFieldName
                             </td>
                             <td>@item.FieldType</td>
                             <td>@item.Values</td>
 
-                            @if (item.IsEnabled)
+                            @if (item.IsMandatory)
                             {
                                 if (item.IsLocked)
                                 {
@@ -617,7 +625,7 @@
 
                     Send Login Details to  (Enter comma seperated email list.) *
 
-                    <textarea id="txtCLSendLoginDetailsto"> </textarea>
+                    <textarea id="txtCLSendLoginDetailsto"></textarea>
 
 
 
@@ -632,8 +640,7 @@
         <div>
             Assessment completion alert    <input type="checkbox" id="chkAlertEmail" /><br />
 
-            <textarea style="display:none;" id="txtAreaAlertEmail" placeholder="Please enter comma separated email id's to receive assessment completion alert. e.g. test@gmail.com,test@yahoo.com">
-            </textarea>
+            <textarea style="display:none;" id="txtAreaAlertEmail" placeholder="Please enter comma separated email id's to receive assessment completion alert. e.g. test@gmail.com,test@yahoo.com"></textarea>
 
             <br />
             <br /><br />
@@ -833,6 +840,7 @@
 
                         },
                         success: function (data) {
+                            debugger;
                             if(data.Result == 'Success')
                             {
                                 alert("Assessment Created Successfully.");
@@ -934,7 +942,7 @@
 
         function ValidateStep2() {
             var returnStatus = true;
-
+            $('#errorAssName').text('');
             //Step 1 with name
             var assesmentName = $('#txtAssessmentName').val();
             if (assesmentName == null || assesmentName == '') {
@@ -942,7 +950,13 @@
                 returnStatus = false;
             }
             else {
-                $('#errorAssName').text('');
+                var validationResult = ValidateAssesmentName(assesmentName);
+                if(!validationResult)
+                {
+                    $('#errorAssName').text('Assesment name already available. Please try with another assesment name. ');
+                    returnStatus = false;
+                }
+                //$('#errorAssName').text('');
             }
             //Step 2 with selection
 
@@ -964,6 +978,44 @@
             return returnStatus;
         }
 
+        function ValidateAssesmentName(assesmentName)
+        {
+            var returnResult = true;
+            debugger;
+            var postUserData = JSON.stringify({ 'AssesmentName': assesmentName });
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ValidateAssesmentName", "AssessMent")",
+                contentType: 'application/json; charset=utf-8',
+                data:  postUserData,
+                beforeSend: function () {
+
+                },
+                complete: function () {
+
+                },
+                success: function (data) {
+                    debugger;
+                    if(data.Result == 'AVAILABLE')
+                    {
+                        returnResult = false;
+                    }
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {  debugger;
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                },
+                cache: false,
+                async:false
+            });
+
+            return returnResult;
+
+
+        }
 
         function ValidateStep3() {
             var returnStatus = true;
@@ -1026,6 +1078,56 @@
 
         $(document).ready(function () {
 
+            $("#txtQuestionBankSearch").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "@Url.Action("LoadAutoFillQuestionBankNames", "AssessMent")/",
+                        type: "GET",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        data: { term: request.term,  maxNoRecord: 10},
+                        dataFilter: function (data) { return data; },
+                        success: function (data) {
+                            debugger;
+                            response($.map(data, function (item) {
+                                return { label: item.QuestionBankName, value: item.QuestionBankName, id: item.Id };
+                            }))
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    debugger;
+                    $("#txtQuestionBankSearch").val(ui.item.label);
+                    $("#hdnQuestionBankSearch").val(ui.item.id);
+
+                    $('.chkExamSubjectSelection').each(function (i, obj) {
+                        //$('#' + obj.id).prop('checked', true);
+                        //if ($('#' + obj.id).is(':checked')) {
+                        var elementId = obj.id;
+                        if(elementId == ui.item.id)
+                        {
+                            $('#trIdExamSelection_' + ui.item.id).show();
+                        }
+                        else{
+                            $('#trIdExamSelection_' + elementId).hide();
+                        }
+                    });
+                     
+                },
+                messages: {
+                    noResults: "",
+                    results: function (resultsCount) {                }
+                },
+                minLength: 1
+            }).keyup(function (e) {
+                if (e.which === 13) {
+                    $(".ui-menu-item").hide();
+                }
+            });
+
+
+
+
 
             $("#btnSaveCriteria").click(function () {
                 debugger;
@@ -1045,7 +1147,7 @@
                             debugger;
                             var sliderVal = $('#txtSlider_'+ obj.id).val();
                             if(sliderVal != '')
-                            {   
+                            {
                                 var NotConsider = sliderVal.split("-")[0];
                                 var MayConsider = sliderVal.split("-")[1];
                                 var StrongConsider = 0;
@@ -1054,7 +1156,7 @@
                             }
                         }
                     });
-         
+
                     $.ajax({
                         type: "POST",
                         url: "@Url.Action("SaveEligibleCriteria", "AssessMent")",
@@ -1070,7 +1172,7 @@
                             if(data.Result == 'Success')
                             {
                                 $('#hdnSelectedShortListCriteria').val(data.AssesmentCriteriaId);
-                                alert("Eligibility Criteria Created Successfully.");                                 
+                                alert("Eligibility Criteria Created Successfully.");
                             }
                             else{
                                 alert("Something went wrong.")
@@ -1084,12 +1186,29 @@
                         cache: false
                     });
 
-         
+
                 }
 
 
             });
 
+            
+
+            $('#txtQuestionBankSearch').change(function () {
+                debugger;
+
+                var elementValue = $('#txtQuestionBankSearch').val();
+                if(elementValue == '')
+                {
+                    $('.chkExamSubjectSelection').each(function (i, obj) {
+                        //$('#' + obj.id).prop('checked', true);
+                        //if ($('#' + obj.id).is(':checked')) {
+                        var elementId = obj.id;
+                        $('#trIdExamSelection_' + elementId).show();
+                    });
+                }
+              
+            });
 
 
             $("input[name='ShortListCriteria']").change(function () {

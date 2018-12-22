@@ -77,13 +77,23 @@
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
-        
-
+             
             $("#lnkLogout").click(function () {
                 $("#dvLogOutModal").modal("show");
             });
-
+             
         });
+
+        
+
+        $(document).ajaxStart(function () {
+            $('#divLoader').show();
+        });
+        $(document).ajaxStop(function () {
+            $('#divLoader').hide();
+        });
+
+
     </script>
 </head>
 <body>
@@ -120,10 +130,8 @@
                         <a href="#" data-toggle="collapse" data-target="#demo">  Assessments <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
                             <li><a href='@Url.Action("CreateAssessment","AssessMent")'>Create Assessments</a></li>
-                            <li><a href='@Url.Action("QuestionBank","QuestionBank")'>My Assessments</a></li>
-                            <li>
-                                <a href='@Url.Action("QuestionBank","QuestionBank")'>Question Bank</a>
-                            </li>
+                            <li><a href='@Url.Action("LoadMyAssesments","AssessMent")'>My Assessments</a></li>
+                            <li><a href='@Url.Action("QuestionBank","QuestionBank")'>Question Bank</a></li>
                         </ul>
                     </li>
 
@@ -145,6 +153,8 @@
                 </div>
 
                 <!-- /.row -->
+
+                <div id="divLoader" style="display:none;"> <img src="~/Content/Images/loading.gif"  alt="Loader" /> </div> 
             </div>
         </div>
         <!-- /.container-fluid -->

@@ -43,9 +43,26 @@ namespace Quiz.Web.BLL.Home
 
             return result;
         }
+        public string ValidateAssesmentName(string assesmentName)
+        {
+            var result = ObjAssessMentDAL.ValidateAssesmentName(assesmentName);
+            return result;
+        }
+        
+        public List<MyAssesmentModal> GetListMyAssesment()
+        {
+            var result = ObjAssessMentDAL.GetListMyAssesment();
+            return result;
+
+        }
 
 
+        public List<QuestionBankModal> LQuestionBankModal()
+        {
+            var result = ObjAssessMentDAL.LQuestionBankModal();
+            return result;
 
+        }
     }
 
 }

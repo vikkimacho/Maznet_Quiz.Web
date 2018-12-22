@@ -149,6 +149,7 @@
     <Content Include="Content\Icons\Submit Module Icon.png" />
     <Content Include="Content\Icons\Time.png" />
     <Content Include="Content\Icons\User name.png" />
+    <Content Include="Content\Images\loading.gif" />
     <Content Include="Content\Images\LoginImage.jpg" />
     <Content Include="Content\login.css" />
     <Content Include="Content\Site.css" />
@@ -242,6 +243,7 @@
     <Content Include="Views\UserManagement\UserManagementList.cshtml" />
     <Content Include="Views\AssessMent\CreateAssessMent.cshtml" />
     <Content Include="Views\QuestionBank\QuestionsList.cshtml" />
+    <Content Include="Views\AssessMent\LoadMyAssesments.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
