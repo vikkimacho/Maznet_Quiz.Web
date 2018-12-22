@@ -6,6 +6,11 @@
     $(document).ready(function () {
         $('#UsersDetailview').DataTable();
     });
+    function downloadTemplate() {
+        debugger;
+        window.open('@Url.Action("DownloadTemplate", "UserManagement")', "_blank", "", true);
+    }
+
 </script>
 
 <div class="container-fluid">
@@ -20,6 +25,9 @@
                 <td><b>PERCENTAGE</b></td>
                 <td><b>GENDER</b></td>
                 <td><b>ADDRESS</b></td>
+                <td>
+                    Action
+                </td>
             </tr>
         </thead>
         
@@ -27,32 +35,36 @@
 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td id="@item.Id">
-                        @item.Name
-                    </td>
-                    <td>
-                        @item.Email
-                    </td>
-                    <td>
-                        @item.MobileNumber
-                    </td>
-                    <td>
-                        @item.Degree/@item.Major
-                    </td>
-                    <td>
-                        @item.Institution
-                    </td>
-                    <td>
-                        @item.Percentage
-                    </td>
-                    <td>
-                        @item.Gender
-                    </td>
-                    <td>
-                        @item.Address
-                    </td>
-                </tr>
+            <tr>
+                <td id="@item.Id">
+                    @item.Name
+                </td>
+                <td>
+                    @item.Email
+                </td>
+                <td>
+                    @item.MobileNumber
+                </td>
+                <td>
+                    @item.Degree/@item.Major
+                </td>
+                <td>
+                    @item.Institution
+                </td>
+                <td>
+                    @item.Percentage
+                </td>
+                <td>
+                    @item.Gender
+                </td>
+                <td>    
+                    @item.Address
+                </td>
+                <td>
+                    <a onclick="GetUserEdit('@item.Id')">Edit</a> /
+                    <a onclick="UserDelete('@item.Id')">Delete</a>
+                </td>
+            </tr>
 
             }
         </tbody>    
@@ -60,3 +72,334 @@
     </table>
 </div>
 
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update User</h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="UserId" />
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" id="Name" onblur="inputfocus(this)" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" id="Email" class="form-control" rows="7" cols="30" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>MobileNumber</label>
+                        <input type="text" id="MobileNumber" class="form-control" rows="7" cols="30" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Degree</label>
+                        <input type="text" id="Degree" class="form-control" rows="7" cols="30" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Institution</label>
+                        <input type="text" id="Institution" class="form-control" rows="7" cols="30" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Percentage</label>
+                        <input type="text" id="Percentage" class="form-control" rows="7" cols="30" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <input type="text" id="Gender" class="form-control" rows="7" cols="30" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" id="Address" class="form-control" rows="7" cols="30" />
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Custom Field1</label>
+                        <input type="text" id="CustomField1" class="form-control" rows="7" cols="30" />
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Custom Field2</label>
+                        <input type="text" id="CustomField2" class="form-control" rows="7" cols="30" />
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Custom Field3</label>
+                        <input type="text" id="CustomField3" class="form-control" rows="7" cols="30" />
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Custom Field4</label>
+                        <input type="text" id="CustomField4" class="form-control" rows="7" cols="30" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Custom Field5</label>
+                        <input type="text" id="CustomField5" class="form-control" rows="7" cols="30" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Custom Field6</label>
+                        <input type="text" id="CustomField6" class="form-control" rows="7" cols="30" />
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Custom Field7</label>
+                        <input type="text" id="CustomField7" class="form-control" rows="7" cols="30" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Custom Field8</label>
+                        <input type="text" id="CustomField8" class="form-control" rows="7" cols="30" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Custom Field9</label>
+                        <input type="text" id="CustomField9" class="form-control" rows="7" cols="30" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Custom Field10</label>
+                        <input type="text" id="CustomField10" class="form-control" rows="7" cols="30" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <button class="btn btn-primary" id="UpdateUser">Update</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+    </div>
+</div>
+
+<script>
+
+
+    $(document).ready(function () {
+
+
+        $("#UpdateUser").click(function () {
+
+            var UserId = $("#UserId").val();
+            var Name = $("#Name").val();
+            var Email = $("#Email").val();
+            var MobileNumber = $("#MobileNumber").val();
+            var Degree = $("#Degree").val();
+            var Institution = $("#Institution").val();
+            var Percentage = $("#Percentage").val();
+            var Gender = $("#Gender").val();
+            var Address = $("#Gender").val();
+            var CustomField1 = $("#CustomField1").val();
+            var CustomField2 = $("#CustomField2").val();
+            var CustomField3 = $("#CustomField3").val();
+            var CustomField4 = $("#CustomField4").val();
+            var CustomField5 = $("#CustomField5").val();
+            var CustomField6 = $("#CustomField6").val();
+            var CustomField7 = $("#CustomField7").val();
+            var CustomField8 = $("#CustomField8").val();
+            var CustomField9 = $("#CustomField9").val();
+            var CustomField10 = $("#CustomField10").val();
+            var Flag = true;
+
+
+            if (!Name) {
+                $("#Name").addClass("error-highlight");
+
+                Flag = false;
+            }
+            if (!Email) {
+
+                Flag = false;
+            }
+            if (!MobileNumber) {
+
+                Flag = false;
+            }
+            if (!Degree) {
+
+                Flag = false;
+            }
+            if (!Institution) {
+
+                Flag = false;
+            }
+            if (!Percentage) {
+
+                Flag = false;
+            }
+            if (!Gender) {
+
+                Flag = false;
+            }
+            if (!Address) {
+
+                Flag = false;
+            }
+
+                data = {
+                    Id: UserId,
+                    Name: Name,
+                    Email: Email,
+                    MobileNumber: MobileNumber,
+                    Degree: Degree,
+                    Institution: Institution,
+                    Percentage: Percentage,
+                    Gender: Gender,
+                    Answer: Address,
+                    CustomField1: CustomField1,
+                    CustomField2: CustomField2,
+                    CustomField3: CustomField3,
+                    CustomField4: CustomField4,
+                    CustomField5: CustomField5,
+                    CustomField6: CustomField6,
+                    CustomField7: CustomField7,
+                    CustomField8: CustomField8,
+                    CustomField9: CustomField9,
+                    CustomField10: CustomField10
+            }
+            if (Flag) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("UpdateUser", "UserManagement")',
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify(data),
+                    success: function (Result) {
+                        if (Result.Result == true) {
+                            alert("User Updated Succesfully");
+                        }
+                        else {
+                            alert("Update Failed");
+                        }
+                        window.location.reload();
+                    },
+                    error: function (xhr, status, p3, p4) {
+                        var err = "Error " + " " + status + " " + p3 + " " + p4;
+                        if (xhr.responseText && xhr.responseText[0] == "{")
+                            err = JSON.parse(xhr.responseText).Message;
+
+                    },
+                    cache: false
+                });
+            }
+            else {
+                return;
+            }
+        });
+    });
+
+
+
+    function UserDelete(UserId) {
+
+        //confirm("Are you Sure to delete Question ");
+
+        if (confirm("Are you Sure to Delete this User ")) {
+            $.ajax({
+            type: "GET",
+                url: '@Url.Action("UserDelete", "UserManagement")?UserId=' + UserId,
+            contentType: false,
+            processData: false,
+            async: false,
+                success: function (Result) {
+                    if (Result.Result == true) {
+
+                        alert("User Deleted Succesfully.");
+
+                        window.location.reload();
+                }
+            },
+            error: function (xhr, status, p3, p4) {
+                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                if (xhr.responseText && xhr.responseText[0] == "{")
+                    err = JSON.parse(xhr.responseText).Message;
+
+            },
+            cache: false
+        });
+        }
+
+    }
+
+
+        function GetUserEdit(UserId) {
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("UserEdit", "UserManagement")?UserId=' + UserId,
+            contentType: false,
+            processData: false,
+            async: false,
+            success: function (result) {
+                if (result) {
+
+                    $("#myModal").modal("show");
+                    $("#UserId").val(result.Id);
+                    $("#Name").val(result.Name);
+                    $("#Email").val(result.Email);
+                    $("#MobileNumber").val(result.MobileNumber);
+                    $("#Degree").val(result.Degree);
+                    $("#Institution").val(result.Institution);
+                    $("#Percentage").val(result.Percentage);
+                    $("#Gender").val(result.Gender);
+                    $("#CustomField1").val(result.CustomField1);
+                    $("#CustomField2").val(result.CustomField2);
+                    $("#CustomField3").val(result.CustomField3);
+                    $("#CustomField4").val(result.CustomField4);
+                    $("#CustomField5").val(result.CustomField5);
+                    $("#CustomField6").val(result.CustomField6);
+                    $("#CustomField7").val(result.CustomField7);
+                    $("#CustomField8").val(result.CustomField8);
+                    $("#CustomField9").val(result.CustomField9);
+                    $("#CustomField10").val(result.CustomField10);
+                }
+            },
+            error: function (xhr, status, p3, p4) {
+                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                if (xhr.responseText && xhr.responseText[0] == "{")
+                    err = JSON.parse(xhr.responseText).Message;
+
+            },
+            cache: false
+        });
+
+    }
+
+
+</script>

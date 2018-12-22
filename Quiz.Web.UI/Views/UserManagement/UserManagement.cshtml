@@ -17,22 +17,27 @@
                 <td><b>USER TITLE</b></td>
                 <td><b>CREATED DATE</b></td>
                 <td><b>MODIFIED DATE</b></td>
+                <td><b>ACTION</b></td>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td id="@item.Id">
-                        <a href="@Url.Action("UserManagementList","UserManagement",new { UserDetailId = item.Id})">@item.UserTitleName</a>
-                    </td>
-                    <td>
-                        @item.CreatedDateTime
-                    </td>
-                    <td>
-                        @item.ModifiedDateTime
-                    </td>
-                </tr>
+            <tr>
+                <td id="@item.Id">
+                    <a href="@Url.Action("UserManagementList","UserManagement",new { UserDetailId = item.Id})">@item.UserTitleName</a>
+                </td>
+                <td>
+                    @item.CreatedDateTime
+                </td>
+                <td>
+                    @item.ModifiedDateTime
+                </td>
+                <td>
+                    <a onclick="GetUserDetailEdit('@item.Id')">Edit</a> /
+                    <a onclick="UserDetailDelete('@item.Id')">Delete</a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
@@ -83,6 +88,35 @@
         </div>
     </div>
         </div>
+
+
+
+<div class="modal fade" id="EditModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <input type="hidden" id="Edit_UserId"/>
+                <h4 class="modal-title">Update Users Detail </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>User Title</label>
+                    <input type="text" class="form-control" id="Edit_txtUserTitle" placeholder="Enter User" />
+                    <span style="color:red;display:none" id="Er_Edit_txtUserTitle">User Title is Required</span>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" id="Edit_btnUpdateUsers">Update</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     $(document).ready(function () {
         var files;
@@ -179,5 +213,129 @@
         });
 
     });
+
+
+
+
+
+    $("#Edit_btnUpdateUsers").click(function () {
+
+        var UserId = $("#Edit_UserId").val();
+        var UserTitle = $("#Edit_txtUserTitle").val();
+
+        $("#Er_Edit_txtUserTitle").hide();
+
+        var Flag = true;
+
+
+        if (!UserTitle) {
+
+            $("#Er_Edit_txtUserTitle").show();
+            Flag = false;
+
+        }
+            
+        data = {
+            Id: UserId,
+            UserTitleName: UserTitle,
+        }
+
+        if (Flag) {
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UpdateUserDetail", "UserManagement")',
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(data),
+                complete: function () {
+
+                },
+                success: function (result) {
+                    if (result.Result) {
+                        alert("User Updated Succesfully");
+                        window.location.reload();
+                    }
+                    else {
+                        alert("User Update Failed");
+                        window.location.reload();
+                    }
+                },
+                error: function (xhr, status, p3, p4) {
+                    var err = "Error " + " " + status + " " + p3 + " " + p4;
+                    if (xhr.responseText && xhr.responseText[0] == "{")
+                        err = JSON.parse(xhr.responseText).Message;
+
+                },
+                cache: false
+            })
+
+        }
+
+    });
+
+
+
+    function GetUserDetailEdit(UserDetailId) {
+        
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("UserDetailEdit", "UserManagement")?UserDetailId=' + UserDetailId,
+            contentType: false,
+            processData: false,
+            async: false,
+            success: function (result) {
+                if (result) {
+                    
+                    $("#EditModal").modal("show");
+                    $("#Edit_UserId").val(result.Id);
+                    $("#Edit_txtUserTitle").val(result.UserTitleName);
+                }
+            },
+            error: function (xhr, status, p3, p4) {
+                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                if (xhr.responseText && xhr.responseText[0] == "{")
+                    err = JSON.parse(xhr.responseText).Message;
+
+            },
+            cache: false
+        });
+
+    }
+
+
+    function UserDetailDelete(UserDetailId) {
+
+        //confirm("Are you Sure to delete Question ");
+
+        if (confirm("Are you Sure to Delete this Users")) {
+            $.ajax({
+            type: "GET",
+                url: '@Url.Action("UserDetailDelete", "UserManagement")?UserDetailId=' + UserDetailId,
+            contentType: false,
+            processData: false,
+            async: false,
+                success: function (Result) {
+                    if (Result.Result == true) {
+
+                        alert("Users Deleted Succesfully.");
+
+                        window.location.reload();
+                }
+            },
+            error: function (xhr, status, p3, p4) {
+                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                if (xhr.responseText && xhr.responseText[0] == "{")
+                    err = JSON.parse(xhr.responseText).Message;
+
+            },
+            cache: false
+        });
+        }       
+        
+    }
+
+
+
 
 </script>

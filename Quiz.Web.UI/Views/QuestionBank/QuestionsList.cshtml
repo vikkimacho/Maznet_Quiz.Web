@@ -77,7 +77,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Question Detail</h4>
+                <h4 class="modal-title">Update Question Detail</h4>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="QuestionId" />
@@ -196,7 +196,7 @@
 
                         alert("Question Deleted Succesfully.");
 
-                        window.reload();
+                        window.location.reload();
                 }
             },
             error: function (xhr, status, p3, p4) {

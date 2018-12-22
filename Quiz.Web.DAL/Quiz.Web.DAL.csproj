@@ -115,12 +115,6 @@
     <Compile Include="DataAccess\RegistrationFormControl.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataAccess\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\sp_helpdiagrams_Result.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataAccess\sysdiagram.cs">
       <DependentUpon>TestEngineEntity.tt</DependentUpon>
     </Compile>

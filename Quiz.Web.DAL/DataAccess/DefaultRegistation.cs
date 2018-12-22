@@ -36,6 +36,9 @@ namespace Quiz.Web.DAL.DataAccess
         public string CustomField10 { get; set; }
         public System.Guid UserDetailId { get; set; }
         public string Password { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     
         public virtual UserDetailMaster UserDetailMaster { get; set; }
     }

@@ -10,10 +10,12 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
+using System.Web.Http;
 
 namespace Quiz.Web.API.Controllers
 {
-    public class GoogleMailController : Controller
+    public class GoogleMailController : ApiController
     {
 
 
@@ -32,10 +34,13 @@ namespace Quiz.Web.API.Controllers
             
         }
         // GET: GoogleMail
-        public ActionResult SendGoogleMail(GoogleMail googleMail)
+        [System.Web.Http.HttpPost]
+        public string SendGoogleMail(GoogleMail googleMail)
         {
+            string result = "FAILED";
             try
             {
+                 
                 UserCredential credential;
                 //read credentials file
                 using (FileStream stream = new FileStream(@"~\packagejson\credentials.json", FileMode.Open, FileAccess.Read))
@@ -60,6 +65,7 @@ namespace Quiz.Web.API.Controllers
                 var newMsg = new Google.Apis.Gmail.v1.Data.Message();
                 newMsg.Raw = Base64UrlEncode(plainText.ToString());
                 service.Users.Messages.Send(newMsg, "me").Execute();
+                result = "SUCCESS";
 
             }
             catch (Exception ex)
@@ -67,7 +73,7 @@ namespace Quiz.Web.API.Controllers
 
                 throw ex;
             }
-            return View();
+            return result;
         }
     }
 }
