@@ -26,6 +26,7 @@ namespace Quiz.Web.DAL.DataAccess
         public Nullable<long> NotConsider { get; set; }
         public Nullable<long> MayConsider { get; set; }
         public Nullable<long> StrongConsider { get; set; }
+        public System.Guid EligibilityIdForAssessment { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AssessmentDetailMaster> AssessmentDetailMasters { get; set; }

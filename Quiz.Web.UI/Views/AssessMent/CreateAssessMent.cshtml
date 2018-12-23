@@ -57,7 +57,7 @@
                     width: 30px;
                     height: 30px;
                     display: block;
-                    background: #fbe8aa;
+                    background: rgb(153, 199, 234);
                     top: 45px;
                     left: 50%;
                     margin-top: -15px;
@@ -69,7 +69,7 @@
                         content: ' ';
                         width: 14px;
                         height: 14px;
-                        background: #fbbd19;
+                        background: rgb(011,071,117);
                         border-radius: 50px;
                         position: absolute;
                         top: 8px;
@@ -87,7 +87,7 @@
                     .bs-wizard > .bs-wizard-step > .progress > .progress-bar {
                         width: 0px;
                         box-shadow: none;
-                        background: #fbe8aa;
+                        background: rgb(153, 199, 234);
                     }
 
                 .bs-wizard > .bs-wizard-step.complete > .progress > .progress-bar {
@@ -146,14 +146,22 @@
             #dvAddMoreText label {
                 margin-top: 5px;
             }
+
+        .foreBlue {
+            color: rgb(011,017,117);
+        }
+
+        hr {
+            border: 2px solid #dadada;
+        }
     </style>
 
 
 
 
 
-    <div class="row">
-        <h3>Create Assessment</h3>
+    <div class="container-fluid">
+        <h3 class="foreBlue">Create Assessment</h3>
     </div>
 
     <div class="container-fluid">
@@ -186,6 +194,19 @@
 
     <div id="divStep1">
         <div class="row">
+            <div class="col-md-12">
+                <div class="well ds_lightBlue">
+                    <div class="input-group">
+                        <input type="text" id="txtQuestionBankSearch" class="form-control" placeholder="Search keyword eg : sales,software engineer etc">
+                        <input type="hidden" id="hdnQuestionBankSearch" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default saveButtonsColor" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
 
 
             <div class="form-group col-lg-8 col-md-8 col-sm-12 col-xs-12">
@@ -197,32 +218,21 @@
             </div>
 
 
-            <div class="col-md-12">
-                <div class="well ds_lightBlue">
-                    <div class="input-group">
-                        <input type="text" id="txtQuestionBankSearch" class="form-control" placeholder="Search keyword eg : sales,software engineer etc">
-                        <input type="hidden" id="hdnQuestionBankSearch" />
-                        @*<span class="input-group-btn">
-                            <button class="btn btn-default ds_darkBlue" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                        </span>*@
-                    </div>
-                </div>
-            </div>
 
         </div>
 
         <hr />
-        <div class="row">
-            <div class="col-md-12 ds_darkBlue" id="dvAddMoreText">
-                <label class="pull-left">Uploaded Question Banks</label>
-                <span hidden class="pull-right"><img id="imgAddMoreText" src="~/Content/Icons/Adding Icon.png" /></span>
-            </div>
-        </div>
+        @*<div class="row">
+                <div class="col-md-12 ds_darkBlue" id="dvAddMoreText">
+                    <label class="pull-left">Uploaded Question Banks</label>
+                    <span hidden class="pull-right"><img id="imgAddMoreText" src="~/Content/Icons/Adding Icon.png" /></span>
+                </div>
+            </div>*@
 
         <div class="row">
             <table class="table table-striped">
                 <thead>
-                    <tr>
+                    <tr class="tableHeaderBlue">
                         <th>
                             <input type="checkbox" id="chkCheckAllAssessMent" />
                         </th>
@@ -265,7 +275,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <input type="button" class="btn ds_darkBlue pull-left" value="Undo Changes" />
+                    <input type="button" class="btn saveButtonsColor pull-left" value="Undo Changes" />
                     <span class="pull-right"><label>Total Duration</label> <span>0h 25 mins</span> </span>
                 </div>
             </div>
@@ -273,19 +283,23 @@
             <div class="row">
                 <div class="col-md-12 text-right">
                     @*<button class="btn ds_Expired"> Back </button>*@
-                    <button id="btnNext1" onclick="return ShowStep2()" class="btn ds_darkBlue">Save & Next </button>
+                    <button id="btnNext1" onclick="return ShowStep2()" class="btn saveButtonsColor">Save & Next </button>
                 </div>
             </div>
         </div>
     </div>
 
-
+    <div class="clearfix"></div>
     <div id="divStep2" style="display:none;">
 
+
         <div class="row">
+            <h4 class="ds_lightBlue tableHeaderText">
+                Proctor These Assessments
+            </h4>
             <table class="table table-striped">
                 <thead>
-                    <tr>
+                    <tr class="tableHeaderBlue">
                         <th>
                             Auto Proc
                         </th>
@@ -321,10 +335,10 @@
 
 
         <div class="row">
-            <h4>Assesment Details</h4>
+            <h4 class="ds_lightBlue tableHeaderText">Assesment Details</h4>
             <table class="table table-striped">
                 <thead>
-                    <tr>
+                    <tr class="tableHeaderBlue">
                         <th>
                             Test Name
                         </th>
@@ -348,14 +362,14 @@
 
 
 
-            <h4>Candidates details form</h4>
+            <h4 class="ds_lightBlue tableHeaderText">Candidates details form</h4>
             @*<span>   Do you want to create a new form or use an existing one? </span>
                 <input type="radio" name="FormSelection" id="radExistingForm" />Select Existing
                 <input type="radio" name="FormSelection" id="radNewForm" checked />Create New*@
 
             <table class="table table-striped">
                 <thead>
-                    <tr>
+                    <tr class="tableHeaderBlue">
                         <th>Field Name</th>
                         <th>Field Type</th>
                         <th>Values</th>
@@ -406,7 +420,7 @@
 
             <div class="col-md-12 text-right">
                 <button onclick="return ShowStep1()" class="btn ds_Expired"> Back </button>
-                <button id="btnNext1" onclick="return ShowStep3()" class="btn ds_darkBlue">Save & Next </button>
+                <button id="btnNext1" onclick="return ShowStep3()" class="btn saveButtonsColor">Save & Next </button>
             </div>
         </div>
 
@@ -416,7 +430,7 @@
 
     <div id="divStep3" style="display:none;">
         <span>Step 3</span>
-        <h3>Short listing criteria </h3>
+        <h3 class="ds_lightBlue tableHeaderText">Short listing criteria </h3>
 
         <div>
             Do you want to create a new shortlisting criteria or use an existing one?
@@ -479,7 +493,7 @@
         <div class="row">
             <div class="col-md-12 text-right">
                 <button onclick="return ShowStep2()" class="btn ds_Expired"> Back </button>
-                <button id="btnNext1" onclick="return ShowStep4()" class="btn ds_darkBlue">Save & Next </button>
+                <button id="btnNext1" onclick="return ShowStep4()" class="btn saveButtonsColor">Save & Next </button>
             </div>
         </div>
 
@@ -554,7 +568,7 @@
                     Uploaded Candidates List
                     <table class="table table-striped">
                         <thead>
-                            <tr>
+                            <tr class="tableHeaderBlue">
                                 <th>
                                     Title
                                 </th>
@@ -671,7 +685,7 @@
         <div class="row">
             <div class="col-md-12 text-right">
                 <button onclick="return ShowStep3()" class="btn ds_Expired"> Back </button>
-                <button id="btnSave" onclick="return submitData()" class="btn ds_darkBlue">Submit </button>
+                <button id="btnSave" onclick="return submitData()" class="btn saveButtonsColor">Submit </button>
             </div>
         </div>
 
@@ -929,7 +943,7 @@
 
 
 
-                $('#dvStepOne').addClass('active').removeClass('disabled');
+                $('#dvStepOne').addClass('complete').removeClass('disabled').removeClass("active");
                 $('#dvStepTwo').addClass('active').removeClass('disabled');
                 $('#dvStepThree').removeClass('active').addClass('disabled');
                 $('#dvStepFour').removeClass('active').addClass('disabled');
@@ -1035,8 +1049,8 @@
                 $('#divStep3').show();
                 $('#divStep4').hide();
 
-                $('#dvStepOne').addClass('active').removeClass('disabled');
-                $('#dvStepTwo').addClass('active').removeClass('disabled');
+                $('#dvStepOne').addClass('complete').removeClass('disabled').removeClass('active');
+                $('#dvStepTwo').addClass('complete').removeClass('disabled').removeClass('active');
                 $('#dvStepThree').addClass('active').removeClass('disabled');
                 $('#dvStepFour').removeClass('active').addClass('disabled');
             }
@@ -1053,9 +1067,9 @@
                 $('#divStep3').hide();
                 $('#divStep4').show();
 
-                $('#dvStepOne').addClass('active').removeClass('disabled');
-                $('#dvStepTwo').addClass('active').removeClass('disabled');
-                $('#dvStepThree').addClass('active').removeClass('disabled');
+                $('#dvStepOne').addClass('complete').removeClass('disabled').removeClass('active');
+                $('#dvStepTwo').addClass('complete').removeClass('disabled').removeClass('active');
+                $('#dvStepThree').addClass('complete').removeClass('disabled').removeClass('active');
                 $('#dvStepFour').addClass('active').removeClass('disabled');
             }
             else {
@@ -1112,7 +1126,7 @@
                             $('#trIdExamSelection_' + elementId).hide();
                         }
                     });
-                     
+
                 },
                 messages: {
                     noResults: "",
@@ -1192,7 +1206,7 @@
 
             });
 
-            
+
 
             $('#txtQuestionBankSearch').change(function () {
                 debugger;
@@ -1207,7 +1221,7 @@
                         $('#trIdExamSelection_' + elementId).show();
                     });
                 }
-              
+
             });
 
 

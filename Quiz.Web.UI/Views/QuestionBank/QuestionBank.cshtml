@@ -5,50 +5,69 @@
     });
 </script>
 <div class="container-fluid">
-    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Upload Question Bank</button>
-    <h3>Update Question Bank</h3>
+
+    <h3 class="foreBlue">Update Question Bank</h3>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well ds_lightBlue">
+                <div class="input-group">
+                    <input type="text" id="txtQuestionBankSearch" class="form-control" placeholder="Search question bank">
+                    <input type="hidden" id="hdnQuestionBankSearch" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default saveButtonsColor" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" style="margin-bottom:20px;">
+        <button type="button" class="btn saveButtonsColor pull-right" data-toggle="modal" data-target="#myModal">Add New <i class="fa fa-plus-circle"></i></button>
+    </div>
+    
+
     <table class="table" id="QuestionBank">
         <thead>
             <tr>
-            <td>
-                Question Bank
-            </td>
-            <td>
-                Question Bank Description
-            </td>
-            <td>
-                Duration
-            </td>
-            <td>
-                Modified Date
-            </td>
-            <td>
-                Action
-            </td>
+                <td>
+                    Question Bank
+                </td>
+                <td>
+                    Question Bank Description
+                </td>
+                <td>
+                    Duration
+                </td>
+                <td>
+                    Modified Date
+                </td>
+                <td>
+                    Action
+                </td>
             </tr>
         </thead>
 
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                <a href="@Url.Action("QuestionsList","QuestionBank",new { QuestionBankId = item.ID})">@item.QuestionBankName</a>
-            </td>
-            <td>
-                @item.Description
-            </td>
-            <td>
-                @item.Duration
-            </td>
-            <td>
-                @item.ModifiedDate
-            </td>
-            <td>
-                <a onclick="GetQuestionsBankEdit('@item.ID')">Edit</a> /
-                <a onclick="QuestionsBankDelete('@item.ID')">Delete</a>
-            </td>
-           
-        </tr>
+            <tr>
+                <td>
+                    <a href="@Url.Action("QuestionsList","QuestionBank",new { QuestionBankId = item.ID})">@item.QuestionBankName</a>
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    @item.Duration
+                </td>
+                <td>
+                    @item.ModifiedDate
+                </td>
+                <td>
+                    <a onclick="GetQuestionsBankEdit('@item.ID')">Edit</a> /
+                    <a onclick="QuestionsBankDelete('@item.ID')">Delete</a>
+                </td>
+
+            </tr>
         }
 
     </table>
