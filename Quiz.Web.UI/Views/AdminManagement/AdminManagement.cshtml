@@ -144,8 +144,10 @@
     }
 
 </script>
-<div><button class="btn btn-primary" id="btnAddAdmin">Add</button></div>
-<table id="AdminManagement">
+<div class="form-group text-center">
+    <button class="btn btn-primary" id="btnAddAdmin">Add New</button>
+</div>
+<table class="table" id="AdminManagement">
     <thead>
         <tr>
             <td>NAME</td>
@@ -202,43 +204,40 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title text-center">Add Admin</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body clearfix">
                 <div class="form-group">
-                    <div class="input-text-wrap is-required">
+                    <div class="col-md-6 input-text-wrap is-required">
                         <label for="txtAddName">Name</label>
-                        <input type="text" id="txtAddName" name="Name" placeholder="Name" />
+                        <input type="text" class="form-control" id="txtAddName" name="Name" placeholder="Name" />
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="input-text-wrap is-required">
+                    <div class="col-md-6 input-text-wrap is-required">
                         <label for="txtAddUserName">UserName</label>
-                        <input type="text" id="txtAddUserName" name="UserName" placeholder="UserName" />
+                        <input type="text" id="txtAddUserName" class="form-control" name="UserName" placeholder="UserName" />
                     </div>
                 </div>
+                
                 <div class="form-group">
-                    <div class="input-text-wrap is-required">
+                    <div class="col-md-6 input-text-wrap is-required">
                         <label for="txtAddPassword">Password</label>
-                        <input type="password" id="txtAddPassword" name="Password" placeholder="Password" />
+                        <input type="password" class="form-control" id="txtAddPassword" name="Password" placeholder="Password" />
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="input-text-wrap is-required">
+                    <div class="col-md-6 input-text-wrap is-required">
                         <label for="txtAddRole">Role</label>
-                        <input type="text" id="txtAddRole" name="Role" placeholder="Role" />
+                        <input type="text" id="txtAddRole" class="form-control" name="Role" placeholder="Role" />
                     </div>
                 </div>
+                
                 <div class="form-group">
-                    <div class="input-text-wrap is-required">
+                    <div class="col-md-6 input-text-wrap is-required">
                         <label for="txtAddEmail">Email</label>
-                        <input type="text" id="txtAddEmail" name="Email" placeholder="Email" />
+                        <input type="text" id="txtAddEmail" class="form-control" name="Email" placeholder="Email" />
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="input-text-wrap is-required">
+                    <div class="col-md-6 input-text-wrap is-required">
                         <label for="txtAddPhone">Phone</label>
-                        <input type="text" id="txtAddPhone" name="Phone" placeholder="Phone" />
+                        <input type="text" id="txtAddPhone" class="form-control" name="Phone" placeholder="Phone" />
                     </div>
                 </div>
+              
             </div>
             <div class="modal-footer text-center">
                 <input type="button" class="btn btn-primary" id="btnAdd" value="Add" />
