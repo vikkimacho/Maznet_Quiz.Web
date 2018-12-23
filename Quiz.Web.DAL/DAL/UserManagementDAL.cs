@@ -55,13 +55,14 @@ namespace Quiz.Web.DAL.DAL
         {
             UsersDetailsModel details = new UsersDetailsModel();
             APIResponse response = new APIResponse();
-
+            var resultUserDetailMasterGuid = Guid.NewGuid();
+            response.ResultUserDetailMasterGuid = resultUserDetailMasterGuid;
             try
             {
                 using (TestEngineEntities testEngineEntities = new TestEngineEntities())
                 {
                     UserDetailMaster users = new UserDetailMaster();
-                    users.Id = Guid.NewGuid();
+                    users.Id = resultUserDetailMasterGuid;
                     users.UserTitle = usersDetails.UserTitleName;
                     users.CreatedDate = DateTime.Now;
                     users.ModifiedDate = DateTime.Now;

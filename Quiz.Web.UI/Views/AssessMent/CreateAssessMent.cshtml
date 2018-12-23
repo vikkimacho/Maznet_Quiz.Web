@@ -21,8 +21,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 
 
+    @*<link rel="stylesheet" type="text/css" href="~/Content/CSS/datatables.min.css" />
+
+        <script type="text/javascript" src="~/Scripts/Datatable.js"></script>*@
 
     <style>
+        table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after {
+            opacity: 1.2;
+        }
+
         .bs-wizard {
             margin-top: 40px;
         }
@@ -197,14 +204,14 @@
             </div>
 
 
-            <div class="col-md-12">
+            <div style="display:none;" class="col-md-12">
                 <div class="well ds_lightBlue">
                     <div class="input-group">
                         <input type="text" id="txtQuestionBankSearch" class="form-control" placeholder="Search keyword eg : sales,software engineer etc">
                         <input type="hidden" id="hdnQuestionBankSearch" />
                         @*<span class="input-group-btn">
-                            <button class="btn btn-default ds_darkBlue" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                        </span>*@
+                                <button class="btn btn-default ds_darkBlue" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                            </span>*@
                     </div>
                 </div>
             </div>
@@ -220,7 +227,7 @@
         </div>
 
         <div class="row">
-            <table class="table table-striped">
+            <table class="table table-striped" id="tblQuesBank">
                 <thead>
                     <tr>
                         <th>
@@ -265,15 +272,15 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <input type="button" class="btn ds_darkBlue pull-left" value="Undo Changes" />
-                    <span class="pull-right"><label>Total Duration</label> <span>0h 25 mins</span> </span>
+                    @*<input type="button" class="btn ds_darkBlue pull-left" value="Undo Changes" />*@
+                    <span class="pull-right"><label>Total Duration</label> <span id="spnTotalDurationLabel"></span> </span>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12 text-right">
                     @*<button class="btn ds_Expired"> Back </button>*@
-                    <button id="btnNext1" onclick="return ShowStep2()" class="btn ds_darkBlue">Save & Next </button>
+                    <button id="btnNext1" onclick="return ShowStep2()" class="btn ds_darkBlue">  Next </button>
                 </div>
             </div>
         </div>
@@ -353,7 +360,7 @@
                 <input type="radio" name="FormSelection" id="radExistingForm" />Select Existing
                 <input type="radio" name="FormSelection" id="radNewForm" checked />Create New*@
 
-            <table class="table table-striped">
+            <table class="table table-striped" id="tblCandidateForms">
                 <thead>
                     <tr>
                         <th>Field Name</th>
@@ -370,7 +377,14 @@
                             <td>
                                 @if (item.IsEnabled)
                                 {
-                                    <input type="checkbox" class="clsFormSelection" id="@item.id" checked />
+                                    if (item.IsLocked)
+                                    {
+                                        <input type="checkbox" class="clsFormSelection" id="@item.id" disabled checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" class="clsFormSelection" id="@item.id" checked />
+                                    }
                                 }
                                 else
                                 {
@@ -406,7 +420,7 @@
 
             <div class="col-md-12 text-right">
                 <button onclick="return ShowStep1()" class="btn ds_Expired"> Back </button>
-                <button id="btnNext1" onclick="return ShowStep3()" class="btn ds_darkBlue">Save & Next </button>
+                <button id="btnNext1" onclick="return ShowStep3()" class="btn ds_darkBlue">  Next </button>
             </div>
         </div>
 
@@ -429,57 +443,93 @@
             @*<input type="radio" name="ShortListCriteria" id="radCustomShortListingCriteria" />Custom*@
             <br />
 
-            <div id="divNewShortListCriteria">
-                Enter a name to save the cutoff
 
-                <input type="text" id="txtShortListCriteria" placeholder="Enter a name to save the cutoff" />
-                <input type="button" class="btn btn-info" id="btnSaveCriteria" value="Save New Cutoff" />
-                <span id="spnSLErrorMsg" style="color:red;"></span>
-
+            <div>
+                <div class="grid-legend-band ng-scope" style="position: relative;">
+                    <span class="legend ng-binding">
+                        <span class="red" style="background: rgb(244, 66, 54);"></span>
+                        Not Consider
+                    </span>
+                    <span class="legend ng-binding">
+                        <span class="yellow" style="background: rgb(254, 179, 0);"></span>
+                        May Consider
+                    </span>
+                    <span class="legend last ng-binding">
+                        <span class="blue" style="background: rgb(69, 173, 78);"></span>
+                        Strong Consider
+                    </span>
+                </div>
             </div>
+
+            <div id="divNewShortListCriteria">
+                <div>
+                    Enter a name to save the cutoff
+
+                    <input type="text" id="txtShortListCriteria" placeholder="Enter a name to save the cutoff" />
+                    <input type="button" class="btn btn-info" style="display:none;" id="btnSaveCriteria" value="Save New Cutoff" />
+                   
+                </div>
+
+
+
+
+                <div id="divSliderSetup">
+                    @foreach (var item in Model.LQuestionBankModal)
+                    {
+                        <p id="p_slider_@item.Id">
+                            <label for="amount">@item.QuestionBankName - @item.QuestionBankDescription</label>
+                            <input class="clsSlider" type="text" id="txtSlider_@item.Id" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                        </p>
+
+                        <div id="slider-range_@item.Id"></div>
+                    }
+
+                </div>
+            </div>
+
             <br />
             <select id="ddlExistingShortListCriteria" style="display:none;">
-                <option>--Select--</option>
+                <option value="">--Select--</option>
+                @foreach (var item in Model.ListEligibilityCriteria.Select(x => new { x.Name, x.EligibilityIdForAssessment }).Distinct())
+                {
+                    <option value=@item.EligibilityIdForAssessment>@item.Name</option>
+                }
+
             </select>
 
-        </div>
+                <div style="display:none;" id="tblExistingCriteriaQuestions">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name </th>
+                                <th>Not Consider</th>
+                                <th>May Consider</th>
+                                <th>Strong Consider</th>
+                            </tr>
+                          
+                        </thead>
 
-        <div>
-            <div class="grid-legend-band ng-scope" style="position: relative;">
-                <span class="legend ng-binding">
-                    <span class="red" style="background: rgb(244, 66, 54);"></span>
-                    Not Consider
-                </span>
-                <span class="legend ng-binding">
-                    <span class="yellow" style="background: rgb(254, 179, 0);"></span>
-                    May Consider
-                </span>
-                <span class="legend last ng-binding">
-                    <span class="blue" style="background: rgb(69, 173, 78);"></span>
-                    Strong Consider
-                </span>
-                <button style="display:none; position: absolute; top: 6px; right: 10px;" type="button" class="btn-secondary">Reset to recommended<div class="disabled-overlay"></div></button>
-            </div>
-        </div>
+                        <tbody id="tbodyExistingCriteria">
+                            
+                        </tbody>
+                    </table>
+
+                </div>
+
+            <span id="spnSLErrorMsg" style="color:red;"></span>
 
 
-        <div id="divSliderSetup">
-            @foreach (var item in Model.LQuestionBankModal)
-            {
-                <p>
-                    <label for="amount">@item.QuestionBankName - @item.QuestionBankDescription</label>
-                    <input class="clsSlider" type="text" id="txtSlider_@item.Id" readonly style="border:0; color:#f6931f; font-weight:bold;">
-                </p>
-
-                <div id="slider-range_@item.Id"></div>
-            }
 
         </div>
+
+
+
+
 
         <div class="row">
             <div class="col-md-12 text-right">
                 <button onclick="return ShowStep2()" class="btn ds_Expired"> Back </button>
-                <button id="btnNext1" onclick="return ShowStep4()" class="btn ds_darkBlue">Save & Next </button>
+                <button id="btnNext1" onclick="return ShowStep4()" class="btn ds_darkBlue">  Next </button>
             </div>
         </div>
 
@@ -546,13 +596,24 @@
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="divbulkschedule" role="tabpanel" aria-labelledby="home-tab">
 
-                    @*<input type="file" id="flUploadXLS" /> Upload File
+                    <br />
+                    <input type="text" class="form-control" id="txtUserTitle" placeholder="Enter User" />
+                    <span style="color:red;display:none" id="Er_txtUserTitle">User Title is Required</span>
+
+                    <br />
+
+                    <div class="form-group">
+                        <input type="file" class="form-control-file" id="flUsersUpload" />
+                        <span style="color:red;display:none" id="Er_flUsersUpload">Please Upload File</span>
+                    </div>
+
+
                         <br />
                         Download Sample
-                        <a id="lnkDownloadSample" href="~/Content/sample.xlsx">Download here</a>*@
+                        <a id="lnkDownloadSample" href="~/Content/sample.xlsx">Download here</a>
 
-                    Uploaded Candidates List
-                    <table class="table table-striped">
+               
+                    <table class="table table-striped" style="display:none;">
                         <thead>
                             <tr>
                                 <th>
@@ -563,17 +624,14 @@
                                 </th>
                             </tr>
                         </thead>
-
                         <tbody>
-
-
-                            @foreach (var item in Model.LstUserDetailMaster)
+                            @*@foreach (var item in Model.LstUserDetailMaster)
                             {
                                 <tr>
                                     <td><input type="checkbox" id="@item.Id" class="clsUploadedStudents" />  @item.UserTitle</td>
                                     <td>@item.CreatedDate.ToShortDateString()</td>
                                 </tr>
-                            }
+                            }*@
                         </tbody>
                     </table>
 
@@ -710,6 +768,8 @@
             var AssesmentAlertEmail = $('#txtAreaAlertEmail').val();
             var AssessmentStudentAlertModal = GetAssessmentStudentAlertModal();
 
+            var UploadFileTitle = $('#txtUserTitle').val();
+            
 
 
 
@@ -719,7 +779,7 @@
                 IsPrintScreenLockEnabled :IsPrintScreenLockEnabled, LstCandidateFormSelectedFields:LstCandidateFormSelectedFields,
                 SelectedShortListCriteria :SelectedShortListCriteria,ScheduleFrom:ScheduleFrom,ScheduleTo:ScheduleTo,
                 SchedulePlan : schedulePlan,lstBulkScheduleIds:lstBulkScheduleIds,SingleScheduleModal:SingleScheduleModal,IsAssessmentCompletionAlertEnabled:IsAssessmentCompletionAlertEnabled
-                ,AssesmentAlertEmail:AssesmentAlertEmail,AssessmentStudentAlertModal:AssessmentStudentAlertModal,CommonLoginModal:commonLoginModal
+                ,AssesmentAlertEmail:AssesmentAlertEmail,AssessmentStudentAlertModal:AssessmentStudentAlertModal,CommonLoginModal:commonLoginModal,UploadFileTitle : UploadFileTitle
             };
             return postModal;
 
@@ -870,9 +930,26 @@
 
 
         $(function () {
-            $('#dtFrom').datetimepicker();
-            $('#dtTo').datetimepicker();
-            $('#txtDOB').datetimepicker();
+            //$('#dtFrom').datetimepicker();
+            //$('#dtTo').datetimepicker();
+            //$('#txtDOB').datetimepicker();
+
+
+            $('#dtFrom').datetimepicker({
+                defaultDate: moment(),
+                sideBySide: true
+            });
+
+            $('#dtTo').datetimepicker({
+                defaultDate: moment().add(24, 'hours'),
+                sideBySide: true
+            });
+
+            $('#txtDOB').datetimepicker({
+                defaultDate: moment(),
+                sideBySide: true
+            });
+
         });
 
 
@@ -918,11 +995,14 @@
 
                 $('.chkExamSubjectSelection').each(function (i, obj) {
                     if ($('#' + obj.id).is(':checked')) {
-
+                        $('#p_slider_'+ obj.id).show();
+                        $('#slider-range_'+ obj.id).show();
                     }
                     else
                     {
+                        $('#p_slider_'+ obj.id).hide();
                         $('#slider-range_'+ obj.id).hide();
+
                     }
                 });
 
@@ -1064,9 +1144,40 @@
         }
 
         function ValidateStep4() {
-            var returnStatus = true;
-
-
+            var returnStatus = true;             
+            var selectedShortList = $('input[name=ShortListCriteria][type="radio"]:checked').val();
+            if(selectedShortList == 'EXISTING')
+            {
+                var savedCriteria = $('#hdnSelectedShortListCriteria').val();
+                if(savedCriteria == "")
+                {
+                    $('#spnSLErrorMsg').text('Shortlist Criteria not selected. Please select valid criteria for assesment');
+                    returnStatus = false;
+                }
+            }
+            else
+            {
+                var savedCriteria = $('#hdnSelectedShortListCriteria').val();
+                if(savedCriteria == "")
+                {
+                    returnStatus = SaveCriteria();
+                }
+                savedCriteria = $('#hdnSelectedShortListCriteria').val();
+                if(savedCriteria == "")
+                {
+                    $('#spnSLErrorMsg').text('Please give valid Criteria name');
+                    returnStatus = false;
+                }
+                if(!returnStatus)
+                {
+                    var spantext = $('#spnSLErrorMsg').text();
+                    if(spantext == '')
+                    {
+                        $('#spnSLErrorMsg').text('Oops something went wrong. Please try again with another short list criteria');
+                    }                    
+                }                                 
+            }
+             
             return returnStatus;
         }
 
@@ -1077,6 +1188,78 @@
 
 
         $(document).ready(function () {
+
+
+
+            var files;
+            $(document).on('change', '#flUsersUpload', function (e) {
+                debugger;
+                files = e.target.files;
+                var isValidFiles = true;
+                var UserTitle = $("#txtUserTitle").val();
+                var finalStatus = false;
+                $('#file-error1').text('');
+                var file_size = $('#flUsersUpload')[0].files[0].size;
+                if (file_size < 120000) {
+                    $(files).each(function () {
+                        var filename = this.name;
+                        if ((filename.toUpperCase().indexOf(".XLSX") == -1) || (filename.toUpperCase().indexOf(".XLS")) == -1) {
+                            isValidFiles = false;
+                        }
+                    });
+                    if (isValidFiles) {
+                        ContactFile = e.target.files;
+
+                    }
+                    else {
+                        $('#mdlmessage').text('Choose Only .xlsx or xlx File');
+                        $('#modalPopUp').addClass("is-visible");
+                        $("#chooseContactsFile").val("");
+                    }
+                }
+                else {
+                    $('.box-error').css("border-color", "#FF0000");
+                    $('#file-error1').text('File size must be less than 120KB');
+                    $("#chooseContactsFile").val("");
+                }
+            });
+
+
+
+
+
+            $("#txtAssessmentName").keypress(function () {
+                debugger
+                var assesmentName =  $("#txtAssessmentName").val();
+                if(assesmentName != '')
+                {
+                    $('#errorAssName').text('');
+                }
+            });
+
+
+
+
+            $('#tblQuesBank').DataTable({
+                columnDefs: [
+                ],
+                paging: true,
+                searching: true,
+                "aaSorting": [],
+                "ordering": false
+            });
+
+            $('#tblCandidateForms').DataTable({
+                columnDefs: [
+                ],
+                paging: true,
+                searching: true,
+                "aaSorting": [],
+                "ordering": false
+            });
+
+
+
 
             $("#txtQuestionBankSearch").autocomplete({
                 source: function (request, response) {
@@ -1112,7 +1295,7 @@
                             $('#trIdExamSelection_' + elementId).hide();
                         }
                     });
-                     
+
                 },
                 messages: {
                     noResults: "",
@@ -1129,70 +1312,12 @@
 
 
 
-            $("#btnSaveCriteria").click(function () {
-                debugger;
-                var txtShortListCriteria = $('#txtShortListCriteria').val();
-                if(txtShortListCriteria == '')
-                {
-                    $('#spnSLErrorMsg').text('Please give valid name for new criteria');
-                    return false;
-                }
-                else{
-
-                    var postDataForEligibilityCriteria = new Array();
-                    $('.chkExamSubjectSelection').each(function (i, obj) {
-                        //$('#' + obj.id).prop('checked', true);
-                        if ($('#' + obj.id).is(':checked')) {
-                            //NotConsider	MayConsider	StrongConsider
-                            debugger;
-                            var sliderVal = $('#txtSlider_'+ obj.id).val();
-                            if(sliderVal != '')
-                            {
-                                var NotConsider = sliderVal.split("-")[0];
-                                var MayConsider = sliderVal.split("-")[1];
-                                var StrongConsider = 0;
-                                var postData = {QuestionBankID :  obj.id , Name : txtShortListCriteria, NotConsider :NotConsider , MayConsider : MayConsider,StrongConsider:StrongConsider };
-                                postDataForEligibilityCriteria.push(postData);
-                            }
-                        }
-                    });
-
-                    $.ajax({
-                        type: "POST",
-                        url: "@Url.Action("SaveEligibleCriteria", "AssessMent")",
-                        contentType: 'application/json; charset=utf-8',
-                        data: postDataForEligibilityCriteria,
-                        beforeSend: function () {
-
-                        },
-                        complete: function () {
-
-                        },
-                        success: function (data) {
-                            if(data.Result == 'Success')
-                            {
-                                $('#hdnSelectedShortListCriteria').val(data.AssesmentCriteriaId);
-                                alert("Eligibility Criteria Created Successfully.");
-                            }
-                            else{
-                                alert("Something went wrong.")
-                            }
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            console.log(xhr.status);
-                            console.log(xhr.responseText);
-                            console.log(thrownError);
-                        },
-                        cache: false
-                    });
+            //$("#btnSaveCriteria").click(function () {
 
 
-                }
+            //});
 
 
-            });
-
-            
 
             $('#txtQuestionBankSearch').change(function () {
                 debugger;
@@ -1207,12 +1332,75 @@
                         $('#trIdExamSelection_' + elementId).show();
                     });
                 }
-              
+
+            });
+
+            $('#ddlExistingShortListCriteria').change(function () {
+                debugger;
+
+
+
+                var selectedEligibilityCriteria =  $('#ddlExistingShortListCriteria').val();
+                var availableStatus = true;
+                var modelListELQB = @Html.Raw(Json.Encode(Model.ListEligibilityCriteria));
+
+                var selectedQuestionBankIds = new Array();
+                var availableQuestionBankIds = new Array();
+                for(var i=0;i<modelListELQB.length;i++)
+                {                     
+                    if(modelListELQB[i].EligibilityIdForAssessment == selectedEligibilityCriteria)
+                    { 
+                        availableQuestionBankIds.push(modelListELQB[i].QuestionBankID)
+                    }
+                }
+
+
+                $('.chkExamSubjectSelection').each(function (i, obj) {
+                    var elementId = obj.id;
+                    selectedQuestionBankIds.push(elementId);
+                });
+
+
+
+
+                $('#hdnSelectedShortListCriteria').val('');
+               
+                var is_same = selectedQuestionBankIds.length == availableQuestionBankIds.length && selectedQuestionBankIds.every(function(element, index) {
+                    return element === availableQuestionBankIds[index]; 
+                });
+
+                if(!is_same)
+                {
+                    $('#tblExistingCriteriaQuestions').hide();
+                    $('input[name=ShortListCriteria][id=radNewShortListingCriteria][type="radio"]').prop('checked',true);
+                    $('#ddlExistingShortListCriteria').val('');
+                    $('input[name=ShortListCriteria][type="radio"]:checked').change();
+                    alert("Assesment Section doesn't match. Please go with new criteria");
+                }
+                else
+                {    
+                    $('#tbodyExistingCriteria').empty();               
+                    for(var i=0;i<modelListELQB.length;i++)
+                    {                     
+                        if(modelListELQB[i].EligibilityIdForAssessment == selectedEligibilityCriteria)
+                        {                              
+                            var questionBankName = GetQuestionBankNameBasedonId(modelListELQB[i].QuestionBankID)                                                         
+                            var trRowInfo  = '<tr><td>'+questionBankName + ' </td> <td>'+modelListELQB[i].NotConsider + ' </td> <td>'+modelListELQB[i].MayConsider + ' </td> <td>'+modelListELQB[i].StrongConsider + ' </td>  </tr> '
+                            $('#tbodyExistingCriteria').append(trRowInfo);
+                        }
+                    
+                    }
+                    $('#tblExistingCriteriaQuestions').show();
+                    $('#hdnSelectedShortListCriteria').val(selectedEligibilityCriteria);
+                }                              
             });
 
 
+          
+
             $("input[name='ShortListCriteria']").change(function () {
                 debugger;
+                $('#spnSLErrorMsg').text('');
                 var selectedShortList = $('input[name=ShortListCriteria][type="radio"]:checked').val();
                 if(selectedShortList == 'EXISTING')
                 {
@@ -1231,7 +1419,14 @@
             $('#home-tab').click();
 
             $('#chkCheckAllAssessMent').change(function () {
-                selectedExamSyllabus = new Array();
+                selectedExamSyllabus = new Array();                
+                var totalDuration = '00:00';
+                var t1 = "00:00";                 
+                var minutes  = 0;
+                var seconds = 0;
+                var tmpSec = 0;
+                var anyoneSelected = false;               
+               
                 if ($('#chkCheckAllAssessMent').is(':checked')) {
                     $('.chkExamSubjectSelection').each(function (i, obj) {
                         $('#' + obj.id).prop('checked', true);
@@ -1241,12 +1436,36 @@
                         var Duration = $('#spnDuration_' + obj.id).text();
                         var elementSelection = { id : elementId, QuestionBankName: QuestionBankName, NoOfQuestions: NoOfQuestions, Duration: Duration };
                         selectedExamSyllabus.push(elementSelection);
+
+                        var minSec = Duration;
+                        var timeParts = minSec.split(":");
+                        minutes = minutes + parseInt(timeParts[0]);
+                        seconds = seconds + parseInt(timeParts[1]);
+
                     });
+
+                    if (seconds > 60){
+                        tmpSec = Math.round(seconds / 60);
+                        seconds = seconds % 60;
+                    }
+
+                    tmpMins = minutes + parseInt(tmpSec);
+                    finalOutput = tmpMins + ":" + seconds;
+                    $('#spnTotalDurationLabel').text(finalOutput);
+
+                    if(anyoneSelected)
+                    {
+                        $('#errorSelectionExam').text('');
+                    }
+ 
+
                 }
                 else {
                     $('.chkExamSubjectSelection').each(function (i, obj) {
                         $('#' + obj.id).prop('checked', false);
                     });
+                    $('#spnTotalDurationLabel').text(totalDuration);
+
                 }
             });
 
@@ -1261,22 +1480,59 @@
 
 
             $('.chkExamSubjectSelection').change(function () {
+                debugger;
                 selectedExamSyllabus = new Array();
+                var totalDuration = '00:00';
+                var t1 = "00:00";
+                var count =0;                
+                var minutes  = 0;
+                var seconds = 0;
+                var tmpSec = 0;
+                var anyoneSelected = false;
+                var totalExamCount =  '@Model.LQuestionBankModal.Count()';
+
                 $('.chkExamSubjectSelection').each(function (i, obj) {
                     //$('#' + obj.id).prop('checked', true);
                     if ($('#' + obj.id).is(':checked')) {
+                        anyoneSelected = true;
                         var elementId = obj.id;
                         var QuestionBankName = $('#spnQuestionBankName_' + obj.id).text();
                         var NoOfQuestions = $('#spnNoOfQuestions_' + obj.id).text();
                         var Duration = $('#spnDuration_' + obj.id).text();
+
+                        var minSec = Duration;
+                        var timeParts = minSec.split(":");
+                        minutes = minutes + parseInt(timeParts[0]);
+                        seconds = seconds + parseInt(timeParts[1]);
+
                         var elementSelection = { id: elementId, QuestionBankName: QuestionBankName, NoOfQuestions: NoOfQuestions, Duration: Duration };
                         selectedExamSyllabus.push(elementSelection);
+                        count = count + 1;
                     }
                 });
 
 
+                if (seconds > 60){
+                    tmpSec = Math.round(seconds / 60);
+                    seconds = seconds % 60;
+                }
 
+                tmpMins = minutes + parseInt(tmpSec);
+                finalOutput = tmpMins + ":" + seconds;
+                $('#spnTotalDurationLabel').text(finalOutput);
+ 
+                if(anyoneSelected)
+                {
+                    $('#errorSelectionExam').text('');
+                }
 
+                if(totalExamCount == count)
+                {                     
+                    $('#chkCheckAllAssessMent').prop('checked',true);
+                }
+                else{
+                    $('#chkCheckAllAssessMent').prop('checked',false);
+                }
             });
 
 
@@ -1292,22 +1548,54 @@
 
 
 
+        var modelListQB = @Html.Raw(Json.Encode(Model.LQuestionBankModal));
 
         $(function () {
 
             debugger;
+            var modelListQB = @Html.Raw(Json.Encode(Model.LQuestionBankModal));
 
             for(var items = 0 ; items < modelListQB.length;items++ )
             {
+                debugger;
                 var halfScore =  modelListQB[items].NoOfQuestions / 2;
                 var fullScore = modelListQB[items].NoOfQuestions;
                 $("#slider-range_"+ modelListQB[items].Id).slider({
                     range: true,
                     min: 0,
                     max: fullScore,
-                    values: [halfScore, fullScore],
+                    values: [halfScore, fullScore-2],
+                    //max: 500,
+                    //values: [75, 300],
                     slide: function (event, ui) {
-                        $("#txtSlider_"+ modelListQB[items].Id).val("" + ui.values[0] + "-" + ui.values[1]);
+                        debugger
+                        var modelListQB = @Html.Raw(Json.Encode(Model.LQuestionBankModal));
+                        if(event != null)
+                        {
+                            if(event.toElement !=null)
+                            {
+                                if(event.toElement.offsetParent !=null)
+                                {
+                                    var elementId = event.toElement.id;
+                                    elementId = elementId.replace("slider-range_","");
+                                    $("#txtSlider_" + elementId).val("" + ui.values[0] + "-" + ui.values[1]);
+                                    $("#" + event.toElement.offsetParent.id).val("" + $("#slider-range_"+ elementId).slider("values", 0) + "-" + $("#slider-range_"+ elementId).slider("values", 1));
+                                }
+                                else{
+                                    $("#txtSlider_"+ modelListQB[items].Id).val("" + ui.values[0] + "-" + ui.values[1]);
+                                    $("#txtSlider_"+ slider-range_[items].Id).val("" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 0) + "-" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 1));
+                                }
+                            }
+                            else{
+                                $("#txtSlider_"+ modelListQB[items].Id).val("" + ui.values[0] + "-" + ui.values[1]);
+                                $("#txtSlider_"+ modelListQB[items].Id).val("" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 0) + "-" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 1));
+                            }
+                        }
+                        else
+                        {
+                            $("#txtSlider_"+ modelListQB[items].Id).val("" + ui.values[0] + "-" + ui.values[1]);
+                            $("#txtSlider_"+ modelListQB[items].Id).val("" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 0) + "-" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 1));
+                        }
                     }
                 });
                 $("#txtSlider_"+ modelListQB[items].Id).val("" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 0) + "-" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 1));
@@ -1315,18 +1603,108 @@
 
 
 
-            //$('.clsSlider').slider({
-            //    range: true,
-            //    min: 0,
-            //    max: 500,
-            //    values: [75, 300],
-            //    slide: function (event, ui) {
-            //        $(this).val("" + ui.values[0] + " - " + ui.values[1]);
-            //    }
-            //});
+
+
+
 
 
         });
+
+
+        function GetQuestionBankNameBasedonId(QuestionBankID)
+        {
+            var questionBankName = '';
+            $('.chkExamSubjectSelection').each(function (i, obj) {
+                var elementId = obj.id;                                
+                if(elementId == QuestionBankID)
+                {
+                    questionBankName = $('#spnQuestionBankName_' + elementId).text();
+                     
+                }
+            });
+            return  questionBankName;     
+
+        }
+
+
+
+        function SaveCriteria()
+        {
+            $('#spnSLErrorMsg').text('');
+            debugger;
+            var returnresult = false;
+            var txtShortListCriteria = $('#txtShortListCriteria').val();
+            if(txtShortListCriteria == '')
+            {
+                $('#spnSLErrorMsg').text('Please give valid name for new criteria');
+                return false;
+            }
+            else{
+
+                var postDataForEligibilityCriteria = new Array();
+                $('.chkExamSubjectSelection').each(function (i, obj) {
+                    if ($('#' + obj.id).is(':checked')) {
+                        //NotConsider	MayConsider	StrongConsider
+                        debugger;
+                        var sliderVal = $('#txtSlider_'+ obj.id).val();
+                        if(sliderVal != '')
+                        {
+                            var NotConsider = sliderVal.split("-")[0];
+                            var MayConsider = sliderVal.split("-")[1];
+                            var StrongConsider = $('#spnNoOfQuestions_' + obj.id).text();
+
+                            var postData = {QuestionBankID :  obj.id , Name : txtShortListCriteria, NotConsider :NotConsider , MayConsider : MayConsider,StrongConsider:StrongConsider };
+                            postDataForEligibilityCriteria.push(postData);
+                        }
+                    }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("SaveEligibleCriteria", "AssessMent")",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify({
+                        'lstpostAssessmentModal': postDataForEligibilityCriteria
+                    }) ,
+                    beforeSend: function () {
+
+                    },
+                    complete: function () {
+
+                    },
+                    success: function (data) {
+                        if(data.Result == 'Success')
+                        {
+                            if(data.ReturnPostEligibileCriteria == "ALREADY AVAILABLE")
+                            { 
+
+                                $('#hdnSelectedShortListCriteria').val('');
+                                returnresult = false;
+                            }
+                            else
+                            {
+                                $('#hdnSelectedShortListCriteria').val(data.ReturnPostEligibileCriteria);
+                                returnresult = true;
+                            }
+                             
+                        }
+                        else
+                        {
+                            alert("Something went wrong with saving your criteria");
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    },
+                    cache: false,
+                    async:false
+                });
+            }
+            return returnresult;
+        }
+
     </script>
 
 

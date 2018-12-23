@@ -16,6 +16,7 @@ namespace Quiz.Web.DTO.Models
     {
         public bool Result { get; set; }
         public string Message { get; set; }
+        public Guid ResultUserDetailMasterGuid { get; set; }
     }
 
 
@@ -46,6 +47,19 @@ namespace Quiz.Web.DTO.Models
         public List<QuestionBankModal> LQuestionBankModal { get; set; }
         public List<CustomCandidateAssesmentDetailsForm> LstCandidateAssesmentDetailsForm { get; set; }
         public List<CustomUserDetailMaster> LstUserDetailMaster { get; set; }
+        public List<EligibilityCriteriaList> ListEligibilityCriteria { get; set; }
+
+    }
+
+    public class EligibilityCriteriaList
+    {
+        public Guid ID { get; set; }
+        public Guid QuestionBankID { get; set; }
+        public string Name { get; set; }
+        public long NotConsider { get; set; }
+        public long MayConsider { get; set; }
+        public long StrongConsider { get; set; }
+        public Guid EligibilityIdForAssessment { get; set; }
 
     }
 
@@ -56,9 +70,8 @@ namespace Quiz.Web.DTO.Models
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }
-         
-    }
 
+    }
 
     public class CustomCandidateAssesmentDetailsForm
     {
@@ -110,6 +123,7 @@ namespace Quiz.Web.DTO.Models
         public AssessmentStudentAlertModal AssessmentStudentAlertModal { get; set; }
         public CommonLoginModal CommonLoginModal { get; set; }
 
+        public string UploadFileTitle { get; set; }
 
 
     }

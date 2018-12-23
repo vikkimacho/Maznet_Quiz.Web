@@ -183,6 +183,7 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <Property Name="NotConsider" Type="bigint" />
           <Property Name="MayConsider" Type="bigint" />
           <Property Name="StrongConsider" Type="bigint" />
+          <Property Name="EligibilityIdForAssessment" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="ExamFinalReport">
           <Key>
@@ -780,6 +781,7 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <Property Name="StrongConsider" Type="Int64" />
           <NavigationProperty Name="AssessmentDetailMasters" Relationship="Self.FK_AssessmentDetailMaster_EligibilityCriteriaDetails" FromRole="EligibilityCriteriaDetails" ToRole="AssessmentDetailMaster" />
           <NavigationProperty Name="QuestionBankMaster" Relationship="Self.FK_EligibilityCriteriaDetails_QuestionBankMaster" FromRole="EligibilityCriteriaDetails" ToRole="QuestionBankMaster" />
+          <Property Name="EligibilityIdForAssessment" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="ExamFinalReport">
           <Key>
@@ -1445,6 +1447,7 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <EntitySetMapping Name="EligibilityCriteriaDetails">
             <EntityTypeMapping TypeName="TestEngineDBContext.EligibilityCriteriaDetail">
               <MappingFragment StoreEntitySet="EligibilityCriteriaDetails">
+                <ScalarProperty Name="EligibilityIdForAssessment" ColumnName="EligibilityIdForAssessment" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="QuestionBankID" ColumnName="QuestionBankID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

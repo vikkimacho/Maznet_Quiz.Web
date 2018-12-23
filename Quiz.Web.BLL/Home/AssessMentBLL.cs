@@ -48,7 +48,13 @@ namespace Quiz.Web.BLL.Home
             var result = ObjAssessMentDAL.ValidateAssesmentName(assesmentName);
             return result;
         }
-        
+
+        public string DeleteAssesment(Guid AssesmentId)
+        {
+            var result = ObjAssessMentDAL.ValidateAndDeleteAssesment(AssesmentId);
+            return result;
+        }
+
         public List<MyAssesmentModal> GetListMyAssesment()
         {
             var result = ObjAssessMentDAL.GetListMyAssesment();
