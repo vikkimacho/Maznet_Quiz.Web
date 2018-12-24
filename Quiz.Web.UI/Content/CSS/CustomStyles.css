@@ -64,8 +64,9 @@
     background: rgb(212,229,239) !important;
     border-color: rgb(212,229,239) !important;
 }
-.font-weight-600{
-    font-weight:600 !important ;
+
+.font-weight-600 {
+    font-weight: 600 !important;
 }
 
 /*Check box CSS */
@@ -131,3 +132,32 @@ input:checked + .slider:before {
     .slider.round:before {
         border-radius: 50%;
     }
+
+.tableHeaderBlue {
+    background: rgb(032,123,178) !important;
+    color: #fff !important;
+}
+
+.saveButtonsColor {
+    background: rgb(011,071,117) !important;
+        color:#fff !important;
+}
+
+.tableHeaderText {
+    color: rgb(011,071,117) !important;
+    padding:15px;
+}
+
+table.dataTable > thead > tr {
+    background: rgb(032,123,178) !important;
+    color: #fff !important;
+}
+
+table.dataTable > tbody > tr {
+    border-bottom:1px solid #dadada;
+}
+
+table.dataTable > tbody > tr >td
+{
+    border-right:1px solid #dadada;
+}

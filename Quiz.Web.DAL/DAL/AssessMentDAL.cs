@@ -33,6 +33,7 @@ namespace Quiz.Web.DAL.Home
                     assesmentPageModal.LQuestionBankModal = TestEngineDBContext.Database.SqlQuery<QuestionBankModal>("exec Assesmentpagemodal").ToList();
                     assesmentPageModal.LstCandidateAssesmentDetailsForm = TestEngineDBContext.Database.SqlQuery<CustomCandidateAssesmentDetailsForm>("exec GetCandidateAssesmentDetailsForm").ToList();
                     assesmentPageModal.LstUserDetailMaster = TestEngineDBContext.Database.SqlQuery<CustomUserDetailMaster>("exec GetLstUserDetailMaster").ToList();
+                    assesmentPageModal.ListEligibilityCriteria = TestEngineDBContext.Database.SqlQuery<EligibilityCriteriaList>("exec GetEligibilityCriteriaList").ToList();
                     return assesmentPageModal;
                 }
             }
@@ -49,6 +50,7 @@ namespace Quiz.Web.DAL.Home
             string result = "Failed";
             try
             {
+                Guid AssesmentEligibilityId = Guid.NewGuid();
                 using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
                 {
                     List<EligibilityCriteriaDetail> lstEligibilityCriteriaDetail = new List<EligibilityCriteriaDetail>();
@@ -61,12 +63,22 @@ namespace Quiz.Web.DAL.Home
                         eligibilityCriteriaDetail.NotConsider = item.NotConsider;
                         eligibilityCriteriaDetail.StrongConsider = item.StrongConsider;                        
                         eligibilityCriteriaDetail.QuestionBankID = item.QuestionBankID;
+                        eligibilityCriteriaDetail.EligibilityIdForAssessment = AssesmentEligibilityId;
                         lstEligibilityCriteriaDetail.Add(eligibilityCriteriaDetail);
                     }
                     if(lstEligibilityCriteriaDetail.Any())
                     {
-                        TestEngineDBContext.EligibilityCriteriaDetails.AddRange(lstEligibilityCriteriaDetail);
-                        result = "Success";
+                        var eligibilityCritAvailability = TestEngineDBContext.EligibilityCriteriaDetails.FirstOrDefault(x => x.Name == lstEligibilityCriteriaDetail.FirstOrDefault().Name);
+                        if(eligibilityCritAvailability == null)
+                        {
+                            TestEngineDBContext.EligibilityCriteriaDetails.AddRange(lstEligibilityCriteriaDetail);
+                            TestEngineDBContext.SaveChanges();
+                            result = AssesmentEligibilityId.ToString();
+                        }
+                        else
+                        {
+                            result = "ALREADY AVAILABLE";
+                        }                      
                     }                                       
                 }
             }
@@ -333,5 +345,31 @@ namespace Quiz.Web.DAL.Home
                 throw ex;
             }
         }
+
+        public string ValidateAndDeleteAssesment(Guid AssesmentId)
+        {
+            string result = "Failed";
+            try
+            {
+
+                using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+                {
+                    var validationResult = TestEngineDBContext.Database.SqlQuery<string>("exec ValidateDeletionofAssesmentId @AssesmentId").FirstOrDefault();
+                    if(validationResult == "Success")
+                    {
+                        result = TestEngineDBContext.Database.SqlQuery<string>("exec DeletionofAssesmentId @AssesmentId").FirstOrDefault();
+                    }                      
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+
+
+
+
     }
 }

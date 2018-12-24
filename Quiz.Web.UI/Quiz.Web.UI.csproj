@@ -119,6 +119,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CSS\CustomStyles.css" />
     <Content Include="Content\CSS\datatable.css" />
+    <Content Include="Content\CSS\datatables.min.css" />
     <Content Include="Content\CSS\sort_asc.png" />
     <Content Include="Content\CSS\sort_asc_disabled.png" />
     <Content Include="Content\CSS\sort_both.png" />
@@ -161,6 +162,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Code_Js\Common.js" />
     <Content Include="Scripts\Code_Js\DashBoard.js" />
+    <Content Include="Scripts\Datatable.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />

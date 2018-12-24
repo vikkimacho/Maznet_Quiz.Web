@@ -79,6 +79,23 @@ namespace Quiz.Web.API.Controllers
             }
 
         }
+        [AcceptVerbs("Get", "Post")]
+
+        public string DeleteAssesment(Guid AssesmentId)
+        {
+            try
+            {
+                return ObjAssessmentBll.DeleteAssesment(AssesmentId);
+            }
+            catch (Exception ex)
+            {
+                return "Failed";
+            }
+
+        }
+
+
+        
 
         [AcceptVerbs("Get", "Post")]
 
