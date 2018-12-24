@@ -98,7 +98,7 @@ namespace Quiz.Web.UI.Controllers
                 string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
                 HttpClient client = new HttpClient();
                 //HttpContent inputContent = new StringContent(Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.PostAsJsonAsync(apiUrl + "/AdminManagement/DeleteAdmin?id=", id).Result;
+                HttpResponseMessage response = client.PostAsJsonAsync(apiUrl + "/AdminManagement/DeleteAdmin?id=" + id, id).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     result = response.Content.ReadAsStringAsync().Result;
@@ -107,6 +107,41 @@ namespace Quiz.Web.UI.Controllers
             }
             catch (Exception ex)
             {
+
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ActivateAdmin(string id)
+        {
+            string result = Failed;
+            try
+            {
+                string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
+                HttpClient client = new HttpClient();
+                //HttpContent inputContent = new StringContent(Encoding.UTF8, "application/json");
+                HttpResponseMessage response = client.GetAsync(apiUrl + "/AdminManagement/GetAdminList").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    result = response.Content.ReadAsStringAsync().Result;
+                    var list = JsonConvert.DeserializeObject<List<AdminDetails>>(result);
+                    Guid adminID = new Guid(id);
+                    var adminDetails = list.FirstOrDefault(x => x.ID == adminID);
+                    if (adminDetails != null)
+                    {
+                        response = client.PostAsJsonAsync(apiUrl + "/AdminManagement/SaveAdminDetails", adminDetails).Result;
+                        if (response.IsSuccessStatusCode)
+                        {
+                            result = response.Content.ReadAsStringAsync().Result;
+                            result = JsonConvert.DeserializeObject<string>(result);
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
 
             }
             return Json(result, JsonRequestBehavior.AllowGet);

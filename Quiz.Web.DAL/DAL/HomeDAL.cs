@@ -99,6 +99,7 @@ namespace Quiz.Web.DAL.Home
                         admin.PhoneNumber = adminDetail.PhoneNumber;
                         admin.Role = adminDetail.Role;
                         admin.Name = adminDetail.Name;
+                        admin.UserName = adminDetail.UserName;
                         admin.IsSuperAdmin = false;
                         TestEngineDBContext.AdminDetails.Add(admin);
                     }
@@ -111,6 +112,7 @@ namespace Quiz.Web.DAL.Home
                         admin.Role = adminDetail.Role;
                         admin.UserName = adminDetail.UserName;
                         admin.Name = adminDetail.Name;
+                        admin.Isdeleted = false;
                     }
                     TestEngineDBContext.SaveChanges();
                     result = Success;

@@ -34,7 +34,7 @@
 
             }
             if (status) {
-                var id = $('#hdnID').val();
+                var id;
                 var objData = { Name: name, UserName: username, Role: role, Email: email, PhoneNumber: phone, ID: id, Password: password };
                 fnSaveAdminDetails(objData);
             }
@@ -128,6 +128,23 @@
 
         });
     }
+    function fnActivate(id) {
+        $.ajax({
+            url: '@Url.Action("ActivateAdmin", "AdminManagement")?id=' + id,
+            type: "POST",            
+            contentType: "application/json",
+            dataType: "json",
+            success: function (result) {
+                if (result != "FAILED") {
+                    location.reload();
+                }
+            },
+            error: function (status) {
+            },
+            cache: false,
+
+        });
+    }
     function fnDisplayEditModal(result) {
         $('#txtEditName').val(result.Name);
         $('#txtEditUserName').val(result.UserName);
@@ -180,13 +197,15 @@
                 @if (Convert.ToBoolean(item.Isdeleted))
                 {
                     <td>Deleted</td>
+                    <td><a onclick="fnActivate('@item.ID')" style="cursor:pointer">Activate</a>  </td>
                 }
                 else
                 {
                     <td>Active</td>
+                    <td><a onclick="fnEditUser('@item.ID')" style="cursor:pointer">Edit</a>  /  <a style="cursor:pointer" onclick="fnDeleteUser('@item.ID')">Delete</a></td>
                 }
 
-                <td><a onclick="fnEditUser('@item.ID')" style="cursor:pointer">Edit</a>  /  <a style="cursor:pointer" onclick="fnDeleteUser('@item.ID')">Delete</a></td>
+
             </tr>
         </tbody>
     }
