@@ -110,6 +110,9 @@
             changeYear: true
 
         });
+        $('#btnCreate').click(function () {
+            window.location = "/AssessMent/CreateAssessment";
+        });
         //$('#StartDate').change(function () {
         //    var tstdt;
         //    var splitDate = $('#StartDate').val().split('/');
@@ -152,7 +155,7 @@
     }
 </script>
 <div class="col-md-12">
-    <div class="row" id="dvDashboardText"> <span class="headingText">Dashboard</span> <button type="button" class="btn btn-primary pull-right">Create New Assessment</button> </div>
+    <div class="row" id="dvDashboardText"> <span class="headingText">Dashboard</span> <button type="button" id="btnCreate" class="btn btn-primary pull-right">Create New Assessment</button> </div>
     <div class="clearfix"></div>
     <div class="row">
         <div class="well clearfix" id="dvUserSearch">

@@ -3,6 +3,9 @@
     $(document).ready(function () {
         $('#QuestionBank').DataTable();
     });
+    function downloadTemplate() {        
+        window.open('@Url.Action("DownloadTemplate", "QuestionBank")', "_blank", "", true);
+    }
 </script>
 <div class="container-fluid">
 
@@ -118,6 +121,16 @@
                     <span style="color:red;display:none" id="Er_txtQuestionBankDescription">Question Bank Description is Required</span>
                 </div>
                 <div class="form-group">
+                    <label>Duration</label>
+                    <input type="text" class="form-control" id="txtQuestionBankDuration" placeholder="HH:MM:SS" />
+                    <span>Duration Format(HH:MM:SS)</span>
+                    <span style="color:red;display:none" id="Er_txtQuestionBankDuration">Question Bank Duration is Required</span>
+                </div>
+                <div class="form-group">
+                    <label>Question Bank Template</label>
+                    <a onclick="downloadTemplate()">click here</a>
+                </div>
+                <div class="form-group">
                     <input type="file" class="form-control-file" id="flQuestionUpload" />
                     <span style="color:red;display:none" id="Er_flQuestionUpload">Upload Question Bank</span>
                 </div>
@@ -131,10 +144,7 @@
                 <div class="form-group">
                     <button class="btn btn-primary" id="btnUpdateQuestionBank">Update</button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+            </div>           
         </div>
     </div>
 </div>
@@ -160,7 +170,13 @@
                 <div class="form-group">
                     <label>Question Bank Description</label>
                     <textarea id="EdittxtQuestionBankDescription" class="form-control" rows="7" cols="30"></textarea>
-                    <span style="color:red;display:none" id="Er_EdittxtQuestionBankDescription">Question Bank Description is Required</span>
+                    <span style="color:red;display:none" id="Er_EdittxtQuestionBankDescription">Question Bank Duration is Required</span>
+                </div>
+                <div class="form-group">
+                    <label>Duration</label>
+                    <input type="text" class="form-control" id="txtEditQuestionBankDuration" placeholder="HH:MM:SS" />
+                    <span>Duration Format(HH:MM:SS)</span>
+                    <span style="color:red;display:none" id="Er_txtEditQuestionBankDuration">Question Bank Duration is Required</span>
                 </div>
                 <div class="form-group">
                     <label>Status</label>
@@ -219,10 +235,11 @@
 
 
 
-            
+
             var questionBankName = $("#txtQuestionBankTitle").val();
             var questionBankDescription = $("#txtQuestionBankDescription").val();
             var status = $("#ddlEditStatusQuestionBank").val();
+            var duration = $('#txtQuestionBankDuration').val();
             var finalStatus = false;
             if (status == "ACTIVE") {
                 finalStatus = true;
@@ -230,6 +247,7 @@
             $("#Er_txtQuestionBankTitle").hide();
             $("#Er_txtQuestionBankDescription").hide();
             $("#Er_flQuestionUpload").hide();
+            $("#Er_txtQuestionBankDuration").hide();
 
             var Flag = true;
 
@@ -247,6 +265,13 @@
                 Flag = false;
 
             }
+            if (!duration) {
+
+                $("#Er_txtQuestionBankDuration").show();
+                Flag = false;
+
+            }
+            
 
             if (files) {
                 var data = new FormData();
@@ -261,43 +286,40 @@
             if (Flag) {
 
                 $.ajax({
-                        type: "POST",
-                        url: '@Url.Action("UploadQuestionBank", "QuestionBank")?QuestionBankName=' + questionBankName + '&Duration=' + null + '&Description=' + questionBankDescription + '&Status=' + finalStatus,
-                        contentType: false,
-                        processData: false,
-                        data: data,
-                        beforeSend: function () {
+                    type: "POST",
+                    url: '@Url.Action("UploadQuestionBank", "QuestionBank")?QuestionBankName=' + questionBankName + '&Duration=' + duration + '&Description=' + questionBankDescription + '&Status=' + finalStatus,
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    beforeSend: function () {
 
-                            uploaded = 1;
-                        },
-                        complete: function () {
+                        uploaded = 1;
+                    },
+                    complete: function () {
 
-                        },
-                        success: function (result) {
-                            if (result.data.Result) {
-                                alert("Question bank Uploaded Succesfully");
-                                window.location.reload();
-                            }
-                            else {
-                                alert("Question bank Upload Failed");
-                                window.location.reload();
-                            }
-                        },
-                        error: function (xhr, status, p3, p4) {
-                            var err = "Error " + " " + status + " " + p3 + " " + p4;
-                            if (xhr.responseText && xhr.responseText[0] == "{")
-                                err = JSON.parse(xhr.responseText).Message;
+                    },
+                    success: function (result) {
+                        if (result.data.Result) {
+                            alert("Question bank Uploaded Succesfully");
+                            window.location.reload();
+                        }
+                        else {
+                            alert("Question bank Upload Failed");
+                            window.location.reload();
+                        }
+                    },
+                    error: function (xhr, status, p3, p4) {
+                        var err = "Error " + " " + status + " " + p3 + " " + p4;
+                        if (xhr.responseText && xhr.responseText[0] == "{")
+                            err = JSON.parse(xhr.responseText).Message;
 
-                        },
-                        cache: false
-                    })
-
-
+                    },
+                    cache: false
+                });
 
             }
-            
-                
-        })
+
+        });
 
 
 
@@ -310,6 +332,7 @@
             var questionBankName = $("#EdittxtQuestionBankTitle").val();
             var questionBankDescription = $("#EdittxtQuestionBankDescription").val();
             var status = $("#ddlStatusQuestionBank").val();
+            var duration = $("#txtEditQuestionBankDuration").val();
             var finalStatus = false;
             if (status == "ACTIVE") {
                 finalStatus = true;
@@ -317,6 +340,7 @@
             $("#Er_EdittxtQuestionBankTitle").hide();
             $("#Er_EdittxtQuestionBankDescription").hide();
             $("#Er_EditflQuestionUpload").hide();
+            $("#Er_EdittxtQuestionBankDescription").hide();
 
             var Flag = true;
 
@@ -327,7 +351,13 @@
                 Flag = false;
 
             }
+            if (!duration) {
 
+                $("#Er_EdittxtQuestionBankDescription").show();
+                Flag = false;
+
+            }
+            
             if (!questionBankDescription) {
 
                 $("#Er_EdittxtQuestionBankDescription").show();
@@ -341,6 +371,7 @@
                 QuestionBankName: questionBankName,
                 Description: questionBankDescription,
                 Status: finalStatus,
+                Duration: duration
             }
 
             if (Flag) {
@@ -405,6 +436,8 @@
                     $("#Edit_QuestionBankId").val(result.ID);
                     $("#EdittxtQuestionBankTitle").val(result.QuestionBankName);
                     $("#EdittxtQuestionBankDescription").val(result.Description);
+                    $("#txtEditQuestionBankDuration").val(result.Duration.Hours + ":" + result.Duration.Minutes + ":"+result.Duration.Seconds);
+                    
                 }
             },
             error: function (xhr, status, p3, p4) {

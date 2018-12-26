@@ -13,6 +13,7 @@ using Quiz.Web.DTO.Models;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using Quiz.Web.UI.Helper;
+using System.Configuration;
 
 namespace Quiz.Web.UI.Controllers
 {
@@ -21,11 +22,11 @@ namespace Quiz.Web.UI.Controllers
     {
         private static readonly string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
         private APIResponse APIResponse = new APIResponse();
-        
+
         // GET: QuestionBank
         public ActionResult QuestionBank()
         {
-            List<QuestionBankDetail> QuestionBank = new List<QuestionBankDetail>(); 
+            List<QuestionBankDetail> QuestionBank = new List<QuestionBankDetail>();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(apiUrl);
@@ -71,7 +72,7 @@ namespace Quiz.Web.UI.Controllers
                     questionsDetailsView = JsonConvert.DeserializeObject<QuestionsDetailsView>(Result);
                 }
             }
-            return Json(questionsDetailsView,JsonRequestBehavior.AllowGet);
+            return Json(questionsDetailsView, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult QuestionsBankEdit(Guid? QuestionBankId)
@@ -93,7 +94,7 @@ namespace Quiz.Web.UI.Controllers
 
         [HttpPost]
         public ActionResult UpdateQuestion(QuestionsDetailsView questionsDetailsView)
-        {            
+        {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(apiUrl);
@@ -127,7 +128,7 @@ namespace Quiz.Web.UI.Controllers
         }
 
         public ActionResult QuestionsDelete(Guid? QuestionId)
-        {            
+        {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(apiUrl);
@@ -206,7 +207,11 @@ namespace Quiz.Web.UI.Controllers
                             questionBankDetail.Description = Description;
                             questionBankDetail.QuestionBankName = QuestionBankName;
                             questionBankDetail.Status = Status;
-                            questionBankDetail.Duration = new TimeSpan(0, 0, 13, 0, 0);
+                            var splitData = Duration.Split(':');
+                            int hour = splitData.Length > 0 ? Convert.ToInt32(splitData[0]) : 0;
+                            int minutes = splitData.Length > 1 ? Convert.ToInt32(splitData[1]) : 0;
+                            int sec = splitData.Length > 2 ? Convert.ToInt32(splitData[2]) : 0;
+                            questionBankDetail.Duration = new TimeSpan(hour, minutes, sec);
 
                             client.BaseAddress = new Uri(apiUrl);
                             var result = client.PostAsJsonAsync(apiUrl + "/QuestionBank/UploadQuestionBank", questionBankDetail).Result;
@@ -217,18 +222,33 @@ namespace Quiz.Web.UI.Controllers
                                 response = JsonConvert.DeserializeObject<APIResponse>(Result);
                             }
                         }
-                            
-                        }
 
                     }
+
                 }
-            
+            }
+
             return Json(new { data = response });
+        }
+
+        [HttpGet]
+        public ActionResult DownloadTemplate()
+        {
+            string FilePath = "";
+            try
+            {
+                string UserTemplate = ConfigurationManager.AppSettings["QuestionBankTemplate"];
+                FilePath = System.Web.Hosting.HostingEnvironment.MapPath(UserTemplate);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return File(FilePath, "application/vnd.ms-excel", Path.GetFileName(FilePath));
         }
 
 
 
-       
 
     }
 }

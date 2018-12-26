@@ -250,7 +250,7 @@ namespace Quiz.Web.DAL.Home
                     questionBankMaster.ID = Guid.NewGuid();
                     questionBankMaster.QuestionBankName = questionsDetailsData.QuestionBankName;                    
                     questionBankMaster.CreatedDate = DateTime.UtcNow;
-                    questionBankMaster.Duration = questionBankMaster.Duration;
+                    questionBankMaster.Duration = questionsDetailsData.Duration;
                     questionBankMaster.IsActive = true;
                     questionBankMaster.IsDeleted = false;
                     questionBankMaster.ModifiedDate = DateTime.UtcNow;
