@@ -68,7 +68,8 @@ namespace Quiz.Web.DAL.Home
                     }
                     if(lstEligibilityCriteriaDetail.Any())
                     {
-                        var eligibilityCritAvailability = TestEngineDBContext.EligibilityCriteriaDetails.FirstOrDefault(x => x.Name == lstEligibilityCriteriaDetail.FirstOrDefault().Name);
+                        var eligilibilityCriteriaName = lstEligibilityCriteriaDetail.FirstOrDefault().Name;
+                        var eligibilityCritAvailability = TestEngineDBContext.EligibilityCriteriaDetails.FirstOrDefault(x => x.Name == eligilibilityCriteriaName);
                         if(eligibilityCritAvailability == null)
                         {
                             TestEngineDBContext.EligibilityCriteriaDetails.AddRange(lstEligibilityCriteriaDetail);
@@ -125,6 +126,7 @@ namespace Quiz.Web.DAL.Home
                             objAssessmentQuestionBankDetail.QuestionBankID = item;
                             objAssessmentQuestionBankDetail.QuestionBankName = questionBankInfo.QuestionBankName;
                             objAssessmentQuestionBankDetail.Duration = questionBankInfo.Duration;
+                            objAssessmentQuestionBankDetail.AssessmentDetailMaster = assesmentDetailMaster;
                             lstAssessmentQuestionBankDetail.Add(objAssessmentQuestionBankDetail);
                         }
                     }
@@ -211,36 +213,40 @@ namespace Quiz.Web.DAL.Home
                     //Common Login Info
                     if (postAssessmentModal.CommonLoginModal != null)
                     {
-                        UserDetailMaster UserDetailMaster = new UserDetailMaster();
-                        UserDetailMaster.CreatedDate = DateTime.Now;
-                        UserDetailMaster.Id = Guid.NewGuid();
-                        UserDetailMaster.IsDeleted = false;
-                        UserDetailMaster.ModifiedDate = DateTime.Now;
-                        UserDetailMaster.UserTitle = assesmentDetailMaster.AssessmentName + " - Assessment";
-                        TestEngineDBContext.UserDetailMasters.Add(UserDetailMaster);
-
-                        List<DefaultRegistation> lstDefaultReg = new List<DefaultRegistation>();
-                        foreach (var items in postAssessmentModal.CommonLoginModal.CLSendLoginDetailsto.Split(','))
+                        if (!string.IsNullOrEmpty(postAssessmentModal.CommonLoginModal.CommonLoginUserName) && !string.IsNullOrEmpty(postAssessmentModal.CommonLoginModal.CommonLoginPassword))
                         {
-                            DefaultRegistation defaultRegistation = new DefaultRegistation();
-                            defaultRegistation.UserDetailId = UserDetailMaster.Id;
-                            defaultRegistation.ID = Guid.NewGuid();
-                            defaultRegistation.Name = postAssessmentModal.SingleScheduleModal.FirstName + " " + postAssessmentModal.SingleScheduleModal.LastName;
-                            defaultRegistation.Email = postAssessmentModal.SingleScheduleModal.Email;
-                            defaultRegistation.Password = postAssessmentModal.SingleScheduleModal.Password;
-                            defaultRegistation.MobileNumber = postAssessmentModal.SingleScheduleModal.Mobile;
-                            lstDefaultReg.Add(defaultRegistation);
-                        }
 
-                        AssessmentUserDetail assessmentUserDetail = new AssessmentUserDetail();
-                        assessmentUserDetail.AssessmentID = assesmentDetailMaster.ID;
-                        assessmentUserDetail.CreatedDate = DateTime.Now;
-                        assessmentUserDetail.ID = Guid.NewGuid();
-                        assessmentUserDetail.IsDeleted = false;
-                        assessmentUserDetail.ModifiedDate = DateTime.Now;
-                        assessmentUserDetail.UserID = UserDetailMaster.Id;
-                        TestEngineDBContext.AssessmentUserDetails.Add(assessmentUserDetail);
-                        TestEngineDBContext.DefaultRegistations.AddRange(lstDefaultReg);
+                            UserDetailMaster UserDetailMaster = new UserDetailMaster();
+                            UserDetailMaster.CreatedDate = DateTime.Now;
+                            UserDetailMaster.Id = Guid.NewGuid();
+                            UserDetailMaster.IsDeleted = false;
+                            UserDetailMaster.ModifiedDate = DateTime.Now;
+                            UserDetailMaster.UserTitle = assesmentDetailMaster.AssessmentName + " - Assessment";
+                            TestEngineDBContext.UserDetailMasters.Add(UserDetailMaster);
+
+                            List<DefaultRegistation> lstDefaultReg = new List<DefaultRegistation>();
+                            foreach (var items in postAssessmentModal.CommonLoginModal.CLSendLoginDetailsto.Split(','))
+                            {
+                                DefaultRegistation defaultRegistation = new DefaultRegistation();
+                                defaultRegistation.UserDetailId = UserDetailMaster.Id;
+                                defaultRegistation.ID = Guid.NewGuid();
+                                defaultRegistation.Name = postAssessmentModal.SingleScheduleModal.FirstName + " " + postAssessmentModal.SingleScheduleModal.LastName;
+                                defaultRegistation.Email = postAssessmentModal.SingleScheduleModal.Email;
+                                defaultRegistation.Password = postAssessmentModal.SingleScheduleModal.Password;
+                                defaultRegistation.MobileNumber = postAssessmentModal.SingleScheduleModal.Mobile;
+                                lstDefaultReg.Add(defaultRegistation);
+                            }
+
+                            AssessmentUserDetail assessmentUserDetail = new AssessmentUserDetail();
+                            assessmentUserDetail.AssessmentID = assesmentDetailMaster.ID;
+                            assessmentUserDetail.CreatedDate = DateTime.Now;
+                            assessmentUserDetail.ID = Guid.NewGuid();
+                            assessmentUserDetail.IsDeleted = false;
+                            assessmentUserDetail.ModifiedDate = DateTime.Now;
+                            assessmentUserDetail.UserID = UserDetailMaster.Id;
+                            TestEngineDBContext.AssessmentUserDetails.Add(assessmentUserDetail);
+                            TestEngineDBContext.DefaultRegistations.AddRange(lstDefaultReg);
+                        }
                     }
 
                     //Alert information to Admin

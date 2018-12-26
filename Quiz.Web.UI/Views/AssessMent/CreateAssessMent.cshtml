@@ -431,7 +431,7 @@
                             {
                                 if (item.IsLocked)
                                 {
-                                    <td><input type="checkbox" disabled id="mandatory_@item.id" checked /> It is Locked</td>
+                                    <td><input type="checkbox" disabled id="mandatory_@item.id" checked /> <i class="fa fa-lock" aria-hidden="true"></i></td>
                                 }
                                 else
                                 {
@@ -934,11 +934,11 @@
                             debugger;
                             if(data.Result == 'Success')
                             {
-                                alert("Assessment Created Successfully.");
+                                successFulAlert("Assessment Created Successfully.");
                                 window.location.reload();
                             }
-                            else{
-                                alert("Something went wrong.")
+                            else {
+                                failureAlert("Something went wrong.")
                             }
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
@@ -953,8 +953,8 @@
                     console.log(err);
                 }
             }
-            else{
-                alert("Please fill all mandatory fields.");
+            else {
+                warningAlert("Please fill all mandatory fields.");
             }
         }
 
@@ -1406,7 +1406,7 @@
                     $('input[name=ShortListCriteria][id=radNewShortListingCriteria][type="radio"]').prop('checked',true);
                     $('#ddlExistingShortListCriteria').val('');
                     $('input[name=ShortListCriteria][type="radio"]:checked').change();
-                    alert("Assesment Section doesn't match. Please go with new criteria");
+                    warningAlert("Assesment Section doesn't match. Please go with new criteria");
                 }
                 else
                 {
@@ -1721,7 +1721,7 @@
                         }
                         else
                         {
-                            alert("Something went wrong with saving your criteria");
+                            failureAlert("Something went wrong with saving your criteria");
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {

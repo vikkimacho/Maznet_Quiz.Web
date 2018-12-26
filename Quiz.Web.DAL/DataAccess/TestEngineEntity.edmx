@@ -343,18 +343,6 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AssessmentDetailMaster_EligibilityCriteriaDetails">
-          <End Role="EligibilityCriteriaDetails" Type="Self.EligibilityCriteriaDetails" Multiplicity="0..1" />
-          <End Role="AssessmentDetailMaster" Type="Self.AssessmentDetailMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EligibilityCriteriaDetails">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="AssessmentDetailMaster">
-              <PropertyRef Name="EligibilityCriteriaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_AssessmentQuestionBankDetail_AssessmentDetailMaster">
           <End Role="AssessmentDetailMaster" Type="Self.AssessmentDetailMaster" Multiplicity="0..1" />
           <End Role="AssessmentQuestionBankDetail" Type="Self.AssessmentQuestionBankDetail" Multiplicity="*" />
@@ -615,10 +603,6 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <AssociationSet Name="FK_AssessmentAdminEmailNotification_AssessmentDetailMaster" Association="Self.FK_AssessmentAdminEmailNotification_AssessmentDetailMaster">
             <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMaster" />
             <End Role="AssessmentAdminEmailNotification" EntitySet="AssessmentAdminEmailNotification" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssessmentDetailMaster_EligibilityCriteriaDetails" Association="Self.FK_AssessmentDetailMaster_EligibilityCriteriaDetails">
-            <End Role="EligibilityCriteriaDetails" EntitySet="EligibilityCriteriaDetails" />
-            <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMaster" />
           </AssociationSet>
           <AssociationSet Name="FK_AssessmentQuestionBankDetail_AssessmentDetailMaster" Association="Self.FK_AssessmentQuestionBankDetail_AssessmentDetailMaster">
             <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMaster" />

@@ -161,6 +161,25 @@
             }
             return status;
         }
+
+        function successFulAlert(text) {
+            $("#spnAlertSuccess").text("");
+            $("#spnAlertSuccess").text(text);
+            $("#dvSuccessFulAlert").show();
+            setTimeout(function () { $("#dvSuccessFulAlert").hide(); }, 3000);
+        }
+        function failureAlert(text) {
+            $("#spnAlertFailure").text("");
+            $("#spnAlertFailure").text(text);
+            $("#dvFailureAlert").show();
+            setTimeout(function () { $("#dvFailureAlert").hide(); }, 3000);
+        }
+        function warningAlert(text) {
+            $("#spnAlertWarning").text("");
+            $("#spnAlertWarning").text(text);
+            $("#dvWarningAlert").show();
+            setTimeout(function () { $("#dvWarningAlert").hide(); }, 3000);
+        }
     </script>
 </head>
 <body>
@@ -220,8 +239,13 @@
                 </div>
 
                 <!-- /.row -->
+                <div id="divLoader" style="margin: 0px; padding: 0px; position: fixed; right: 0px; top: 0px; width: 100%; height: 100%; background-color: rgb(102, 102, 102); z-index: 30001; opacity: 0.8;display:none;">
+                    <p style="position: absolute; color: White; top: 50%; left: 45%;">
+                        Loading, please wait...
+                        <img src="~/Content/Images/loading.gif" style="width:200px;" alt="Loader" />
+                    </p>
+                </div>
 
-                <div id="divLoader" style="display:none;"> <img src="~/Content/Images/loading.gif"  alt="Loader" /> </div> 
             </div>
         </div>
         <!-- /.container-fluid -->
@@ -253,5 +277,17 @@
     </div>
 
     <!-- End here -->
+    <!--Alerts -->
+
+    <div class="alert alert-success" id="dvSuccessFulAlert" style="display:none;">
+        <span id="spnAlertSuccess"></span>
+    </div>
+
+    <div class="alert alert-danger" id="dvFailureAlert" style="display:none;">
+        <span id="spnAlertFailure"></span>
+    </div>
+    <div class="alert alert-warning" id="dvWarningAlert" style="display:none;">
+        <span id="spnAlertWarning"></span>
+    </div>
 </body>
 </html>

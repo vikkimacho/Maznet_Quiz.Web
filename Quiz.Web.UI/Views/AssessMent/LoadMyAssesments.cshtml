@@ -4,7 +4,24 @@
     ViewBag.Title = "LoadMyAssesments";
 }
 
-<h2>My Assesments</h2>
+<h2 class="tableHeaderBlue">My Assesments</h2>
+ 
+<script>
+    
+
+        function DeleteAssessment(AssessmentID) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("DeleteAssesment", "AssessMent")?AssesmentId=" + AssessmentID,
+                success: function (data) {
+                    if (data == "Success") {
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+ 
+</script>
 
 <div class="row">
     <table class="table table-striped">
@@ -31,8 +48,8 @@
                     <td>@items.MayConsider</td>
                     <td><a> Candidate Details</a>                       
                     </td>
-                    <td><a> Edit Assesment</a></td>
-                    <td> <input type="button" id="btnLnkDeleteOrEdit"  value="|"/> </td>
+                    
+                    <td> <a id="btnLnkDeleteOrEdit" href="#" onclick="DeleteAssessment('@items.AssesmentId')"> <i class="fa fa-trash-o" style="color:red"></i> </a></td>
                      
                 </tr>
 
