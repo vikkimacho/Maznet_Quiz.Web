@@ -210,7 +210,7 @@
             if (file_size < 120000) {
                 $(files).each(function () {
                     var filename = this.name;
-                    if ((filename.toUpperCase().indexOf(".XLSX") == -1) || (filename.toUpperCase().indexOf(".XLS")) == -1) {
+                    if ((filename.toUpperCase().indexOf(".XLSX") < 1) || (filename.toUpperCase().indexOf(".XLS")) < 1) {
                         isValidFiles = false;
                     }
                 });

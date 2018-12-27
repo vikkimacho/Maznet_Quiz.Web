@@ -127,6 +127,7 @@ namespace Quiz.Web.UI.Controllers
                 {
                     var retresult = response.Content.ReadAsStringAsync().Result;
                     result = JsonConvert.DeserializeObject<List<MyAssesmentModal>>(retresult);
+                    result = result.OrderByDescending(x => x.LastModified).ToList();
                 }
             }
             catch (Exception ex)

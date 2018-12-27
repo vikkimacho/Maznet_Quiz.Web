@@ -61,16 +61,16 @@ namespace Quiz.Web.DAL.Home
                         eligibilityCriteriaDetail.MayConsider = item.MayConsider;
                         eligibilityCriteriaDetail.Name = item.Name;
                         eligibilityCriteriaDetail.NotConsider = item.NotConsider;
-                        eligibilityCriteriaDetail.StrongConsider = item.StrongConsider;                        
+                        eligibilityCriteriaDetail.StrongConsider = item.StrongConsider;
                         eligibilityCriteriaDetail.QuestionBankID = item.QuestionBankID;
                         eligibilityCriteriaDetail.EligibilityIdForAssessment = AssesmentEligibilityId;
                         lstEligibilityCriteriaDetail.Add(eligibilityCriteriaDetail);
                     }
-                    if(lstEligibilityCriteriaDetail.Any())
+                    if (lstEligibilityCriteriaDetail.Any())
                     {
                         var eligilibilityCriteriaName = lstEligibilityCriteriaDetail.FirstOrDefault().Name;
                         var eligibilityCritAvailability = TestEngineDBContext.EligibilityCriteriaDetails.FirstOrDefault(x => x.Name == eligilibilityCriteriaName);
-                        if(eligibilityCritAvailability == null)
+                        if (eligibilityCritAvailability == null)
                         {
                             TestEngineDBContext.EligibilityCriteriaDetails.AddRange(lstEligibilityCriteriaDetail);
                             TestEngineDBContext.SaveChanges();
@@ -79,8 +79,8 @@ namespace Quiz.Web.DAL.Home
                         else
                         {
                             result = "ALREADY AVAILABLE";
-                        }                      
-                    }                                       
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -159,7 +159,7 @@ namespace Quiz.Web.DAL.Home
                     //Schedule plan updation
                     TestEngineDBContext.AssessmentDetailMasters.Add(assesmentDetailMaster);
 
-                    
+
                     if (postAssessmentModal.lstBulkScheduleIds.Any())
                     {
                         List<AssessmentUserDetail> lstAssesmentdetailMaster = new List<AssessmentUserDetail>();
@@ -251,10 +251,10 @@ namespace Quiz.Web.DAL.Home
 
                     //Alert information to Admin
 
-                    if(!string.IsNullOrEmpty(postAssessmentModal.AssesmentAlertEmail))
+                    if (!string.IsNullOrEmpty(postAssessmentModal.AssesmentAlertEmail))
                     {
                         List<AssessmentAdminEmailNotification> lstAssesmentEMailNotification = new List<AssessmentAdminEmailNotification>();
-                        foreach(var items in postAssessmentModal.AssesmentAlertEmail.Split(','))
+                        foreach (var items in postAssessmentModal.AssesmentAlertEmail.Split(','))
                         {
                             AssessmentAdminEmailNotification assessmentAdminEmailNotification = new AssessmentAdminEmailNotification();
                             assessmentAdminEmailNotification.AssessmentId = assesmentDetailMaster.ID;
@@ -263,15 +263,15 @@ namespace Quiz.Web.DAL.Home
                             assessmentAdminEmailNotification.IsAdminEmailCompletionAlertEnabled = postAssessmentModal.IsAssessmentCompletionAlertEnabled;
                             lstAssesmentEMailNotification.Add(assessmentAdminEmailNotification);
                         }
-                        if(lstAssesmentEMailNotification.Any())
+                        if (lstAssesmentEMailNotification.Any())
                         {
                             TestEngineDBContext.AssessmentAdminEmailNotifications.AddRange(lstAssesmentEMailNotification);
-                        }                      
+                        }
                     }
 
 
                     //Alert Information to Students
-                    if(postAssessmentModal.AssessmentStudentAlertModal != null)
+                    if (postAssessmentModal.AssessmentStudentAlertModal != null)
                     {
                         AssessmentStudentNotification assessmentStudentNotification = new AssessmentStudentNotification();
                         assessmentStudentNotification.AssessmentId = assesmentDetailMaster.ID;
@@ -288,7 +288,7 @@ namespace Quiz.Web.DAL.Home
                         assessmentStudentNotification.Type = postAssessmentModal.AssessmentStudentAlertModal.Type;
                         TestEngineDBContext.AssessmentStudentNotifications.Add(assessmentStudentNotification);
                     }
-                     
+
                     TestEngineDBContext.AssessmentQuestionBankDetails.AddRange(lstAssessmentQuestionBankDetail);
                     TestEngineDBContext.CandidateAssesmentDetailsForms.AddRange(lstCandidateAssesmentDetailsForm);
                     TestEngineDBContext.SaveChanges();
@@ -310,12 +310,12 @@ namespace Quiz.Web.DAL.Home
             using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
             {
                 var assesmentInfo = TestEngineDBContext.AssessmentDetailMasters.FirstOrDefault(x => x.AssessmentName.Trim().ToUpper() == assesmentName.Trim().ToUpper());
-                if(assesmentInfo != null)
+                if (assesmentInfo != null)
                 {
                     return "AVAILABLE";
                 }
 
-            }                 
+            }
             return result;
         }
 
@@ -326,14 +326,26 @@ namespace Quiz.Web.DAL.Home
                 using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
                 {
                     var returnResult = TestEngineDBContext.Database.SqlQuery<MyAssesmentModal>("exec GetMyAssesments").ToList();
+                    foreach (var item in returnResult)
+                    {
+                        string duration = string.Empty;
+                        var assesmentQues = TestEngineDBContext.AssessmentQuestionBankDetails.Where(x => x.AssessmentID == item.AssesmentId).ToList();
+                        TimeSpan totalDuarion = new TimeSpan();
+                        foreach (var assesmentQuesItem in assesmentQues)
+                        {
+                            totalDuarion += assesmentQuesItem.Duration != null ? TimeSpan.Parse(Convert.ToString(assesmentQuesItem.Duration)) : new TimeSpan();
+                        }
+                        item.totaltimeDuration = Convert.ToString(totalDuarion);
+                    }
+
                     return returnResult;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
-           
+
         }
 
         public List<QuestionBankModal> LQuestionBankModal()
@@ -361,10 +373,10 @@ namespace Quiz.Web.DAL.Home
                 using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
                 {
                     var validationResult = TestEngineDBContext.Database.SqlQuery<string>("exec ValidateDeletionofAssesmentId @AssesmentId").FirstOrDefault();
-                    if(validationResult == "Success")
+                    if (validationResult == "Success")
                     {
                         result = TestEngineDBContext.Database.SqlQuery<string>("exec DeletionofAssesmentId @AssesmentId").FirstOrDefault();
-                    }                      
+                    }
                 }
             }
             catch (Exception ex)
