@@ -120,6 +120,7 @@
     <Content Include="Content\CSS\CustomStyles.css" />
     <Content Include="Content\CSS\datatable.css" />
     <Content Include="Content\CSS\datatables.min.css" />
+    <Content Include="Content\CSS\simple-switch.min.css" />
     <Content Include="Content\CSS\sort_asc.png" />
     <Content Include="Content\CSS\sort_asc_disabled.png" />
     <Content Include="Content\CSS\sort_both.png" />
@@ -152,6 +153,7 @@
     <Content Include="Content\Icons\User name.png" />
     <Content Include="Content\Images\loading.gif" />
     <Content Include="Content\Images\LoginImage.jpg" />
+    <Content Include="Content\JS\jquery.simpleswitch.min.js" />
     <Content Include="Content\login.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\CSS\sb-admin.css" />

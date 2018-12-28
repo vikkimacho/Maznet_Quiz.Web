@@ -33,7 +33,7 @@
 
     <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <!-- Latest compiled JavaScript -->
-
+    <script src="~/Content/JS/jquery.simpleswitch.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
 
@@ -47,6 +47,7 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="~/Content/CSS/CustomStyles.css" rel="stylesheet" />
 
+    <link href="~/Content/CSS/simple-switch.min.css" rel="stylesheet" />
 
 
     <style>
@@ -129,10 +130,31 @@
         .foreBlue {
             color: rgb(011,017,117);
         }
-        .text-center
-        {
-            text-align:center !important;
+
+        .text-center {
+            text-align: center !important;
         }
+
+        .simple-switch-outter.checked {
+            border-color: #62B0FF;
+            box-shadow: #004080 0px 0px 0px 16px inset;
+            transition: border 0.4s, box-shadow 0.4s, background-color 1.2s;
+            background-color: #408080;
+        }
+
+            .simple-switch-outter.checked .simple-switch-circle {
+                background-color: #BFDFFF;
+            }
+
+        .simple-switch-outter.unchecked {
+            box-shadow: #dfdfdf 0px 0px 0px 0px inset;
+            border-color: #356A6A;
+            background-color: #A0CFCF;
+        }
+
+            .simple-switch-outter.unchecked .simple-switch-circle {
+                background-color: #D1E9E9;
+            }
     </style>
     <script type="text/javascript">
         $(document).ready(function () {

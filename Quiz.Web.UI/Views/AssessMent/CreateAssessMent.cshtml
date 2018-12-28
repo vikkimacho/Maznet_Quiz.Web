@@ -167,6 +167,17 @@
             width: 20px;
             display: inline-block;
         }
+        span.legend.ng-binding.rrbn {
+            margin-right: 50px;
+            font-weight: 600;
+            position: relative;
+            top: 0px;
+        }
+        .rrbntext
+        {
+            position:relative;
+            top:-5px;
+        }
     </style>
 
 
@@ -339,13 +350,13 @@
                         <td>
                             <span> Browser Lock </span>
                         </td>
-                        <td><input type="checkbox" id="chkBrowserLockOn" checked /> </td>
+                        <td><input type="checkbox" id="chkBrowserLockOn" class="switchdemo" checked /> </td>
                     </tr>
                     <tr>
                         <td>
                             <span> Print Screen Lock </span>
                         </td>
-                        <td><input type="checkbox" id="chkPrintScreenLockOn" checked /> </td>
+                        <td><input type="checkbox" id="chkPrintScreenLockOn" class="switchdemo" checked /> </td>
                     </tr>
 
                 </tbody>
@@ -431,16 +442,16 @@
                             {
                                 if (item.IsLocked)
                                 {
-                                    <td><input type="checkbox" disabled id="mandatory_@item.id" checked /> <i class="fa fa-lock" aria-hidden="true"></i></td>
+                                    <td><input type="checkbox" class="switchdemo" disabled id="mandatory_@item.id" checked /> <i class="fa fa-lock" aria-hidden="true"></i></td>
                                 }
                                 else
                                 {
-                                    <td><input type="checkbox" id="mandatory_@item.id" checked /> </td>
+                                    <td><input type="checkbox" class="switchdemo" id="mandatory_@item.id" checked /> </td>
                                 }
                             }
                             else
                             {
-                                <td><input type="checkbox" id="mandatory_@item.id" /> </td>
+                                <td><input type="checkbox" class="switchdemo" id="mandatory_@item.id" /> </td>
                             }
                         </tr>
                     }
@@ -461,45 +472,47 @@
 
     <div id="divStep3" style="display:none;">
 
-        <h3 class="ds_lightBlue tableHeaderText">Short listing criteria </h3>
+        <h3 class="ds_lightBlue tableHeaderText" style="margin:0px;">Short listing criteria </h3>
 
-        <div>
-            Do you want to create a new shortlisting criteria or use an existing one?
-            <br />
-            <input type="radio" name="ShortListCriteria" id="radExistingShortListCriteria" value="EXISTING" />Select Existing
-
-
-
-            <input type="radio" name="ShortListCriteria" id="radNewShortListingCriteria" value="NEW" checked />Create New
+        <div style="background:#e4e4e4">
+            <div class="col-md-12">
+                Do you want to create a new shortlisting criteria or use an existing one?
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-md-12" style="margin-top:20px;">
+                <input type="radio" name="ShortListCriteria" id="radExistingShortListCriteria" value="EXISTING" />Select Existing
+                <input type="radio" name="ShortListCriteria" id="radNewShortListingCriteria" value="NEW" checked style="margin-left:25px;" />Create New
+            </div>
             @*<input type="radio" name="ShortListCriteria" id="radCustomShortListingCriteria" />Custom*@
-            <br />
+            
+
+            <div class="col-md-6" style="margin-bottom:10px;">
+                <input type="text" id="txtShortListCriteria" class="form-control" placeholder="Enter a name to save the cutoff" />
+                <input type="button" class="btn btn-info" style="display:none;" id="btnSaveCriteria" value="Save New Cutoff" />
+
+            </div>
+
 
             <div class="clearfix" style="margin-top:10px;"></div>
-            <div class="form-group">
+            <div class="form-group ds_lightBlue tableHeaderText">
                 <div class="grid-legend-band ng-scope" style="position: relative;">
-                    <span class="legend ng-binding">
+                    <span class="legend ng-binding rrbn">
                         <span class="consider red" style="background: rgb(244, 66, 54);"></span>
-                        Not Consider
+                        <span class="rrbntext"> Not Consider</span>
                     </span>
-                    <span class="legend ng-binding">
+                    <span class="legend ng-binding rrbn">
                         <span class="consider yellow" style="background: rgb(254, 179, 0);"></span>
-                        May Consider
+                        <span class="rrbntext"> May Consider</span>
                     </span>
-                    <span class="legend last ng-binding">
+                    <span class="legend last ng-binding rrbn">
                         <span class="consider blue" style="background: rgb(69, 173, 78);"></span>
-                        Strong Consider
+                        <span class="rrbntext">  Strong Consider</span>
                     </span>
                 </div>
             </div>
 
             <div id="divNewShortListCriteria">
-                <div>
-                    Enter a name to save the cutoff
 
-                    <input type="text" id="txtShortListCriteria" class="form-control" placeholder="Enter a name to save the cutoff" />
-                    <input type="button" class="btn btn-info" style="display:none;" id="btnSaveCriteria" value="Save New Cutoff" />
-
-                </div>
 
 
 
@@ -507,12 +520,14 @@
                 <div id="divSliderSetup">
                     @foreach (var item in Model.LQuestionBankModal)
                     {
+                    <div class="form-group">
                         <p id="p_slider_@item.Id">
                             <label for="amount">@item.QuestionBankName - @item.QuestionBankDescription</label>
                             <input class="clsSlider" type="text" id="txtSlider_@item.Id" readonly style="border:0; color:#f6931f; font-weight:bold;">
                         </p>
 
                         <div id="slider-range_@item.Id"></div>
+                    </div>
                     }
 
                 </div>
@@ -728,7 +743,7 @@
         </div>
 
         <div>
-            <div class="ds_lightBlue tableHeaderText">Assessment completion alert    <input type="checkbox" id="chkAlertEmail" /></div>
+            <div class="ds_lightBlue tableHeaderText">Assessment completion alert    <input type="checkbox" class="switchdemo" id="chkAlertEmail" /></div>
 
             <textarea style="display:none;" class="form-control" id="txtAreaAlertEmail" placeholder="Please enter comma separated email id's to receive assessment completion alert. e.g. test@gmail.com,test@yahoo.com"></textarea>
 
@@ -1220,7 +1235,7 @@
 
         $(document).ready(function () {
 
-
+            $(".switchdemo").simpleSwitch();
 
             var files;
             $(document).on('change', '#flUsersUpload', function (e) {
