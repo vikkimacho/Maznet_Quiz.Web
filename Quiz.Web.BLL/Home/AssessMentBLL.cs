@@ -69,6 +69,12 @@ namespace Quiz.Web.BLL.Home
             return result;
 
         }
+
+        public List<ExistingQuestionBankDetails> GetExistingQuestionBankDetails(Guid assessmentId)
+        {
+            var questionBankDetails = ObjAssessMentDAL.GetExistingQuestionBankDetails(assessmentId);
+            return questionBankDetails;
+        }
     }
 
 }

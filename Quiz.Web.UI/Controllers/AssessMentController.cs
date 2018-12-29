@@ -67,7 +67,7 @@ namespace Quiz.Web.UI.Controllers
         }
 
 
-       public ActionResult SaveEligibleCriteria(List<PostEligibilityCriteria> lstpostAssessmentModal)
+        public ActionResult SaveEligibleCriteria(List<PostEligibilityCriteria> lstpostAssessmentModal)
         {
             string result = "Failed";
             try
@@ -214,7 +214,7 @@ namespace Quiz.Web.UI.Controllers
             string result = "Failed";
             try
             {
-                logger.WriteToLogFile("Post Data ValidateAssesmentGuid " + AssesmentId);             
+                logger.WriteToLogFile("Post Data ValidateAssesmentGuid " + AssesmentId);
                 string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = client.PostAsJsonAsync(apiUrl + "/Assessment/DeleteAssesment", AssesmentId).Result;
@@ -246,16 +246,16 @@ namespace Quiz.Web.UI.Controllers
                 if (postAssessmentModal != null)
                 {
                     postAssessmentModal.lstBulkScheduleIds = new List<Guid>();
-                    if(!string.IsNullOrEmpty(postAssessmentModal.UploadFileTitle))
+                    if (!string.IsNullOrEmpty(postAssessmentModal.UploadFileTitle))
                     {
                         var postFileUploadResponse = UploadUserDetail(postAssessmentModal.UploadFileTitle);
                         if (postFileUploadResponse != null)
                         {
                             postAssessmentModal.lstBulkScheduleIds.Add(postFileUploadResponse.ResultUserDetailMasterGuid);
                         }
-                    }                   
+                    }
                 }
-                 
+
                 string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = client.PostAsJsonAsync(apiUrl + "/Assessment/PostCreateAssessment", postAssessmentModal).Result;
@@ -276,11 +276,23 @@ namespace Quiz.Web.UI.Controllers
             return Json(new { Result = result });
         }
 
+        [HttpPost]
+        public ActionResult GetExistingQuestionBankDetails(Guid assessmentId)
+        {
+            var questionBankDetail = new List<ExistingQuestionBankDetails>();
+            string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = client.GetAsync(apiUrl + "/Assessment/GetExistingQuestionBankDetails?assessmentId="+ assessmentId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var retresult = response.Content.ReadAsStringAsync().Result;
+                questionBankDetail = JsonConvert.DeserializeObject<List<ExistingQuestionBankDetails>>(retresult);
+            }
+            return Json(new { questions = questionBankDetail });
+        }
 
 
 
-
-         
         public APIResponse UploadUserDetail(string UserNameTitle)
         {
             string Result = "Failed";

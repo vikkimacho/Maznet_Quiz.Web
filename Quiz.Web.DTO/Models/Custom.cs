@@ -218,4 +218,12 @@ namespace Quiz.Web.DTO.Models
         public string QuestionbankName { get; set; }
         public DateTime CreatedDate { get; set; }
     }
+
+    public class ExistingQuestionBankDetails
+    {
+        public Guid id { get; set; }
+        public string QuestionBankName { get; set; }
+        public int NoOfQuestions { get; set; }
+        public TimeSpan Duration { get; set; }
+    }
 }

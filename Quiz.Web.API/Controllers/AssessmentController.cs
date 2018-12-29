@@ -31,8 +31,8 @@ namespace Quiz.Web.API.Controllers
                 return null;
             }
         }
-        [AcceptVerbs("Get", "Post")]
-
+         
+        [HttpGet]
         public string PostCreateAssessment(PostAssessmentModal postAssessmentModal)
         {
 
@@ -124,8 +124,19 @@ namespace Quiz.Web.API.Controllers
             }
 
         }
+        [HttpGet]
+        public List<ExistingQuestionBankDetails> GetExistingQuestionBankDetails(Guid assessmentId)
+        {
+            try
+            {
+                return ObjAssessmentBll.GetExistingQuestionBankDetails(assessmentId);
+            }
+            catch(Exception ex)
+            {
+                return new List<ExistingQuestionBankDetails>();
+            }
 
-
+        }
 
 
     }

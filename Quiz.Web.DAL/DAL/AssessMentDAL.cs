@@ -367,6 +367,23 @@ namespace Quiz.Web.DAL.Home
             }
         }
 
+        public List<ExistingQuestionBankDetails> GetExistingQuestionBankDetails(Guid assessmentId)
+        {
+            try
+            {
+                using (TestEngineEntities dbContext = new TestEngineEntities())
+                {
+                    var existingQuestionBankDetails = dbContext.Database.SqlQuery<ExistingQuestionBankDetails>("exec GetExistingQuestionDetails @assessmentId", new SqlParameter("@assessmentID", assessmentId)).ToList();
+                    return existingQuestionBankDetails;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
         public string ValidateAndDeleteAssesment(Guid AssesmentId)
         {
             string result = "Failed";

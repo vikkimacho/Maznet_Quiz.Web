@@ -249,8 +249,8 @@
                         <tbody>
                             @for (int i = 0; i < existingAssessMentDetails.Count(); i++)
                             {
-                                <tr>
-                                    <td>@existingAssessMentDetails[i].AssessmentName</td>
+                                <tr id="ext_@existingAssessMentDetails[i].ID" style="cursor:pointer" onclick="GetExistingQuestionBankDetails('@existingAssessMentDetails[i].ID')">
+                                    <td><span data-toggle="tooltip" data-placement="top" title="@existingAssessMentDetails[i].QuestionbankName"> @existingAssessMentDetails[i].AssessmentName</span> </td>
                                     <td>@existingAssessMentDetails[i].CreatedDate</td>
                                 </tr>
                             }
@@ -1042,11 +1042,17 @@
             $('#dvStepFour').removeClass('active').addClass('disabled');
         }
 
-
+        var IsDirectEnvironment = false;
 
         function ShowStep2() {
-
-            var validateStatus = ValidateStep2();
+            var validateStatus = false;
+            if (IsDirectEnvironment == false) {
+                validateStatus = ValidateStep2();
+            }
+            if (IsDirectEnvironment == true && validateStatus == false) {
+                validateStatus = true;
+            }
+             
             if (validateStatus) {
                 $('#divStep1').hide();
                 $('#divStep2').show();
@@ -1083,7 +1089,7 @@
                 });
 
 
-
+                IsDirectEnvironment = false;
 
                 $('#dvStepOne').addClass('complete').removeClass('disabled').removeClass("active");
                 $('#dvStepTwo').addClass('active').removeClass('disabled');
@@ -1264,7 +1270,7 @@
 
 
         $(document).ready(function () {
-
+            $('[data-toggle="tooltip"]').tooltip();
             $(".switchdemo").simpleSwitch();
 
             var files;
@@ -1779,6 +1785,55 @@
                 });
             }
             return returnresult;
+        }
+
+        function GetExistingQuestionBankDetails(assessmentId) {
+            debugger;
+            if (assessmentId != null && assessmentId != undefined && assessmentId != "") {
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "@Url.Action("GetExistingQuestionBankDetails", "AssessMent")?assessmentId=" + assessmentId,
+                    dataType: "json",
+                    beforeSend: function () {
+                    },
+                    complete: function () {
+
+                                            },
+                    success: function (data) {
+                        debugger;
+                        console.log(data);
+                        if (data.questions!=null) {
+                            selectedExamSyllabus = new Array();
+                            var questions = data.questions;
+                            var questionsLength = questions.length;
+                            if (questions.length > 0) {
+
+                                for (var i = 0; i < questionsLength; i++) {
+                                    var elementId = questions[i].id;
+                                    var QuestionBankName = questions[i].QuestionBankName;
+                                    var NoOfQuestions = questions[i].NoOfQuestions;
+                                    var Duration = questions[i].Duration;
+                                    var hours = Duration.Hours;
+                                    var minutes = Duration.Minutes;
+                                    var seconds = Duration.Seconds;
+                                    hours = parseFloat(hours).toFixed(2);
+                                    minutes = parseFloat(minutes).toFixed(2);
+                                    seconds = parseFloat(seconds).toFixed(2);
+                                    var finalDuration = hours + ":" + minutes + ":" + seconds;
+                                    var elementSelection = { id: elementId, QuestionBankName: QuestionBankName, NoOfQuestions: NoOfQuestions, Duration: finalDuration };
+                                    selectedExamSyllabus.push(elementSelection);
+                                    IsDirectEnvironment = true;
+                                    ShowStep2();
+                                }
+                            }
+
+                        }
+                    }
+
+                });
+            }
         }
 
     </script>
