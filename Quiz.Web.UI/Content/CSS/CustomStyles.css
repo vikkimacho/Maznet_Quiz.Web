@@ -157,7 +157,10 @@ table.dataTable > tbody > tr {
     border-bottom:1px solid #dadada;
 }
 
-table.dataTable > tbody > tr >td
-{
-    border-right:1px solid #dadada;
+    table.dataTable > tbody > tr > td {
+        border-right: 1px solid #ceb8b8;
+    }
+.dataTables_wrapper {
+    padding: 8px;
+    background: #d4d4d4;
 }

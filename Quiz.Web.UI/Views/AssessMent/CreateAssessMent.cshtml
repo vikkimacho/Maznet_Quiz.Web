@@ -3,7 +3,7 @@
     ViewBag.Title = "CreateAssessMent";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-
+    var existingAssessMentDetails = Model.existingAssessmentDetails;
 }
 
 @if (Model != null)
@@ -167,16 +167,17 @@
             width: 20px;
             display: inline-block;
         }
+
         span.legend.ng-binding.rrbn {
             margin-right: 50px;
             font-weight: 600;
             position: relative;
             top: 0px;
         }
-        .rrbntext
-        {
-            position:relative;
-            top:-5px;
+
+        .rrbntext {
+            position: relative;
+            top: -5px;
         }
     </style>
 
@@ -230,6 +231,35 @@
                 </div>
             </div>
         </div>
+
+        @if (existingAssessMentDetails.Any())
+        {
+            <div class="row">
+                <div class="table">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr class="tableHeaderBlue">
+                                <th>
+
+                                    Assessment
+                                </th>
+                                <th>Created Date </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < existingAssessMentDetails.Count(); i++)
+                            {
+                                <tr>
+                                    <td>@existingAssessMentDetails[i].AssessmentName</td>
+                                    <td>@existingAssessMentDetails[i].CreatedDate</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+
         <div class="row">
 
 
@@ -484,7 +514,7 @@
                 <input type="radio" name="ShortListCriteria" id="radNewShortListingCriteria" value="NEW" checked style="margin-left:25px;" />Create New
             </div>
             @*<input type="radio" name="ShortListCriteria" id="radCustomShortListingCriteria" />Custom*@
-            
+
 
             <div class="col-md-6" style="margin-bottom:10px;">
                 <input type="text" id="txtShortListCriteria" class="form-control" placeholder="Enter a name to save the cutoff" />
@@ -520,14 +550,14 @@
                 <div id="divSliderSetup">
                     @foreach (var item in Model.LQuestionBankModal)
                     {
-                    <div class="form-group">
-                        <p id="p_slider_@item.Id">
-                            <label for="amount">@item.QuestionBankName - @item.QuestionBankDescription</label>
-                            <input class="clsSlider" type="text" id="txtSlider_@item.Id" readonly style="border:0; color:#f6931f; font-weight:bold;">
-                        </p>
+                        <div class="form-group">
+                            <p id="p_slider_@item.Id">
+                                <label for="amount">@item.QuestionBankName - @item.QuestionBankDescription</label>
+                                <input class="clsSlider" type="text" id="txtSlider_@item.Id" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                            </p>
 
-                        <div id="slider-range_@item.Id"></div>
-                    </div>
+                            <div id="slider-range_@item.Id"></div>
+                        </div>
                     }
 
                 </div>
@@ -691,34 +721,34 @@
 
                 <div class="tab-pane fade" id="divSingleSchedule" role="tabpanel" aria-labelledby="profile-tab">
                     <h4 class="ds_lightBlue tableHeaderText">Candidate Detail </h4>
-                   
-                        <div class="form-group">
-                            <label>  First Name </label><input class="form-control" type="text" id="txtFirstName" />
-                        </div>
-                        <div class="form-group">
-                            <label> Last Name </label><input type="text" class="form-control" id="txtLastName" />
-                        </div>
-                        <div class="form-group">
-                            <label> Email </label><input type="text" class="form-control" id="txtEmail" /> 
-                        </div>
-                        <div class="form-group">
-                            <label> User Name <i class="fa fa-asterick iconred"></i> </label><input type="text" class="form-control" id="txtUserName" /> 
-                        </div>
-                        <div class="form-group">
-                            <label> Password <i class="fa fa-asterick iconred"></i></label> <input type="password" class="form-control" id="txtPassword" /> 
-                        </div>
-                        <div class="form-group">
-                            <label> Mobile</label> <input class="form-control" type="text"   id="txtMobile" /> 
-                        </div>
-                        <label> Date of birth</label>
 
-                        <div class='input-group date' id='txtDOB'>
-                            <input type='text' class="form-control" id='txtDOBSingle' />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                     
+                    <div class="form-group">
+                        <label>  First Name </label><input class="form-control" type="text" id="txtFirstName" />
+                    </div>
+                    <div class="form-group">
+                        <label> Last Name </label><input type="text" class="form-control" id="txtLastName" />
+                    </div>
+                    <div class="form-group">
+                        <label> Email </label><input type="text" class="form-control" id="txtEmail" />
+                    </div>
+                    <div class="form-group">
+                        <label> User Name <i class="fa fa-asterick iconred"></i> </label><input type="text" class="form-control" id="txtUserName" />
+                    </div>
+                    <div class="form-group">
+                        <label> Password <i class="fa fa-asterick iconred"></i></label> <input type="password" class="form-control" id="txtPassword" />
+                    </div>
+                    <div class="form-group">
+                        <label> Mobile</label> <input class="form-control" type="text" id="txtMobile" />
+                    </div>
+                    <label> Date of birth</label>
+
+                    <div class='input-group date' id='txtDOB'>
+                        <input type='text' class="form-control" id='txtDOBSingle' />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+
                 </div>
 
                 <div class="tab-pane fade" id="divCommonLogin" role="tabpanel" aria-labelledby="contact-tab">
@@ -734,10 +764,10 @@
 
                     <label>  Send Login Details to  (Enter comma seperated email list.) *</label>
 
-                        <textarea class="form-group" id="txtCLSendLoginDetailsto"></textarea>
- 
-                    </div>
+                    <textarea class="form-group" id="txtCLSendLoginDetailsto"></textarea>
+
                 </div>
+            </div>
 
 
         </div>

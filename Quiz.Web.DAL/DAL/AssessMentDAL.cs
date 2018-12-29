@@ -34,6 +34,9 @@ namespace Quiz.Web.DAL.Home
                     assesmentPageModal.LstCandidateAssesmentDetailsForm = TestEngineDBContext.Database.SqlQuery<CustomCandidateAssesmentDetailsForm>("exec GetCandidateAssesmentDetailsForm").ToList();
                     assesmentPageModal.LstUserDetailMaster = TestEngineDBContext.Database.SqlQuery<CustomUserDetailMaster>("exec GetLstUserDetailMaster").ToList();
                     assesmentPageModal.ListEligibilityCriteria = TestEngineDBContext.Database.SqlQuery<EligibilityCriteriaList>("exec GetEligibilityCriteriaList").ToList();
+                    assesmentPageModal.existingAssessmentDetails = TestEngineDBContext.Database.SqlQuery<ExistingAssessmentDetails>("exec GetExistingAssessmentDetails").ToList();
+                        
+
                     return assesmentPageModal;
                 }
             }

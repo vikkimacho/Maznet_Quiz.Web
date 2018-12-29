@@ -48,7 +48,7 @@ namespace Quiz.Web.DTO.Models
         public List<CustomCandidateAssesmentDetailsForm> LstCandidateAssesmentDetailsForm { get; set; }
         public List<CustomUserDetailMaster> LstUserDetailMaster { get; set; }
         public List<EligibilityCriteriaList> ListEligibilityCriteria { get; set; }
-
+        public List<ExistingAssessmentDetails> existingAssessmentDetails { get; set; }
     }
 
     public class EligibilityCriteriaList
@@ -209,5 +209,13 @@ namespace Quiz.Web.DTO.Models
     {
         public string ValidateAssesmentName { get; set; }
 
+    }
+
+    public class ExistingAssessmentDetails
+    {
+        public Guid ID { get; set; }
+        public string AssessmentName { get; set; }
+        public string QuestionbankName { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }
