@@ -164,6 +164,8 @@ namespace Quiz.Web.UI.Controllers
         public ActionResult UploadQuestionBank(string QuestionBankName, string Duration, string Description, bool Status)
         {
             APIResponse response = new APIResponse();
+            int duplicates = 0;
+            int NoAnswer = 0;
             try
             {
                 string Result = "Failed";
@@ -199,8 +201,38 @@ namespace Quiz.Web.UI.Controllers
                             questionDetail.Answer = Answer;
                             if (questionDetail != null)
                             {
-                                questionsDetailsView.Add(questionDetail);
+                                if (questionsDetailsView.Any(x => x.Question.Trim().ToUpper() == questionDetail.Question.Trim().ToUpper()))
+                                {
+                                    duplicates++;
+                                }
+                                else if (questionDetail.Answer == null || Answer == "")
+                                {
+                                    NoAnswer++;
+                                }
+                                else
+                                {
+                                    questionsDetailsView.Add(questionDetail);
+
+                                }
+                                
                             }
+                        }
+
+                        var duplicateserror = "Duplicates Questions : " + duplicates;
+                        var noanserror = "Question without Answer : " + NoAnswer;
+                        var ResultMessage = "Question bank Upload Failed";
+                        var AlertMessages = "";
+                        if (duplicates > 0 && NoAnswer == 0)
+                        {
+                            AlertMessages = " => " + duplicateserror;
+                        }
+                        else if (NoAnswer > 0 && duplicates == 0)
+                        {
+                            AlertMessages = " => " + noanserror;
+                        }
+                        else if (NoAnswer > 0 && duplicates > 0)
+                        {
+                            AlertMessages = " => " + duplicateserror + " || " + noanserror;
                         }
                         if (questionsDetailsView.Any())
                         {
@@ -217,17 +249,25 @@ namespace Quiz.Web.UI.Controllers
                                 int sec = splitData.Length > 2 ? Convert.ToInt32(splitData[2]) : 0;
                                 questionBankDetail.Duration = new TimeSpan(hour, minutes, sec);
 
-                                client.BaseAddress = new Uri(apiUrl);
-                                var result = client.PostAsJsonAsync(apiUrl + "/QuestionBank/UploadQuestionBank", questionBankDetail).Result;
-                                if (result.IsSuccessStatusCode)
+                                                               
+                                if (questionBankDetail.questionsDetailsViews.Count > 0)
                                 {
-                                    Result = result.Content.ReadAsStringAsync().Result;
+                                    client.BaseAddress = new Uri(apiUrl);
+                                    var result = client.PostAsJsonAsync(apiUrl + "/QuestionBank/UploadQuestionBank", questionBankDetail).Result;
+                                    if (result.IsSuccessStatusCode)
+                                    {
+                                        Result = result.Content.ReadAsStringAsync().Result;
 
-                                    response = JsonConvert.DeserializeObject<APIResponse>(Result);
+                                        response = JsonConvert.DeserializeObject<APIResponse>(Result);
+                                        ResultMessage = "Question bank Uploaded Succesfully";
+
+                                    }                                    
                                 }
                             }
 
                         }
+
+                        response.Message = ResultMessage + AlertMessages;
 
                     }
                 }
