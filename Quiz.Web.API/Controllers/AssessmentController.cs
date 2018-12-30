@@ -31,8 +31,8 @@ namespace Quiz.Web.API.Controllers
                 return null;
             }
         }
-         
-        [HttpGet]
+
+        [AcceptVerbs("Get", "Post")]
         public string PostCreateAssessment(PostAssessmentModal postAssessmentModal)
         {
 

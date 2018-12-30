@@ -179,6 +179,23 @@
             position: relative;
             top: -5px;
         }
+
+        div[id^=slider-range_] > div {
+            position: absolute;
+            text-align: center;
+            margin-top: 20px;
+            transform: translateX(-50%);
+        }
+
+        .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        .ui-slider-horizontal .ui-slider-handle {
+            top: -0.8em;
+        }
     </style>
 
 
@@ -250,7 +267,7 @@
                             @for (int i = 0; i < existingAssessMentDetails.Count(); i++)
                             {
                                 <tr id="ext_@existingAssessMentDetails[i].ID" style="cursor:pointer" onclick="GetExistingQuestionBankDetails('@existingAssessMentDetails[i].ID')">
-                                    <td><span data-toggle="tooltip" data-placement="top" title="@existingAssessMentDetails[i].QuestionbankName"> @existingAssessMentDetails[i].AssessmentName</span> </td>
+                                    <td><span id="spnExistingQB_@existingAssessMentDetails[i].ID" data-toggle="tooltip" data-placement="top" title="@existingAssessMentDetails[i].QuestionbankName"> @existingAssessMentDetails[i].AssessmentName</span> </td>
                                     <td>@existingAssessMentDetails[i].CreatedDate</td>
                                 </tr>
                             }
@@ -524,7 +541,8 @@
 
 
             <div class="clearfix" style="margin-top:10px;"></div>
-            <div class="form-group ds_lightBlue tableHeaderText">
+
+            <div class="form-group ds_lightBlue tableHeaderText" id="dvConsiderColorSection">
                 <div class="grid-legend-band ng-scope" style="position: relative;">
                     <span class="legend ng-binding rrbn">
                         <span class="consider red" style="background: rgb(244, 66, 54);"></span>
@@ -542,11 +560,6 @@
             </div>
 
             <div id="divNewShortListCriteria">
-
-
-
-
-
                 <div id="divSliderSetup">
                     @foreach (var item in Model.LQuestionBankModal)
                     {
@@ -800,7 +813,10 @@
             </table>
 
         </div>
-
+        <div class="col-md-6 form-group" id="dvExistingAssessmentName" style="display:none;">
+            <label>Existing AssessmentName</label>
+            <input type="text" class="form-control" id="txtExistingAssessmentName" />
+        </div>
 
         <div class="row">
             <div class="col-md-12 text-right">
@@ -821,6 +837,9 @@
         {
             debugger;
             var assesmentName = $('#txtAssessmentName').val();
+            if (assesmentName == "") {
+                assesmentName = $("#txtExistingAssessmentName").val();
+            }
             var LstQuestionBankSelected = new Array();
             for (var i = 0; i < selectedExamSyllabus.length; i++)
             {
@@ -841,6 +860,9 @@
             var commonLoginModal = GetCommonLoginModal();
 
             var IsAssessmentCompletionAlertEnabled = $('#chkAlertEmail').is(':checked');
+            if (IsAssessmentCompletionAlertEnabled == null) {
+                IsAssessmentCompletionAlertEnabled = false;
+            }
             var AssesmentAlertEmail = $('#txtAreaAlertEmail').val();
             var AssessmentStudentAlertModal = GetAssessmentStudentAlertModal();
 
@@ -855,7 +877,7 @@
                 IsPrintScreenLockEnabled :IsPrintScreenLockEnabled, LstCandidateFormSelectedFields:LstCandidateFormSelectedFields,
                 SelectedShortListCriteria :SelectedShortListCriteria,ScheduleFrom:ScheduleFrom,ScheduleTo:ScheduleTo,
                 SchedulePlan : schedulePlan,lstBulkScheduleIds:lstBulkScheduleIds,SingleScheduleModal:SingleScheduleModal,IsAssessmentCompletionAlertEnabled:IsAssessmentCompletionAlertEnabled
-                ,AssesmentAlertEmail:AssesmentAlertEmail,AssessmentStudentAlertModal:AssessmentStudentAlertModal,CommonLoginModal:commonLoginModal,UploadFileTitle : UploadFileTitle
+                , AssesmentAlertEmail: AssesmentAlertEmail, AssessmentStudentAlertModal: AssessmentStudentAlertModal, CommonLoginModal: commonLoginModal, UploadFileTitle: UploadFileTitle
             };
             return postModal;
 
@@ -1052,7 +1074,7 @@
             if (IsDirectEnvironment == true && validateStatus == false) {
                 validateStatus = true;
             }
-             
+
             if (validateStatus) {
                 $('#divStep1').hide();
                 $('#divStep2').show();
@@ -1075,21 +1097,31 @@
 
                 }
 
-                $('.chkExamSubjectSelection').each(function (i, obj) {
-                    if ($('#' + obj.id).is(':checked')) {
-                        $('#p_slider_'+ obj.id).show();
-                        $('#slider-range_'+ obj.id).show();
+                if (IsDirectEnvironment == true) {
+                    $("p[id^=p_slider_]").hide();
+                    $("div[id^=slider-range_]").hide();
+                    for (var i = 0; i < selectedExamSyllabus.length; i++) {
+                        $("#p_slider_" + selectedExamSyllabus[i].id).show();
+                        $('#slider-range_' + selectedExamSyllabus[i].id).show();
                     }
-                    else
-                    {
-                        $('#p_slider_'+ obj.id).hide();
-                        $('#slider-range_'+ obj.id).hide();
 
-                    }
-                });
+                }
+                else {
+                    $('.chkExamSubjectSelection').each(function (i, obj) {
+                        if ($('#' + obj.id).is(':checked')) {
+                            $('#p_slider_' + obj.id).show();
+                            $('#slider-range_' + obj.id).show();
+                        }
+                        else {
+                            $('#p_slider_' + obj.id).hide();
+                            $('#slider-range_' + obj.id).hide();
+
+                        }
+                    });
+                }
 
 
-                IsDirectEnvironment = false;
+                //IsDirectEnvironment = false;
 
                 $('#dvStepOne').addClass('complete').removeClass('disabled').removeClass("active");
                 $('#dvStepTwo').addClass('active').removeClass('disabled');
@@ -1223,9 +1255,14 @@
             else {
                 //alert("Please fill all mandatory fields to go forward");
             }
+            if (IsDirectEnvironment == true) {
+                $("#dvExistingAssessmentName").show();
+                IsDirectEnvironment = false;
+            }
         }
 
         function ValidateStep4() {
+            debugger;
             var returnStatus = true;
             var selectedShortList = $('input[name=ShortListCriteria][type="radio"]:checked').val();
             if(selectedShortList == 'EXISTING')
@@ -1436,12 +1473,21 @@
                     }
                 }
 
-
-                $('.chkExamSubjectSelection').each(function (i, obj) {
-                    var elementId = obj.id;
-                    selectedQuestionBankIds.push(elementId);
-                });
-
+                if (IsDirectEnvironment == true) {
+                    var selectedQBanks = selectedExamSyllabus;
+                    var selectedList = selectedQBanks.length;
+                    if (selectedList > 0) {
+                        for (var i = 0; i < selectedList; i++) {
+                            selectedQuestionBankIds.push(selectedQBanks[i].id);
+                        }
+                    }
+                }
+                else {
+                    $('.chkExamSubjectSelection').each(function (i, obj) {
+                        var elementId = obj.id;
+                        selectedQuestionBankIds.push(elementId);
+                    });
+                }
 
 
 
@@ -1488,10 +1534,14 @@
                 {
                     $('#divNewShortListCriteria').hide();
                     $('#ddlExistingShortListCriteria').show();
+                    $("#dvConsiderColorSection").hide();
+                    $("#txtShortListCriteria").hide();
                 }
                 else{
                     $('#ddlExistingShortListCriteria').hide();
                     $('#divNewShortListCriteria').show();
+                    $("#dvConsiderColorSection").show();
+                    $("#txtShortListCriteria").show();
                 }
             });
 
@@ -1679,11 +1729,39 @@
                             $("#txtSlider_"+ modelListQB[items].Id).val("" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 0) + "-" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 1));
                         }
                     }
+                }).each(function () {
+                    debugger;
+                    // Add labels to slider whose values
+                    // are specified by min, max
+
+                    // Get the options for this slider (specified above)
+                    var opt = $("#slider-range_"+ modelListQB[items].Id).slider("option");
+                    console.log(opt);
+
+                    // Get the number of possible values
+                    var vals = opt.max - opt.min;
+
+                    // Position the labels
+                    for (var i = 0; i <= vals; i++) {
+                        var $el = $('<div class="sliderLegend"><div class="sliderLegendMark">|</div><div class="sliderLegendNumber">' + (i) + '</div></div>').css('left', (i / vals * 100) + '%');
+                        $(this).append($el);
+                    }
+
                 });
                 $("#txtSlider_"+ modelListQB[items].Id).val("" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 0) + "-" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 1));
             }
 
 
+            $('div[id^=slider-range_] .sliderLegend').slice(1).each(function () {
+                var left = $(this).position().left,
+                    $prev = $(this).prevAll(':has(.sliderLegendNumber)').first(),
+                    prevRight = $prev.position().left + $prev.width(),
+                    $item = $(this).is(':last-child') ? $prev : $(this);
+
+                if (left < prevRight + 6) {
+                    $item.find('.sliderLegendNumber').remove();
+                }
+            });
 
 
 
@@ -1724,22 +1802,43 @@
             else{
 
                 var postDataForEligibilityCriteria = new Array();
-                $('.chkExamSubjectSelection').each(function (i, obj) {
-                    if ($('#' + obj.id).is(':checked')) {
-                        //NotConsider	MayConsider	StrongConsider
-                        debugger;
-                        var sliderVal = $('#txtSlider_'+ obj.id).val();
-                        if(sliderVal != '')
-                        {
-                            var NotConsider = sliderVal.split("-")[0];
-                            var MayConsider = sliderVal.split("-")[1];
-                            var StrongConsider = $('#spnNoOfQuestions_' + obj.id).text();
+                if (IsDirectEnvironment == true) {
 
-                            var postData = {QuestionBankID :  obj.id , Name : txtShortListCriteria, NotConsider :NotConsider , MayConsider : MayConsider,StrongConsider:StrongConsider };
-                            postDataForEligibilityCriteria.push(postData);
+                    var selectedQuestionBank = selectedExamSyllabus;
+                    var selectedList = selectedQuestionBank.length;
+                    if (selectedList > 0) {
+                        for (var i = 0; i < selectedList; i++) {
+                            var sliderVal = $('#txtSlider_' + selectedQuestionBank[i].id).val();
+                            if (sliderVal != '') {
+                                var NotConsider = sliderVal.split("-")[0];
+                                var MayConsider = sliderVal.split("-")[1];
+                                var StrongConsider = $('#spnNoOfQuestions_' + selectedQuestionBank[i].id).text();
+                                var postData = { QuestionBankID: selectedQuestionBank[i].id, Name: txtShortListCriteria, NotConsider: NotConsider, MayConsider: MayConsider, StrongConsider: StrongConsider };
+                                postDataForEligibilityCriteria.push(postData);
+                            }
                         }
                     }
-                });
+                }
+                else {
+
+
+                    $('.chkExamSubjectSelection').each(function (i, obj) {
+                        if ($('#' + obj.id).is(':checked')) {
+                            //NotConsider	MayConsider	StrongConsider
+                            debugger;
+                            var sliderVal = $('#txtSlider_' + obj.id).val();
+                            if (sliderVal != '') {
+                                var NotConsider = sliderVal.split("-")[0];
+                                var MayConsider = sliderVal.split("-")[1];
+                                var StrongConsider = $('#spnNoOfQuestions_' + obj.id).text();
+
+                                var postData = { QuestionBankID: obj.id, Name: txtShortListCriteria, NotConsider: NotConsider, MayConsider: MayConsider, StrongConsider: StrongConsider };
+                                postDataForEligibilityCriteria.push(postData);
+                            }
+                        }
+                    });
+
+                }
 
                 $.ajax({
                     type: "POST",
@@ -1791,6 +1890,13 @@
             debugger;
             if (assessmentId != null && assessmentId != undefined && assessmentId != "") {
 
+                var assessmentName = $("#spnExistingQB_" + assessmentId).text();
+                if (assessmentName != null && assessmentName != "" && assessmentName != undefined) {
+
+                    $("#txtExistingAssessmentName").val("");
+                    $("#txtExistingAssessmentName").val(assessmentName);
+                    }
+
                 $.ajax({
 
                     type: "POST",
@@ -1799,7 +1905,7 @@
                     beforeSend: function () {
                     },
                     complete: function () {
-
+                        ShowStep2();
                                             },
                     success: function (data) {
                         debugger;
@@ -1825,12 +1931,14 @@
                                     var elementSelection = { id: elementId, QuestionBankName: QuestionBankName, NoOfQuestions: NoOfQuestions, Duration: finalDuration };
                                     selectedExamSyllabus.push(elementSelection);
                                     IsDirectEnvironment = true;
-                                    ShowStep2();
+
                                 }
                             }
 
                         }
-                    }
+                    },
+                    async: false,
+                    cache:false
 
                 });
             }
