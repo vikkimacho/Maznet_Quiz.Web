@@ -265,12 +265,14 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="QuestionBankID" Type="uniqueidentifier" />
           <Property Name="Question" Type="nvarchar(max)" />
-          <Property Name="OptionA" Type="nvarchar" MaxLength="50" />
-          <Property Name="OptionB" Type="nvarchar" MaxLength="50" />
-          <Property Name="OptionC" Type="nvarchar" MaxLength="50" />
-          <Property Name="OptionD" Type="nvarchar" MaxLength="50" />
-          <Property Name="OptionE" Type="nvarchar" MaxLength="50" />
-          <Property Name="Answer" Type="nvarchar" MaxLength="50" />
+          <Property Name="MasterQuestion" Type="nvarchar(max)" />
+          <Property Name="OptionA" Type="nvarchar" MaxLength="200" />
+          <Property Name="OptionB" Type="nvarchar" MaxLength="200" />
+          <Property Name="OptionC" Type="nvarchar" MaxLength="200" />
+          <Property Name="OptionD" Type="nvarchar" MaxLength="200" />
+          <Property Name="OptionE" Type="nvarchar" MaxLength="200" />
+          <Property Name="Answer" Type="nvarchar" MaxLength="200" />
+          <Property Name="IsMaster" Type="bit" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" />
@@ -319,7 +321,7 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" />
         </EntityType>
-        <Association Name="FK__Questions__Quest__6DCC4D03">
+        <Association Name="FK__Questions__Quest__2AD55B43">
           <End Role="QuestionBankMaster" Type="Self.QuestionBankMaster" Multiplicity="0..1" />
           <End Role="QuestionsDetails" Type="Self.QuestionsDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -596,7 +598,7 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
     [AssesmentMasterDetailsForm].[Createddate] AS [Createddate]
     FROM [dbo].[AssesmentMasterDetailsForm] AS [AssesmentMasterDetailsForm]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__Questions__Quest__6DCC4D03" Association="Self.FK__Questions__Quest__6DCC4D03">
+          <AssociationSet Name="FK__Questions__Quest__2AD55B43" Association="Self.FK__Questions__Quest__2AD55B43">
             <End Role="QuestionBankMaster" EntitySet="QuestionBankMaster" />
             <End Role="QuestionsDetails" EntitySet="QuestionsDetails" />
           </AssociationSet>
@@ -835,27 +837,9 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <NavigationProperty Name="AssessmentQuestionBankDetails" Relationship="Self.FK_AssessmentQuestionBankDetail_QuestionBankMaster" FromRole="QuestionBankMaster" ToRole="AssessmentQuestionBankDetail" />
           <NavigationProperty Name="EligibilityCriteriaDetails" Relationship="Self.FK_EligibilityCriteriaDetails_QuestionBankMaster" FromRole="QuestionBankMaster" ToRole="EligibilityCriteriaDetails" />
           <NavigationProperty Name="ExamFinalReports" Relationship="Self.FK_ExamFinalReport_QuestionBankMaster" FromRole="QuestionBankMaster" ToRole="ExamFinalReport" />
-          <NavigationProperty Name="QuestionsDetails" Relationship="Self.FK__Questions__Quest__3A81B327" FromRole="QuestionBankMaster" ToRole="QuestionsDetails" />
           <Property Name="NoOfQuestions" Type="Int32" Nullable="false" />
           <NavigationProperty Name="UserAssessmentAnswerdetails" Relationship="TestEngineDBContext.FK_UserAssessmentAnswerdetail_QuestionBankMaster" FromRole="QuestionBankMaster" ToRole="UserAssessmentAnswerdetail" />
-        </EntityType>
-        <EntityType Name="QuestionsDetail">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="QuestionBankID" Type="Guid" />
-          <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OptionA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OptionB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OptionC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OptionD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Answer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <NavigationProperty Name="QuestionBankMaster" Relationship="Self.FK__Questions__Quest__3A81B327" FromRole="QuestionsDetails" ToRole="QuestionBankMaster" />
-          <Property Name="OptionE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="QuestionsDetails" Relationship="TestEngineDBContext.FK__Questions__Quest__2AD55B43" FromRole="QuestionBankMaster" ToRole="QuestionsDetail" />
         </EntityType>
         <Association Name="FK_AssessmentDetailMaster_EligibilityCriteriaDetails">
           <End Role="EligibilityCriteriaDetails" Type="Self.EligibilityCriteriaDetail" Multiplicity="0..1" />
@@ -941,18 +925,6 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Questions__Quest__3A81B327">
-          <End Role="QuestionBankMaster" Type="Self.QuestionBankMaster" Multiplicity="0..1" />
-          <End Role="QuestionsDetails" Type="Self.QuestionsDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="QuestionBankMaster">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="QuestionsDetails">
-              <PropertyRef Name="QuestionBankID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="TestEngineEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AdminDetails" EntityType="Self.AdminDetail" />
           <EntitySet Name="AssessmentDetailMasters" EntityType="Self.AssessmentDetailMaster" />
@@ -964,7 +936,6 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <EntitySet Name="ExaminerMasters" EntityType="Self.ExaminerMaster" />
           <EntitySet Name="ExaminerMasterDetails" EntityType="Self.ExaminerMasterDetail" />
           <EntitySet Name="QuestionBankMasters" EntityType="Self.QuestionBankMaster" />
-          <EntitySet Name="QuestionsDetails" EntityType="Self.QuestionsDetail" />
           <AssociationSet Name="FK_AssessmentDetailMaster_EligibilityCriteriaDetails" Association="Self.FK_AssessmentDetailMaster_EligibilityCriteriaDetails">
             <End Role="EligibilityCriteriaDetails" EntitySet="EligibilityCriteriaDetails" />
             <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMasters" />
@@ -992,10 +963,6 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <AssociationSet Name="FK_ExaminerMasterDetails_ExaminerMaster" Association="Self.FK_ExaminerMasterDetails_ExaminerMaster">
             <End Role="ExaminerMaster" EntitySet="ExaminerMasters" />
             <End Role="ExaminerMasterDetails" EntitySet="ExaminerMasterDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Questions__Quest__3A81B327" Association="Self.FK__Questions__Quest__3A81B327">
-            <End Role="QuestionBankMaster" EntitySet="QuestionBankMasters" />
-            <End Role="QuestionsDetails" EntitySet="QuestionsDetails" />
           </AssociationSet>
           <FunctionImport Name="GetDashBoardDetails" ReturnType="Collection(TestEngineDBContext.GetDashBoardDetails_Result)">
             <Parameter Name="StarDatetime" Mode="In" Type="String" />
@@ -1051,6 +1018,11 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <AssociationSet Name="FK_AssessmentAdminEmailNotification_AssessmentDetailMaster" Association="TestEngineDBContext.FK_AssessmentAdminEmailNotification_AssessmentDetailMaster">
             <End Role="AssessmentDetailMaster" EntitySet="AssessmentDetailMasters" />
             <End Role="AssessmentAdminEmailNotification" EntitySet="AssessmentAdminEmailNotifications" />
+          </AssociationSet>
+          <EntitySet Name="QuestionsDetails" EntityType="TestEngineDBContext.QuestionsDetail" />
+          <AssociationSet Name="FK__Questions__Quest__2AD55B43" Association="TestEngineDBContext.FK__Questions__Quest__2AD55B43">
+            <End Role="QuestionBankMaster" EntitySet="QuestionBankMasters" />
+            <End Role="QuestionsDetail" EntitySet="QuestionsDetails" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetDashBoardDetails_Result">
@@ -1344,6 +1316,38 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="QuestionsDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="QuestionBankID" Type="Guid" />
+          <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MasterQuestion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OptionA" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="OptionB" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="OptionC" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="OptionD" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="OptionE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Answer" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsMaster" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="QuestionBankMaster" Relationship="TestEngineDBContext.FK__Questions__Quest__2AD55B43" FromRole="QuestionsDetail" ToRole="QuestionBankMaster" />
+        </EntityType>
+        <Association Name="FK__Questions__Quest__2AD55B43">
+          <End Type="TestEngineDBContext.QuestionBankMaster" Role="QuestionBankMaster" Multiplicity="0..1" />
+          <End Type="TestEngineDBContext.QuestionsDetail" Role="QuestionsDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionBankMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QuestionsDetail">
+              <PropertyRef Name="QuestionBankID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1509,24 +1513,6 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="QuestionsDetails">
-            <EntityTypeMapping TypeName="TestEngineDBContext.QuestionsDetail">
-              <MappingFragment StoreEntitySet="QuestionsDetails">
-                <ScalarProperty Name="OptionE" ColumnName="OptionE" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="QuestionBankID" ColumnName="QuestionBankID" />
-                <ScalarProperty Name="Question" ColumnName="Question" />
-                <ScalarProperty Name="OptionA" ColumnName="OptionA" />
-                <ScalarProperty Name="OptionB" ColumnName="OptionB" />
-                <ScalarProperty Name="OptionC" ColumnName="OptionC" />
-                <ScalarProperty Name="OptionD" ColumnName="OptionD" />
-                <ScalarProperty Name="Answer" ColumnName="Answer" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetDashBoardDetails" FunctionName="TestEngineDBContext.Store.GetDashBoardDetails">
             <ResultMapping>
               <ComplexTypeMapping TypeName="TestEngineDBContext.GetDashBoardDetails_Result">
@@ -1687,6 +1673,26 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
                 <ScalarProperty Name="IsAdminEmailCompletionAlertEnabled" ColumnName="IsAdminEmailCompletionAlertEnabled" />
                 <ScalarProperty Name="AssessmentId" ColumnName="AssessmentId" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionsDetails">
+            <EntityTypeMapping TypeName="TestEngineDBContext.QuestionsDetail">
+              <MappingFragment StoreEntitySet="QuestionsDetails">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsMaster" ColumnName="IsMaster" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="OptionE" ColumnName="OptionE" />
+                <ScalarProperty Name="OptionD" ColumnName="OptionD" />
+                <ScalarProperty Name="OptionC" ColumnName="OptionC" />
+                <ScalarProperty Name="OptionB" ColumnName="OptionB" />
+                <ScalarProperty Name="OptionA" ColumnName="OptionA" />
+                <ScalarProperty Name="MasterQuestion" ColumnName="MasterQuestion" />
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="QuestionBankID" ColumnName="QuestionBankID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

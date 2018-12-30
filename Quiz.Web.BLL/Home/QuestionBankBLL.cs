@@ -90,6 +90,7 @@ namespace Quiz.Web.BLL.Home
             {
                 var data = objQuestion.QuestionsEdit(QuestionId);               
                 detail.ID = data.ID;
+                detail.MasterQuestion = data.MasterQuestion;
                 detail.Question = data.Question;
                 detail.Answer = data.Answer;
                 detail.ModifiedDate = data.ModifiedDate;
@@ -98,6 +99,7 @@ namespace Quiz.Web.BLL.Home
                 detail.OptionC = data.OptionC;
                 detail.OptionD = data.OptionD;
                 detail.OptionE = data.OptionE;
+                detail.IsMaster = data.IsMaster;
                 detail.QuestionBankID = data.QuestionBankID;
                  
             }

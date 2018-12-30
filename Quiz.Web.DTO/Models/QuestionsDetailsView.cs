@@ -8,8 +8,9 @@ namespace Quiz.Web.DTO.Models
 {
     public class QuestionsDetailsView
     {
-        public System.Guid ID { get; set; }
-        public Nullable<System.Guid> QuestionBankID { get; set; }
+        public Guid ID { get; set; }
+        public Guid? QuestionBankID { get; set; }
+        public string MasterQuestion { get; set; }
         public string Question { get; set; }
         public string OptionA { get; set; }
         public string OptionB { get; set; }
@@ -17,6 +18,8 @@ namespace Quiz.Web.DTO.Models
         public string OptionD { get; set; }
         public string OptionE { get; set; }
         public string Answer { get; set; }
+        public bool? IsMaster { get; set; }
+        public int? MasterQuestionId { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool? IsDeleted { get; set; }

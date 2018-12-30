@@ -15,7 +15,6 @@
         <EntityTypeShape EntityType="TestEngineDBContext.ExaminerMaster" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="TestEngineDBContext.ExaminerMasterDetail" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="TestEngineDBContext.QuestionBankMaster" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TestEngineDBContext.QuestionsDetail" Width="1.5" PointX="3" PointY="10.625" IsExpanded="true" />
         <AssociationConnector Association="TestEngineDBContext.FK_AssessmentDetailMaster_EligibilityCriteriaDetails" ManuallyRouted="false" />
         <AssociationConnector Association="TestEngineDBContext.FK_AssessmentQuestionBankDetail_AssessmentDetailMaster" ManuallyRouted="false" />
         <AssociationConnector Association="TestEngineDBContext.FK_ExamFinalReport_AssessmentDetailMaster" ManuallyRouted="false" />
@@ -23,7 +22,6 @@
         <AssociationConnector Association="TestEngineDBContext.FK_EligibilityCriteriaDetails_QuestionBankMaster" ManuallyRouted="false" />
         <AssociationConnector Association="TestEngineDBContext.FK_ExamFinalReport_QuestionBankMaster" ManuallyRouted="false" />
         <AssociationConnector Association="TestEngineDBContext.FK_ExaminerMasterDetails_ExaminerMaster" ManuallyRouted="false" />
-        <AssociationConnector Association="TestEngineDBContext.FK__Questions__Quest__3A81B327" ManuallyRouted="false" />
         <EntityTypeShape EntityType="TestEngineDBContext.InputControlMaster" Width="1.5" PointX="9.75" PointY="13.25" />
         <EntityTypeShape EntityType="TestEngineDBContext.RegistrationFormControl" Width="1.5" PointX="12" PointY="1" />
         <EntityTypeShape EntityType="TestEngineDBContext.sysdiagram" Width="1.5" PointX="5.375" PointY="12.75" />
@@ -45,6 +43,8 @@
         <AssociationConnector Association="TestEngineDBContext.FK_AssessmentStudentNotification_AssessmentDetailMaster" />
         <EntityTypeShape EntityType="TestEngineDBContext.AssessmentAdminEmailNotification" Width="1.5" PointX="7.5" PointY="20.5" />
         <AssociationConnector Association="TestEngineDBContext.FK_AssessmentAdminEmailNotification_AssessmentDetailMaster" />
+        <EntityTypeShape EntityType="TestEngineDBContext.QuestionsDetail" Width="1.5" PointX="3" PointY="11" />
+        <AssociationConnector Association="TestEngineDBContext.FK__Questions__Quest__2AD55B43" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

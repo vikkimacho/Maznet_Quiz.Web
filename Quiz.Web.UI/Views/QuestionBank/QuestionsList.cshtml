@@ -81,6 +81,10 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" id="QuestionId" />
+                <div class="form-group MasterQuestion hide">
+                    <label>Master Question</label>
+                    <textarea class="form-control" id="MasterQuestion"></textarea>
+                </div> 
                 <div class="form-group">
                     <label>Question</label>
                     <textarea class="form-control" id="Question"></textarea>
@@ -231,6 +235,10 @@
                     $("#OptionC").val(result.OptionC);
                     $("#OptionD").val(result.OptionD);
                     $("#OptionE").val(result.OptionE);
+                    if (result.IsMaster) {
+                        $(".MasterQuestion").show();
+                        $("#MasterQuestion").val(result.MasterQuestion);
+                    }
                     $("#Answer").val(result.Answer);
                 }
             },

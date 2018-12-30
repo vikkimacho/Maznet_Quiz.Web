@@ -109,6 +109,7 @@ namespace Quiz.Web.DAL.Home
                         data.OptionD = questionsDetailsView.OptionD;
                         data.OptionE = questionsDetailsView.OptionE;
                         data.Question = questionsDetailsView.Question;
+                        data.MasterQuestion = questionsDetailsView.MasterQuestion;
                         data.ModifiedDate = DateTime.UtcNow;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
@@ -259,6 +260,7 @@ namespace Quiz.Web.DAL.Home
 
                     foreach (var item in questionsDetailsData.questionsDetailsViews)
                     {
+                        bool IsMaster = false;
                         QuestionsDetail questionsDetails = new QuestionsDetail();
                         questionsDetails.Answer = item.Answer;
                         questionsDetails.CreatedDate = DateTime.UtcNow;
@@ -270,10 +272,15 @@ namespace Quiz.Web.DAL.Home
                         questionsDetails.OptionC = item.OptionC;
                         questionsDetails.OptionD = item.OptionD;
                         questionsDetails.OptionE = item.OptionE;
+                        questionsDetails.MasterQuestion = item.MasterQuestion;
                         questionsDetails.Question = item.Question;
                         questionsDetails.QuestionBankID = questionBankMaster.ID;
+                        if (!string.IsNullOrEmpty(item.MasterQuestion))
+                        {
+                            IsMaster = true;
+                        }
+                        questionsDetails.IsMaster = IsMaster;
                         testEngineEntities.QuestionsDetails.Add(questionsDetails);
-
                     }
                     testEngineEntities.SaveChanges();
                     aPIResponse.Result = true;
