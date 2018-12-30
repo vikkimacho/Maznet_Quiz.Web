@@ -179,6 +179,22 @@
             position: relative;
             top: -5px;
         }
+        div[id^=slider-range_] > div {
+            position: absolute;
+            text-align: center;
+            margin-top: 20px;
+            transform: translateX(-50%);
+        }
+        .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active
+        {
+            width:30px;
+            height:30px;
+            border-radius:50%;
+        }
+        .ui-slider-horizontal .ui-slider-handle
+        {
+            top:-0.8em;
+        }
     </style>
 
 
@@ -1075,18 +1091,28 @@
 
                 }
 
-                $('.chkExamSubjectSelection').each(function (i, obj) {
-                    if ($('#' + obj.id).is(':checked')) {
-                        $('#p_slider_'+ obj.id).show();
-                        $('#slider-range_'+ obj.id).show();
+                if (IsDirectEnvironment == true) {
+                    $("p[id^=p_slider_]").hide();
+                    $("div[id^=slider-range_]").hide();
+                    for (var i = 0; i < selectedExamSyllabus.length; i++) {
+                        $("#p_slider_" + selectedExamSyllabus[i].id).show();
+                        $('#slider-range_' + selectedExamSyllabus[i].id).show();
                     }
-                    else
-                    {
-                        $('#p_slider_'+ obj.id).hide();
-                        $('#slider-range_'+ obj.id).hide();
 
-                    }
-                });
+                }
+                else {
+                    $('.chkExamSubjectSelection').each(function (i, obj) {
+                        if ($('#' + obj.id).is(':checked')) {
+                            $('#p_slider_' + obj.id).show();
+                            $('#slider-range_' + obj.id).show();
+                        }
+                        else {
+                            $('#p_slider_' + obj.id).hide();
+                            $('#slider-range_' + obj.id).hide();
+
+                        }
+                    });
+                }
 
 
                 IsDirectEnvironment = false;
@@ -1679,11 +1705,39 @@
                             $("#txtSlider_"+ modelListQB[items].Id).val("" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 0) + "-" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 1));
                         }
                     }
+                }).each(function () {
+                    debugger;
+                    // Add labels to slider whose values 
+                    // are specified by min, max
+
+                    // Get the options for this slider (specified above)
+                    var opt = $("#slider-range_"+ modelListQB[items].Id).slider("option");
+                    console.log(opt);
+
+                    // Get the number of possible values
+                    var vals = opt.max - opt.min;
+
+                    // Position the labels
+                    for (var i = 0; i <= vals; i++) {
+                        var $el = $('<div class="sliderLegend"><div class="sliderLegendMark">|</div><div class="sliderLegendNumber">' + (i) + '</div></div>').css('left', (i / vals * 100) + '%');
+                        $(this).append($el);
+                    }
+
                 });
                 $("#txtSlider_"+ modelListQB[items].Id).val("" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 0) + "-" + $("#slider-range_"+ modelListQB[items].Id).slider("values", 1));
             }
 
 
+            $('div[id^=slider-range_] .sliderLegend').slice(1).each(function () {
+                var left = $(this).position().left,
+                    $prev = $(this).prevAll(':has(.sliderLegendNumber)').first(),
+                    prevRight = $prev.position().left + $prev.width(),
+                    $item = $(this).is(':last-child') ? $prev : $(this);
+
+                if (left < prevRight + 6) {
+                    $item.find('.sliderLegendNumber').remove();
+                }
+            });
 
 
 
@@ -1799,7 +1853,7 @@
                     beforeSend: function () {
                     },
                     complete: function () {
-
+                        ShowStep2();
                                             },
                     success: function (data) {
                         debugger;
@@ -1825,12 +1879,14 @@
                                     var elementSelection = { id: elementId, QuestionBankName: QuestionBankName, NoOfQuestions: NoOfQuestions, Duration: finalDuration };
                                     selectedExamSyllabus.push(elementSelection);
                                     IsDirectEnvironment = true;
-                                    ShowStep2();
+                                  
                                 }
                             }
 
                         }
-                    }
+                    },
+                    async: false,
+                    cache:false
 
                 });
             }
