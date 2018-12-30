@@ -28,6 +28,7 @@ namespace Quiz.Web.DAL.DataAccess
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> MasterQuestionId { get; set; }
     
         public virtual QuestionBankMaster QuestionBankMaster { get; set; }
     }

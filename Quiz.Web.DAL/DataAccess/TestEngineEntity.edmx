@@ -276,6 +276,7 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" />
+          <Property Name="MasterQuestionId" Type="int" />
         </EntityType>
         <EntityType Name="RegistrationFormControls">
           <Key>
@@ -1335,6 +1336,7 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" />
           <NavigationProperty Name="QuestionBankMaster" Relationship="TestEngineDBContext.FK__Questions__Quest__2AD55B43" FromRole="QuestionsDetail" ToRole="QuestionBankMaster" />
+          <Property Name="MasterQuestionId" Type="Int32" />
         </EntityType>
         <Association Name="FK__Questions__Quest__2AD55B43">
           <End Type="TestEngineDBContext.QuestionBankMaster" Role="QuestionBankMaster" Multiplicity="0..1" />
@@ -1679,6 +1681,7 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <EntitySetMapping Name="QuestionsDetails">
             <EntityTypeMapping TypeName="TestEngineDBContext.QuestionsDetail">
               <MappingFragment StoreEntitySet="QuestionsDetails">
+                <ScalarProperty Name="MasterQuestionId" ColumnName="MasterQuestionId" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
