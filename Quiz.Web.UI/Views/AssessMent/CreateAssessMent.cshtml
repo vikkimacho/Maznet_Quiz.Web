@@ -705,25 +705,30 @@
                         <a id="lnkDownloadSample" href="~/Content/sample.xlsx">Download here</a>
                     </div>
 
-                    <table class="table table-striped" style="display:none;">
+                    <table class="table table-striped" id="tblUploadedUserData" style="display:none;">
                         <thead>
                             <tr class="tableHeaderBlue">
                                 <th>
-                                    Title
+                                    User Name
                                 </th>
                                 <th>
-                                    Uploaded on
+                                    Password
+                                </th>
+                                <th>Email</th>
+                                <th>
+                                    Mobile Number
+                                </th>
+                                <th>
+                                    First Name
+
+                                </th>
+                                <th>
+                                    Last Name
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @*@foreach (var item in Model.LstUserDetailMaster)
-                                {
-                                    <tr>
-                                        <td><input type="checkbox" id="@item.Id" class="clsUploadedStudents" />  @item.UserTitle</td>
-                                        <td>@item.CreatedDate.ToShortDateString()</td>
-                                    </tr>
-                                }*@
+                        <tbody id="tbodyUploadedUserDetail">
+                            
                         </tbody>
                     </table>
 
@@ -840,6 +845,18 @@
             if (assesmentName == "") {
                 assesmentName = $("#txtExistingAssessmentName").val();
             }
+
+            if ($("#dvExistingAssessmentName").css("display") == "block") {
+                if (assesmentName == "" || assesmentName == null || assesmentName == undefined) {
+
+                    $("#txtExistingAssessmentName").css("border", "1px solid red");
+                    return false;
+                }
+                else {
+                    $("#txtExistingAssessmentName").css("border", "1px solid #dadada");
+                }
+            }
+
             var LstQuestionBankSelected = new Array();
             for (var i = 0; i < selectedExamSyllabus.length; i++)
             {
@@ -920,10 +937,9 @@
             var postData = new Array();
             $('.clsUploadedStudents').each(function (i, obj) {
                 var elementId = obj.id;
-                if($('#'+elementId).is(':checked'))
-                {
+               
                     postData.push(elementId);
-                }
+                 
             });
             return postData;
 
@@ -1326,10 +1342,67 @@
                             isValidFiles = false;
                         }
                     });
+                    var flag = true;
                     if (isValidFiles) {
                         ContactFile = e.target.files;
+                        var data = new FormData();
+                        if (files) {
+                            for (var x = 0; x < files.length; x++) {
+                                data.append("file" + x, ContactFile[x]);
+                            }
+                        } else {
+                            $("#Er_flUsersUpload").show();
+                            flag = false;
+                        }
+                        if (flag) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("UploadBulkLoginDetail", "Assessment")?UserNameTitle=' + UserTitle,
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    beforeSend: function () {
+                        uploaded = 1;
+                    },
+                    complete: function () {
+
+                    },
+                    success: function (result) {
+                        debugger;
+                        if (result!=null) {
+
+                            var resultList = result.data;
+                            var appendData = "";
+                            for (var i = 0; i < resultList.length; i++) {
+
+                                appendData += "<tr><td class=clsUploadedStudents id=" + resultList[i].UserDetailId + ">" + resultList[i].Name + "</td><td>" + resultList[i].Email + "</td><td></td><td></td></tr>"
+                                $("#tbodyUploadedUserDetail").append(appendData);
+                                $("#tblUploadedUserData").show();
+                            }
+
+                        }
+                        else {
+                            alert("Users Upload Failed");
+                            
+                        }
+
+                    },
+                    error: function (xhr, status, p3, p4) {
+                        var err = "Error " + " " + status + " " + p3 + " " + p4;
+                        if (xhr.responseText && xhr.responseText[0] == "{")
+                            err = JSON.parse(xhr.responseText).Message;
+
+                    },
+                    cache: false
+                });
+            } else {
+                return false;
+            }
 
                     }
+
+
+
                     else {
                         $('#mdlmessage').text('Choose Only .xlsx or xlx File');
                         $('#modalPopUp').addClass("is-visible");

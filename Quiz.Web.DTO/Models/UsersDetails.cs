@@ -13,6 +13,7 @@ namespace Quiz.Web.DTO.Models
         public System.Guid UserDetailId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
         public string MobileNumber { get; set; }
         public string Degree { get; set; }
         public string Institution { get; set; }

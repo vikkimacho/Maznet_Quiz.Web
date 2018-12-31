@@ -15,7 +15,7 @@ namespace Quiz.Web.API.Controllers
         AssessMentBLL ObjAssessmentBll = new AssessMentBLL();
         public string CreateAssessment()
         {
-            var result= ObjAssessmentBll.CreateAssessMent();
+            var result = ObjAssessmentBll.CreateAssessMent();
             return result;
         }
 
@@ -55,7 +55,7 @@ namespace Quiz.Web.API.Controllers
         {
 
             try
-            {                
+            {
                 return ObjAssessmentBll.PostUpdateEligibleCriteria(lstpostAssessmentModal);
             }
             catch (Exception ex)
@@ -95,7 +95,7 @@ namespace Quiz.Web.API.Controllers
         }
 
 
-        
+
 
         [AcceptVerbs("Get", "Post")]
 
@@ -131,13 +131,24 @@ namespace Quiz.Web.API.Controllers
             {
                 return ObjAssessmentBll.GetExistingQuestionBankDetails(assessmentId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new List<ExistingQuestionBankDetails>();
             }
 
         }
-
+        [HttpGet]
+        public List<UsersDetailsModel> GetUploadedUserDetail(Guid UserDetailId)
+        {
+            try
+            {
+                return ObjAssessmentBll.GetUploadedUserDetail(UserDetailId);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
 
     }
 }
