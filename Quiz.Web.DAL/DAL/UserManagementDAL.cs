@@ -76,6 +76,7 @@ namespace Quiz.Web.DAL.DAL
                         defaultRegistation.UserDetailId = users.Id;
                         defaultRegistation.Name = item.Name;
                         defaultRegistation.Email = item.Email;
+                        defaultRegistation.Password = item.Password;
                         defaultRegistation.MobileNumber = item.MobileNumber;
                         defaultRegistation.Degree = item.Degree;
                         defaultRegistation.Institution = item.Institution;

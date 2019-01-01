@@ -75,6 +75,12 @@ namespace Quiz.Web.BLL.Home
             var questionBankDetails = ObjAssessMentDAL.GetExistingQuestionBankDetails(assessmentId);
             return questionBankDetails;
         }
+
+        public List<UsersDetailsModel> GetUploadedUserDetail(Guid userDetailId)
+        {
+            var uploadDetail = ObjAssessMentDAL.GetUploadedUserDetails(userDetailId);
+            return uploadDetail;
+        }
     }
 
 }

@@ -226,4 +226,6 @@ namespace Quiz.Web.DTO.Models
         public int NoOfQuestions { get; set; }
         public TimeSpan Duration { get; set; }
     }
+
+
 }

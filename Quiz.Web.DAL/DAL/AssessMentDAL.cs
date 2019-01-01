@@ -384,6 +384,22 @@ namespace Quiz.Web.DAL.Home
 
         }
 
+        public List<UsersDetailsModel> GetUploadedUserDetails(Guid userdetailId)
+        {
+            try
+            {
+                using (TestEngineEntities dBContext = new TestEngineEntities())
+                {
+                    var UploadedDetail = dBContext.Database.SqlQuery<UsersDetailsModel>("exec GetUploadedUserDetailsOnUserDetailId @userDetailId", new SqlParameter("@userDetailId", userdetailId)).ToList();
+                    return UploadedDetail;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public string ValidateAndDeleteAssesment(Guid AssesmentId)
         {
             string result = "Failed";
