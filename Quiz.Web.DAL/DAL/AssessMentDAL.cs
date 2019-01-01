@@ -35,7 +35,7 @@ namespace Quiz.Web.DAL.Home
                     assesmentPageModal.LstUserDetailMaster = TestEngineDBContext.Database.SqlQuery<CustomUserDetailMaster>("exec GetLstUserDetailMaster").ToList();
                     assesmentPageModal.ListEligibilityCriteria = TestEngineDBContext.Database.SqlQuery<EligibilityCriteriaList>("exec GetEligibilityCriteriaList").ToList();
                     assesmentPageModal.existingAssessmentDetails = TestEngineDBContext.Database.SqlQuery<ExistingAssessmentDetails>("exec GetExistingAssessmentDetails").ToList();
-                        
+
 
                     return assesmentPageModal;
                 }
@@ -377,7 +377,7 @@ namespace Quiz.Web.DAL.Home
                     return existingQuestionBankDetails;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -406,7 +406,24 @@ namespace Quiz.Web.DAL.Home
             return result;
         }
 
+        public List<QuestionBankDetail> GetAssessmentQuestionDetails(Guid assessmentID)
+        {
+            List<QuestionBankDetail> questionBankDetailList = new List<QuestionBankDetail>();
+            try
+            {
+                using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+                {
+                    questionBankDetailList = TestEngineDBContext.Database.SqlQuery<QuestionBankDetail>("exec GetAssessmentQuestions @AssessmentID",
+                        new SqlParameter("@AssessmentID", assessmentID)).ToList();
+                }
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+            return questionBankDetailList;
+        }
 
 
     }

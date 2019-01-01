@@ -61,7 +61,7 @@
             <img class="img-responsive" src="~/Content/Images/logo.jpg" />
         </div>
 
-        @{ Html.RenderPartial("UserLoin", new { assessmentID = assessmentID }); }
+        @{ Html.RenderAction("UserLogin","ExamLogin", new { assessmentID = assessmentID }); }
     </div>
 }
 else

@@ -72,21 +72,22 @@
         }
     }
     function ValidateExaminer(username, password) {
-
+        debugger;
         var status = "FAILED";
         $.ajax({
-            url: '@Url.Action("ExamLogin", "ValidateExaminer")',
-            data: JSON.stringify({ 'username': username, 'password': password, 'assessmentID': assessmentID}),
+            url: '@Url.Action("ExamLogin", "ValidateExaminer")?username=' + username + "&password=" + password + "&assessmentID=" + assessmentID,          
             type: "POST",
             async: false,
             contentType: "application/json",
             dataType: "json",
             success: function (result) {
+                debugger;
                 if (result != "FAILED") {
                     status = result;
                 }
             },
             error: function (status) {
+                debugger;
             },
             cache: false,
             async: false
@@ -125,9 +126,9 @@
                                     <input type="password" class="form-control" oninput="deleteSpecialChar(this),deleteSpecialCharForPWD(this)" id="password" name="Password" placeholder="Password" />
                                 </div>
                             </div>
-                            <div class="form-group">
+                            @*<div class="form-group">
                                 <a href="~/forgot_password/" class="pull-right">Forgot Password?</a>
-                            </div>
+                            </div>*@
                         </div>
                         <div class="clearfix"></div>
                         <div class="row form-group text-center">
@@ -168,9 +169,9 @@
                                     <input type="password" class="form-control" id="password" name="Password" placeholder="Password" />
                                 </div>
                             </div>
-                            <div class="form-group">
+                            @*<div class="form-group">
                                 <a href="~/forgot_password/" class="pull-right">Forgot Password?</a>
-                            </div>
+                            </div>*@
                         </div>
                         <div class="clearfix"></div>
                         <div class="row form-group text-center">

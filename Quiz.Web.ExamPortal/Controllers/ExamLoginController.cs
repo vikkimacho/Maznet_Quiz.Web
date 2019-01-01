@@ -30,14 +30,15 @@ namespace Quiz.Web.ExamPortal.Controllers
             }
             return View("ExamLogin");
         }
-        public ActionResult UserLoin(string assessmentID)
+        public ActionResult UserLogin(string assessmentID)
         {
             ExamLogin login = new ExamLogin();
             login.assessmentid = assessmentID;
             return PartialView("UserLogin", login);
         }
 
-        public string ValidateExaminer(string username, string password, string assessmentID)
+     
+        public ActionResult ValidateExaminer(string username, string password, string assessmentID)
         {
             string result = "Failed";
             try
@@ -55,7 +56,7 @@ namespace Quiz.Web.ExamPortal.Controllers
             {
 
             }
-            return result;
+            return Json(result,JsonRequestBehavior.AllowGet);
         }
     }
 }
