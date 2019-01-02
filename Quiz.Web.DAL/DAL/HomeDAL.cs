@@ -20,7 +20,7 @@ namespace Quiz.Web.DAL.Home
             DashBoardDetailsView dashBoardDetailsView = new DashBoardDetailsView();
             try
             {
-                using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+                using (DBEntities TestEngineDBContext = new DBEntities())
                 {
                     var x = TestEngineDBContext.QuestionBankMasters.ToList();
 
@@ -46,7 +46,7 @@ namespace Quiz.Web.DAL.Home
             string result = Failed;
             try
             {
-                using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+                using (DBEntities TestEngineDBContext = new DBEntities())
                 {
                     var adminUserDetails = TestEngineDBContext.AdminDetails.FirstOrDefault(x => x.UserName == username && x.Password == password && x.Isdeleted == false);
                     if (adminUserDetails != null)
@@ -67,7 +67,7 @@ namespace Quiz.Web.DAL.Home
             List<AdminDetail> adminDetails = new List<AdminDetail>();
             try
             {
-                using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+                using (DBEntities TestEngineDBContext = new DBEntities())
                 {
                     adminDetails = TestEngineDBContext.AdminDetails.Where(x => x.IsSuperAdmin == false).ToList();
                 }
@@ -84,7 +84,7 @@ namespace Quiz.Web.DAL.Home
             string result = Failed;
             try
             {
-                using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+                using (DBEntities TestEngineDBContext = new DBEntities())
                 {
                     var admin = TestEngineDBContext.AdminDetails.FirstOrDefault(x => x.ID == adminDetail.ID);
                     if (admin == null)
@@ -131,7 +131,7 @@ namespace Quiz.Web.DAL.Home
             try
             {
                 Guid adminID = new Guid(id);
-                using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+                using (DBEntities TestEngineDBContext = new DBEntities())
                 {
                     var admin = TestEngineDBContext.AdminDetails.FirstOrDefault(x => x.ID == adminID);
                     if (admin != null)

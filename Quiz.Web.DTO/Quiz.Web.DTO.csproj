@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Models\AdminDetails.cs" />
     <Compile Include="Models\Custom.cs" />
+    <Compile Include="Models\CustomRegistration.cs" />
     <Compile Include="Models\DashBoardDetailsView.cs" />
     <Compile Include="Models\GoogleMail.cs" />
     <Compile Include="Models\QuestionBankView.cs" />

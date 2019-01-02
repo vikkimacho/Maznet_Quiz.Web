@@ -17,8 +17,8 @@ namespace Quiz.Web.DAL.DataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserDetailMaster()
         {
-            this.DefaultRegistations = new HashSet<DefaultRegistation>();
             this.AssessmentUserDetails = new HashSet<AssessmentUserDetail>();
+            this.DefaultRegistations = new HashSet<DefaultRegistation>();
             this.UserAssessmentAnswerdetails = new HashSet<UserAssessmentAnswerdetail>();
         }
     
@@ -29,9 +29,9 @@ namespace Quiz.Web.DAL.DataAccess
         public Nullable<bool> IsDeleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DefaultRegistation> DefaultRegistations { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AssessmentUserDetail> AssessmentUserDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DefaultRegistation> DefaultRegistations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserAssessmentAnswerdetail> UserAssessmentAnswerdetails { get; set; }
     }

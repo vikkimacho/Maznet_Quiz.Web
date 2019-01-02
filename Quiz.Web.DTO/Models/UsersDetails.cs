@@ -21,17 +21,18 @@ namespace Quiz.Web.DTO.Models
         public string Percentage { get; set; }
         public string Gender { get; set; }
         public string Address { get; set; }
-        public string CustomField1 { get; set; }
-        public string CustomField2 { get; set; }
-        public string CustomField3 { get; set; }
-        public string CustomField4 { get; set; }
-        public string CustomField5 { get; set; }
-        public string CustomField6 { get; set; }
-        public string CustomField7 { get; set; }
-        public string CustomField8 { get; set; }
-        public string CustomField9 { get; set; }
-        public string CustomField10 { get; set; }
-       
+        public string SSLCPassedOutYear { get; set; }
+        public string SSLCPercentage { get; set; }
+        public string SSLCBoardName { get; set; }
+        public string TechnicalSkills { get; set; }
+        public string HSCPercentage { get; set; }
+        public string LastName { get; set; }
+        public string DOB { get; set; }
+        public string State { get; set; }
+        public string DegreePassedOutYear { get; set; }
+        public string HSCBoardName { get; set; }
+        public string HSCPassedOutYear { get; set; }
+
     }
 
     public class UsersDetails

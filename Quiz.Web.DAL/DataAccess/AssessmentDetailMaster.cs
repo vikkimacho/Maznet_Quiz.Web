@@ -17,12 +17,12 @@ namespace Quiz.Web.DAL.DataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AssessmentDetailMaster()
         {
-            this.AssessmentQuestionBankDetails = new HashSet<AssessmentQuestionBankDetail>();
-            this.ExamFinalReports = new HashSet<ExamFinalReport>();
-            this.AssessmentUserDetails = new HashSet<AssessmentUserDetail>();
-            this.UserAssessmentAnswerdetails = new HashSet<UserAssessmentAnswerdetail>();
-            this.AssessmentStudentNotifications = new HashSet<AssessmentStudentNotification>();
             this.AssessmentAdminEmailNotifications = new HashSet<AssessmentAdminEmailNotification>();
+            this.AssessmentQuestionBankDetails = new HashSet<AssessmentQuestionBankDetail>();
+            this.AssessmentStudentNotifications = new HashSet<AssessmentStudentNotification>();
+            this.AssessmentUserDetails = new HashSet<AssessmentUserDetail>();
+            this.ExamFinalReports = new HashSet<ExamFinalReport>();
+            this.UserAssessmentAnswerdetails = new HashSet<UserAssessmentAnswerdetail>();
         }
     
         public System.Guid ID { get; set; }
@@ -36,18 +36,17 @@ namespace Quiz.Web.DAL.DataAccess
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
     
-        public virtual EligibilityCriteriaDetail EligibilityCriteriaDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AssessmentAdminEmailNotification> AssessmentAdminEmailNotifications { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AssessmentQuestionBankDetail> AssessmentQuestionBankDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ExamFinalReport> ExamFinalReports { get; set; }
+        public virtual ICollection<AssessmentStudentNotification> AssessmentStudentNotifications { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AssessmentUserDetail> AssessmentUserDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ExamFinalReport> ExamFinalReports { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserAssessmentAnswerdetail> UserAssessmentAnswerdetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AssessmentStudentNotification> AssessmentStudentNotifications { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AssessmentAdminEmailNotification> AssessmentAdminEmailNotifications { get; set; }
     }
 }

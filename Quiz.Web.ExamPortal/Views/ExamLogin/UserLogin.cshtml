@@ -72,12 +72,11 @@
         }
     }
     function ValidateExaminer(username, password) {
-        debugger;
+        debugger; 
         var status = "FAILED";
         $.ajax({
-            url: '@Url.Action("ExamLogin", "ValidateExaminer")?username=' + username + "&password=" + password + "&assessmentID=" + assessmentID,          
-            type: "POST",
-            async: false,
+            url: '@Url.Action("ValidateExaminer", "ExamLogin")?username=' + username + "&password=" + password + "&assessmentID=" + assessmentID,          
+            type: "POST",            
             contentType: "application/json",
             dataType: "json",
             success: function (result) {
@@ -96,7 +95,7 @@
     }
 </script>
 
-@using (Html.BeginForm("PostLogin", "Login", FormMethod.Post, new { id = "globalloginform", @class = "login-form margin-clear", onsubmit = "return checkvalue(this)" }))
+@using (Html.BeginForm("PostLogin", "ExamLogin", FormMethod.Post, new { id = "globalloginform", @class = "login-form margin-clear", onsubmit = "return checkvalue(this)" }))
 {
 
     @Html.AntiForgeryToken()
@@ -134,6 +133,7 @@
                         <div class="row form-group text-center">
                             <center><input type="submit" class="btn btn-primary" id="btnLogin" style="margin-bottom: 30px" value="Login" /></center>
                             <input type="hidden" id="isauth" name="isauth" />
+                            <input type="hidden" id="assessmentID" name="assessmentID" value="@Model.assessmentid"/>
                         </div>
                     </div>
                 </div>
@@ -177,6 +177,7 @@
                         <div class="row form-group text-center">
                             <input type="submit" class="btn btn-primary" id="btnLogin" style="margin-bottom: 30px" value="Login" />
                             <input type="hidden" id="isauth" name="isauth" />
+                            <input type="hidden" id="assessmentID" name="assessmentID"  value="@Model.assessmentid"/>
                         </div>
 
                     </div>

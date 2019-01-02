@@ -10,18 +10,14 @@
 namespace Quiz.Web.DAL.DataAccess
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class EligibilityCriteriaDetail
+    public partial class ValidateAssessment_Result
     {
-        public System.Guid ID { get; set; }
+        public Nullable<bool> IsBrowserLock { get; set; }
+        public Nullable<bool> IsPrintScreenLock { get; set; }
         public Nullable<System.Guid> QuestionBankID { get; set; }
-        public string Name { get; set; }
-        public Nullable<long> NotConsider { get; set; }
-        public Nullable<long> MayConsider { get; set; }
-        public Nullable<long> StrongConsider { get; set; }
-        public System.Guid EligibilityIdForAssessment { get; set; }
-    
-        public virtual QuestionBankMaster QuestionBankMaster { get; set; }
+        public Nullable<System.TimeSpan> Duration { get; set; }
+        public string QuestionBankName { get; set; }
+        public System.Guid AssessmentID { get; set; }
     }
 }

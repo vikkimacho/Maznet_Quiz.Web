@@ -63,16 +63,17 @@ namespace Quiz.Web.BLL.UserManagement
                         detail.Percentage = x.Percentage;
                         detail.Gender = x.Gender;
                         detail.Address = x.Address;
-                        detail.CustomField1 = x.CustomField1;
-                        detail.CustomField2 = x.CustomField2;
-                        detail.CustomField3 = x.CustomField3;
-                        detail.CustomField4 = x.CustomField4;
-                        detail.CustomField5 = x.CustomField5;
-                        detail.CustomField6 = x.CustomField6;
-                        detail.CustomField7 = x.CustomField7;
-                        detail.CustomField8 = x.CustomField8;
-                        detail.CustomField9 = x.CustomField9;
-                        detail.CustomField10 = x.CustomField10;
+                        detail.SSLCPassedOutYear = x.SSLCPassedOutYear;
+                        detail.SSLCPercentage = x.SSLCPercentage;
+                        detail.SSLCBoardName = x.SSLCBoardName;
+                        detail.TechnicalSkills = x.TechnicalSkills;
+                        detail.HSCPercentage = x.HSCPercentage;
+                        detail.LastName = x.LastName;
+                        detail.DOB = x.DOB;
+                        detail.State = x.State;
+                        detail.DegreePassedOutYear = x.DegreePassedOutYear;
+                        detail.HSCBoardName = x.HSCBoardName;
+                        detail.HSCPassedOutYear = x.HSCPassedOutYear;
                         detaillist.Add(detail);
                     });
 
@@ -169,16 +170,17 @@ namespace Quiz.Web.BLL.UserManagement
                 detail.Percentage = data.Percentage;
                 detail.Gender = data.Gender;
                 detail.Address = data.Address;
-                detail.CustomField1 = data.CustomField1;
-                detail.CustomField2 = data.CustomField2;
-                detail.CustomField3 = data.CustomField3;
-                detail.CustomField4 = data.CustomField4;
-                detail.CustomField5 = data.CustomField5;
-                detail.CustomField6 = data.CustomField6;
-                detail.CustomField7 = data.CustomField7;
-                detail.CustomField8 = data.CustomField8;
-                detail.CustomField9 = data.CustomField9;
-                detail.CustomField10 = data.CustomField10;
+                detail.SSLCPassedOutYear = data.SSLCPassedOutYear;
+                detail.SSLCPercentage = data.SSLCPercentage;
+                detail.SSLCBoardName = data.SSLCBoardName;
+                detail.TechnicalSkills = data.TechnicalSkills;
+                detail.HSCPercentage = data.HSCPercentage;
+                detail.LastName = data.LastName;
+                detail.DOB = data.DOB;
+                detail.State = data.State;
+                detail.DegreePassedOutYear = data.DegreePassedOutYear;
+                detail.HSCBoardName = data.HSCBoardName;
+                detail.HSCPassedOutYear = data.HSCPassedOutYear;
             }
             catch (Exception)
             {

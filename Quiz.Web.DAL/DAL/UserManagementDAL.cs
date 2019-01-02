@@ -3,8 +3,6 @@ using Quiz.Web.DTO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Quiz.Web.DAL.DAL
 {
@@ -16,7 +14,7 @@ namespace Quiz.Web.DAL.DAL
             APIResponse response = new APIResponse();
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     details = testEngineEntities.UserDetailMasters.Where(x => x.IsDeleted == false).ToList();
                     
@@ -37,7 +35,7 @@ namespace Quiz.Web.DAL.DAL
             APIResponse response = new APIResponse();
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     details = testEngineEntities.DefaultRegistations.Where(x => x.UserDetailId == UserDetailId && x.IsDeleted == false).ToList();
 
@@ -59,7 +57,7 @@ namespace Quiz.Web.DAL.DAL
             response.ResultUserDetailMasterGuid = resultUserDetailMasterGuid;
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     UserDetailMaster users = new UserDetailMaster();
                     users.Id = resultUserDetailMasterGuid;
@@ -84,19 +82,21 @@ namespace Quiz.Web.DAL.DAL
                         defaultRegistation.Percentage = item.Percentage;
                         defaultRegistation.Gender = item.Gender;
                         defaultRegistation.Address = item.Address;
-                        defaultRegistation.CustomField1 = item.CustomField1;
-                        defaultRegistation.CustomField2 = item.CustomField2;
-                        defaultRegistation.CustomField3 = item.CustomField3;
-                        defaultRegistation.CustomField4 = item.CustomField4;
-                        defaultRegistation.CustomField5 = item.CustomField5;
-                        defaultRegistation.CustomField6 = item.CustomField6;
-                        defaultRegistation.CustomField7 = item.CustomField7;
-                        defaultRegistation.CustomField8 = item.CustomField8;
-                        defaultRegistation.CustomField9 = item.CustomField9;
-                        defaultRegistation.CustomField10 = item.CustomField10;
+                        defaultRegistation.SSLCPassedOutYear = item.SSLCPassedOutYear;
+                        defaultRegistation.SSLCPercentage = item.SSLCPercentage;
+                        defaultRegistation.SSLCBoardName = item.SSLCBoardName;
+                        defaultRegistation.TechnicalSkills = item.TechnicalSkills;
+                        defaultRegistation.HSCPercentage = item.HSCPercentage;
+                        defaultRegistation.LastName = item.LastName;
+                        defaultRegistation.DOB = item.DOB;
+                        defaultRegistation.State = item.State;
+                        defaultRegistation.DegreePassedOutYear = item.DegreePassedOutYear;
+                        defaultRegistation.HSCBoardName = item.HSCBoardName;
+                        defaultRegistation.HSCPassedOutYear = item.HSCPassedOutYear;
                         defaultRegistation.ModifiedDate = DateTime.UtcNow;
                         defaultRegistation.CreatedDate = DateTime.UtcNow;
-                        defaultRegistation.IsDeleted = true;
+                        defaultRegistation.IsDeleted = false;
+                        defaultRegistation.UserName = item.Email;
                         testEngineEntities.DefaultRegistations.Add(defaultRegistation);
 
                     }
@@ -121,7 +121,7 @@ namespace Quiz.Web.DAL.DAL
             APIResponse response = new APIResponse();
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     details = testEngineEntities.DefaultRegistations.Where(x => x.ID  == UserId && x.IsDeleted == false).FirstOrDefault();
 
@@ -142,7 +142,7 @@ namespace Quiz.Web.DAL.DAL
             response.Result = false;
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     var data = testEngineEntities.DefaultRegistations.Where(x => x.ID == UserId && x.IsDeleted == false).FirstOrDefault();
                     if (data != null)
@@ -170,7 +170,7 @@ namespace Quiz.Web.DAL.DAL
             response.Result = false;
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     var data = testEngineEntities.DefaultRegistations.Where(x => x.ID == usersDetailsModel.Id && x.IsDeleted == false).FirstOrDefault();
                     if (data != null)
@@ -184,16 +184,17 @@ namespace Quiz.Web.DAL.DAL
                         data.Percentage = usersDetailsModel.Percentage;
                         data.Gender = usersDetailsModel.Gender;
                         data.Address = usersDetailsModel.Address;
-                        data.CustomField1 = usersDetailsModel.CustomField1;
-                        data.CustomField2 = usersDetailsModel.CustomField2;
-                        data.CustomField3 = usersDetailsModel.CustomField3;
-                        data.CustomField4 = usersDetailsModel.CustomField4;
-                        data.CustomField5 = usersDetailsModel.CustomField5;
-                        data.CustomField6 = usersDetailsModel.CustomField6;
-                        data.CustomField7 = usersDetailsModel.CustomField7;
-                        data.CustomField8 = usersDetailsModel.CustomField8;
-                        data.CustomField9 = usersDetailsModel.CustomField9;
-                        data.CustomField10 = usersDetailsModel.CustomField10;
+                        data.SSLCPassedOutYear = usersDetailsModel.SSLCPassedOutYear;
+                        data.SSLCPercentage = usersDetailsModel.SSLCPercentage;
+                        data.SSLCBoardName = usersDetailsModel.SSLCBoardName;
+                        data.TechnicalSkills = usersDetailsModel.TechnicalSkills;
+                        data.HSCPercentage = usersDetailsModel.HSCPercentage;
+                        data.LastName = usersDetailsModel.LastName;
+                        data.DOB = usersDetailsModel.DOB;
+                        data.State = usersDetailsModel.State;
+                        data.DegreePassedOutYear = usersDetailsModel.DegreePassedOutYear;
+                        data.HSCBoardName = usersDetailsModel.HSCBoardName;
+                        data.HSCPassedOutYear = usersDetailsModel.HSCPassedOutYear;
                         data.ModifiedDate = DateTime.UtcNow;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
@@ -216,7 +217,7 @@ namespace Quiz.Web.DAL.DAL
             APIResponse response = new APIResponse();
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     details = testEngineEntities.UserDetailMasters.Where(x => x.Id == UserDetailId && x.IsDeleted == false).FirstOrDefault();
 
@@ -237,7 +238,7 @@ namespace Quiz.Web.DAL.DAL
             response.Result = false;
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     var data = testEngineEntities.UserDetailMasters.Where(x => x.Id == UserDetailId && x.IsDeleted == false).FirstOrDefault();
                     var Users = testEngineEntities.DefaultRegistations.Where(x => x.UserDetailId == UserDetailId && x.IsDeleted == false).FirstOrDefault();
@@ -275,7 +276,7 @@ namespace Quiz.Web.DAL.DAL
             response.Result = false;
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     var data = testEngineEntities.UserDetailMasters.Where(x => x.Id == usersDetails.Id && x.IsDeleted == false).FirstOrDefault();
                     if (data != null)

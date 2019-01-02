@@ -1,0 +1,125 @@
+﻿@model List<Quiz.Web.DTO.Models.CustomRegistration>
+@{
+    ViewBag.Title = "Registration";
+}
+<script>
+    $(document).ready(function () {
+        $('#btnRegister').click(function () {
+
+        });
+    });
+    
+</script>
+<table>
+    @foreach (var item in Model)
+    {
+        if (item.FieldName == "EmailId")
+        {
+            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+            <tr>
+                <td>@item.DisplayFieldName</td>
+                <td><input type="text" class="form-control @isMandatory" id="txtEmail" placeholder="@item.DisplayFieldName" /> </td>
+            </tr>
+        }
+
+        if (item.FieldName == "Name")
+        {
+            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+            <tr>
+                <td>@item.DisplayFieldName</td>
+                <td><input type="text" class="form-control @isMandatory" id="txtName" placeholder="@item.DisplayFieldName" /> </td>
+            </tr>
+        }
+
+        if (item.FieldName == "LastName")
+        {
+            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+            <tr>
+                <td>@item.DisplayFieldName</td>
+                <td><input type="text" class="form-control @isMandatory" id="txtLastName" placeholder="@item.DisplayFieldName" /> </td>
+            </tr>
+        }
+
+        if (item.FieldName == "Gender")
+        {
+            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+            <tr>
+                <td>@item.DisplayFieldName</td>
+                <td>
+                    <input type="radio" class="form-control @isMandatory" name="gender" />
+                    <input type="radio" class="form-control @isMandatory" name="gender" />
+                </td>
+            </tr>
+        }
+
+        if (item.FieldName == "MobileNo")
+        {
+            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+            <tr>
+                <td>@item.DisplayFieldName</td>
+                <td><input type="text" class="form-control @isMandatory" id="txtMobileNo" /> </td>
+            </tr>
+        }
+
+        if (item.FieldName == "DateofBirth")
+        {
+            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+            <tr>
+                <td>@item.DisplayFieldName</td>
+                <td><input type="text" class="form-control @isMandatory" id="txtDateofBirth" placeholder="DD/MM/YYYY" /> </td>
+            </tr>
+        }
+        if (item.FieldName == "10thBoardName")
+        {
+            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+            <tr>
+                <td>@item.DisplayFieldName</td>
+                <td><input type="text" class="form-control @isMandatory" id="txtSSLCBoard" placeholder="@item.DisplayFieldName" /> </td>
+            </tr>
+        }
+        if (item.FieldName == "10thPassingYear")
+        {
+            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+            <tr>
+                <td>10th Passedout Year</td>
+                <td><input type="text" class="form-control @isMandatory" id="txtSSLCYear" placeholder="(Ex - 2018)" /> </td>
+            </tr>
+        }
+        if (item.FieldName == "10thPercentage")
+        {
+            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+            <tr>
+                <td>@item.DisplayFieldName</td>
+                <td><input type="text" class="form-control @isMandatory" id="txtSSLCPerentage" placeholder="(Ex - 80%)" /> </td>
+            </tr>
+        }
+        if (item.FieldName == "12thBoardName")
+        {
+            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+            <tr>
+                <td>@item.DisplayFieldName</td>
+                <td><input type="text" class="form-control @isMandatory" id="txtHSCBoard" placeholder="@item.DisplayFieldName" /> </td>
+            </tr>
+        }
+        if (item.FieldName == "12thPassingYear")
+        {
+            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+            <tr>
+                <td>@item.DisplayFieldName</td>
+                <td><input type="text" class="form-control @isMandatory" id="txtHSCYear" placeholder="@item.DisplayFieldName" /> </td>
+            </tr>
+        }
+        if (item.FieldName == "12thPercentage")
+        {
+            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+            <tr>
+                <td>@item.DisplayFieldName</td>
+                <td><input type="text" class="form-control @isMandatory" id="txtHSCPercentage" placeholder="@item.DisplayFieldName" /> </td>
+            </tr>
+        }
+    }
+    
+        <input type="button" value="Register" id="btnRegister"/>
+    
+</table>
+

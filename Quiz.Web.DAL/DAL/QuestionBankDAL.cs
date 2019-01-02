@@ -14,7 +14,7 @@ namespace Quiz.Web.DAL.Home
         public List<QuestionBankMaster> GetQuestionBank()
         {
             List<QuestionBankMaster> questionBankData = new List<QuestionBankMaster>();
-            using (var QuizContext = new TestEngineEntities())
+            using (var QuizContext = new DBEntities())
             {
                 QuizContext.Configuration.ProxyCreationEnabled = false;
                 questionBankData = QuizContext.QuestionBankMasters.Where(x => x.IsDeleted == false).ToList();
@@ -28,7 +28,7 @@ namespace Quiz.Web.DAL.Home
             APIResponse response = new APIResponse();
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     details = testEngineEntities.QuestionsDetails.Where(x => x.QuestionBankID == QuestionBankId && x.IsDeleted == false).ToList();
                 }
@@ -48,7 +48,7 @@ namespace Quiz.Web.DAL.Home
             APIResponse response = new APIResponse();
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     details = testEngineEntities.QuestionsDetails.Where(x => x.ID == QuestionId && x.IsDeleted == false).FirstOrDefault();
 
@@ -69,7 +69,7 @@ namespace Quiz.Web.DAL.Home
             response.Result = false;
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     var data = testEngineEntities.QuestionsDetails.Where(x => x.ID == QuestionId && x.IsDeleted == false).FirstOrDefault();
                     if(data != null)
@@ -97,7 +97,7 @@ namespace Quiz.Web.DAL.Home
             response.Result = false;
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     var data = testEngineEntities.QuestionsDetails.Where(x => x.ID == questionsDetailsView.ID && x.IsDeleted == false).FirstOrDefault();
                     if (data != null)
@@ -132,7 +132,7 @@ namespace Quiz.Web.DAL.Home
             APIResponse response = new APIResponse();
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     details = testEngineEntities.QuestionBankMasters.Where(x => x.ID == QuestionBankId && x.IsDeleted == false).FirstOrDefault();
 
@@ -153,7 +153,7 @@ namespace Quiz.Web.DAL.Home
             response.Result = false;
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     var data = testEngineEntities.QuestionBankMasters.Where(x => x.ID == QuestionBankId && x.IsDeleted == false).FirstOrDefault();
                     var questions = testEngineEntities.QuestionsDetails.Where(x => x.ID == QuestionBankId && x.IsDeleted == false).FirstOrDefault();
@@ -191,7 +191,7 @@ namespace Quiz.Web.DAL.Home
             response.Result = false;
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     var data = testEngineEntities.QuestionBankMasters.Where(x => x.ID == questionsDetailsView.ID && x.IsDeleted == false).FirstOrDefault();
                     if (data != null)
@@ -222,7 +222,7 @@ namespace Quiz.Web.DAL.Home
             APIResponse response = new APIResponse();
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     details = testEngineEntities.DefaultRegistations.Where(x => x.UserDetailId == UserDetailId).ToList();
 
@@ -245,7 +245,7 @@ namespace Quiz.Web.DAL.Home
             aPIResponse.Result = false;
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     QuestionBankMaster questionBankMaster = new QuestionBankMaster();
                     questionBankMaster.ID = Guid.NewGuid();

@@ -55,89 +55,124 @@
     <Compile Include="DAL\QuestionBankDAL.cs" />
     <Compile Include="DAL\UserManagementDAL.cs" />
     <Compile Include="DataAccess\AdminDetail.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\AssesmentMasterDetailsForm.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataAccess\Assesmentpagemodal_Result.cs" />
+    <Compile Include="DataAccess\Assesmentpagemodal_Result.cs">
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\AssessmentAdminEmailNotification.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\AssessmentDetailMaster.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\AssessmentQuestionBankDetail.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\AssessmentStudentNotification.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\AssessmentUserDetail.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\CandidateAssesmentDetailsForm.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\CustomRegistrationForm.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\DefaultRegistation.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\EligibilityCriteriaDetail.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\ExamFinalReport.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\ExaminerAssessmentDetail.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\ExaminerMaster.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\ExaminerMasterDetail.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\GetAssessmentQuestions_Result.cs">
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\GetCandidateAssesmentDetailsForm_Result.cs">
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\GetDashBoardDetails_Result.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\GetEligibilityCriteriaList_Result.cs">
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\GetExistingAssessmentDetails_Result.cs">
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\GetExistingQuestionDetails_Result.cs">
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\GetLstUserDetailMaster_Result.cs">
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\GetMyAssesments_Result.cs">
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\GetUploadedUserDetailsOnUserDetailId_Result.cs">
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\InputControlMaster.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\QuestionBankMaster.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\QuestionsDetail.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\RegistrationFormControl.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\sp_helpdiagrams_Result.cs">
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\sysdiagram.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataAccess\TestEngineEntity.Context.cs">
+    <Compile Include="DataAccess\TestEngineEntitiy.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TestEngineEntity.Context.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataAccess\TestEngineEntity.cs">
+    <Compile Include="DataAccess\TestEngineEntitiy.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataAccess\TestEngineEntity.Designer.cs">
+    <Compile Include="DataAccess\TestEngineEntitiy.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TestEngineEntity.edmx</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.edmx</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\UserAssessmentAnswerdetail.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\UserDetailMaster.cs">
-      <DependentUpon>TestEngineEntity.tt</DependentUpon>
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\ValidateAssessment_Result.cs">
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -154,26 +189,28 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
-    <EntityDeploy Include="DataAccess\TestEngineEntity.edmx">
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="DataAccess\TestEngineEntitiy.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TestEngineEntity.Designer.cs</LastGenOutput>
+      <LastGenOutput>TestEngineEntitiy.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DataAccess\TestEngineEntity.edmx.diagram">
-      <DependentUpon>TestEngineEntity.edmx</DependentUpon>
+    <None Include="DataAccess\TestEngineEntitiy.edmx.diagram">
+      <DependentUpon>TestEngineEntitiy.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DataAccess\TestEngineEntity.Context.tt">
+    <Content Include="DataAccess\TestEngineEntitiy.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TestEngineEntity.edmx</DependentUpon>
-      <LastGenOutput>TestEngineEntity.Context.cs</LastGenOutput>
+      <DependentUpon>TestEngineEntitiy.edmx</DependentUpon>
+      <LastGenOutput>TestEngineEntitiy.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DataAccess\TestEngineEntity.tt">
+    <Content Include="DataAccess\TestEngineEntitiy.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TestEngineEntity.edmx</DependentUpon>
-      <LastGenOutput>TestEngineEntity.cs</LastGenOutput>
+      <DependentUpon>TestEngineEntitiy.edmx</DependentUpon>
+      <LastGenOutput>TestEngineEntitiy.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

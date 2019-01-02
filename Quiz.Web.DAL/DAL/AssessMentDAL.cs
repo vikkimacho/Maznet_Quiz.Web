@@ -28,7 +28,7 @@ namespace Quiz.Web.DAL.Home
             try
             {
                 AssesmentPageModal assesmentPageModal = new AssesmentPageModal();
-                using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+                using (DBEntities TestEngineDBContext = new DBEntities())
                 {
                     assesmentPageModal.LQuestionBankModal = TestEngineDBContext.Database.SqlQuery<QuestionBankModal>("exec Assesmentpagemodal").ToList();
                     assesmentPageModal.LstCandidateAssesmentDetailsForm = TestEngineDBContext.Database.SqlQuery<CustomCandidateAssesmentDetailsForm>("exec GetCandidateAssesmentDetailsForm").ToList();
@@ -54,7 +54,7 @@ namespace Quiz.Web.DAL.Home
             try
             {
                 Guid AssesmentEligibilityId = Guid.NewGuid();
-                using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+                using (DBEntities TestEngineDBContext = new DBEntities())
                 {
                     List<EligibilityCriteriaDetail> lstEligibilityCriteriaDetail = new List<EligibilityCriteriaDetail>();
                     foreach (var item in lstpostAssessmentModal)
@@ -98,7 +98,7 @@ namespace Quiz.Web.DAL.Home
             string result = "Failed";
             try
             {
-                using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+                using (DBEntities TestEngineDBContext = new DBEntities())
                 {
                     var assesmentDetailMaster = new DataAccess.AssessmentDetailMaster();
                     assesmentDetailMaster.AssessmentName = postAssessmentModal.AssessmentName;
@@ -310,7 +310,7 @@ namespace Quiz.Web.DAL.Home
         public string ValidateAssesmentName(string assesmentName)
         {
             String result = "Failed";
-            using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+            using (DBEntities TestEngineDBContext = new DBEntities())
             {
                 var assesmentInfo = TestEngineDBContext.AssessmentDetailMasters.FirstOrDefault(x => x.AssessmentName.Trim().ToUpper() == assesmentName.Trim().ToUpper());
                 if (assesmentInfo != null)
@@ -326,7 +326,7 @@ namespace Quiz.Web.DAL.Home
         {
             try
             {
-                using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+                using (DBEntities TestEngineDBContext = new DBEntities())
                 {
                     var returnResult = TestEngineDBContext.Database.SqlQuery<MyAssesmentModal>("exec GetMyAssesments").ToList();
                     foreach (var item in returnResult)
@@ -355,7 +355,7 @@ namespace Quiz.Web.DAL.Home
         {
             try
             {
-                using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+                using (DBEntities TestEngineDBContext = new DBEntities())
                 {
                     var LQuestionBankModal = TestEngineDBContext.Database.SqlQuery<QuestionBankModal>("exec Assesmentpagemodal").ToList();
                     return LQuestionBankModal;
@@ -371,7 +371,7 @@ namespace Quiz.Web.DAL.Home
         {
             try
             {
-                using (TestEngineEntities dbContext = new TestEngineEntities())
+                using (DBEntities dbContext = new DBEntities())
                 {
                     var existingQuestionBankDetails = dbContext.Database.SqlQuery<ExistingQuestionBankDetails>("exec GetExistingQuestionDetails @assessmentId", new SqlParameter("@assessmentID", assessmentId)).ToList();
                     return existingQuestionBankDetails;
@@ -388,7 +388,7 @@ namespace Quiz.Web.DAL.Home
         {
             try
             {
-                using (TestEngineEntities dBContext = new TestEngineEntities())
+                using (DBEntities dBContext = new DBEntities())
                 {
                     var UploadedDetail = dBContext.Database.SqlQuery<UsersDetailsModel>("exec GetUploadedUserDetailsOnUserDetailId @userDetailId", new SqlParameter("@userDetailId", userdetailId)).ToList();
                     return UploadedDetail;
@@ -406,7 +406,7 @@ namespace Quiz.Web.DAL.Home
             try
             {
 
-                using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+                using (DBEntities TestEngineDBContext = new DBEntities())
                 {
                     var validationResult = TestEngineDBContext.Database.SqlQuery<string>("exec ValidateDeletionofAssesmentId @AssesmentId").FirstOrDefault();
                     if (validationResult == "Success")
@@ -427,7 +427,7 @@ namespace Quiz.Web.DAL.Home
             List<QuestionBankDetail> questionBankDetailList = new List<QuestionBankDetail>();
             try
             {
-                using (TestEngineEntities TestEngineDBContext = new TestEngineEntities())
+                using (DBEntities TestEngineDBContext = new DBEntities())
                 {
                     questionBankDetailList = TestEngineDBContext.Database.SqlQuery<QuestionBankDetail>("exec GetAssessmentQuestions @AssessmentID",
                         new SqlParameter("@AssessmentID", assessmentID)).ToList();

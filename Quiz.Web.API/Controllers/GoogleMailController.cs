@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using System.Web.Http;
+using System.Configuration;
 
 namespace Quiz.Web.API.Controllers
 {
@@ -40,20 +41,21 @@ namespace Quiz.Web.API.Controllers
             string result = "FAILED";
             try
             {
+                string credentialsPath = ConfigurationManager.AppSettings["GSuiteCredntial"];
                  
                 UserCredential credential;
                 //read credentials file
-                using (FileStream stream = new FileStream(@"~\packagejson\credentials.json", FileMode.Open, FileAccess.Read))
+                using (FileStream stream = new FileStream(credentialsPath, FileMode.Open, FileAccess.Read))
                 {
                     string credPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                    credPath = @"~\packagejson\credentialsnew.json";
+                    credPath = @"\packagejson\credentialsnew.json";
                     credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets, Scopes, "user", CancellationToken.None, new FileDataStore(credPath, true)).Result;
                 }
 
                 string plainText = $"To: " + googleMail.ToMail + "  \r\n" +
                                    $"Subject: " + googleMail.Subject + " \r\n" +
                                    "Content-Type: text/html; charset=utf-8\r\n\r\n" +
-                                   $"<h1>" + googleMail.Subject + "</h1>";
+                                   $"<h1>" + googleMail.Body + "</h1>";
 
                 //call gmail service
                 var service = new GmailService(new BaseClientService.Initializer()
