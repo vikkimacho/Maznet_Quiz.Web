@@ -1,125 +1,518 @@
 ﻿@model List<Quiz.Web.DTO.Models.CustomRegistration>
 @{
     ViewBag.Title = "Registration";
+    int i = 0;
+    string assessmentID = Convert.ToString(Model.Select(x => x.AssessmentId).FirstOrDefault());
 }
 <script>
     $(document).ready(function () {
         $('#btnRegister').click(function () {
+            debugger;
+            var status = true;
+            var txtEmail = $('#txtEmail').val();
+            if (!txtEmail) {
+                $('#spnemail').show();
+                status = false;
+            }
+            else {
+                $('#spnemail').hide();
+            }
+            var txtName = $('#txtName').val();
+            if (!txtName) {
+                $('#spnname').show();
+                status = false;
+            }
+            else {
+                $('#spnname').hide();
+            }
+
+
+            var txtLastName = $('#txtLastName').val();
+            if (txtLastName == undefined && !$('#txtLastName').hasClass('mandatory')) {
+                txtLastName = null;
+            }
+            else if ($('#txtLastName').hasClass('mandatory') && (txtLastName == "" || txtLastName == null)) {
+                $('#spnlastname').show();
+                status = false;
+            }
+            else {
+                $('#spnlastname').hide();
+            }
+
+
+            var gender = $("input[name='gender']:checked").val();
+            if (gender == undefined && !$("input[name='gender']").hasClass('mandatory')) {
+                gender = null;
+            }
+            else if ($("input[name='gender']").hasClass('mandatory') && (gender == "" || gender == null)) {
+                $('#spngender').show();
+                status = false;
+            }
+            else {
+                $('#spngender').hide();
+            }
+
+
+            var txtMobileNo = $('#txtMobileNo').val();
+            if (txtMobileNo == undefined && !$('#txtMobileNo').hasClass('mandatory')) {
+                txtMobileNo = null;
+            }
+            else if ($('#txtMobileNo').hasClass('mandatory') && (txtMobileNo == "" || txtMobileNo == null)) {
+                $('#spnmobile').show();
+                status = false;
+            }
+            else {
+                $('#spnmobile').hide();
+            }
+
+
+            var txtDateofBirth = $('#txtDateofBirth').val();
+            if (txtDateofBirth == undefined && !$('#txtDateofBirth').hasClass('mandatory')) {
+                txtDateofBirth = null;
+            }
+            else if ($('#txtDateofBirth').hasClass('mandatory') && (txtDateofBirth == "" || txtDateofBirth == null)) {
+                $('#spndob').show();
+                status = false;
+            }
+            else {
+                $('#spndob').hide();
+            }
+
+
+            var txtSSLCBoard = $('#txtSSLCBoard').val();
+            if (txtSSLCBoard == undefined && !$('#txtSSLCBoard').hasClass('mandatory')) {
+                txtSSLCBoard = null;
+            }
+            else if ($('#txtSSLCBoard').hasClass('mandatory') && (txtSSLCBoard == "" || txtSSLCBoard == null)) {
+                $('#spnsslcboard').show();
+                status = false;
+            }
+            else {
+                $('#spnsslcboard').hide();
+            }
+
+
+            var txtSSLCYear = $('#txtSSLCYear').val();
+            if (txtSSLCYear == undefined && !$('#txtSSLCYear').hasClass('mandatory')) {
+                txtSSLCYear = null;
+            }
+            else if ($('#txtSSLCYear').hasClass('mandatory') && (txtSSLCYear == "" || txtSSLCYear == null)) {
+                $('#spnsslcyear').show();
+                status = false;
+            }
+            else {
+                $('#spnsslcyear').hide();
+            }
+
+
+
+            var txtSSLCPerentage = $('#txtSSLCPerentage').val();
+            if (txtSSLCPerentage == undefined && !$('#txtSSLCPerentage').hasClass('mandatory')) {
+                txtSSLCPerentage = null;
+            }
+            else if ($('#txtSSLCPerentage').hasClass('mandatory') && (txtSSLCPerentage == "" || txtSSLCPerentage == null)) {
+                $('#spnsslcperentage').show();
+                status = false;
+            }
+            else {
+                $('#spnsslcperentage').hide();
+            }
+
+
+
+            var txtHSCBoard = $('#txtHSCBoard').val();
+            if (txtHSCBoard == undefined && !$('#txtHSCBoard').hasClass('mandatory')) {
+                txtHSCBoard = null;
+            }
+            else if ($('#txtHSCBoard').hasClass('mandatory') && (txtHSCBoard == "" || txtHSCBoard == null)) {
+                $('#spnhscboard').show();
+                status = false;
+            }
+            else {
+                $('#spnhscboard').hide();
+            }
+
+
+            var txtHSCYear = $('#txtHSCYear').val();
+            if (txtHSCYear == undefined && !$('#txtHSCYear').hasClass('mandatory')) {
+                txtHSCYear = null;
+            }
+            else if ($('#txtHSCYear').hasClass('mandatory') && (txtHSCYear == "" || txtHSCYear == null)) {
+                $('#spnhscyear').show();
+                status = false;
+            }
+            else {
+                $('#spnhscyear').hide();
+            }
+
+
+            var txtHSCPercentage = $('#txtHSCPercentage').val();
+            if (txtHSCYear == undefined && !$('#txtHSCPercentage').hasClass('mandatory')) {
+                txtHSCYear = null;
+            }
+            else if ($('#txtHSCPercentage').hasClass('mandatory') && (txtHSCPercentage == "" || txtHSCPercentage == null)) {
+                $('#spnhscpercentage').show();
+                status = false;
+            }
+            else {
+                $('#spnhscpercentage').hide();
+            }
+
+
+            var txtDegree = $('#txtDegree').val();
+            if (txtDegree == undefined && !$('#txtDegree').hasClass('mandatory')) {
+                txtDegree = null;
+            }
+            else if ($('#txtDegree').hasClass('mandatory') && (txtDegree == "" || txtDegree == null)) {
+                $('#spndegree').show();
+                status = false;
+            }
+            else {
+                $('#spndegree').hide();
+            }
+
+
+
+
+            var txtDegreeBranch = $('#txtDegreeBranch').val();
+            if (txtDegreeBranch == undefined && !$('#txtDegreeBranch').hasClass('mandatory')) {
+                txtDegreeBranch = null;
+            }
+            else if ($('#txtDegreeBranch').hasClass('mandatory') && (txtDegreeBranch == "" || txtDegreeBranch == null)) {
+                $('#spnbranch').show();
+                status = false;
+            }
+            else {
+                $('#spnbranch').hide();
+            }
+
+
+
+            var txtDegreePercentage = $('#txtDegreePercentage').val();
+            if (txtDegreeBranch == undefined && !$('#txtDegreePercentage').hasClass('mandatory')) {
+                txtDegreeBranch = null;
+            }
+            else if ($('#txtDegreePercentage').hasClass('mandatory') && (txtDegreePercentage == "" || txtDegreePercentage == null)) {
+                $('#spndegreepercenatage').show();
+                status = false;
+            }
+            else {
+                $('#spndegreepercenatage').hide();
+            }
+
+
+            var txtDegreeYear = $('#txtDegreeYear').val();
+            if (txtDegreeYear == undefined && !$('#txtDegreeYear').hasClass('mandatory')) {
+                txtDegreeYear = null;
+            }
+            else if ($('#txtDegreeYear').hasClass('mandatory') && (txtDegreeYear == "" || txtDegreeYear == null)) {
+                $('#spndegreeyear').show();
+                status = false;
+            }
+            else {
+                $('#spndegreeyear').hide();
+            }
+
+
+
+            var txtCollege = $('#txtCollege').val();
+            if (txtCollege == undefined && !$('#txtCollege').hasClass('mandatory')) {
+                txtCollege = null;
+            }
+            else if ($('#txtCollege').hasClass('mandatory') && (txtCollege == "" || txtCollege == null)) {
+                $('#spncollege').show();
+                status = false;
+            }
+            else {
+                $('#spncollege').hide();
+            }
+
+
+            var txtTechSkills = $('#txtTechSkills').val();
+            if (txtTechSkills == undefined && !$('#txtTechSkills').hasClass('mandatory')) {
+                txtTechSkills = null;
+            }
+            else if ($('#txtTechSkills').hasClass('mandatory') && (txtTechSkills == "" || txtTechSkills == null)) {
+                $('#spntech').show();
+                status = false;
+            }
+            else {
+                $('#spntech').hide();
+            }
+
+
+            var txtCity = $('#txtCity').val();
+            if (txtCity == undefined && !$('#txtCity').hasClass('mandatory')) {
+                txtCity = null;
+            }
+            else if ($('#txtCity').hasClass('mandatory') && (txtCity == "" || txtCity == null)) {
+                $('#spncity').show();
+                status = false;
+            }
+            else {
+                $('#spncity').hide();
+            }
+
+
+
+
+            var txtState = $('#txtState').val();
+            if (txtState == undefined && !$('#txtState').hasClass('mandatory')) {
+                txtState = null;
+            }
+            else if ($('#txtState').hasClass('mandatory') && (txtState == "" || txtState == null)) {
+                $('#spnstate').show();
+                status = false;
+            }
+            else {
+                $('#spnstate').hide();
+            }
+            status = true;
+            if (status) {
+                data = {
+                    'assessmentID': '@assessmentID',
+                    'Name': txtName,
+                    'Email': txtEmail,
+                    'MobileNumber': txtMobileNo,
+                    'Degree': txtDegree,
+                    'Institution': txtCollege,
+                    'Percentage': txtDegreePercentage,
+                    'Gender': gender,
+                    'Address': txtCity,
+                    'SSLCPassedOutYear': txtSSLCYear,
+                    'SSLCPercentage': txtSSLCPerentage,
+                    'SSLCBoardName': txtSSLCBoard,
+                    'TechnicalSkills': txtTechSkills,
+                    'HSCPercentage': txtHSCPercentage,
+                    'LastName': txtLastName,
+                    'DOB': txtDateofBirth,
+                    'State': txtState,
+                    'DegreePassedOutYear': txtDegreeYear,
+                    'HSCBoardName': txtHSCBoard,
+                    'HSCPassedOutYear': txtHSCYear,
+                    'Major': txtDegreeBranch
+
+                }
+
+                $.ajax({
+                    type: "POST",
+                    //url: '@Url.Action("UpdateUser", "ExamLogin")?usersDetailsModel=' + data + "&assessmentID=" + '@assessmentID',
+                    url: '/ExamLogin/UpdateUser',
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (Result) {
+                        if (Result.Result == true) {
+                            alert("User Updated Succesfully");
+                        }
+                        else {
+                            alert("Update Failed");
+                        }
+                        window.location.reload();
+                    },
+                    error: function (xhr, status, p3, p4) {
+                        var err = "Error " + " " + status + " " + p3 + " " + p4;
+                        if (xhr.responseText && xhr.responseText[0] == "{")
+                            err = JSON.parse(xhr.responseText).Message;
+
+                    },
+                    cache: false
+                });
+
+            }
 
         });
+
     });
-    
+
 </script>
-<table>
-    @foreach (var item in Model)
-    {
-        if (item.FieldName == "EmailId")
+@if (Model.Count > 0)
+{
+    <table>
+        @foreach (var item in Model)
         {
-            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-            <tr>
-                <td>@item.DisplayFieldName</td>
-                <td><input type="text" class="form-control @isMandatory" id="txtEmail" placeholder="@item.DisplayFieldName" /> </td>
-            </tr>
-        }
+            i++;
+            if (item.FieldName == "EmailId")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>@item.DisplayFieldName</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtEmail" placeholder="@item.DisplayFieldName" /> <span id="spnemail" style="display:none">*required</span></td>
+                </tr>
+            }
 
-        if (item.FieldName == "Name")
-        {
-            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-            <tr>
-                <td>@item.DisplayFieldName</td>
-                <td><input type="text" class="form-control @isMandatory" id="txtName" placeholder="@item.DisplayFieldName" /> </td>
-            </tr>
-        }
+            else if (item.FieldName == "Name")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>@item.DisplayFieldName</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtName" placeholder="@item.DisplayFieldName" /> <span id="spnname" style="display:none">*required</span></td>
+                </tr>
+            }
 
-        if (item.FieldName == "LastName")
-        {
-            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-            <tr>
-                <td>@item.DisplayFieldName</td>
-                <td><input type="text" class="form-control @isMandatory" id="txtLastName" placeholder="@item.DisplayFieldName" /> </td>
-            </tr>
-        }
+            else if (item.FieldName == "LastName")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>@item.DisplayFieldName</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtLastName" placeholder="@item.DisplayFieldName" /> <span id="spnlastname" style="display:none">*required</span></td>
+                </tr>
+            }
 
-        if (item.FieldName == "Gender")
-        {
-            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-            <tr>
-                <td>@item.DisplayFieldName</td>
-                <td>
-                    <input type="radio" class="form-control @isMandatory" name="gender" />
-                    <input type="radio" class="form-control @isMandatory" name="gender" />
-                </td>
-            </tr>
-        }
+            else if (item.FieldName == "Gender")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>@item.DisplayFieldName</label></td>
+                    <td>
+                        <input type="radio" class="form-control @isMandatory" name="gender" value="Male" />
+                        <input type="radio" class="form-control @isMandatory" name="gender" value="Female" />
+                        <span id="spngender" style="display:none">*required</span>
+                    </td>
+                </tr>
+            }
 
-        if (item.FieldName == "MobileNo")
-        {
-            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-            <tr>
-                <td>@item.DisplayFieldName</td>
-                <td><input type="text" class="form-control @isMandatory" id="txtMobileNo" /> </td>
-            </tr>
-        }
+            else if (item.FieldName == "MobileNo")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>@item.DisplayFieldName</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtMobileNo" /> <span id="spnmobile" style="display:none">*required</span></td>
+                </tr>
+            }
 
-        if (item.FieldName == "DateofBirth")
-        {
-            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-            <tr>
-                <td>@item.DisplayFieldName</td>
-                <td><input type="text" class="form-control @isMandatory" id="txtDateofBirth" placeholder="DD/MM/YYYY" /> </td>
-            </tr>
+            else if (item.FieldName == "DateofBirth")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>@item.DisplayFieldName</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtDateofBirth" placeholder="DD/MM/YYYY" /> <span id="spndob" style="display:none">*required</span></td>
+                </tr>
+            }
+            else if (item.FieldName == "10thBoardName")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>@item.DisplayFieldName</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtSSLCBoard" placeholder="@item.DisplayFieldName" /> <span id="spnsslcboard" style="display:none">*required</span></td>
+                </tr>
+            }
+            else if (item.FieldName == "10thPassingYear")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>10th Passedout Year</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtSSLCYear" placeholder="(Ex - 2018)" /> <span id="spnsslcyear" style="display:none">*required</span></td>
+                </tr>
+            }
+            else if (item.FieldName == "10thPercentage")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>@item.DisplayFieldName</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtSSLCPerentage" placeholder="(Ex - 80%)" /> <span id="spnsslcperentage" style="display:none">*required</span></td>
+                </tr>
+            }
+            else if (item.FieldName == "12thBoardName")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>@item.DisplayFieldName</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtHSCBoard" placeholder="@item.DisplayFieldName" /> <span id="spnhscboard" style="display:none">*required</span></td>
+                </tr>
+            }
+            else if (item.FieldName == "12thPassingYear")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>@item.DisplayFieldName</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtHSCYear" placeholder="@item.DisplayFieldName" /> <span id="spnhscyear" style="display:none">*required</span></td>
+                </tr>
+            }
+            else if (item.FieldName == "12thPercentage")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>@item.DisplayFieldName</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtHSCPercentage" placeholder="@item.DisplayFieldName" /> <span id="spnhscpercentage" style="display:none">*required</span></td>
+                </tr>
+            }
+
+            else if (item.FieldName == "Degree")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>@item.DisplayFieldName</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtDegree" placeholder="@item.DisplayFieldName" /><span id="spndegree" style="display:none">*required</span> </td>
+                </tr>
+            }
+            else if (item.FieldName == "DegreeSpecialization")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>@item.DisplayFieldName</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtDegreeBranch" placeholder="(Ex - CSE)" /> <span id="spnbranch" style="display:none">*required</span></td>
+                </tr>
+            }
+            else if (item.FieldName == "CollegePercentage")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>@item.DisplayFieldName</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtDegreePercentage" placeholder="@item.DisplayFieldName" /> <span id="spndegreepercenatage" style="display:none">*required</span></td>
+                </tr>
+            }
+            else if (item.FieldName == "DegreePassOutYear")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>@item.DisplayFieldName</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtDegreeYear" placeholder="(Ex - 2019)" /> <span id="spndegreeyear" style="display:none">*required</span></td>
+                </tr>
+            }
+            else if (item.FieldName == "CollegeName")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>@item.DisplayFieldName</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtCollege" placeholder="@item.DisplayFieldName" /> <span id="spncollege" style="display:none">*required</span></td>
+                </tr>
+            }
+            else if (item.FieldName == "TechnicalSkills")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>@item.DisplayFieldName</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtTechSkills" placeholder="@item.DisplayFieldName" /> <span id="spntech" style="display:none">*required</span></td>
+                </tr>
+            }
+            else if (item.FieldName == "CurrentCity")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>City</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtCity" placeholder="City" /> <span id="spncity" style="display:none">*required</span></td>
+                </tr>
+            }
+            else if (item.FieldName == "CurrentState")
+            {
+                string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
+                <tr>
+                    <td><label>State</label></td>
+                    <td><input type="text" class="form-control @isMandatory" id="txtState" placeholder="State" /> <span id="spnstate" style="display:none">*required</span></td>
+                </tr>
+            }
+
+            if (i == Model.Count())
+            {
+                <tr>
+                    <td>
+                        <input type="button" value="Register" id="btnRegister" />
+                    </td>
+                </tr>
+
+            }
         }
-        if (item.FieldName == "10thBoardName")
-        {
-            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-            <tr>
-                <td>@item.DisplayFieldName</td>
-                <td><input type="text" class="form-control @isMandatory" id="txtSSLCBoard" placeholder="@item.DisplayFieldName" /> </td>
-            </tr>
-        }
-        if (item.FieldName == "10thPassingYear")
-        {
-            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-            <tr>
-                <td>10th Passedout Year</td>
-                <td><input type="text" class="form-control @isMandatory" id="txtSSLCYear" placeholder="(Ex - 2018)" /> </td>
-            </tr>
-        }
-        if (item.FieldName == "10thPercentage")
-        {
-            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-            <tr>
-                <td>@item.DisplayFieldName</td>
-                <td><input type="text" class="form-control @isMandatory" id="txtSSLCPerentage" placeholder="(Ex - 80%)" /> </td>
-            </tr>
-        }
-        if (item.FieldName == "12thBoardName")
-        {
-            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-            <tr>
-                <td>@item.DisplayFieldName</td>
-                <td><input type="text" class="form-control @isMandatory" id="txtHSCBoard" placeholder="@item.DisplayFieldName" /> </td>
-            </tr>
-        }
-        if (item.FieldName == "12thPassingYear")
-        {
-            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-            <tr>
-                <td>@item.DisplayFieldName</td>
-                <td><input type="text" class="form-control @isMandatory" id="txtHSCYear" placeholder="@item.DisplayFieldName" /> </td>
-            </tr>
-        }
-        if (item.FieldName == "12thPercentage")
-        {
-            string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-            <tr>
-                <td>@item.DisplayFieldName</td>
-                <td><input type="text" class="form-control @isMandatory" id="txtHSCPercentage" placeholder="@item.DisplayFieldName" /> </td>
-            </tr>
-        }
-    }
-    
-        <input type="button" value="Register" id="btnRegister"/>
-    
-</table>
+    </table>
+}
 

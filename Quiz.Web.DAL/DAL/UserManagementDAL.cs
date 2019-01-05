@@ -8,16 +8,17 @@ namespace Quiz.Web.DAL.DAL
 {
     public class UserManagementDAL
     {
+        private DateTime dateTime = DateTime.UtcNow.AddHours(5).AddMinutes(30);
         public List<UserDetailMaster> GetUsersList()
         {
-            List<UserDetailMaster> details = new List<UserDetailMaster>();            
+            List<UserDetailMaster> details = new List<UserDetailMaster>();
             APIResponse response = new APIResponse();
             try
             {
                 using (DBEntities testEngineEntities = new DBEntities())
                 {
                     details = testEngineEntities.UserDetailMasters.Where(x => x.IsDeleted == false).ToList();
-                    
+
                 }
 
             }
@@ -52,8 +53,10 @@ namespace Quiz.Web.DAL.DAL
         public APIResponse UploadUserDetail(UsersDetails usersDetails)
         {
             UsersDetailsModel details = new UsersDetailsModel();
+            dateTime = DateTime.UtcNow.AddHours(5).AddMinutes(30);
             APIResponse response = new APIResponse();
             var resultUserDetailMasterGuid = Guid.NewGuid();
+            var usertype = "upload";
             response.ResultUserDetailMasterGuid = resultUserDetailMasterGuid;
             try
             {
@@ -62,12 +65,13 @@ namespace Quiz.Web.DAL.DAL
                     UserDetailMaster users = new UserDetailMaster();
                     users.Id = resultUserDetailMasterGuid;
                     users.UserTitle = usersDetails.UserTitleName;
-                    users.CreatedDate = DateTime.Now;
-                    users.ModifiedDate = DateTime.Now;
+                    users.UserType = usertype;
+                    users.CreatedDate = dateTime;
+                    users.ModifiedDate = dateTime;
                     users.IsDeleted = false;
                     testEngineEntities.UserDetailMasters.Add(users);
 
-                    foreach(var item in usersDetails.UsersDetailsModel)
+                    foreach (var item in usersDetails.UsersDetailsModel)
                     {
                         DefaultRegistation defaultRegistation = new DefaultRegistation();
                         defaultRegistation.ID = Guid.NewGuid();
@@ -93,8 +97,8 @@ namespace Quiz.Web.DAL.DAL
                         defaultRegistation.DegreePassedOutYear = item.DegreePassedOutYear;
                         defaultRegistation.HSCBoardName = item.HSCBoardName;
                         defaultRegistation.HSCPassedOutYear = item.HSCPassedOutYear;
-                        defaultRegistation.ModifiedDate = DateTime.UtcNow;
-                        defaultRegistation.CreatedDate = DateTime.UtcNow;
+                        defaultRegistation.ModifiedDate = dateTime;;
+                        defaultRegistation.CreatedDate = dateTime;;
                         defaultRegistation.IsDeleted = false;
                         defaultRegistation.UserName = item.Email;
                         testEngineEntities.DefaultRegistations.Add(defaultRegistation);
@@ -103,7 +107,7 @@ namespace Quiz.Web.DAL.DAL
                     testEngineEntities.SaveChanges();
                     response.Result = true;
                 }
-                
+
 
 
             }
@@ -123,7 +127,7 @@ namespace Quiz.Web.DAL.DAL
             {
                 using (DBEntities testEngineEntities = new DBEntities())
                 {
-                    details = testEngineEntities.DefaultRegistations.Where(x => x.ID  == UserId && x.IsDeleted == false).FirstOrDefault();
+                    details = testEngineEntities.DefaultRegistations.Where(x => x.ID == UserId && x.IsDeleted == false).FirstOrDefault();
 
                 }
 
@@ -148,7 +152,7 @@ namespace Quiz.Web.DAL.DAL
                     if (data != null)
                     {
                         data.IsDeleted = true;
-                        data.ModifiedDate = DateTime.UtcNow;
+                        data.ModifiedDate = dateTime;;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
                     }
@@ -172,30 +176,30 @@ namespace Quiz.Web.DAL.DAL
             {
                 using (DBEntities testEngineEntities = new DBEntities())
                 {
-                    var data = testEngineEntities.DefaultRegistations.Where(x => x.ID == usersDetailsModel.Id && x.IsDeleted == false).FirstOrDefault();
+                    var data = testEngineEntities.DefaultRegistations.Where(x => x.ID == usersDetailsModel.Id && x.IsDeleted == false).FirstOrDefault();                    
                     if (data != null)
                     {
-                        data.Name = usersDetailsModel.Name;
-                        data.Email = usersDetailsModel.Email;
-                        data.MobileNumber = usersDetailsModel.MobileNumber;
-                        data.Degree = usersDetailsModel.Degree;
-                        data.Institution = usersDetailsModel.Institution;
-                        data.Major = usersDetailsModel.Major;
-                        data.Percentage = usersDetailsModel.Percentage;
-                        data.Gender = usersDetailsModel.Gender;
-                        data.Address = usersDetailsModel.Address;
-                        data.SSLCPassedOutYear = usersDetailsModel.SSLCPassedOutYear;
-                        data.SSLCPercentage = usersDetailsModel.SSLCPercentage;
-                        data.SSLCBoardName = usersDetailsModel.SSLCBoardName;
-                        data.TechnicalSkills = usersDetailsModel.TechnicalSkills;
-                        data.HSCPercentage = usersDetailsModel.HSCPercentage;
-                        data.LastName = usersDetailsModel.LastName;
-                        data.DOB = usersDetailsModel.DOB;
-                        data.State = usersDetailsModel.State;
-                        data.DegreePassedOutYear = usersDetailsModel.DegreePassedOutYear;
-                        data.HSCBoardName = usersDetailsModel.HSCBoardName;
-                        data.HSCPassedOutYear = usersDetailsModel.HSCPassedOutYear;
-                        data.ModifiedDate = DateTime.UtcNow;
+                        data.Name = string.IsNullOrEmpty(usersDetailsModel.Name) ? data.Name : usersDetailsModel.Name;
+                        data.Email = string.IsNullOrEmpty(usersDetailsModel.Email) ? data.Email : usersDetailsModel.Email;
+                        data.MobileNumber = string.IsNullOrEmpty(usersDetailsModel.MobileNumber) ? data.MobileNumber : usersDetailsModel.MobileNumber;
+                        data.Degree = string.IsNullOrEmpty(usersDetailsModel.Degree) ? data.Name : usersDetailsModel.Degree;
+                        data.Institution = string.IsNullOrEmpty(usersDetailsModel.Institution) ? data.Institution : usersDetailsModel.Institution;
+                        data.Major = string.IsNullOrEmpty(usersDetailsModel.Major) ? data.Name : usersDetailsModel.Major;
+                        data.Percentage = string.IsNullOrEmpty(usersDetailsModel.Percentage) ? data.Percentage : usersDetailsModel.Percentage;
+                        data.Gender = string.IsNullOrEmpty(usersDetailsModel.Gender) ? data.Name : usersDetailsModel.Gender;
+                        data.Address = string.IsNullOrEmpty(usersDetailsModel.Address) ? data.Address : usersDetailsModel.Address;
+                        data.SSLCPassedOutYear = string.IsNullOrEmpty(usersDetailsModel.SSLCPassedOutYear) ? data.SSLCPassedOutYear : usersDetailsModel.SSLCPassedOutYear;
+                        data.SSLCPercentage = string.IsNullOrEmpty(usersDetailsModel.SSLCPercentage) ? data.SSLCPercentage : usersDetailsModel.SSLCPercentage;
+                        data.SSLCBoardName = string.IsNullOrEmpty(usersDetailsModel.SSLCBoardName) ? data.SSLCBoardName : usersDetailsModel.SSLCBoardName;
+                        data.TechnicalSkills = string.IsNullOrEmpty(usersDetailsModel.TechnicalSkills) ? data.TechnicalSkills : usersDetailsModel.TechnicalSkills;
+                        data.HSCPercentage = string.IsNullOrEmpty(usersDetailsModel.HSCPercentage) ? data.HSCPercentage : usersDetailsModel.HSCPercentage;
+                        data.LastName = string.IsNullOrEmpty(usersDetailsModel.LastName) ? data.LastName : usersDetailsModel.LastName;
+                        data.DOB = string.IsNullOrEmpty(usersDetailsModel.DOB) ? data.DOB : usersDetailsModel.DOB;
+                        data.State = string.IsNullOrEmpty(usersDetailsModel.State) ? data.State : usersDetailsModel.State;
+                        data.DegreePassedOutYear = string.IsNullOrEmpty(usersDetailsModel.DegreePassedOutYear) ? data.DegreePassedOutYear : usersDetailsModel.DegreePassedOutYear;
+                        data.HSCBoardName = string.IsNullOrEmpty(usersDetailsModel.HSCBoardName) ? data.HSCBoardName : usersDetailsModel.HSCBoardName;
+                        data.HSCPassedOutYear = string.IsNullOrEmpty(usersDetailsModel.HSCPassedOutYear) ? data.HSCPassedOutYear : usersDetailsModel.HSCPassedOutYear;
+                        data.ModifiedDate = dateTime;;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
                     }
@@ -245,14 +249,14 @@ namespace Quiz.Web.DAL.DAL
                     if (data != null)
                     {
                         data.IsDeleted = true;
-                        data.ModifiedDate = DateTime.UtcNow;
+                        data.ModifiedDate = dateTime;;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
 
                         if (Users != null)
                         {
                             Users.IsDeleted = true;
-                            Users.ModifiedDate = DateTime.UtcNow;
+                            Users.ModifiedDate = dateTime;;
                             testEngineEntities.SaveChanges();
                             response.Result = true;
 
@@ -273,6 +277,7 @@ namespace Quiz.Web.DAL.DAL
         public APIResponse UpdateUserDetail(UsersDetails usersDetails)
         {
             APIResponse response = new APIResponse();
+            dateTime = DateTime.UtcNow.AddHours(5).AddMinutes(30);
             response.Result = false;
             try
             {
@@ -282,7 +287,7 @@ namespace Quiz.Web.DAL.DAL
                     if (data != null)
                     {
                         data.UserTitle = usersDetails.UserTitleName;
-                        data.ModifiedDate = System.DateTime.UtcNow;
+                        data.ModifiedDate = dateTime;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
                     }

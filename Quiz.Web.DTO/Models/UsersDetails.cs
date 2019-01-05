@@ -32,7 +32,7 @@ namespace Quiz.Web.DTO.Models
         public string DegreePassedOutYear { get; set; }
         public string HSCBoardName { get; set; }
         public string HSCPassedOutYear { get; set; }
-
+        public Guid assessmentID { get; set; }
     }
 
     public class UsersDetails

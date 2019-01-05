@@ -30,22 +30,24 @@ namespace Quiz.Web.DAL.DAL
             return examAssessmentDetails;
         }
 
-        public string ValidateExaminer(string username, string password, Guid assessmentID)
+
+        public APIResponse ValidateExaminer(string username, string password, Guid assessmentID)
         {
-            string result = "FAILED";
+            APIResponse result = new APIResponse();
+            result.Message = "FAILED";
             try
             {
                 using (var dbContext = new DBEntities())
                 {
-                    var validateResult = dbContext.Database.SqlQuery<string>("Exec ValidateExaminer @AssessmentID, @Username, @Password"
+                    var validateResult = dbContext.Database.SqlQuery<Guid>("Exec ValidateExaminer @AssessmentID, @Username, @Password"
                            , new SqlParameter("@AssessmentID", assessmentID)
                            , new SqlParameter("@Username", username)
                            , new SqlParameter("@Password", password)
                            ).FirstOrDefault();
-                    if (!string.IsNullOrEmpty(validateResult))
-                    {
-                        result = "SUCCESS";
-                    }
+                        result.Result = true;
+                        result.Message = "SUCCESS";
+                        result.Guid = validateResult;
+                    
                 }
             }
             catch (Exception ex)

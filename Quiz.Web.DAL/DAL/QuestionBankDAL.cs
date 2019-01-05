@@ -11,6 +11,7 @@ namespace Quiz.Web.DAL.Home
 {
     public class QuestionBankDAL
     {
+        private DateTime dateTime = DateTime.UtcNow.AddHours(5).AddMinutes(30);
         public List<QuestionBankMaster> GetQuestionBank()
         {
             List<QuestionBankMaster> questionBankData = new List<QuestionBankMaster>();
@@ -66,6 +67,7 @@ namespace Quiz.Web.DAL.Home
         public APIResponse QuestionsDelete(Guid? QuestionId)
         {
             APIResponse response = new APIResponse();
+            dateTime = DateTime.UtcNow.AddHours(5).AddMinutes(30);
             response.Result = false;
             try
             {
@@ -75,7 +77,7 @@ namespace Quiz.Web.DAL.Home
                     if(data != null)
                     {
                         data.IsDeleted = true;
-                        data.ModifiedDate = DateTime.UtcNow;
+                        data.ModifiedDate = dateTime;;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
                     }                    
@@ -110,7 +112,7 @@ namespace Quiz.Web.DAL.Home
                         data.OptionE = questionsDetailsView.OptionE;
                         data.Question = questionsDetailsView.Question;
                         data.MasterQuestion = questionsDetailsView.MasterQuestion;
-                        data.ModifiedDate = DateTime.UtcNow;
+                        data.ModifiedDate = dateTime;;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
                     }
@@ -150,6 +152,7 @@ namespace Quiz.Web.DAL.Home
         public APIResponse QuestionsBankDelete(Guid? QuestionBankId)
         {
             APIResponse response = new APIResponse();
+            dateTime = DateTime.UtcNow.AddHours(5).AddMinutes(30);
             response.Result = false;
             try
             {
@@ -160,14 +163,14 @@ namespace Quiz.Web.DAL.Home
                     if (data != null)
                     {
                         data.IsDeleted = true;
-                        data.ModifiedDate = DateTime.UtcNow;
+                        data.ModifiedDate = dateTime;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
 
                         if(questions!= null)
                         {
                             questions.IsDeleted = true;
-                            questions.ModifiedDate = DateTime.UtcNow;
+                            questions.ModifiedDate = dateTime;
                             testEngineEntities.SaveChanges();
                             response.Result = true;
 
@@ -188,6 +191,7 @@ namespace Quiz.Web.DAL.Home
         public APIResponse UpdateQuestionBank(QuestionBankDetail questionsDetailsView)
         {
             APIResponse response = new APIResponse();
+            dateTime = DateTime.UtcNow.AddHours(5).AddMinutes(30);
             response.Result = false;
             try
             {
@@ -199,7 +203,7 @@ namespace Quiz.Web.DAL.Home
                         data.QuestionBankDescription = questionsDetailsView.Description;
                         data.Duration = questionsDetailsView.Duration;
                         data.QuestionBankName= questionsDetailsView.QuestionBankName;
-                        data.ModifiedDate = DateTime.UtcNow;
+                        data.ModifiedDate = dateTime;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
                     }
@@ -242,6 +246,7 @@ namespace Quiz.Web.DAL.Home
         {
             List<QuestionsDetailsView> QuestionsDetailsView = new List<QuestionsDetailsView>();
             APIResponse aPIResponse = new APIResponse();
+            dateTime = DateTime.UtcNow.AddHours(5).AddMinutes(30);
             aPIResponse.Result = false;
             try
             {
@@ -250,11 +255,11 @@ namespace Quiz.Web.DAL.Home
                     QuestionBankMaster questionBankMaster = new QuestionBankMaster();
                     questionBankMaster.ID = Guid.NewGuid();
                     questionBankMaster.QuestionBankName = questionsDetailsData.QuestionBankName;                    
-                    questionBankMaster.CreatedDate = DateTime.UtcNow;
+                    questionBankMaster.CreatedDate = dateTime;;
                     questionBankMaster.Duration = questionsDetailsData.Duration;
                     questionBankMaster.IsActive = true;
                     questionBankMaster.IsDeleted = false;
-                    questionBankMaster.ModifiedDate = DateTime.UtcNow;
+                    questionBankMaster.ModifiedDate = dateTime;;
                     questionBankMaster.QuestionBankDescription = questionsDetailsData.Description;                         
                     testEngineEntities.QuestionBankMasters.Add(questionBankMaster);
 
@@ -263,10 +268,10 @@ namespace Quiz.Web.DAL.Home
                         bool IsMaster = false;
                         QuestionsDetail questionsDetails = new QuestionsDetail();
                         questionsDetails.Answer = item.Answer;
-                        questionsDetails.CreatedDate = DateTime.UtcNow;
+                        questionsDetails.CreatedDate = dateTime;;
                         questionsDetails.ID = Guid.NewGuid();
                         questionsDetails.IsDeleted = false;
-                        questionsDetails.ModifiedDate = DateTime.UtcNow;
+                        questionsDetails.ModifiedDate = dateTime;;
                         questionsDetails.OptionA = item.OptionA;
                         questionsDetails.OptionB = item.OptionB;
                         questionsDetails.OptionC = item.OptionC;

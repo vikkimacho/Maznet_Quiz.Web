@@ -17,6 +17,7 @@ namespace Quiz.Web.DTO.Models
         public bool Result { get; set; }
         public string Message { get; set; }
         public Guid ResultUserDetailMasterGuid { get; set; }
+        public Guid Guid { get; set; }
     }
 
 

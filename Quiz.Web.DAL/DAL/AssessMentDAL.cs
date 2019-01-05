@@ -12,7 +12,7 @@ namespace Quiz.Web.DAL.Home
 {
     public class AssessMentDAL
     {
-
+        private DateTime dateTime = DateTime.UtcNow.AddHours(5).AddMinutes(30);
         public string CreateAssessMent()
         {
             return "";
@@ -96,6 +96,7 @@ namespace Quiz.Web.DAL.Home
         public string PostCreateAssessment(PostAssessmentModal postAssessmentModal, Guid AssessmentId)
         {
             string result = "Failed";
+            dateTime = DateTime.UtcNow.AddHours(5).AddMinutes(30);
             try
             {
                 using (DBEntities TestEngineDBContext = new DBEntities())
@@ -103,11 +104,11 @@ namespace Quiz.Web.DAL.Home
                     var assesmentDetailMaster = new DataAccess.AssessmentDetailMaster();
                     assesmentDetailMaster.AssessmentName = postAssessmentModal.AssessmentName;
                     assesmentDetailMaster.ID = AssessmentId;
-                    assesmentDetailMaster.CreatedDate = DateTime.Now;
+                    assesmentDetailMaster.CreatedDate = dateTime;
                     assesmentDetailMaster.IsBrowserLock = postAssessmentModal.IsBrowserLockEnabled;
                     assesmentDetailMaster.IsPrintScreenLock = postAssessmentModal.IsPrintScreenLockEnabled;
                     assesmentDetailMaster.IsDeleted = false;
-                    assesmentDetailMaster.ModifiedDate = DateTime.Now;
+                    assesmentDetailMaster.ModifiedDate = dateTime;
                     assesmentDetailMaster.ScheduledEndDatetime = postAssessmentModal.ScheduleTo;
                     assesmentDetailMaster.ScheduledStartDatetime = postAssessmentModal.ScheduleFrom;
                     assesmentDetailMaster.EligibilityCriteriaId = postAssessmentModal.SelectedShortListCriteria;
@@ -123,9 +124,9 @@ namespace Quiz.Web.DAL.Home
                             AssessmentQuestionBankDetail objAssessmentQuestionBankDetail = new AssessmentQuestionBankDetail();
                             objAssessmentQuestionBankDetail.AssessmentID = assesmentDetailMaster.ID;
                             objAssessmentQuestionBankDetail.IsDeleted = false;
-                            objAssessmentQuestionBankDetail.CreatedDate = DateTime.Now;
+                            objAssessmentQuestionBankDetail.CreatedDate = dateTime;
                             objAssessmentQuestionBankDetail.ID = Guid.NewGuid();
-                            objAssessmentQuestionBankDetail.ModifiedDate = DateTime.Now;
+                            objAssessmentQuestionBankDetail.ModifiedDate = dateTime;
                             objAssessmentQuestionBankDetail.QuestionBankID = item;
                             objAssessmentQuestionBankDetail.QuestionBankName = questionBankInfo.QuestionBankName;
                             objAssessmentQuestionBankDetail.Duration = questionBankInfo.Duration;
@@ -142,7 +143,7 @@ namespace Quiz.Web.DAL.Home
                         var assesmentModalInfo = TestEngineDBContext.AssesmentMasterDetailsForms.ToList();
                         CandidateAssesmentDetailsForm candidateAssesmentDetailsForm = new CandidateAssesmentDetailsForm();
                         candidateAssesmentDetailsForm.AssessmentId = assesmentDetailMaster.ID;
-                        candidateAssesmentDetailsForm.Createddate = DateTime.Now;
+                        candidateAssesmentDetailsForm.Createddate = dateTime;
                         candidateAssesmentDetailsForm.DisplayFieldName = assesmentModalInfo.FirstOrDefault(x => x.id == item.FormId).DisplayFieldName;
                         candidateAssesmentDetailsForm.FieldName = assesmentModalInfo.FirstOrDefault(x => x.id == item.FormId).FieldName;
                         candidateAssesmentDetailsForm.FieldType = assesmentModalInfo.FirstOrDefault(x => x.id == item.FormId).FieldType;
@@ -152,7 +153,7 @@ namespace Quiz.Web.DAL.Home
                         candidateAssesmentDetailsForm.IsLocked = assesmentModalInfo.FirstOrDefault(x => x.id == item.FormId).IsLocked;
                         candidateAssesmentDetailsForm.IsMandatory = item.IsMandatory;
                         candidateAssesmentDetailsForm.ModificationHistory = string.Empty;
-                        candidateAssesmentDetailsForm.ModifiedDate = DateTime.Now;
+                        candidateAssesmentDetailsForm.ModifiedDate = dateTime;
                         candidateAssesmentDetailsForm.Remarks = string.Empty;
                         candidateAssesmentDetailsForm.Values = assesmentModalInfo.FirstOrDefault(x => x.id == item.FormId).Values;
                         lstCandidateAssesmentDetailsForm.Add(candidateAssesmentDetailsForm);
@@ -170,10 +171,10 @@ namespace Quiz.Web.DAL.Home
                         {
                             AssessmentUserDetail assessmentUserDetail = new AssessmentUserDetail();
                             assessmentUserDetail.AssessmentID = assesmentDetailMaster.ID;
-                            assessmentUserDetail.CreatedDate = DateTime.Now;
+                            assessmentUserDetail.CreatedDate = dateTime;
                             assessmentUserDetail.ID = Guid.NewGuid();
                             assessmentUserDetail.IsDeleted = false;
-                            assessmentUserDetail.ModifiedDate = DateTime.Now;
+                            assessmentUserDetail.ModifiedDate = dateTime;
                             assessmentUserDetail.UserID = item;
                             lstAssesmentdetailMaster.Add(assessmentUserDetail);
                         }
@@ -183,10 +184,10 @@ namespace Quiz.Web.DAL.Home
                     if (postAssessmentModal.SingleScheduleModal != null)
                     {
                         UserDetailMaster UserDetailMaster = new UserDetailMaster();
-                        UserDetailMaster.CreatedDate = DateTime.Now;
+                        UserDetailMaster.CreatedDate = dateTime;
                         UserDetailMaster.Id = Guid.NewGuid();
                         UserDetailMaster.IsDeleted = false;
-                        UserDetailMaster.ModifiedDate = DateTime.Now;
+                        UserDetailMaster.ModifiedDate = dateTime;
                         UserDetailMaster.UserTitle = assesmentDetailMaster.AssessmentName + " - Assessment";
                         TestEngineDBContext.UserDetailMasters.Add(UserDetailMaster);
 
@@ -203,10 +204,10 @@ namespace Quiz.Web.DAL.Home
 
                         AssessmentUserDetail assessmentUserDetail = new AssessmentUserDetail();
                         assessmentUserDetail.AssessmentID = assesmentDetailMaster.ID;
-                        assessmentUserDetail.CreatedDate = DateTime.Now;
+                        assessmentUserDetail.CreatedDate = dateTime;
                         assessmentUserDetail.ID = Guid.NewGuid();
                         assessmentUserDetail.IsDeleted = false;
-                        assessmentUserDetail.ModifiedDate = DateTime.Now;
+                        assessmentUserDetail.ModifiedDate = dateTime;
                         assessmentUserDetail.UserID = UserDetailMaster.Id;
                         TestEngineDBContext.AssessmentUserDetails.Add(assessmentUserDetail);
 
@@ -220,10 +221,10 @@ namespace Quiz.Web.DAL.Home
                         {
 
                             UserDetailMaster UserDetailMaster = new UserDetailMaster();
-                            UserDetailMaster.CreatedDate = DateTime.Now;
+                            UserDetailMaster.CreatedDate = dateTime;
                             UserDetailMaster.Id = Guid.NewGuid();
                             UserDetailMaster.IsDeleted = false;
-                            UserDetailMaster.ModifiedDate = DateTime.Now;
+                            UserDetailMaster.ModifiedDate = dateTime;
                             UserDetailMaster.UserTitle = assesmentDetailMaster.AssessmentName + " - Assessment";
                             TestEngineDBContext.UserDetailMasters.Add(UserDetailMaster);
 
@@ -242,10 +243,10 @@ namespace Quiz.Web.DAL.Home
 
                             AssessmentUserDetail assessmentUserDetail = new AssessmentUserDetail();
                             assessmentUserDetail.AssessmentID = assesmentDetailMaster.ID;
-                            assessmentUserDetail.CreatedDate = DateTime.Now;
+                            assessmentUserDetail.CreatedDate = dateTime;
                             assessmentUserDetail.ID = Guid.NewGuid();
                             assessmentUserDetail.IsDeleted = false;
-                            assessmentUserDetail.ModifiedDate = DateTime.Now;
+                            assessmentUserDetail.ModifiedDate = dateTime;
                             assessmentUserDetail.UserID = UserDetailMaster.Id;
                             TestEngineDBContext.AssessmentUserDetails.Add(assessmentUserDetail);
                             TestEngineDBContext.DefaultRegistations.AddRange(lstDefaultReg);
@@ -282,11 +283,11 @@ namespace Quiz.Web.DAL.Home
                         assessmentStudentNotification.BodyofMessage = postAssessmentModal.AssessmentStudentAlertModal.BodyofMessage;
                         assessmentStudentNotification.CC = postAssessmentModal.AssessmentStudentAlertModal.CC;
                         assessmentStudentNotification.CommunicationType = postAssessmentModal.AssessmentStudentAlertModal.CommunicationType;
-                        assessmentStudentNotification.CreatedDate = DateTime.Now;
+                        assessmentStudentNotification.CreatedDate = dateTime;
                         assessmentStudentNotification.id = Guid.NewGuid();
                         assessmentStudentNotification.IsEnabled = postAssessmentModal.AssessmentStudentAlertModal.IsEnabled;
                         assessmentStudentNotification.ModHistory = string.Empty;
-                        assessmentStudentNotification.ModifiedDate = DateTime.Now;
+                        assessmentStudentNotification.ModifiedDate = dateTime;
                         assessmentStudentNotification.Remarks = string.Empty;
                         assessmentStudentNotification.Type = postAssessmentModal.AssessmentStudentAlertModal.Type;
                         TestEngineDBContext.AssessmentStudentNotifications.Add(assessmentStudentNotification);

@@ -11,6 +11,7 @@ namespace Quiz.Web.DAL.Home
 {
     public class HomeDAL
     {
+        private DateTime dateTime = DateTime.UtcNow.AddHours(5).AddMinutes(30);
         #region Declaration
         private readonly string Success = "SUCCESS";
         private readonly string Failed = "FAILED";
@@ -81,6 +82,7 @@ namespace Quiz.Web.DAL.Home
 
         public string SaveAdminDetails(AdminDetail adminDetail)
         {
+            dateTime = DateTime.UtcNow.AddHours(5).AddMinutes(30);
             string result = Failed;
             try
             {
@@ -90,11 +92,11 @@ namespace Quiz.Web.DAL.Home
                     if (admin == null)
                     {
                         admin = new AdminDetail();
-                        admin.CreatedDate = DateTime.Now;
+                        admin.CreatedDate = dateTime;
                         admin.Email = adminDetail.Email;
                         admin.ID = Guid.NewGuid();
                         admin.Isdeleted = false;
-                        admin.ModifiedDate = DateTime.Now;
+                        admin.ModifiedDate = dateTime;
                         admin.Password = adminDetail.Password;
                         admin.PhoneNumber = adminDetail.PhoneNumber;
                         admin.Role = adminDetail.Role;
@@ -106,7 +108,7 @@ namespace Quiz.Web.DAL.Home
                     else
                     {
                         admin.Email = adminDetail.Email;
-                        admin.ModifiedDate = DateTime.Now;
+                        admin.ModifiedDate = dateTime;
                         admin.Password = adminDetail.Password;
                         admin.PhoneNumber = adminDetail.PhoneNumber;
                         admin.Role = adminDetail.Role;
@@ -136,7 +138,7 @@ namespace Quiz.Web.DAL.Home
                     var admin = TestEngineDBContext.AdminDetails.FirstOrDefault(x => x.ID == adminID);
                     if (admin != null)
                     {
-                        admin.ModifiedDate = DateTime.Now;
+                        admin.ModifiedDate = dateTime;
                         admin.Isdeleted = true;
                         TestEngineDBContext.SaveChanges();
                         result = Success;

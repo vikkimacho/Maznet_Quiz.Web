@@ -11,6 +11,7 @@ namespace Quiz.Web.API.Controllers
 {
     public class ExamController : ApiController
     {
+        APIResponse result = new APIResponse();
         public string GetPortalLogin(Guid assessmentID)
         {
             ExamBLL examBLL = new ExamBLL();
@@ -19,9 +20,8 @@ namespace Quiz.Web.API.Controllers
         }
 
         [HttpGet]
-        public string ValidateExaminer(string username, string password, string assessmentID)
+        public APIResponse ValidateExaminer(string username, string password, string assessmentID)
         {
-            string result = "Failed";
             try
             {
                 ExamBLL examBLL = new ExamBLL();

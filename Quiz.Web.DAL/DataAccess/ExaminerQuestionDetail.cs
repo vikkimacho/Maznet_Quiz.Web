@@ -12,21 +12,14 @@ namespace Quiz.Web.DAL.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class ExaminerMaster
+    public partial class ExaminerQuestionDetail
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ExaminerMaster()
-        {
-            this.ExaminerMasterDetails = new HashSet<ExaminerMasterDetail>();
-        }
-    
         public System.Guid ID { get; set; }
-        public Nullable<System.Guid> AssessmentId { get; set; }
-        public Nullable<System.Guid> UserDetailId { get; set; }
+        public Nullable<System.Guid> ExaminerAssessmentDetailId { get; set; }
+        public Nullable<System.Guid> QuestionId { get; set; }
+        public string Answer { get; set; }
+        public Nullable<bool> AnswerStatus { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ExaminerMasterDetail> ExaminerMasterDetails { get; set; }
     }
 }

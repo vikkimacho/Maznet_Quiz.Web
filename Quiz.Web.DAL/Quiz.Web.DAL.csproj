@@ -102,6 +102,9 @@
     <Compile Include="DataAccess\ExaminerMasterDetail.cs">
       <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\ExaminerQuestionDetail.cs">
+      <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\GetAssessmentQuestions_Result.cs">
       <DependentUpon>TestEngineEntitiy.tt</DependentUpon>
     </Compile>

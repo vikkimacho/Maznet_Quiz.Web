@@ -11,6 +11,8 @@ namespace Quiz.Web.BLL.Exam
     public class ExamBLL
     {
         ExamDAL examDAL = new ExamDAL();
+
+        APIResponse result = new APIResponse();
         public string GetExamPortal(Guid assessmentID)
         {
             string result = "Failed";
@@ -29,9 +31,8 @@ namespace Quiz.Web.BLL.Exam
             return result;
         }
 
-        public string ValidateExaminer(string username, string password, string assessmentID)
-        {
-            string result = "FAILED";
+        public APIResponse ValidateExaminer(string username, string password, string assessmentID)
+        {            
             try
             {
                 result = examDAL.ValidateExaminer(username, password, new Guid(assessmentID));

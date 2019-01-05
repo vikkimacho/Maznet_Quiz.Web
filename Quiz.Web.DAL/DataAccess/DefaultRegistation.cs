@@ -11,7 +11,7 @@ namespace Quiz.Web.DAL.DataAccess
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class DefaultRegistation
     {
         public System.Guid ID { get; set; }
@@ -41,6 +41,7 @@ namespace Quiz.Web.DAL.DataAccess
         public Nullable<bool> IsDeleted { get; set; }
         public string UserName { get; set; }
         public string SSLCPassedOutYear { get; set; }
+    
         public virtual UserDetailMaster UserDetailMaster { get; set; }
     }
 }
