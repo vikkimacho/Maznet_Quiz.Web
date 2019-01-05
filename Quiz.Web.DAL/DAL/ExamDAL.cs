@@ -106,7 +106,7 @@ namespace Quiz.Web.DAL.DAL
                                     examinerQuestion.QuestionId = questionDetails.ID;
                                     dbEntities.ExaminerQuestionDetails.Add(examinerQuestion);
                                     dbEntities.SaveChanges();
-                                    result = "SUCCESS";
+                                    result = "SUCCESS";                                    
                                 }
                                 else
                                 {
@@ -127,5 +127,29 @@ namespace Quiz.Web.DAL.DAL
             }
             return result;
         }
+
+        public List<QuestionsDetail> GetAssesmentQuestions(Guid assesmentID)
+        {
+            List<QuestionsDetail> questionlist = new List<QuestionsDetail>();
+            try
+            {
+                using (DBEntities dbEntities = new DBEntities())
+                {
+                    questionlist = (from x in dbEntities.QuestionsDetails
+                                 join y in dbEntities.AssessmentQuestionBankDetails on x.QuestionBankID equals y.QuestionBankID
+                                 where x.IsDeleted == false && y.IsDeleted == false && y.AssessmentID == assesmentID
+                                 select x).ToList();
+
+
+                    
+                 }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return questionlist;
+        }
+
     }
 }

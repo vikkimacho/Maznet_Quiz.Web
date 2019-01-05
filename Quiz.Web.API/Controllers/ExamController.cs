@@ -65,5 +65,20 @@ namespace Quiz.Web.API.Controllers
             }
             return result;
         }
+
+        [HttpGet]
+        public List<Questions> GetAssesmentQuestions(Guid assesmentID)
+        {
+            List<Questions> questions = new List<Questions>();
+            try
+            {
+                questions = examBLL.GetAssesmentQuestions(assesmentID);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return questions;
+        }
     }
 }
