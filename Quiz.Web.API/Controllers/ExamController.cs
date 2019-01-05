@@ -12,9 +12,10 @@ namespace Quiz.Web.API.Controllers
     public class ExamController : ApiController
     {
         APIResponse result = new APIResponse();
+        ExamBLL examBLL = new ExamBLL();
         public string GetPortalLogin(Guid assessmentID)
         {
-            ExamBLL examBLL = new ExamBLL();
+
             var result = examBLL.GetExamPortal(assessmentID);
             return result;
         }
@@ -24,7 +25,7 @@ namespace Quiz.Web.API.Controllers
         {
             try
             {
-                ExamBLL examBLL = new ExamBLL();
+
                 result = examBLL.ValidateExaminer(username, password, assessmentID);
             }
             catch (Exception ex)
@@ -35,13 +36,28 @@ namespace Quiz.Web.API.Controllers
         }
 
         [HttpGet]
-        public List<CustomRegistration> GetRegistration( string assessmentID)
+        public List<CustomRegistration> GetRegistration(string assessmentID)
         {
             List<CustomRegistration> result = new List<CustomRegistration>();
             try
             {
-                ExamBLL examBLL = new ExamBLL();
+
                 result = examBLL.GetRegistration(assessmentID);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
+
+        [HttpPost]
+        public string SaveExamAnswers(Guid assesmentID, Guid userID, Guid qusID, string answer)
+        {
+            string result = "FAILED";
+            try
+            {
+                result = examBLL.SaveExamAnswers(assesmentID, userID, qusID, answer);
             }
             catch (Exception ex)
             {

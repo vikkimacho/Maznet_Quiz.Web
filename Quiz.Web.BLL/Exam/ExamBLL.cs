@@ -80,5 +80,19 @@ namespace Quiz.Web.BLL.Exam
             }
             return result;
         }
+
+        public string SaveExamAnswers(Guid assesmentID, Guid userID, Guid qusID, string answer)
+        {
+            string result = "FAILED";
+            try
+            {
+                result = examDAL.SaveExamAnswers(assesmentID, userID, qusID, answer);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
     }
 }

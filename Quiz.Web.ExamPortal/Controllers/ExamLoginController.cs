@@ -24,6 +24,7 @@ namespace Quiz.Web.ExamPortal.Controllers
         string apiUrl = ConfigurationManager.AppSettings["WebApiUrl"];
         private APIResponse APIResponse = new APIResponse();
         #endregion
+
         public ActionResult ExamLogin(Guid assessmentid)
         {
 
@@ -48,7 +49,7 @@ namespace Quiz.Web.ExamPortal.Controllers
 
         public ActionResult ValidateExaminer(string username, string password, string assessmentID)
         {
-            
+
             try
             {
                 HttpClient client = new HttpClient();
@@ -56,7 +57,7 @@ namespace Quiz.Web.ExamPortal.Controllers
                 HttpResponseMessage response = client.GetAsync(apiUrl + "/Exam/ValidateExaminer?username=" + username + "&password=" + password + "&assessmentID=" + assessmentID).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    var Response =  response.Content.ReadAsStringAsync().Result;
+                    var Response = response.Content.ReadAsStringAsync().Result;
                     APIResponse = JsonConvert.DeserializeObject<APIResponse>(Response);
                 }
 
@@ -103,7 +104,7 @@ namespace Quiz.Web.ExamPortal.Controllers
                         System.Web.HttpContext.Current.Response.Cookies.Clear();
                         System.Web.HttpContext.Current.Session["userid"] = login.username;
                         FormsAuthentication.SetAuthCookie(login.username, false);
-                        Session["LoginAssessmentID"] = login.assessmentid;                        
+                        Session["LoginAssessmentID"] = login.assessmentid;
                         return RedirectToAction("Register", "ExamLogin");
 
                     }
@@ -170,6 +171,36 @@ namespace Quiz.Web.ExamPortal.Controllers
             }
 
             return Json(APIResponse, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SaveExamAnswer(string quesID, string answer)
+        {
+            string result = "FAILED";
+            try
+            {
+                if (!string.IsNullOrEmpty(quesID))
+                {
+                    HttpClient client = new HttpClient();
+                    Guid assessmentID = SessionHelper.sessionObjects.AssessmentID;
+                    Guid qusID = new Guid(quesID);
+                    Guid userID = SessionHelper.sessionObjects.UserID;
+                    if (assessmentID != Guid.Empty && userID != Guid.Empty)
+                    {
+                        var response = client.PostAsJsonAsync(apiUrl + "/Exam/SaveExamAnswers?assesmentID=" + assessmentID + "&userID="
+                            + userID + "&qusID=" + qusID + "&answer=" + answer, string.Empty).Result;
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var responseString = response.Content.ReadAsStringAsync().Result;
+                            result = JsonConvert.DeserializeObject<string>(responseString);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }
