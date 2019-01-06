@@ -203,7 +203,6 @@ namespace Quiz.Web.ExamPortal.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-    }
 
 
         public ActionResult AssessmentDetails()
@@ -224,15 +223,9 @@ namespace Quiz.Web.ExamPortal.Controllers
 
         public ActionResult StartExam()
         {
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = client.GetAsync(apiUrl + "/Exam/GetAssessmentDetails?assessmentID=" + assessmentid).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var result = response.Content.ReadAsStringAsync().Result;
-                //examAssessmentDetails = JsonConvert.DeserializeObject<List<Ques>>(result);
-                ViewBag.LoginStatus = result;
-            }
             return View();
         }
+
     }
-}
+
+    }
