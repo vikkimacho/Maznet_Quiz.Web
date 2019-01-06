@@ -35,6 +35,23 @@ namespace Quiz.Web.API.Controllers
         }
 
         [HttpGet]
+        public List<ExamAssessmentDetails> GetAssessmentDetails(Guid assessmentID)
+        {
+            List<ExamAssessmentDetails> examAssessmentDetails = new List<ExamAssessmentDetails>();
+            try
+            {
+                ExamBLL examBLL = new ExamBLL();
+                examAssessmentDetails = examBLL.GetAssessmentDetails(assessmentID);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return examAssessmentDetails;
+        }
+
+        [HttpGet]
         public List<CustomRegistration> GetRegistration( string assessmentID)
         {
             List<CustomRegistration> result = new List<CustomRegistration>();

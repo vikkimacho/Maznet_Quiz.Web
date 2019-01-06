@@ -303,12 +303,12 @@
                     dataType: "json",
                     success: function (Result) {
                         if (Result.Result == true) {
-                            alert("User Updated Succesfully");
+                            window.location.href = "/ExamLogin/AssessmentDetails";
                         }
                         else {
                             alert("Update Failed");
                         }
-                        window.location.reload();
+                        //window.location.reload();
                     },
                     error: function (xhr, status, p3, p4) {
                         var err = "Error " + " " + status + " " + p3 + " " + p4;
@@ -322,6 +322,33 @@
             }
 
         });
+
+        function AssessmentDetails() {
+
+            $.ajax({
+                    type: "POST",
+                    url: '/ExamLogin/AssessmentDetails',
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (Result) {
+                        if (Result.Result == true) {
+
+                        }
+                        else {
+
+                        }
+                        window.location.reload();
+                    },
+                    error: function (xhr, status, p3, p4) {
+                        var err = "Error " + " " + status + " " + p3 + " " + p4;
+                        if (xhr.responseText && xhr.responseText[0] == "{")
+                            err = JSON.parse(xhr.responseText).Message;
+
+                    },
+                    cache: false
+                });
+
+        }
 
     });
 

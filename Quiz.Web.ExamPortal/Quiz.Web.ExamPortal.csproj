@@ -153,6 +153,8 @@
     <Content Include="Views\ExamLogin\ExamLogin.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\ExamLogin\Registration.cshtml" />
+    <Content Include="Views\ExamLogin\AssessmentDetails.cshtml" />
+    <Content Include="Views\ExamLogin\StartExam.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

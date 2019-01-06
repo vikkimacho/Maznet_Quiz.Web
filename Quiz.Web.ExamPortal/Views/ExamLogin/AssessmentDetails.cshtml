@@ -1,0 +1,35 @@
+﻿@model List<Quiz.Web.DTO.Models.ExamAssessmentDetails>
+@{
+    ViewBag.Title = "AssessmentDetails";
+}
+
+<h2>Hi User , Your Assesssment Details as below</h2>
+
+
+<table style="width:100%">
+    <tr>
+        <th><h3>Question Bank Name</h3></th>
+        <th><h3>Duration</h3></th>
+        <th><h3>No. Of Questions</h3></th>
+    </tr>
+    @foreach (var Item in Model)
+    {
+    <tr>
+        <td><h3>@Item.QuestionBankName</h3></td>
+        <td><h3>@Item.Duration</h3></td>
+        <td><h3>@Item.NOOFQUESTIONS</h3></td>
+    </tr>
+    }
+</table>
+<input type="button" onclick="StartExam()" value="Start Test"/>
+<script>
+
+    function StartExam() {
+
+        window.open('/ExamLogin/StartExam', "Exam", 'toolbar=no, location=no, directories=no, status=yes, minimizable=no, menubar=no, scrollbars=yes, resizable=0, copyhistory=no, width=' + 10000 + ', height=' + 10000 + ', top=' + 100 + ', left=' + 100);
+    }
+
+</script>
+
+
+

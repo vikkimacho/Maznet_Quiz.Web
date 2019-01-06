@@ -171,5 +171,35 @@ namespace Quiz.Web.ExamPortal.Controllers
 
             return Json(APIResponse, JsonRequestBehavior.AllowGet);
         }
+
+
+        public ActionResult AssessmentDetails()
+        {
+
+            HttpClient client = new HttpClient();
+            List<ExamAssessmentDetails> examAssessmentDetails = new List<ExamAssessmentDetails>();
+            Guid assessmentid = SessionHelper.sessionObjects.AssessmentID;
+            HttpResponseMessage response = client.GetAsync(apiUrl + "/Exam/GetAssessmentDetails?assessmentID=" + assessmentid).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var result = response.Content.ReadAsStringAsync().Result;
+                examAssessmentDetails = JsonConvert.DeserializeObject<List<ExamAssessmentDetails>>(result);
+                ViewBag.LoginStatus = result;
+            }
+            return View(examAssessmentDetails);
+        }
+
+        public ActionResult StartExam()
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = client.GetAsync(apiUrl + "/Exam/GetAssessmentDetails?assessmentID=" + assessmentid).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var result = response.Content.ReadAsStringAsync().Result;
+                //examAssessmentDetails = JsonConvert.DeserializeObject<List<Ques>>(result);
+                ViewBag.LoginStatus = result;
+            }
+            return View();
+        }
     }
 }

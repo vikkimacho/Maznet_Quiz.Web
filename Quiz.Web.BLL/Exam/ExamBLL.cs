@@ -31,6 +31,22 @@ namespace Quiz.Web.BLL.Exam
             return result;
         }
 
+        public List<ExamAssessmentDetails> GetAssessmentDetails(Guid assessmentID)
+        {
+            List<ExamAssessmentDetails> examAssessmentDetails = new List<ExamAssessmentDetails>();
+            try
+            {
+                examAssessmentDetails = examDAL.ValidateAssessmentID(assessmentID);
+                
+            }
+            catch (Exception)
+            {
+
+            }
+            return examAssessmentDetails;
+        }
+
+
         public APIResponse ValidateExaminer(string username, string password, string assessmentID)
         {            
             try

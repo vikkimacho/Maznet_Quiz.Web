@@ -36,6 +36,7 @@ namespace Quiz.Web.DTO.Models
     {
         public Guid AssessmentID { get; set; }
         public string QuestionBankName { get; set; }
+        public int NOOFQUESTIONS { get; set; }
         public TimeSpan Duration { get; set; }
         public Guid QuestionBankID { get; set; }
         public bool IsPrintScreenLock { get; set; }
