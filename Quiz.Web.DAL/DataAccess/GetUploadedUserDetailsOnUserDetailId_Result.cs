@@ -10,9 +10,8 @@
 namespace Quiz.Web.DAL.DataAccess
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class DefaultRegistation
+    public partial class GetUploadedUserDetailsOnUserDetailId_Result
     {
         public System.Guid ID { get; set; }
         public System.Guid UserDetailId { get; set; }
@@ -40,8 +39,5 @@ namespace Quiz.Web.DAL.DataAccess
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public string UserName { get; set; }
-        public string SSLCPassedOutYear { get; set; }
-    
-        public virtual UserDetailMaster UserDetailMaster { get; set; }
     }
 }

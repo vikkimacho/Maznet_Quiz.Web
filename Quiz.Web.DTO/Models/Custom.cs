@@ -17,6 +17,7 @@ namespace Quiz.Web.DTO.Models
         public bool Result { get; set; }
         public string Message { get; set; }
         public Guid ResultUserDetailMasterGuid { get; set; }
+        public Guid Guid { get; set; }
     }
 
 
@@ -218,4 +219,29 @@ namespace Quiz.Web.DTO.Models
         public string QuestionbankName { get; set; }
         public DateTime CreatedDate { get; set; }
     }
+
+    public class ExistingQuestionBankDetails
+    {
+        public Guid id { get; set; }
+        public string QuestionBankName { get; set; }
+        public int NoOfQuestions { get; set; }
+        public TimeSpan Duration { get; set; }
+    }
+
+    public class Questions
+    {
+        public System.Guid ID { get; set; }
+        public Nullable<System.Guid> QuestionBankID { get; set; }
+        public string Question { get; set; }
+        public string MasterQuestion { get; set; }
+        public string OptionA { get; set; }
+        public string OptionB { get; set; }
+        public string OptionC { get; set; }
+        public string OptionD { get; set; }
+        public string OptionE { get; set; }
+        public string Answer { get; set; }
+        public bool? IsMaster { get; set; }     
+        public int? MasterQuestionId { get; set; }
+    }
+
 }

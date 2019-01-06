@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="adc6828e035d4bdb8d538651a8edcd4b" Name="Diagram1">
+        <EntityTypeShape EntityType="TestEngineDB.AdminDetail" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestEngineDB.AssessmentAdminEmailNotification" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestEngineDB.AssessmentDetailMaster" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestEngineDB.AssessmentQuestionBankDetail" Width="1.5" PointX="6" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestEngineDB.AssessmentStudentNotification" Width="1.5" PointX="3" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestEngineDB.AssessmentUserDetail" Width="1.5" PointX="3" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestEngineDB.CandidateAssesmentDetailsForm" Width="1.5" PointX="8.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestEngineDB.CustomRegistrationForm" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestEngineDB.EligibilityCriteriaDetail" Width="1.5" PointX="6.375" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestEngineDB.ExamFinalReport" Width="1.5" PointX="6" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestEngineDB.InputControlMaster" Width="1.5" PointX="5.375" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestEngineDB.QuestionBankMaster" Width="1.5" PointX="3.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestEngineDB.QuestionsDetail" Width="1.5" PointX="6" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestEngineDB.RegistrationFormControl" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestEngineDB.sysdiagram" Width="1.5" PointX="10.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestEngineDB.UserAssessmentAnswerdetail" Width="1.5" PointX="6" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestEngineDB.AssesmentMasterDetailsForm" Width="1.5" PointX="10.75" PointY="10.75" IsExpanded="true" />
+        <AssociationConnector Association="TestEngineDB.FK_AssessmentAdminEmailNotification_AssessmentDetailMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="TestEngineDB.FK_AssessmentQuestionBankDetail_AssessmentDetailMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="TestEngineDB.FK_AssessmentStudentNotification_AssessmentDetailMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="TestEngineDB.FK_AssessmentUserDetail_AssessmentDetailMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="TestEngineDB.FK_ExamFinalReport_AssessmentDetailMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="TestEngineDB.FK_UserAssessmentAnswerdetail_AssessmentDetailMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="TestEngineDB.FK_AssessmentQuestionBankDetail_QuestionBankMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="TestEngineDB.FK_RegistrationFormControls_CustomRegistrationForm1" ManuallyRouted="false" />
+        <AssociationConnector Association="TestEngineDB.FK_EligibilityCriteriaDetails_QuestionBankMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="TestEngineDB.FK_ExamFinalReport_QuestionBankMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="TestEngineDB.FK_RegistrationFormControls_InputControlMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="TestEngineDB.FK__Questions__Quest__2AD55B43" ManuallyRouted="false" />
+        <AssociationConnector Association="TestEngineDB.FK_UserAssessmentAnswerdetail_QuestionBankMaster" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TestEngineDB.ExaminerAssessmentDetail" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="TestEngineDB.ExaminerMaster" Width="1.5" PointX="8.75" PointY="0.875" />
+        <EntityTypeShape EntityType="TestEngineDB.ExaminerMasterDetail" Width="1.5" PointX="11" PointY="0.875" />
+        <EntityTypeShape EntityType="TestEngineDB.ExaminerQuestionDetail" Width="1.5" PointX="13.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TestEngineDB.UserDetailMaster" Width="1.5" PointX="1.125" PointY="18.125" />
+        <AssociationConnector Association="TestEngineDB.FK_AssessmentUserDetail_UserDetailMaster" />
+        <AssociationConnector Association="TestEngineDB.FK_ExaminerMasterDetails_ExaminerMaster" />
+        <AssociationConnector Association="TestEngineDB.FK_UserAssessmentAnswerdetail_UserDetailMaster" />
+        <EntityTypeShape EntityType="TestEngineDB.DefaultRegistation" Width="1.5" PointX="3.375" PointY="20.25" />
+        <AssociationConnector Association="TestEngineDB.FK_DefaultRegistation_UserDetailMaster" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

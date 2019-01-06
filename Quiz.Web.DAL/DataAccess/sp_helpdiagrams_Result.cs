@@ -10,18 +10,13 @@
 namespace Quiz.Web.DAL.DataAccess
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class EligibilityCriteriaDetail
+    public partial class sp_helpdiagrams_Result
     {
-        public System.Guid ID { get; set; }
-        public Nullable<System.Guid> QuestionBankID { get; set; }
+        public string Database { get; set; }
         public string Name { get; set; }
-        public Nullable<long> NotConsider { get; set; }
-        public Nullable<long> MayConsider { get; set; }
-        public Nullable<long> StrongConsider { get; set; }
-        public System.Guid EligibilityIdForAssessment { get; set; }
-    
-        public virtual QuestionBankMaster QuestionBankMaster { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

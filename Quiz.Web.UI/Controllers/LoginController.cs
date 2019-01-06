@@ -133,7 +133,7 @@ namespace Quiz.Web.UI.Controllers
             string LogoutURL = ConfigurationManager.AppSettings["WebUIUrl"];
             try
             {
-                Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
+                Response.Cache.SetExpires(DateTime.Now.AddMinutes(-1));
                 Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
                 Response.Cache.SetNoStore();
                 Session.Clear();

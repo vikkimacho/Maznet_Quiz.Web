@@ -70,6 +70,9 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\SystemWebPackage.1.0.0\lib\System.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -99,7 +102,6 @@
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -185,6 +187,31 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Files\Template\SampleQuestionBank.xlsx" />
     <Content Include="Files\Template\SampleUserList.xlsx" />
+    <Content Include="Files\QuestionBank\Book1%281%29.xlsx" />
+    <Content Include="Files\QuestionBank\Book1%282%29.xlsx" />
+    <Content Include="Files\QuestionBank\Book1.xlsx" />
+    <Content Include="Files\QuestionBank\QuestionsUpload.xlsx" />
+    <Content Include="Files\QuestionBank\SampleQuestionBank - Copy.xlsx" />
+    <Content Include="Files\QuestionBank\SampleQuestionBank%281%29.xlsx" />
+    <Content Include="Files\QuestionBank\SampleQuestionBank%2810%29.xlsx" />
+    <Content Include="Files\QuestionBank\SampleQuestionBank%2811%29.xlsx" />
+    <Content Include="Files\QuestionBank\SampleQuestionBank%2812%29.xlsx" />
+    <Content Include="Files\QuestionBank\SampleQuestionBank%2813%29.xlsx" />
+    <Content Include="Files\QuestionBank\SampleQuestionBank%2814%29.xlsx" />
+    <Content Include="Files\QuestionBank\SampleQuestionBank%2815%29.xlsx" />
+    <Content Include="Files\QuestionBank\SampleQuestionBank%282%29.xlsx" />
+    <Content Include="Files\QuestionBank\SampleQuestionBank%283%29.xlsx" />
+    <Content Include="Files\QuestionBank\SampleQuestionBank%284%29.xlsx" />
+    <Content Include="Files\QuestionBank\SampleQuestionBank%285%29.xlsx" />
+    <Content Include="Files\QuestionBank\SampleQuestionBank%286%29.xlsx" />
+    <Content Include="Files\QuestionBank\SampleQuestionBank%287%29.xlsx" />
+    <Content Include="Files\QuestionBank\SampleQuestionBank%288%29.xlsx" />
+    <Content Include="Files\QuestionBank\SampleQuestionBank%289%29.xlsx" />
+    <Content Include="Files\QuestionBank\SampleQuestionBank.xlsx" />
+    <Content Include="Files\QuestionBank\Untitled spreadsheet%281%29.xlsx" />
+    <Content Include="Files\QuestionBank\Untitled spreadsheet%282%29.xlsx" />
+    <Content Include="Files\QuestionBank\Untitled spreadsheet%283%29.xlsx" />
+    <Content Include="Files\QuestionBank\Untitled spreadsheet.xlsx" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />

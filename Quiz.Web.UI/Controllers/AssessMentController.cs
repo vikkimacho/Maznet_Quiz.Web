@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace Quiz.Web.UI.Controllers
 {
@@ -20,6 +21,7 @@ namespace Quiz.Web.UI.Controllers
 
         Logger logger = new Logger();
         private DataTable dt = new DataTable();
+        private Random random = new Random();
         //public ActionResult CreateAssessment()
         //{
         //    try
@@ -67,7 +69,7 @@ namespace Quiz.Web.UI.Controllers
         }
 
 
-       public ActionResult SaveEligibleCriteria(List<PostEligibilityCriteria> lstpostAssessmentModal)
+        public ActionResult SaveEligibleCriteria(List<PostEligibilityCriteria> lstpostAssessmentModal)
         {
             string result = "Failed";
             try
@@ -214,7 +216,7 @@ namespace Quiz.Web.UI.Controllers
             string result = "Failed";
             try
             {
-                logger.WriteToLogFile("Post Data ValidateAssesmentGuid " + AssesmentId);             
+                logger.WriteToLogFile("Post Data ValidateAssesmentGuid " + AssesmentId);
                 string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = client.PostAsJsonAsync(apiUrl + "/Assessment/DeleteAssesment", AssesmentId).Result;
@@ -238,30 +240,78 @@ namespace Quiz.Web.UI.Controllers
         public ActionResult PostCreateAssessment(PostAssessmentModal postAssessmentModal)
         {
             string result = "Failed";
+            string Result = "Failed";
             try
             {
                 string postData = JsonConvert.SerializeObject(postAssessmentModal);
                 logger.WriteToLogFile("Post Data " + postData);
 
-                if (postAssessmentModal != null)
+                if (postAssessmentModal == null)
                 {
                     postAssessmentModal.lstBulkScheduleIds = new List<Guid>();
-                    if(!string.IsNullOrEmpty(postAssessmentModal.UploadFileTitle))
-                    {
-                        var postFileUploadResponse = UploadUserDetail(postAssessmentModal.UploadFileTitle);
-                        if (postFileUploadResponse != null)
-                        {
-                            postAssessmentModal.lstBulkScheduleIds.Add(postFileUploadResponse.ResultUserDetailMasterGuid);
-                        }
-                    }                   
+
                 }
-                 
+
                 string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = client.PostAsJsonAsync(apiUrl + "/Assessment/PostCreateAssessment", postAssessmentModal).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var retresult = response.Content.ReadAsStringAsync().Result;
+
+                    if (postAssessmentModal.lstBulkScheduleIds.Any())
+                    {
+                        var userDetailId = postAssessmentModal.lstBulkScheduleIds.FirstOrDefault();
+
+                     
+                        HttpClient clientuser = new HttpClient();
+
+                        HttpResponseMessage responsfinal = clientuser.GetAsync(apiUrl + "/Assessment/GetUploadedUserDetail?UserDetailId=" + userDetailId).Result;
+                        if (responsfinal.IsSuccessStatusCode)
+                        {
+                            Result = responsfinal.Content.ReadAsStringAsync().Result;
+
+                        
+                        
+                            Result = responsfinal.Content.ReadAsStringAsync().Result;
+
+                            var finalUserdetails = JsonConvert.DeserializeObject<List<UsersDetailsModel>>(Result);
+
+                            foreach (var item in finalUserdetails)
+                            {
+                                if (item != null)
+                                {
+
+
+                                    var password = item.Password;
+
+                                    GoogleMail mail = new GoogleMail();
+                                    mail.Body = "Hi " + item.Name + ", Password  - " + password;
+                                    mail.Subject = "Forgot Password";
+                                    mail.ToMail = item.Email;
+                                    var data = JsonConvert.SerializeObject(mail);
+                                    response = client.PostAsJsonAsync(apiUrl + "/GoogleMail/SendGoogleMail", mail).Result;
+                                    result = response.Content.ReadAsStringAsync().Result;
+                                    result = JsonConvert.DeserializeObject<string>(result);
+
+                                }
+                            }
+                        }
+
+                    }
+                    else if(postAssessmentModal.SingleScheduleModal !=null)
+                    {
+                        GoogleMail mail = new GoogleMail();
+                        mail.Body = "Hi " + postAssessmentModal.SingleScheduleModal.FirstName + ", Password  - " + postAssessmentModal.SingleScheduleModal.Password;
+                        mail.Subject = "Assessment Detail";
+                        mail.ToMail = postAssessmentModal.SingleScheduleModal.Email;
+                        var data = JsonConvert.SerializeObject(mail);
+                        response = client.PostAsJsonAsync(apiUrl + "/GoogleMail/SendGoogleMail", mail).Result;
+                        result = response.Content.ReadAsStringAsync().Result;
+                        result = JsonConvert.DeserializeObject<string>(result);
+
+                    }
+
                     result = JsonConvert.DeserializeObject<string>(retresult);
                 }
             }
@@ -276,16 +326,28 @@ namespace Quiz.Web.UI.Controllers
             return Json(new { Result = result });
         }
 
+        [HttpPost]
+        public ActionResult GetExistingQuestionBankDetails(Guid assessmentId)
+        {
+            var questionBankDetail = new List<ExistingQuestionBankDetails>();
+            string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = client.GetAsync(apiUrl + "/Assessment/GetExistingQuestionBankDetails?assessmentId=" + assessmentId).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var retresult = response.Content.ReadAsStringAsync().Result;
+                questionBankDetail = JsonConvert.DeserializeObject<List<ExistingQuestionBankDetails>>(retresult);
+            }
+            return Json(new { questions = questionBankDetail });
+        }
 
 
 
-
-         
-        public APIResponse UploadUserDetail(string UserNameTitle)
+        public ActionResult UploadBulkLoginDetail(string UserNameTitle)
         {
             string Result = "Failed";
             APIResponse response = new APIResponse();
-
+            var finalUserdetails = new List<UsersDetailsModel>();
             foreach (string file in Request.Files)
             {
                 HttpPostedFileBase hpf = Request.Files[file] as HttpPostedFileBase;
@@ -304,23 +366,13 @@ namespace Quiz.Web.UI.Controllers
                         UsersDetailsModel UsersDetails = new UsersDetailsModel();
                         UsersDetails.Name = dt.Rows[i]["Name"] != DBNull.Value ? dt.Rows[i]["Name"].ToString().Trim().ToUpper() : string.Empty;
                         UsersDetails.Email = dt.Rows[i]["Email"] != DBNull.Value ? dt.Rows[i]["Email"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.Password = dt.Rows[i]["Password"] != DBNull.Value ? dt.Rows[i]["Password"].ToString() : string.Empty;
+                        if (string.IsNullOrEmpty(UsersDetails.Password))
+                        {
+                            UsersDetails.Password = CreateRandomPassword(8);
+                        }
                         UsersDetails.MobileNumber = dt.Rows[i]["MobileNumber"] != DBNull.Value ? dt.Rows[i]["MobileNumber"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.Degree = dt.Rows[i]["Degree"] != DBNull.Value ? dt.Rows[i]["Degree"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.Institution = dt.Rows[i]["Institution"] != DBNull.Value ? dt.Rows[i]["Institution"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.Major = dt.Rows[i]["Major"] != DBNull.Value ? dt.Rows[i]["Major"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.Percentage = dt.Rows[i]["Percentage"] != DBNull.Value ? dt.Rows[i]["Percentage"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.Gender = dt.Rows[i]["Gender"] != DBNull.Value ? dt.Rows[i]["Gender"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.Address = dt.Rows[i]["Address"] != DBNull.Value ? dt.Rows[i]["Address"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField1 = dt.Rows[i]["CustomField1"] != DBNull.Value ? dt.Rows[i]["CustomField1"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField2 = dt.Rows[i]["CustomField2"] != DBNull.Value ? dt.Rows[i]["CustomField2"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField3 = dt.Rows[i]["CustomField3"] != DBNull.Value ? dt.Rows[i]["CustomField3"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField4 = dt.Rows[i]["CustomField4"] != DBNull.Value ? dt.Rows[i]["CustomField4"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField5 = dt.Rows[i]["CustomField5"] != DBNull.Value ? dt.Rows[i]["CustomField5"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField6 = dt.Rows[i]["CustomField6"] != DBNull.Value ? dt.Rows[i]["CustomField6"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField7 = dt.Rows[i]["CustomField7"] != DBNull.Value ? dt.Rows[i]["CustomField7"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField8 = dt.Rows[i]["CustomField8"] != DBNull.Value ? dt.Rows[i]["CustomField8"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField9 = dt.Rows[i]["CustomField9"] != DBNull.Value ? dt.Rows[i]["CustomField9"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField10 = dt.Rows[i]["CustomField10"] != DBNull.Value ? dt.Rows[i]["CustomField10"].ToString().Trim().ToUpper() : string.Empty;
+
 
                         if (UsersDetails != null)
                         {
@@ -344,9 +396,40 @@ namespace Quiz.Web.UI.Controllers
                         }
 
                     }
+                    if (response.Result)
+                    {
+
+                        string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
+                        HttpClient client = new HttpClient();
+
+                        HttpResponseMessage responsfinal = client.GetAsync(apiUrl + "/Assessment/GetUploadedUserDetail?UserDetailId=" + response.ResultUserDetailMasterGuid).Result;
+                        if (responsfinal.IsSuccessStatusCode)
+                        {
+                            Result = responsfinal.Content.ReadAsStringAsync().Result;
+
+                            finalUserdetails = JsonConvert.DeserializeObject<List<UsersDetailsModel>>(Result);
+                        }
+
+                    }
+
+
                 }
             }
-            return response;
+            return Json(new { data = finalUserdetails });
+        }
+
+
+        public static string CreateRandomPassword(int PasswordLength)
+        {
+            string _allowedChars = "0123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ";
+            Random randNum = new Random();
+            char[] chars = new char[PasswordLength];
+            int allowedCharCount = _allowedChars.Length;
+            for (int i = 0; i < PasswordLength; i++)
+            {
+                chars[i] = _allowedChars[(int)((_allowedChars.Length) * randNum.NextDouble())];
+            }
+            return new string(chars);
         }
 
     }

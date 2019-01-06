@@ -53,7 +53,7 @@ namespace Quiz.Web.API.Controllers
         public APIResponse UploadUserDetail(UsersDetails usersDetails)
         {
             UsersDetailsModel details = new UsersDetailsModel();
-            
+
             UserManagementBLL userManagementBLL = new UserManagementBLL();
             try
             {
@@ -63,7 +63,7 @@ namespace Quiz.Web.API.Controllers
             {
 
                 throw;
-            }            
+            }
             return response;
         }
 

@@ -21,8 +21,8 @@ namespace Quiz.Web.DAL.DataAccess
         }
     
         public System.Guid ID { get; set; }
-        public string ExaminerName { get; set; }
-        public Nullable<bool> Iscommon { get; set; }
+        public Nullable<System.Guid> AssessmentId { get; set; }
+        public Nullable<System.Guid> UserDetailId { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     

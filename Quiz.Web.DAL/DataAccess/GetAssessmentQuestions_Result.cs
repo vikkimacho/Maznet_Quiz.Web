@@ -10,9 +10,8 @@
 namespace Quiz.Web.DAL.DataAccess
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class QuestionsDetail
+    public partial class GetAssessmentQuestions_Result
     {
         public System.Guid ID { get; set; }
         public Nullable<System.Guid> QuestionBankID { get; set; }
@@ -29,7 +28,13 @@ namespace Quiz.Web.DAL.DataAccess
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> MasterQuestionId { get; set; }
-    
-        public virtual QuestionBankMaster QuestionBankMaster { get; set; }
+        public System.Guid ID1 { get; set; }
+        public Nullable<System.Guid> AssessmentID { get; set; }
+        public Nullable<System.Guid> QuestionBankID1 { get; set; }
+        public Nullable<System.DateTime> CreatedDate1 { get; set; }
+        public Nullable<System.DateTime> ModifiedDate1 { get; set; }
+        public Nullable<bool> IsDeleted1 { get; set; }
+        public Nullable<System.TimeSpan> Duration { get; set; }
+        public string QuestionBankName { get; set; }
     }
 }

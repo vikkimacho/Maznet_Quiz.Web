@@ -10,18 +10,15 @@
 namespace Quiz.Web.DAL.DataAccess
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class RegistrationFormControl
+    public partial class GetEligibilityCriteriaList_Result
     {
         public System.Guid ID { get; set; }
-        public Nullable<System.Guid> CustomRegisterId { get; set; }
-        public Nullable<System.Guid> InputFieldId { get; set; }
-        public string DisplayName { get; set; }
-        public string InputValues { get; set; }
-        public Nullable<bool> IsMandatory { get; set; }
-    
-        public virtual CustomRegistrationForm CustomRegistrationForm { get; set; }
-        public virtual InputControlMaster InputControlMaster { get; set; }
+        public Nullable<System.Guid> QuestionBankID { get; set; }
+        public string Name { get; set; }
+        public Nullable<long> NotConsider { get; set; }
+        public Nullable<long> MayConsider { get; set; }
+        public Nullable<long> StrongConsider { get; set; }
+        public System.Guid EligibilityIdForAssessment { get; set; }
     }
 }

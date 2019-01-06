@@ -11,10 +11,11 @@ namespace Quiz.Web.DAL.Home
 {
     public class QuestionBankDAL
     {
+        private DateTime dateTime = DateTime.UtcNow.AddHours(5).AddMinutes(30);
         public List<QuestionBankMaster> GetQuestionBank()
         {
             List<QuestionBankMaster> questionBankData = new List<QuestionBankMaster>();
-            using (var QuizContext = new TestEngineEntities())
+            using (var QuizContext = new DBEntities())
             {
                 QuizContext.Configuration.ProxyCreationEnabled = false;
                 questionBankData = QuizContext.QuestionBankMasters.Where(x => x.IsDeleted == false).ToList();
@@ -28,7 +29,7 @@ namespace Quiz.Web.DAL.Home
             APIResponse response = new APIResponse();
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     details = testEngineEntities.QuestionsDetails.Where(x => x.QuestionBankID == QuestionBankId && x.IsDeleted == false).ToList();
                 }
@@ -48,7 +49,7 @@ namespace Quiz.Web.DAL.Home
             APIResponse response = new APIResponse();
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     details = testEngineEntities.QuestionsDetails.Where(x => x.ID == QuestionId && x.IsDeleted == false).FirstOrDefault();
 
@@ -66,16 +67,17 @@ namespace Quiz.Web.DAL.Home
         public APIResponse QuestionsDelete(Guid? QuestionId)
         {
             APIResponse response = new APIResponse();
+            dateTime = DateTime.UtcNow.AddHours(5).AddMinutes(30);
             response.Result = false;
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     var data = testEngineEntities.QuestionsDetails.Where(x => x.ID == QuestionId && x.IsDeleted == false).FirstOrDefault();
                     if(data != null)
                     {
                         data.IsDeleted = true;
-                        data.ModifiedDate = DateTime.UtcNow;
+                        data.ModifiedDate = dateTime;;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
                     }                    
@@ -97,7 +99,7 @@ namespace Quiz.Web.DAL.Home
             response.Result = false;
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     var data = testEngineEntities.QuestionsDetails.Where(x => x.ID == questionsDetailsView.ID && x.IsDeleted == false).FirstOrDefault();
                     if (data != null)
@@ -109,7 +111,8 @@ namespace Quiz.Web.DAL.Home
                         data.OptionD = questionsDetailsView.OptionD;
                         data.OptionE = questionsDetailsView.OptionE;
                         data.Question = questionsDetailsView.Question;
-                        data.ModifiedDate = DateTime.UtcNow;
+                        data.MasterQuestion = questionsDetailsView.MasterQuestion;
+                        data.ModifiedDate = dateTime;;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
                     }
@@ -131,7 +134,7 @@ namespace Quiz.Web.DAL.Home
             APIResponse response = new APIResponse();
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     details = testEngineEntities.QuestionBankMasters.Where(x => x.ID == QuestionBankId && x.IsDeleted == false).FirstOrDefault();
 
@@ -149,24 +152,25 @@ namespace Quiz.Web.DAL.Home
         public APIResponse QuestionsBankDelete(Guid? QuestionBankId)
         {
             APIResponse response = new APIResponse();
+            dateTime = DateTime.UtcNow.AddHours(5).AddMinutes(30);
             response.Result = false;
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     var data = testEngineEntities.QuestionBankMasters.Where(x => x.ID == QuestionBankId && x.IsDeleted == false).FirstOrDefault();
                     var questions = testEngineEntities.QuestionsDetails.Where(x => x.ID == QuestionBankId && x.IsDeleted == false).FirstOrDefault();
                     if (data != null)
                     {
                         data.IsDeleted = true;
-                        data.ModifiedDate = DateTime.UtcNow;
+                        data.ModifiedDate = dateTime;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
 
                         if(questions!= null)
                         {
                             questions.IsDeleted = true;
-                            questions.ModifiedDate = DateTime.UtcNow;
+                            questions.ModifiedDate = dateTime;
                             testEngineEntities.SaveChanges();
                             response.Result = true;
 
@@ -187,10 +191,11 @@ namespace Quiz.Web.DAL.Home
         public APIResponse UpdateQuestionBank(QuestionBankDetail questionsDetailsView)
         {
             APIResponse response = new APIResponse();
+            dateTime = DateTime.UtcNow.AddHours(5).AddMinutes(30);
             response.Result = false;
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     var data = testEngineEntities.QuestionBankMasters.Where(x => x.ID == questionsDetailsView.ID && x.IsDeleted == false).FirstOrDefault();
                     if (data != null)
@@ -198,7 +203,7 @@ namespace Quiz.Web.DAL.Home
                         data.QuestionBankDescription = questionsDetailsView.Description;
                         data.Duration = questionsDetailsView.Duration;
                         data.QuestionBankName= questionsDetailsView.QuestionBankName;
-                        data.ModifiedDate = DateTime.UtcNow;
+                        data.ModifiedDate = dateTime;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
                     }
@@ -221,7 +226,7 @@ namespace Quiz.Web.DAL.Home
             APIResponse response = new APIResponse();
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     details = testEngineEntities.DefaultRegistations.Where(x => x.UserDetailId == UserDetailId).ToList();
 
@@ -241,39 +246,46 @@ namespace Quiz.Web.DAL.Home
         {
             List<QuestionsDetailsView> QuestionsDetailsView = new List<QuestionsDetailsView>();
             APIResponse aPIResponse = new APIResponse();
+            dateTime = DateTime.UtcNow.AddHours(5).AddMinutes(30);
             aPIResponse.Result = false;
             try
             {
-                using (TestEngineEntities testEngineEntities = new TestEngineEntities())
+                using (DBEntities testEngineEntities = new DBEntities())
                 {
                     QuestionBankMaster questionBankMaster = new QuestionBankMaster();
                     questionBankMaster.ID = Guid.NewGuid();
                     questionBankMaster.QuestionBankName = questionsDetailsData.QuestionBankName;                    
-                    questionBankMaster.CreatedDate = DateTime.UtcNow;
+                    questionBankMaster.CreatedDate = dateTime;;
                     questionBankMaster.Duration = questionsDetailsData.Duration;
                     questionBankMaster.IsActive = true;
                     questionBankMaster.IsDeleted = false;
-                    questionBankMaster.ModifiedDate = DateTime.UtcNow;
+                    questionBankMaster.ModifiedDate = dateTime;;
                     questionBankMaster.QuestionBankDescription = questionsDetailsData.Description;                         
                     testEngineEntities.QuestionBankMasters.Add(questionBankMaster);
 
                     foreach (var item in questionsDetailsData.questionsDetailsViews)
                     {
+                        bool IsMaster = false;
                         QuestionsDetail questionsDetails = new QuestionsDetail();
                         questionsDetails.Answer = item.Answer;
-                        questionsDetails.CreatedDate = DateTime.UtcNow;
+                        questionsDetails.CreatedDate = dateTime;;
                         questionsDetails.ID = Guid.NewGuid();
                         questionsDetails.IsDeleted = false;
-                        questionsDetails.ModifiedDate = DateTime.UtcNow;
+                        questionsDetails.ModifiedDate = dateTime;;
                         questionsDetails.OptionA = item.OptionA;
                         questionsDetails.OptionB = item.OptionB;
                         questionsDetails.OptionC = item.OptionC;
                         questionsDetails.OptionD = item.OptionD;
                         questionsDetails.OptionE = item.OptionE;
+                        questionsDetails.MasterQuestion = item.MasterQuestion;
                         questionsDetails.Question = item.Question;
                         questionsDetails.QuestionBankID = questionBankMaster.ID;
+                        if (!string.IsNullOrEmpty(item.MasterQuestion))
+                        {
+                            IsMaster = true;
+                        }
+                        questionsDetails.IsMaster = IsMaster;
                         testEngineEntities.QuestionsDetails.Add(questionsDetails);
-
                     }
                     testEngineEntities.SaveChanges();
                     aPIResponse.Result = true;

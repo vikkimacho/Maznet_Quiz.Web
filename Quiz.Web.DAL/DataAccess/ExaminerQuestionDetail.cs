@@ -12,16 +12,14 @@ namespace Quiz.Web.DAL.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class RegistrationFormControl
+    public partial class ExaminerQuestionDetail
     {
         public System.Guid ID { get; set; }
-        public Nullable<System.Guid> CustomRegisterId { get; set; }
-        public Nullable<System.Guid> InputFieldId { get; set; }
-        public string DisplayName { get; set; }
-        public string InputValues { get; set; }
-        public Nullable<bool> IsMandatory { get; set; }
-    
-        public virtual CustomRegistrationForm CustomRegistrationForm { get; set; }
-        public virtual InputControlMaster InputControlMaster { get; set; }
+        public Nullable<System.Guid> ExaminerAssessmentDetailId { get; set; }
+        public Nullable<System.Guid> QuestionId { get; set; }
+        public string Answer { get; set; }
+        public Nullable<bool> AnswerStatus { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     }
 }

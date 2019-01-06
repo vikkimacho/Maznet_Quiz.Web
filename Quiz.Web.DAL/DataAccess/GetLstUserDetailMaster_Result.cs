@@ -11,14 +11,12 @@ namespace Quiz.Web.DAL.DataAccess
 {
     using System;
     
-    public partial class Assesmentpagemodal_Result
+    public partial class GetLstUserDetailMaster_Result
     {
         public System.Guid Id { get; set; }
-        public string QuestionBankName { get; set; }
-        public System.TimeSpan Duration { get; set; }
+        public string UserTitle { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public string QuestionBankDescription { get; set; }
-        public int NoOfQuestions { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     }
 }

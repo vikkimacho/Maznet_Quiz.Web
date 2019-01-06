@@ -11,14 +11,9 @@ namespace Quiz.Web.DAL.DataAccess
 {
     using System;
     
-    public partial class Assesmentpagemodal_Result
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public System.Guid Id { get; set; }
-        public string QuestionBankName { get; set; }
-        public System.TimeSpan Duration { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public string QuestionBankDescription { get; set; }
-        public int NoOfQuestions { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

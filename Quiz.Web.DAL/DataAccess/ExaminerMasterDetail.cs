@@ -15,11 +15,8 @@ namespace Quiz.Web.DAL.DataAccess
     public partial class ExaminerMasterDetail
     {
         public System.Guid ID { get; set; }
-        public Nullable<System.Guid> ExaminerID { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string MobileNumber { get; set; }
-        public string Institution { get; set; }
+        public Nullable<System.Guid> ExaminerMasterId { get; set; }
+        public Nullable<System.Guid> UserId { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     

@@ -85,17 +85,18 @@ namespace Quiz.Web.UI.Controllers
                         UsersDetails.Percentage = dt.Rows[i]["Percentage"] != DBNull.Value ? dt.Rows[i]["Percentage"].ToString().Trim().ToUpper() : string.Empty;
                         UsersDetails.Gender = dt.Rows[i]["Gender"] != DBNull.Value ? dt.Rows[i]["Gender"].ToString().Trim().ToUpper() : string.Empty;
                         UsersDetails.Address = dt.Rows[i]["Address"] != DBNull.Value ? dt.Rows[i]["Address"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField1 = dt.Rows[i]["CustomField1"] != DBNull.Value ? dt.Rows[i]["CustomField1"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField2 = dt.Rows[i]["CustomField2"] != DBNull.Value ? dt.Rows[i]["CustomField2"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField3 = dt.Rows[i]["CustomField3"] != DBNull.Value ? dt.Rows[i]["CustomField3"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField4 = dt.Rows[i]["CustomField4"] != DBNull.Value ? dt.Rows[i]["CustomField4"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField5 = dt.Rows[i]["CustomField5"] != DBNull.Value ? dt.Rows[i]["CustomField5"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField6 = dt.Rows[i]["CustomField6"] != DBNull.Value ? dt.Rows[i]["CustomField6"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField7 = dt.Rows[i]["CustomField7"] != DBNull.Value ? dt.Rows[i]["CustomField7"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField8 = dt.Rows[i]["CustomField8"] != DBNull.Value ? dt.Rows[i]["CustomField8"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField9 = dt.Rows[i]["CustomField9"] != DBNull.Value ? dt.Rows[i]["CustomField9"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.CustomField10 = dt.Rows[i]["CustomField10"] != DBNull.Value ? dt.Rows[i]["CustomField10"].ToString().Trim().ToUpper() : string.Empty;
-                        
+                        UsersDetails.SSLCPercentage = dt.Rows[i]["SSLCPercentage"] != DBNull.Value ? dt.Rows[i]["SSLCPercentage"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.SSLCBoardName = dt.Rows[i]["SSLCBoardName"] != DBNull.Value ? dt.Rows[i]["SSLCBoardName"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.TechnicalSkills = dt.Rows[i]["TechnicalSkills"] != DBNull.Value ? dt.Rows[i]["TechnicalSkills"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.HSCPercentage = dt.Rows[i]["HSCPercentage"] != DBNull.Value ? dt.Rows[i]["HSCPercentage"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.LastName = dt.Rows[i]["LastName"] != DBNull.Value ? dt.Rows[i]["LastName"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.DOB = dt.Rows[i]["DOB"] != DBNull.Value ? dt.Rows[i]["DOB"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.State = dt.Rows[i]["State"] != DBNull.Value ? dt.Rows[i]["State"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.DegreePassedOutYear = dt.Rows[i]["DegreePassedOutYear"] != DBNull.Value ? dt.Rows[i]["DegreePassedOutYear"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.HSCBoardName = dt.Rows[i]["HSCBoardName"] != DBNull.Value ? dt.Rows[i]["HSCBoardName"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.HSCPassedOutYear = dt.Rows[i]["HSCPassedOutYear"] != DBNull.Value ? dt.Rows[i]["HSCPassedOutYear"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.SSLCPassedOutYear = dt.Rows[i]["SSLCPassedOutYear"] != DBNull.Value ? dt.Rows[i]["SSLCPassedOutYear"].ToString().Trim().ToUpper() : string.Empty;
+
                         if (UsersDetails != null)
                         {
                             userslist.Add(UsersDetails);
