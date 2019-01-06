@@ -96,5 +96,56 @@ namespace Quiz.Web.BLL.Exam
             }
             return result;
         }
+
+        public string SaveExamAnswers(Guid assesmentID, Guid userID, Guid qusID, string answer)
+        {
+            string result = "FAILED";
+            try
+            {
+                result = examDAL.SaveExamAnswers(assesmentID, userID, qusID, answer);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
+
+        public List<Questions> GetAssesmentQuestions(Guid assesmentID)
+        {
+            List<Questions> questionslists = new List<Questions>();
+            
+            try
+            {
+                var questionlist = examDAL.GetAssesmentQuestions(assesmentID);
+
+                if(questionlist.Count > 0)
+                {
+
+                    questionlist.ForEach(x => {
+                        Questions questions = new Questions();
+                        questions.Answer = x.Answer;
+                        questions.ID = x.ID;
+                        questions.IsMaster = x.IsMaster;
+                        questions.MasterQuestion = x.MasterQuestion;
+                        questions.MasterQuestionId = x.MasterQuestionId;
+                        questions.OptionA = x.OptionA;
+                        questions.OptionB = x.OptionB;
+                        questions.OptionC = x.OptionC;
+                        questions.OptionD = x.OptionD;
+                        questions.OptionE = x.OptionE;
+                        questions.Question = x.Question;
+                        questions.QuestionBankID = x.QuestionBankID;
+                        questionslists.Add(questions);
+                    });
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return questionslists;
+        }
     }
 }

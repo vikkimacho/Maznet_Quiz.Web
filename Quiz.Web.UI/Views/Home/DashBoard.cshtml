@@ -11,11 +11,13 @@
 
     #dvDashboardText {
         margin-bottom: 30px;
+        margin-top:0;
+       
     }
 
     .headingText {
         font-size: 22px;
-        color: #000;
+        color: #585858;
         font-weight: 600;
     }
 
@@ -160,27 +162,48 @@
     <div class="row">
         <div class="well clearfix" id="dvUserSearch">
             <div class="col-md-4">
-                <select class="form-control">
-                    <option>User</option>
-                </select>
+                <div class="row">
+                    <div class="col-md-3 label-right">
+                        <label for="User">User</label>
+                    </div>
+                    <div class="col-md-9">
+                        <select class="form-control">
+                            <option>User</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="col-md-4">
-                <input id="StartDate" type="text" class="form-control" />
-                @*<input type="text" class="form-control" id="txtFromDate" />*@
+                <div class="row">
+                    <div class="col-md-3 label-right">
+                        <label for="User">From</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input id="StartDate" type="text" class="form-control" />
+                        @*<input type="text" class="form-control" id="txtFromDate" />*@
+                    </div>
+                </div>
             </div>
             <div class="col-md-4">
-                <input id="EndDate" type="text" class="form-control" />
-                @*<input type="text" class="form-control" id="txtToDate" />*@
+                <div class="row">
+                    <div class="col-md-3 label-right">
+                        <label for="User">To</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input id="EndDate" type="text" class="form-control" />
+                        @*<input type="text" class="form-control" id="txtToDate" />*@
+                    </div>
+                </div>
+                </div>
             </div>
         </div>
-    </div>
     <div class="row">
         <div class="">
-            <label>Create new assesments </label>
+            <label class="color-58">Create new assesments </label>
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search keyword..">
+                <input type="text" class="form-control search-box" placeholder="Search keyword..">
                 <span class="input-group-btn">
-                    <button class="btn btn-default ds_darkBlue" type="button" onclick="DashBoardFetch()" ><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    <button class="btn btn-default ds_darkBlue search-btn" type="button" onclick="DashBoardFetch()" ><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                 </span>
             </div>
         </div>

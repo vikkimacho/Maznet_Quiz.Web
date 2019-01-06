@@ -10,10 +10,11 @@
         window.open('@Url.Action("DownloadTemplate", "UserManagement")', "_blank", "", true);
     }
 </script>
-<div class="form-group text-center">
-    <button type="button" class="btn saveButtonsColor" data-toggle="modal" data-target="#myModal">Add Users</button>
-</div>
 <div class="container-fluid">
+    <h3 class="foreBlue question-bank-title">User Management</h3>
+    <div class="form-group text-center">
+        <button type="button" class="btn saveButtonsColor addnew-btn " data-toggle="modal" data-target="#myModal">Add Users <img class="adding-icon delete-icon" src="~/Content/Images/Adding Icon.png" alt="Add New" /></button>
+    </div>
     
     <table class="table" id="Usersview">
         <thead>
@@ -27,21 +28,21 @@
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
-                <td id="@item.Id">
-                    <a href="@Url.Action("UserManagementList","UserManagement",new { UserDetailId = item.Id})">@item.UserTitleName</a>
-                </td>
-                <td>
-                    @item.CreatedDateTime
-                </td>
-                <td>
-                    @item.ModifiedDateTime
-                </td>
-                <td>
-                    <a onclick="GetUserDetailEdit('@item.Id')">Edit</a> /
-                    <a onclick="UserDetailDelete('@item.Id')">Delete</a>
-                </td>
-            </tr>
+                <tr>
+                    <td id="@item.Id">
+                        <a href="@Url.Action("UserManagementList","UserManagement",new { UserDetailId = item.Id})">@item.UserTitleName</a>
+                    </td>
+                    <td>
+                        @item.CreatedDateTime
+                    </td>
+                    <td>
+                        @item.ModifiedDateTime
+                    </td>
+                    <td>
+                        <a onclick="GetUserDetailEdit('@item.Id')"><img class="img-icon edit-icon" src="~/Content/Images/Edit Icon.png" alt="Edit" /></a>
+                        <a onclick="UserDetailDelete('@item.Id')"><img class="img-icon delete-icon" src="~/Content/Images/Delete Icon.png" alt="Delete" /></a>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>

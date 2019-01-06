@@ -44,10 +44,10 @@ namespace Quiz.Web.DAL.DAL
                            , new SqlParameter("@Username", username)
                            , new SqlParameter("@Password", password)
                            ).FirstOrDefault();
-                        result.Result = true;
-                        result.Message = "SUCCESS";
-                        result.Guid = validateResult;
-                    
+                    result.Result = true;
+                    result.Message = "SUCCESS";
+                    result.Guid = validateResult;
+
                 }
             }
             catch (Exception ex)
@@ -75,5 +75,81 @@ namespace Quiz.Web.DAL.DAL
             }
             return list;
         }
+
+        public string SaveExamAnswers(Guid assesmentID, Guid userID, Guid qusID, string answer)
+        {
+            string result = "FAILED";
+            try
+            {
+                using (DBEntities dbEntities = new DBEntities())
+                {
+                    var examinerMaster = dbEntities.ExaminerMasters.FirstOrDefault(x => x.AssessmentId == assesmentID);
+                    if (examinerMaster != null)
+                    {
+                        var examinerDetails = dbEntities.ExaminerMasterDetails.FirstOrDefault(x => x.ExaminerMasterId == examinerMaster.ID && x.UserId == userID);
+                        var questionDetails = dbEntities.QuestionsDetails.FirstOrDefault(x => x.ID == qusID);
+                        if (examinerDetails != null && questionDetails != null)
+                        {
+                            var examinerAssessmentDetail = dbEntities.ExaminerAssessmentDetails.FirstOrDefault(x => x.ExaminerMasterDetailId == examinerMaster.ID && x.QuestionBankID == questionDetails.QuestionBankID);
+                            if (examinerAssessmentDetail != null)
+                            {
+                                var examinerQuestionExisting = dbEntities.ExaminerQuestionDetails.FirstOrDefault(x => x.ExaminerAssessmentDetailId == examinerAssessmentDetail.ID && x.QuestionId == qusID);
+                                if (examinerQuestionExisting == null)
+                                {
+                                    bool ansStatus = questionDetails.Answer.Trim().ToUpper() == answer.Trim().ToUpper() ? true : false;
+                                    ExaminerQuestionDetail examinerQuestion = new ExaminerQuestionDetail();
+                                    examinerQuestion.Answer = answer;
+                                    examinerQuestion.AnswerStatus = ansStatus;
+                                    examinerQuestion.CreatedDate = DateTime.UtcNow.AddHours(5).AddMinutes(30);
+                                    examinerQuestion.ExaminerAssessmentDetailId = examinerAssessmentDetail.ID;
+                                    examinerQuestion.ModifiedDate = null;
+                                    examinerQuestion.QuestionId = questionDetails.ID;
+                                    dbEntities.ExaminerQuestionDetails.Add(examinerQuestion);
+                                    dbEntities.SaveChanges();
+                                    result = "SUCCESS";                                    
+                                }
+                                else
+                                {
+                                    examinerQuestionExisting.Answer = answer;
+                                    examinerQuestionExisting.ModifiedDate= DateTime.UtcNow.AddHours(5).AddMinutes(30);
+                                    dbEntities.SaveChanges();
+                                    result = "SUCCESS";
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
+
+        public List<QuestionsDetail> GetAssesmentQuestions(Guid assesmentID)
+        {
+            List<QuestionsDetail> questionlist = new List<QuestionsDetail>();
+            try
+            {
+                using (DBEntities dbEntities = new DBEntities())
+                {
+                    questionlist = (from x in dbEntities.QuestionsDetails
+                                 join y in dbEntities.AssessmentQuestionBankDetails on x.QuestionBankID equals y.QuestionBankID
+                                 where x.IsDeleted == false && y.IsDeleted == false && y.AssessmentID == assesmentID
+                                 select x).ToList();
+
+
+                    
+                 }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return questionlist;
+        }
+
     }
 }

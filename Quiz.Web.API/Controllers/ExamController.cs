@@ -12,9 +12,10 @@ namespace Quiz.Web.API.Controllers
     public class ExamController : ApiController
     {
         APIResponse result = new APIResponse();
+        ExamBLL examBLL = new ExamBLL();
         public string GetPortalLogin(Guid assessmentID)
         {
-            ExamBLL examBLL = new ExamBLL();
+
             var result = examBLL.GetExamPortal(assessmentID);
             return result;
         }
@@ -24,7 +25,7 @@ namespace Quiz.Web.API.Controllers
         {
             try
             {
-                ExamBLL examBLL = new ExamBLL();
+
                 result = examBLL.ValidateExaminer(username, password, assessmentID);
             }
             catch (Exception ex)
@@ -35,29 +36,12 @@ namespace Quiz.Web.API.Controllers
         }
 
         [HttpGet]
-        public List<ExamAssessmentDetails> GetAssessmentDetails(Guid assessmentID)
-        {
-            List<ExamAssessmentDetails> examAssessmentDetails = new List<ExamAssessmentDetails>();
-            try
-            {
-                ExamBLL examBLL = new ExamBLL();
-                examAssessmentDetails = examBLL.GetAssessmentDetails(assessmentID);
-
-            }
-            catch (Exception)
-            {
-
-            }
-            return examAssessmentDetails;
-        }
-
-        [HttpGet]
         public List<CustomRegistration> GetRegistration( string assessmentID)
         {
             List<CustomRegistration> result = new List<CustomRegistration>();
             try
             {
-                ExamBLL examBLL = new ExamBLL();
+
                 result = examBLL.GetRegistration(assessmentID);
             }
             catch (Exception ex)
@@ -65,6 +49,36 @@ namespace Quiz.Web.API.Controllers
 
             }
             return result;
+        }
+
+        [HttpPost]
+        public string SaveExamAnswers(Guid assesmentID, Guid userID, Guid qusID, string answer)
+        {
+            string result = "FAILED";
+            try
+            {
+                result = examBLL.SaveExamAnswers(assesmentID, userID, qusID, answer);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
+
+        [HttpGet]
+        public List<Questions> GetAssesmentQuestions(Guid assesmentID)
+        {
+            List<Questions> questions = new List<Questions>();
+            try
+            {
+                questions = examBLL.GetAssesmentQuestions(assesmentID);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return questions;
         }
     }
 }
