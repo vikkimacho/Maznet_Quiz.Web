@@ -31,7 +31,11 @@
         }
 
         .bs-wizard {
-            margin-top: 40px;
+            margin-top: 0px;
+            margin-bottom:30px;
+            max-width:900px;
+            margin-left:auto;
+            margin-right:auto;
         }
 
         /*Form Wizard*/
@@ -44,16 +48,22 @@
                 padding: 0;
                 position: relative;
             }
-
-                .bs-wizard > .bs-wizard-step + .bs-wizard-step {
-                }
+        .progress {
+            background: #585858;
+        }
+        .bs-wizard > .bs-wizard-step + .bs-wizard-step {
+        }
 
                 .bs-wizard > .bs-wizard-step .bs-wizard-stepnum {
-                    color: #595959;
-                    font-size: 16px;
+                    color: #ababab;
+                    font-size: 14px;
                     margin-bottom: 5px;
+                    font-weight:600;
                 }
-
+                .bs-wizard > .active .bs-wizard-stepnum {
+                    color: #585858;
+                    
+                }
                 .bs-wizard > .bs-wizard-step .bs-wizard-info {
                     color: #999;
                     font-size: 14px;
@@ -61,11 +71,11 @@
 
                 .bs-wizard > .bs-wizard-step > .bs-wizard-dot {
                     position: absolute;
-                    width: 30px;
-                    height: 30px;
+                    width: 20px;
+                    height: 20px;
                     display: block;
-                    background: rgb(153, 199, 234);
-                    top: 45px;
+                    background: rgb(171, 171, 171);
+                    top: 30px;
                     left: 50%;
                     margin-top: -15px;
                     margin-left: -15px;
@@ -76,19 +86,19 @@
                         content: ' ';
                         width: 14px;
                         height: 14px;
-                        background: rgb(011,071,117);
+                        background: #0b4775;
                         border-radius: 50px;
                         position: absolute;
-                        top: 8px;
-                        left: 8px;
+                        top: 3px;
+                        left: 3px;
                     }
 
                 .bs-wizard > .bs-wizard-step > .progress {
                     position: relative;
                     border-radius: 0px;
-                    height: 8px;
+                    height: 3px;
                     box-shadow: none;
-                    margin: 20px 0;
+                    margin: 25px 0;
                 }
 
                     .bs-wizard > .bs-wizard-step > .progress > .progress-bar {
@@ -114,7 +124,7 @@
                 }
 
                 .bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot {
-                    background-color: #f5f5f5;
+                    background-color: #ababab;
                 }
 
                     .bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot:after {
@@ -155,11 +165,13 @@
             }
 
         .foreBlue {
-            color: rgb(011,017,117);
+            color: #0b4775;
         }
 
         hr {
-            border: 2px solid #dadada;
+            border-top: 1px solid #999;
+            margin-left: -25px;
+            margin-right: -55px;
         }
 
         .consider {
@@ -179,6 +191,43 @@
             position: relative;
             top: -5px;
         }
+
+        /*Check box*/
+        input[type="checkbox"]{
+            position: absolute;
+            right: 9000px;
+        }
+        input[type="checkbox"] + .label-text:before {
+            content: "\f096";
+            font-family: "FontAwesome";
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            width: 1em;
+            display: inline-block;
+            margin-right: 5px;
+            font-size:20px;
+        }
+
+        input[type="checkbox"]:checked + .label-text:before {
+            content: "\f14a";
+            color: #2980b9;
+            animation: effect 250ms ease-in;
+        }
+
+        input[type="checkbox"]:disabled + .label-text {
+            color: #aaa;
+        }
+
+            input[type="checkbox"]:disabled + .label-text:before {
+                content: "\f0c8";
+                color: #ccc;
+            }
+            /*checkbox End Here*/
     </style>
 
 
@@ -186,33 +235,37 @@
 
 
     <div class="container-fluid">
-        <h3 class="foreBlue">Create Assessment</h3>
+        <h3 class="foreBlue question-bank-title">Create Assessment</h3>
     </div>
 
     <div class="container-fluid">
         <div class="row bs-wizard" style="border-bottom:0;">
             <div class="col-xs-3 bs-wizard-step active" id="dvStepOne">
-                <div class="text-center bs-wizard-stepnum">Assessment</div>
+
                 <div class="progress"><div class="progress-bar"></div></div>
                 <a href="#" class="bs-wizard-dot"></a>
+                <div class="text-center bs-wizard-stepnum">Assessment</div>
             </div>
             <div class="col-xs-3 bs-wizard-step disabled" id="dvStepTwo">
                 <!-- complete -->
-                <div class="text-center bs-wizard-stepnum">Environment</div>
+
                 <div class="progress"><div class="progress-bar"></div></div>
                 <a href="#" class="bs-wizard-dot"></a>
+                <div class="text-center bs-wizard-stepnum">Environment</div>
             </div>
             <div class="col-xs-3 bs-wizard-step disabled" id="dvStepThree">
                 <!-- complete -->
-                <div class="text-center bs-wizard-stepnum">Shortlist Criteria</div>
+
                 <div class="progress"><div class="progress-bar"></div></div>
                 <a href="#" class="bs-wizard-dot"></a>
+                <div class="text-center bs-wizard-stepnum">Shortlist Criteria</div>
             </div>
             <div class="col-xs-3 bs-wizard-step disabled" id="dvStepFour">
                 <!-- active -->
-                <div class="text-center bs-wizard-stepnum">Scheduling</div>
+
                 <div class="progress"><div class="progress-bar"></div></div>
                 <a href="#" class="bs-wizard-dot"></a>
+                <div class="text-center bs-wizard-stepnum">Scheduling</div>
             </div>
         </div>
     </div>
@@ -222,10 +275,10 @@
             <div class="col-md-12">
                 <div class="well ds_lightBlue">
                     <div class="input-group">
-                        <input type="text" id="txtQuestionBankSearch" class="form-control" placeholder="Search keyword eg : sales,software engineer etc">
+                        <input type="text" id="txtQuestionBankSearch" class="form-control search-box" placeholder="Search keyword eg : sales,software engineer etc">
                         <input type="hidden" id="hdnQuestionBankSearch" />
                         <span class="input-group-btn">
-                            <button class="btn btn-default saveButtonsColor" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                            <button class="btn btn-default saveButtonsColor search-btn" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                         </span>
                     </div>
                 </div>
@@ -236,7 +289,7 @@
         {
             <div class="row">
                 <div class="table">
-                    <table class="table table-striped">
+                    <table class="table" id="assesment-table-grid">
                         <thead>
                             <tr class="tableHeaderBlue">
                                 <th>
@@ -263,7 +316,7 @@
         <div class="row">
 
 
-            <div class="form-group col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <div class="form-group col-lg-8 col-md-8 col-sm-12 col-xs-12" style="margin-top:15px;">
                 <div class="col-md-4"> <label id="lblAssessMentName">Name your assessment </label></div>
                 <div class="col-md-6">
                     <input type="text" class="form-control" id="txtAssessmentName" placeholder="ex:Software Engineer" />
@@ -295,11 +348,15 @@
             </div>*@
 
         <div class="row">
-            <table class="table table-striped" id="tblQuesBank">
+            <table class="table" id="tblQuesBank">
                 <thead>
                     <tr class="tableHeaderBlue">
                         <th>
-                            <input type="checkbox" id="chkCheckAllAssessMent" />
+                            <div class="form-check">
+                                <label>
+                                    <input type="checkbox" id="chkCheckAllAssessMent" /><span class="label-text"></span>
+                                </label>
+                            </div>
                         </th>
                         <th>
                             Name
@@ -318,7 +375,11 @@
                     {
                         <tr class="trClsExamSelection" id="trIdExamSelection_@item.Id">
                             <td>
-                                <input id=@item.Id type="checkbox" class="chkExamSubjectSelection" />
+                                <div class="form-check">
+                                    <label>
+                                        <input id=@item.Id type="checkbox" class="chkExamSubjectSelection" /><span class="label-text"></span>
+                                        </label>
+                                    </div>
                             </td>
                             <td>
                                 <span id="spnQuestionBankName_@item.Id">@item.QuestionBankName - @item.QuestionBankDescription </span>
@@ -359,10 +420,10 @@
 
 
         <div class="row">
-            <h4 class="ds_lightBlue tableHeaderText">
+            <h4 class="ds_lightBlue tableHeaderText ca-light-blue">
                 Proctor These Assessments
             </h4>
-            <table class="table table-striped">
+            <table class="table proctor-table table-bg">
                 <thead>
                     <tr class="tableHeaderBlue">
                         <th>
@@ -400,8 +461,8 @@
 
 
         <div class="row">
-            <h4 class="ds_lightBlue tableHeaderText">Assesment Details</h4>
-            <table class="table table-striped">
+            <h4 class="ds_lightBlue tableHeaderText ca-light-blue">Assesment Details</h4>
+            <table class="table table-bg as-detailed-table">
                 <thead>
                     <tr class="tableHeaderBlue">
                         <th>
@@ -427,12 +488,12 @@
 
 
 
-            <h4 class="ds_lightBlue tableHeaderText">Candidates details form</h4>
+            <h4 class="ds_lightBlue tableHeaderText ca-light-blue">Candidates details form</h4>
             @*<span>   Do you want to create a new form or use an existing one? </span>
                 <input type="radio" name="FormSelection" id="radExistingForm" />Select Existing
                 <input type="radio" name="FormSelection" id="radNewForm" checked />Create New*@
 
-            <table class="table table-striped" id="tblCandidateForms">
+            <table class="table table-bg" id="tblCandidateForms">
                 <thead>
                     <tr class="tableHeaderBlue">
                         <th>Field Name</th>

@@ -131,7 +131,7 @@
     function fnActivate(id) {
         $.ajax({
             url: '@Url.Action("ActivateAdmin", "AdminManagement")?id=' + id,
-            type: "POST",            
+            type: "POST",
             contentType: "application/json",
             dataType: "json",
             success: function (result) {
@@ -161,8 +161,9 @@
     }
 
 </script>
+<h3 class="foreBlue question-bank-title">Admin Management</h3>
 <div class="form-group text-center">
-    <button class="btn btn-primary" id="btnAddAdmin">Add New</button>
+    <button class="btn btn-primary addnew-btn" id="btnAddAdmin">Add New <img class="adding-icon delete-icon" src="~/Content/Images/Adding Icon.png" alt="Add New" /></button>
 </div>
 <table class="table" id="AdminManagement">
     <thead>
@@ -204,7 +205,10 @@
                 else
                 {
                     <td>Active</td>
-                    <td><a onclick="fnEditUser('@item.ID')" style="cursor:pointer">Edit</a>  /  <a style="cursor:pointer" onclick="fnDeleteUser('@item.ID')">Delete</a></td>
+                    <td>
+                        <a onclick="fnEditUser('@item.ID')" style="cursor:pointer"><img class="img-icon edit-icon" src="~/Content/Images/Edit Icon.png" alt="Edit" /></a>
+                        <a style="cursor:pointer" onclick="fnDeleteUser('@item.ID')"><img class="img-icon delete-icon" src="~/Content/Images/Delete Icon.png" alt="Delete" /></a>
+                    </td>
                 }
 
 
@@ -234,7 +238,7 @@
                         <input type="text" id="txtAddUserName" class="form-control" name="UserName" placeholder="UserName" />
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <div class="col-md-6 input-text-wrap is-required">
                         <label for="txtAddPassword">Password</label>
@@ -245,7 +249,7 @@
                         <input type="text" id="txtAddRole" class="form-control" name="Role" placeholder="Role" />
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <div class="col-md-6 input-text-wrap is-required">
                         <label for="txtAddEmail">Email</label>
@@ -256,7 +260,7 @@
                         <input type="text" id="txtAddPhone" class="form-control" name="Phone" placeholder="Phone" />
                     </div>
                 </div>
-              
+
             </div>
             <div class="modal-footer text-center">
                 <input type="button" class="btn btn-primary" id="btnAdd" value="Add" />

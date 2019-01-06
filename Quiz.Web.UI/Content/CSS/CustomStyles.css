@@ -1,4 +1,7 @@
 ﻿/* colors are mentioned as per the dashboard UX RGB Colors */
+body {
+    color: #585858;
+}
 
 .ds_Scheduled {
     background: rgb(019,181,241);
@@ -46,8 +49,13 @@
     border-color: rgb(008,140,155);
 }
 
+.search-box, .search-btn {
+    min-height: 42px;
+}
+
 #imgLoginUser {
     width: 45px;
+    margin-left: 15px;
 }
 
 .lnkBlack {
@@ -55,9 +63,24 @@
 }
 
 .ds_darkBlue {
-    background: rgb(024,023,069) !important;
-    border-color: rgb(024,023,069) !important;
+    background: rgb(32, 123, 178) !important;
+    border-color: rgb(32, 123, 178) !important;
     color: #fff;
+}
+
+.color-58 {
+    color: #585858;
+}
+
+.label-right {
+    text-align: right;
+    padding-right: 0;
+    margin-top: 6px;
+    color: #585858;
+}
+
+.side-nav li a i {
+    float: right;
 }
 
 .ds_lightBlue {
@@ -140,12 +163,12 @@ input:checked + .slider:before {
 
 .saveButtonsColor {
     background: rgb(011,071,117) !important;
-        color:#fff !important;
+    color: #fff !important;
 }
 
 .tableHeaderText {
     color: rgb(011,071,117) !important;
-    padding:15px;
+    padding: 15px;
 }
 
 table.dataTable > thead > tr {
@@ -154,13 +177,190 @@ table.dataTable > thead > tr {
 }
 
 table.dataTable > tbody > tr {
-    border-bottom:1px solid #dadada;
+    border-bottom: 1px solid #dadada;
 }
 
     table.dataTable > tbody > tr > td {
         border-right: 1px solid #ceb8b8;
     }
+
 .dataTables_wrapper {
     padding: 8px;
     background: #d4d4d4;
 }
+/*Changes By Designer*/
+/*Question Bank Start Here*/
+#QuestionBank {
+    border: 1px solid rgb(215,215,215);
+    border-right: none;
+}
+
+    #QuestionBank.dataTable > tbody > tr > td {
+        border-right: 1px solid rgb(215,215,215);
+    }
+
+#QuestionBank_wrapper {
+    background: #fff;
+}
+
+.addnew-btn {
+    padding: 8px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+    .addnew-btn .adding-icon {
+        max-width: 25px;
+        margin-left: 16px;
+        position: relative;
+        top: -1.3px;
+    }
+
+td a .img-icon {
+    vertical-align: middle;
+    max-width: 22px;
+    display: inline-block;
+    float: left;
+    cursor: pointer;
+}
+
+td a .delete-icon {
+    margin-left: 10px;
+}
+
+.question-bank-title {
+    margin-top: 5px;
+    margin-bottom: 30px;
+    font-weight: 600;
+    font-size: 22px;
+}
+
+#QuestionBank_filter {
+    margin-right: 13px;
+}
+/*Question bank end*/
+
+/*Assesment page*/
+.assesment-table {
+    background: #f5f5f5;
+}
+
+    .assesment-table tbody tr td {
+        border-top: 1px solid rgb(121,124,126);
+        padding-top: 20px
+    }
+
+    .assesment-table tbody tr:first-child td {
+        border-top: none;
+    }
+
+    .assesment-table tbody tr td .assesment-name {
+        font-size: 17px;
+        margin-bottom: 15px;
+        display: inline-block;
+        font-weight: 600;
+    }
+
+    .assesment-table tbody tr td .assesment-items {
+        display: inline-block;
+        padding: 8px;
+        background: #585858;
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        width: 65px;
+        text-align: center;
+        color: #fff;
+        border-radius: 4px;
+    }
+
+    .assesment-table tbody tr td .item-blue {
+        background: rgb(019,181,241);
+    }
+
+    .assesment-table tbody tr td .item-purple {
+        background: rgb(100,002,141);
+    }
+
+    .assesment-table tbody tr td .item-green {
+        background: rgb(09,173,078);
+    }
+
+    .assesment-table tbody tr td .item-yellow {
+        background: rgb(222,145,030);
+    }
+
+    .assesment-table tbody tr td .assesment-details-left {
+        display: inline-block;
+        width: 45%;
+        text-align: left;
+        line-height: 25px;
+    }
+
+    .assesment-table tbody tr td .assesment-details-right {
+        display: inline-block;
+        width: 45%;
+        text-align: left;
+        line-height: 25px;
+    }
+/*Assesment End Here*/
+
+/*User Management and admin management*/
+#Usersview_wrapper, #AdminManagement_wrapper {
+    background: #fff;
+}
+
+#Usersview, #AdminManagement {
+    border: 1px solid rgb(215,215,215);
+    border-right: none;
+}
+
+    #Usersview tbody tr td, #AdminManagement tbody tr td {
+        border-right: 1px solid rgb(215,215,215);
+    }
+
+#AdminManagement_filter {
+    padding-right: 20px;
+}
+
+#AdminManagement_paginate {
+    padding-right: 15px;
+}
+/*User Management End*/
+
+/*Create Assesment*/
+#tblQuesBank_wrapper {
+    background:#fff;
+}
+#tblQuesBank {
+    background: #fff;
+    border: 1px solid #b7b7b7;
+}
+#assesment-table-grid {
+    
+    border:1px solid #b7b7b7;
+}
+    #assesment-table-grid tbody tr td, #tblQuesBank tbody tr td, .table-bg tbody tr td {
+        border-right: 1px solid #b7b7b7;
+        border-bottom: 1px solid #b7b7b7;
+        border-top: none;
+    }
+        #assesment-table-grid tbody tr td:last-child, #tblQuesBank tbody tr td:last-child, .table-bg tbody tr td:last-child, .as-detailed-table tbody  td {
+            border-right: none;
+        }
+.ca-light-blue {
+    margin-bottom: 0;
+    padding: 20px;
+    font-weight: 600;
+}
+.table-bg {
+    background:#e6e6e6;
+}
+.as-detailed-table tbody td {
+    padding: 8px !important;
+    border-right: 1px solid #b7b7b7;
+    border-bottom: 1px solid #b7b7b7;
+    border-top: none;
+}
+/*End Here*/
