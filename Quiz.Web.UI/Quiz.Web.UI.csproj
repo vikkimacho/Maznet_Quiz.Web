@@ -153,6 +153,9 @@
     <Content Include="Content\Icons\Submit Module Icon.png" />
     <Content Include="Content\Icons\Time.png" />
     <Content Include="Content\Icons\User name.png" />
+    <Content Include="Content\Images\Adding Icon.png" />
+    <Content Include="Content\Images\Delete Icon.png" />
+    <Content Include="Content\Images\Edit Icon.png" />
     <Content Include="Content\Images\loading.gif" />
     <Content Include="Content\Images\LoginImage.jpg" />
     <Content Include="Content\JS\jquery.simpleswitch.min.js" />

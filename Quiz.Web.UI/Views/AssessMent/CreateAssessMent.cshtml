@@ -32,10 +32,10 @@
 
         .bs-wizard {
             margin-top: 0px;
-            margin-bottom:30px;
-            max-width:900px;
-            margin-left:auto;
-            margin-right:auto;
+            margin-bottom: 30px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /*Form Wizard*/
@@ -48,101 +48,104 @@
                 padding: 0;
                 position: relative;
             }
+
         .progress {
             background: #585858;
         }
+
         .bs-wizard > .bs-wizard-step + .bs-wizard-step {
         }
 
-                .bs-wizard > .bs-wizard-step .bs-wizard-stepnum {
-                    color: #ababab;
-                    font-size: 14px;
-                    margin-bottom: 5px;
-                    font-weight:600;
-                }
-                .bs-wizard > .active .bs-wizard-stepnum {
-                    color: #585858;
-                    
-                }
-                .bs-wizard > .bs-wizard-step .bs-wizard-info {
-                    color: #999;
-                    font-size: 14px;
-                }
+        .bs-wizard > .bs-wizard-step .bs-wizard-stepnum {
+            color: #ababab;
+            font-size: 14px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
 
-                .bs-wizard > .bs-wizard-step > .bs-wizard-dot {
-                    position: absolute;
-                    width: 20px;
-                    height: 20px;
-                    display: block;
-                    background: rgb(171, 171, 171);
-                    top: 30px;
-                    left: 50%;
-                    margin-top: -15px;
-                    margin-left: -15px;
-                    border-radius: 50%;
-                }
+        .bs-wizard > .active .bs-wizard-stepnum {
+            color: #585858;
+        }
 
-                    .bs-wizard > .bs-wizard-step > .bs-wizard-dot:after {
-                        content: ' ';
-                        width: 14px;
-                        height: 14px;
-                        background: #0b4775;
-                        border-radius: 50px;
-                        position: absolute;
-                        top: 3px;
-                        left: 3px;
-                    }
+        .bs-wizard > .bs-wizard-step .bs-wizard-info {
+            color: #999;
+            font-size: 14px;
+        }
 
-                .bs-wizard > .bs-wizard-step > .progress {
-                    position: relative;
-                    border-radius: 0px;
-                    height: 3px;
-                    box-shadow: none;
-                    margin: 25px 0;
-                }
+        .bs-wizard > .bs-wizard-step > .bs-wizard-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            display: block;
+            background: rgb(171, 171, 171);
+            top: 30px;
+            left: 50%;
+            margin-top: -15px;
+            margin-left: -15px;
+            border-radius: 50%;
+        }
 
-                    .bs-wizard > .bs-wizard-step > .progress > .progress-bar {
-                        width: 0px;
-                        box-shadow: none;
-                        background: rgb(153, 199, 234);
-                    }
+            .bs-wizard > .bs-wizard-step > .bs-wizard-dot:after {
+                content: ' ';
+                width: 14px;
+                height: 14px;
+                background: #0b4775;
+                border-radius: 50px;
+                position: absolute;
+                top: 3px;
+                left: 3px;
+            }
 
-                .bs-wizard > .bs-wizard-step.complete > .progress > .progress-bar {
-                    width: 100%;
-                }
+        .bs-wizard > .bs-wizard-step > .progress {
+            position: relative;
+            border-radius: 0px;
+            height: 3px;
+            box-shadow: none;
+            margin: 25px 0;
+        }
 
-                .bs-wizard > .bs-wizard-step.active > .progress > .progress-bar {
-                    width: 50%;
-                }
+            .bs-wizard > .bs-wizard-step > .progress > .progress-bar {
+                width: 0px;
+                box-shadow: none;
+                background: rgb(153, 199, 234);
+            }
 
-                .bs-wizard > .bs-wizard-step:first-child.active > .progress > .progress-bar {
-                    width: 0%;
-                }
+        .bs-wizard > .bs-wizard-step.complete > .progress > .progress-bar {
+            width: 100%;
+        }
 
-                .bs-wizard > .bs-wizard-step:last-child.active > .progress > .progress-bar {
-                    width: 100%;
-                }
+        .bs-wizard > .bs-wizard-step.active > .progress > .progress-bar {
+            width: 50%;
+        }
 
-                .bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot {
-                    background-color: #ababab;
-                }
+        .bs-wizard > .bs-wizard-step:first-child.active > .progress > .progress-bar {
+            width: 0%;
+        }
 
-                    .bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot:after {
-                        opacity: 0;
-                    }
+        .bs-wizard > .bs-wizard-step:last-child.active > .progress > .progress-bar {
+            width: 100%;
+        }
 
-                .bs-wizard > .bs-wizard-step:first-child > .progress {
-                    left: 50%;
-                    width: 50%;
-                }
+        .bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot {
+            background-color: #ababab;
+        }
 
-                .bs-wizard > .bs-wizard-step:last-child > .progress {
-                    width: 50%;
-                }
+            .bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot:after {
+                opacity: 0;
+            }
 
-                .bs-wizard > .bs-wizard-step.disabled a.bs-wizard-dot {
-                    pointer-events: none;
-                }
+        .bs-wizard > .bs-wizard-step:first-child > .progress {
+            left: 50%;
+            width: 50%;
+        }
+
+        .bs-wizard > .bs-wizard-step:last-child > .progress {
+            width: 50%;
+        }
+
+        .bs-wizard > .bs-wizard-step.disabled a.bs-wizard-dot {
+            pointer-events: none;
+        }
 
         .well {
             padding: 10px;
@@ -193,41 +196,42 @@
         }
 
         /*Check box*/
-        input[type="checkbox"]{
+        input[type="checkbox"] {
             position: absolute;
             right: 9000px;
         }
-        input[type="checkbox"] + .label-text:before {
-            content: "\f096";
-            font-family: "FontAwesome";
-            speak: none;
-            font-style: normal;
-            font-weight: normal;
-            font-variant: normal;
-            text-transform: none;
-            line-height: 1;
-            -webkit-font-smoothing: antialiased;
-            width: 1em;
-            display: inline-block;
-            margin-right: 5px;
-            font-size:20px;
-        }
 
-        input[type="checkbox"]:checked + .label-text:before {
-            content: "\f14a";
-            color: #2980b9;
-            animation: effect 250ms ease-in;
-        }
-
-        input[type="checkbox"]:disabled + .label-text {
-            color: #aaa;
-        }
-
-            input[type="checkbox"]:disabled + .label-text:before {
-                content: "\f0c8";
-                color: #ccc;
+            input[type="checkbox"] + .label-text:before {
+                content: "\f096";
+                font-family: "FontAwesome";
+                speak: none;
+                font-style: normal;
+                font-weight: normal;
+                font-variant: normal;
+                text-transform: none;
+                line-height: 1;
+                -webkit-font-smoothing: antialiased;
+                width: 1em;
+                display: inline-block;
+                margin-right: 5px;
+                font-size: 20px;
             }
-            /*checkbox End Here*/
+
+            input[type="checkbox"]:checked + .label-text:before {
+                content: "\f14a";
+                color: #2980b9;
+                animation: effect 250ms ease-in;
+            }
+
+            input[type="checkbox"]:disabled + .label-text {
+                color: #aaa;
+            }
+
+                input[type="checkbox"]:disabled + .label-text:before {
+                    content: "\f0c8";
+                    color: #ccc;
+                }
+        /*checkbox End Here*/
 
         div[id^=slider-range_] > div {
             position: absolute;
@@ -244,6 +248,10 @@
 
         .ui-slider-horizontal .ui-slider-handle {
             top: -0.8em;
+        }
+
+        .form-check {
+            display: inline-block;
         }
     </style>
 
@@ -342,17 +350,17 @@
             </div>
 
 
-            <div style="display:none;" class="col-md-12">
-                <div class="well ds_lightBlue">
-                    <div class="input-group">
-                        <input type="text" id="txtQuestionBankSearch" class="form-control" placeholder="Search keyword eg : sales,software engineer etc">
-                        <input type="hidden" id="hdnQuestionBankSearch" />
-                        @*<span class="input-group-btn">
-                                <button class="btn btn-default ds_darkBlue" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                            </span>*@
+            @*<div style="display:none;" class="col-md-12">
+                    <div class="well ds_lightBlue">
+                        <div class="input-group">
+                            <input type="text" id="txtQuestionBankSearch" class="form-control" placeholder="Search keyword eg : sales,software engineer etc">
+                            <input type="hidden" id="hdnQuestionBankSearch" />
+                            <span class="input-group-btn">
+                                    <button class="btn btn-default ds_darkBlue" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                </span>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </div>*@
 
         </div>
 
@@ -395,8 +403,8 @@
                                 <div class="form-check">
                                     <label>
                                         <input id=@item.Id type="checkbox" class="chkExamSubjectSelection" /><span class="label-text"></span>
-                                        </label>
-                                    </div>
+                                    </label>
+                                </div>
                             </td>
                             <td>
                                 <span id="spnQuestionBankName_@item.Id">@item.QuestionBankName - @item.QuestionBankDescription </span>
@@ -529,19 +537,31 @@
                                 {
                                     if (item.IsLocked)
                                     {
-                                        <input type="checkbox" class="clsFormSelection" id="@item.id" disabled checked />
+                                        <div class="form-check">
+                                            <label>
+                                                <input type="checkbox" class="clsFormSelection" id="@item.id" disabled checked /><span class="label-text">@item.DisplayFieldName</span>
+                                            </label>
+                                        </div>
                                     }
                                     else
                                     {
-                                        <input type="checkbox" class="clsFormSelection" id="@item.id" checked />
+                                        <div class="form-check">
+                                            <label>
+                                                <input type="checkbox" class="clsFormSelection" id="@item.id" checked /><span class="label-text">@item.DisplayFieldName</span>
+                                            </label>
+                                        </div>
                                     }
                                 }
                                 else
                                 {
-                                    <input type="checkbox" class="clsFormSelection" id="@item.id" />
+                                    <div class="form-check">
+                                        <label>
+                                            <input type="checkbox" class="clsFormSelection" id="@item.id" /><span class="label-text">@item.DisplayFieldName</span>
+                                        </label>
+                                    </div>
                                 }
                                 <input type="hidden" id="hdnFormId_@item.id" value="@item.id" />
-                                @item.DisplayFieldName
+                                
                             </td>
                             <td>@item.FieldType</td>
                             <td>@item.Values</td>
@@ -788,9 +808,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody id="tbodyUploadedUserDetail">
-                            
-                        </tbody>
+                        <tbody id="tbodyUploadedUserDetail"></tbody>
                     </table>
 
 
@@ -998,9 +1016,9 @@
             var postData = new Array();
             $('.clsUploadedStudents').each(function (i, obj) {
                 var elementId = obj.id;
-               
+
                     postData.push(elementId);
-                 
+
             });
             return postData;
 
@@ -1444,7 +1462,7 @@
                         }
                         else {
                             alert("Users Upload Failed");
-                            
+
                         }
 
                     },
@@ -1870,7 +1888,7 @@
 
                     // Get the options for this slider (specified above)
                     var opt = $("#slider-range_"+ modelListQB[items].Id).slider("option");
-                    console.log(opt);
+                    //console.log(opt);
 
                     // Get the number of possible values
                     var vals = opt.max - opt.min;
@@ -2043,7 +2061,7 @@
                                             },
                     success: function (data) {
                         debugger;
-                        console.log(data);
+                        //console.log(data);
                         if (data.questions!=null) {
                             selectedExamSyllabus = new Array();
                             var questions = data.questions;

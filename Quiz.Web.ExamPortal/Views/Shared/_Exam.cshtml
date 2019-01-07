@@ -1,0 +1,107 @@
+﻿@model List<Quiz.Web.DTO.Models.Questions>
+@{
+    ViewBag.Title = "StartExam";
+    int nxtSkip = Convert.ToInt32(ViewBag.Skip) + 1;
+    int prevSkip = Convert.ToInt32(ViewBag.Skip) == 0 ? Convert.ToInt32(ViewBag.Skip): Convert.ToInt32(ViewBag.Skip) - 1;
+    int nxtTake = Convert.ToInt32(ViewBag.Take) + 1;
+    int prevTake = Convert.ToInt32(ViewBag.Take) == 1 ? Convert.ToInt32(ViewBag.Take): Convert.ToInt32(ViewBag.Take) - 1;
+    Guid QuestionId = Model.FirstOrDefault().ID;
+
+}
+
+<h2>Showing Question @ViewBag.Take of  @ViewBag.Questions</h2>
+<div id="questions">
+</div>
+@foreach (var items in Model)
+{
+    if (!String.IsNullOrEmpty(items.MasterQuestion))
+    {
+        <h2>@items.MasterQuestion</h2>
+    }
+
+    if (!String.IsNullOrEmpty(items.Question))
+    {
+        <h2>@items.Question</h2>
+    }
+
+    if (!String.IsNullOrEmpty(items.OptionA))
+    {
+        <input type="radio" name="@items.ID" value="A">
+        <h2>@items.OptionA</h2>
+    }
+    if (!String.IsNullOrEmpty(items.OptionB))
+    {
+        <input type="radio" name="@items.ID" value="B">
+        <h2>
+            @items.OptionB
+        </h2>
+    }
+    if (!String.IsNullOrEmpty(items.OptionC))
+    {
+        <input type="radio" name="@items.ID" value="C">
+        <h2>
+            @items.OptionC
+        </h2>
+    }
+    if (!String.IsNullOrEmpty(items.OptionD))
+    {
+        <input type="radio" name="@items.ID" value="D">
+        <h2>
+            @items.OptionD
+        </h2>
+    }
+    if (!String.IsNullOrEmpty(items.OptionE))
+    {
+        <input type="radio" name="@items.ID" value="E">
+        <h2>
+            @items.OptionE
+        </h2>
+    }
+
+
+}
+@if(ViewBag.Take > 1)
+{
+<input type="button" value="Previous" onclick="GetQuestion('@prevSkip','@prevTake')" />
+}
+<input type="button" value="Submit" onclick="SaveExamAnswer('@Model.FirstOrDefault().MasterQuestionId')" />
+
+@if(ViewBag.Questions != ViewBag.Take)
+{
+<input type="button" value="Next" onclick="GetQuestion('@nxtSkip','@nxtTake')" />
+}
+
+<script>
+
+    function SaveExamAnswer(quesID) {
+
+        var questionId = '@QuestionId';
+        var answer = $("input[name='" + questionId + "']:checked").val();
+        debugger;
+        var status = "FAILED";
+        if (answer) {
+            
+        $.ajax({
+            url: '@Url.Action("SaveExamAnswer", "ExamLogin")?quesID=' + questionId + '&answer=' + answer,
+            type: "POST",
+            async: false,
+            contentType: "application/json",
+            dataType: "HTML",
+            success: function (result) {
+                GetQuestion('@nxtSkip', '@nxtTake');
+            },
+            
+            error: function (status) {
+            },
+            cache: false,
+            async: false
+            });
+
+        }
+            return status;
+            }
+    
+</script>
+
+
+

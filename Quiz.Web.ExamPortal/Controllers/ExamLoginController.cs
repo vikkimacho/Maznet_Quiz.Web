@@ -173,6 +173,7 @@ namespace Quiz.Web.ExamPortal.Controllers
             return Json(APIResponse, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
         public ActionResult SaveExamAnswer(string quesID, string answer)
         {
             string result = "FAILED";
@@ -223,7 +224,43 @@ namespace Quiz.Web.ExamPortal.Controllers
 
         public ActionResult StartExam()
         {
+            HttpClient client = new HttpClient();
+            List<Questions> questions = new List<Questions>();
+            Guid assesmentID = SessionHelper.sessionObjects.AssessmentID;
+            HttpResponseMessage response = client.GetAsync(apiUrl + "/Exam/GetAssesmentQuestions?assesmentID=" + assesmentID).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var result = response.Content.ReadAsStringAsync().Result;
+                questions = JsonConvert.DeserializeObject<List<Questions>>(result);
+                var limitedQus = questions.Take(1).Skip(0).ToList();
+                Session["QuestionsList"] = result;
+                ViewBag.LoginStatus = result;
+                return View();
+            }
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetQuestion(int skip,int take)
+        {
+            List<Questions> qusList = new List<Questions>();
+            ViewBag.Skip = skip;
+            ViewBag.Take = take;
+            try
+            {
+                string qusJSON = Session["QuestionsList"] as string;
+                if (!string.IsNullOrEmpty(qusJSON))
+                {
+                    var questions = JsonConvert.DeserializeObject<List<Questions>>(qusJSON);
+                    qusList = questions.Take(take).Skip(skip).ToList();
+                    ViewBag.Questions = questions.Count();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return PartialView("_Exam", qusList);
         }
 
     }

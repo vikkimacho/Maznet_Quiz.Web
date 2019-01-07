@@ -155,6 +155,7 @@
     <Content Include="Views\ExamLogin\Registration.cshtml" />
     <Content Include="Views\ExamLogin\AssessmentDetails.cshtml" />
     <Content Include="Views\ExamLogin\StartExam.cshtml" />
+    <Content Include="Views\Shared\_Exam.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

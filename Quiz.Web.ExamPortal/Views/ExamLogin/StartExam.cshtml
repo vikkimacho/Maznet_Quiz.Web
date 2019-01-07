@@ -1,7 +1,58 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "StartExam";
+    
 }
 
-<h2>StartExam</h2>
+<div>Registration closes in <span id="time">05:00</span> minutes!</div>
+<div id="questions">
+</div>
+<script>
 
+    GetQuestion(0, 1);
+
+    function GetQuestion(skip, take) {
+
+        var status = "FAILED";
+        $.ajax({
+            url: '@Url.Action("GetQuestion", "ExamLogin")',
+            data: JSON.stringify({ 'skip': parseInt(skip), 'take': parseInt(take) }),
+            type: "POST",
+            async: false,
+            contentType: "application/json",
+            dataType: "HTML",
+            success: function (result) {
+
+                $("#questions").html(result);
+            },
+            
+            error: function (status) {
+            },
+            cache: false,
+            async: false
+            });
+            return status;
+    }
+
+    function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10)
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                timer = duration;
+            }
+        }, 1000);
+    }
+
+    window.onload = function () {
+        var fiveMinutes = 60 * 5,
+            display = document.querySelector('#time');
+        startTimer(fiveMinutes, display);
+    };
+</script>
