@@ -80,27 +80,46 @@
         debugger;
         var status = "FAILED";
         if (answer) {
-            
-        $.ajax({
-            url: '@Url.Action("SaveExamAnswer", "ExamLogin")?quesID=' + questionId + '&answer=' + answer,
-            type: "POST",
-            async: false,
-            contentType: "application/json",
-            dataType: "HTML",
-            success: function (result) {
-                GetQuestion('@nxtSkip', '@nxtTake');
-            },
-            
-            error: function (status) {
-            },
-            cache: false,
-            async: false
+
+            $.ajax({
+                url: '@Url.Action("SaveExamAnswer", "ExamLogin")?quesID=' + questionId + '&answer=' + answer,
+                type: "POST",
+                async: false,
+                contentType: "application/json",
+                dataType: "HTML",
+                success: function (result) {
+                    GetQuestion('@nxtSkip', '@nxtTake');
+                },
+
+                error: function (status) {
+                },
+                cache: false,
+                async: false
             });
 
         }
-            return status;
-            }
-    
+        return status;
+    }
+    function copyToClipboard() {
+
+        var aux = document.createElement("input");
+        aux.setAttribute("value", "print screen disabled!");
+        document.body.appendChild(aux);
+        aux.select();
+        document.execCommand("copy");
+        // Remove it from the body
+        document.body.removeChild(aux);
+        //setTimeout(function () {
+        //    alert("Print screen disabled!");
+        //},1000)
+       
+    }
+
+    $(window).keyup(function (e) {
+        if (e.keyCode == 44) {
+            copyToClipboard();
+        }
+    });
 </script>
 
 
