@@ -645,12 +645,12 @@
                     @foreach (var item in Model.LQuestionBankModal)
                     {
                         <div class="form-group">
-                            <p id="p_slider_@item.Id">
+                            <p id="p_slider_@item.Id" style="display:none;">
                                 <label for="amount">@item.QuestionBankName - @item.QuestionBankDescription</label>
                                 <input class="clsSlider" type="text" id="txtSlider_@item.Id" readonly style="border:0; color:#f6931f; font-weight:bold;">
                             </p>
 
-                            <div id="slider-range_@item.Id"></div>
+                            <div id="slider-range_@item.Id" style="display:none;"></div>
                         </div>
                     }
 
@@ -1094,7 +1094,7 @@
                         },
                         success: function (data) {
                             debugger;
-                            if(data.Result == 'Success')
+                            if (data.Result == 'SUCCESS')
                             {
                                 successFulAlert("Assessment Created Successfully.");
                                 window.location.reload();

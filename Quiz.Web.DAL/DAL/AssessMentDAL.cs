@@ -163,24 +163,26 @@ namespace Quiz.Web.DAL.Home
                     //Schedule plan updation
                     TestEngineDBContext.AssessmentDetailMasters.Add(assesmentDetailMaster);
 
-
-                    if (postAssessmentModal.lstBulkScheduleIds.Any())
+                    if(postAssessmentModal.lstBulkScheduleIds!=null)
                     {
-                        List<AssessmentUserDetail> lstAssesmentdetailMaster = new List<AssessmentUserDetail>();
-                        foreach (var item in postAssessmentModal.lstBulkScheduleIds)
+                        if (postAssessmentModal.lstBulkScheduleIds.Any())
                         {
-                            AssessmentUserDetail assessmentUserDetail = new AssessmentUserDetail();
-                            assessmentUserDetail.AssessmentID = assesmentDetailMaster.ID;
-                            assessmentUserDetail.CreatedDate = dateTime;
-                            assessmentUserDetail.ID = Guid.NewGuid();
-                            assessmentUserDetail.IsDeleted = false;
-                            assessmentUserDetail.ModifiedDate = dateTime;
-                            assessmentUserDetail.UserID = item;
-                            lstAssesmentdetailMaster.Add(assessmentUserDetail);
+                            List<AssessmentUserDetail> lstAssesmentdetailMaster = new List<AssessmentUserDetail>();
+                            foreach (var item in postAssessmentModal.lstBulkScheduleIds)
+                            {
+                                AssessmentUserDetail assessmentUserDetail = new AssessmentUserDetail();
+                                assessmentUserDetail.AssessmentID = assesmentDetailMaster.ID;
+                                assessmentUserDetail.CreatedDate = dateTime;
+                                assessmentUserDetail.ID = Guid.NewGuid();
+                                assessmentUserDetail.IsDeleted = false;
+                                assessmentUserDetail.ModifiedDate = dateTime;
+                                assessmentUserDetail.UserID = item;
+                                lstAssesmentdetailMaster.Add(assessmentUserDetail);
+                            }
+                            TestEngineDBContext.AssessmentUserDetails.AddRange(lstAssesmentdetailMaster);
                         }
-                        TestEngineDBContext.AssessmentUserDetails.AddRange(lstAssesmentdetailMaster);
                     }
-
+                    
                     if (postAssessmentModal.SingleScheduleModal != null)
                     {
                         UserDetailMaster UserDetailMaster = new UserDetailMaster();
@@ -199,6 +201,7 @@ namespace Quiz.Web.DAL.Home
                         defaultRegistation.Email = postAssessmentModal.SingleScheduleModal.Email;
                         defaultRegistation.Password = postAssessmentModal.SingleScheduleModal.Password;
                         defaultRegistation.MobileNumber = postAssessmentModal.SingleScheduleModal.Mobile;
+                        defaultRegistation.UserName = postAssessmentModal.SingleScheduleModal.UserName;
 
                         TestEngineDBContext.DefaultRegistations.Add(defaultRegistation);
 
@@ -229,18 +232,20 @@ namespace Quiz.Web.DAL.Home
                             TestEngineDBContext.UserDetailMasters.Add(UserDetailMaster);
 
                             List<DefaultRegistation> lstDefaultReg = new List<DefaultRegistation>();
-                            foreach (var items in postAssessmentModal.CommonLoginModal.CLSendLoginDetailsto.Split(','))
+                            if (postAssessmentModal.CommonLoginModal.CLSendLoginDetailsto != null)
                             {
-                                DefaultRegistation defaultRegistation = new DefaultRegistation();
-                                defaultRegistation.UserDetailId = UserDetailMaster.Id;
-                                defaultRegistation.ID = Guid.NewGuid();
-                                defaultRegistation.Name = postAssessmentModal.SingleScheduleModal.FirstName + " " + postAssessmentModal.SingleScheduleModal.LastName;
-                                defaultRegistation.Email = postAssessmentModal.SingleScheduleModal.Email;
-                                defaultRegistation.Password = postAssessmentModal.SingleScheduleModal.Password;
-                                defaultRegistation.MobileNumber = postAssessmentModal.SingleScheduleModal.Mobile;
-                                lstDefaultReg.Add(defaultRegistation);
+                                foreach (var items in postAssessmentModal.CommonLoginModal.CLSendLoginDetailsto.Split(','))
+                                {
+                                    DefaultRegistation defaultRegistation = new DefaultRegistation();
+                                    defaultRegistation.UserDetailId = UserDetailMaster.Id;
+                                    defaultRegistation.ID = Guid.NewGuid();
+                                    defaultRegistation.Name = postAssessmentModal.SingleScheduleModal.FirstName + " " + postAssessmentModal.SingleScheduleModal.LastName;
+                                    defaultRegistation.Email = postAssessmentModal.SingleScheduleModal.Email;
+                                    defaultRegistation.Password = postAssessmentModal.SingleScheduleModal.Password;
+                                    defaultRegistation.MobileNumber = postAssessmentModal.SingleScheduleModal.Mobile;
+                                    lstDefaultReg.Add(defaultRegistation);
+                                }
                             }
-
                             AssessmentUserDetail assessmentUserDetail = new AssessmentUserDetail();
                             assessmentUserDetail.AssessmentID = assesmentDetailMaster.ID;
                             assessmentUserDetail.CreatedDate = dateTime;
@@ -395,7 +400,7 @@ namespace Quiz.Web.DAL.Home
                     return UploadedDetail;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }

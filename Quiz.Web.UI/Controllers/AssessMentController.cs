@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Configuration;
 
 namespace Quiz.Web.UI.Controllers
 {
@@ -258,51 +259,55 @@ namespace Quiz.Web.UI.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var retresult = response.Content.ReadAsStringAsync().Result;
-
-                    if (postAssessmentModal.lstBulkScheduleIds.Any())
+                    string assessmentID = JsonConvert.DeserializeObject<string>(retresult);
+                    if (postAssessmentModal.lstBulkScheduleIds != null)
                     {
-                        var userDetailId = postAssessmentModal.lstBulkScheduleIds.FirstOrDefault();
-
-                     
-                        HttpClient clientuser = new HttpClient();
-
-                        HttpResponseMessage responsfinal = clientuser.GetAsync(apiUrl + "/Assessment/GetUploadedUserDetail?UserDetailId=" + userDetailId).Result;
-                        if (responsfinal.IsSuccessStatusCode)
+                        if (postAssessmentModal.lstBulkScheduleIds.Any())
                         {
-                            Result = responsfinal.Content.ReadAsStringAsync().Result;
+                            var userDetailId = postAssessmentModal.lstBulkScheduleIds.FirstOrDefault();
 
-                        
-                        
-                            Result = responsfinal.Content.ReadAsStringAsync().Result;
 
-                            var finalUserdetails = JsonConvert.DeserializeObject<List<UsersDetailsModel>>(Result);
+                            HttpClient clientuser = new HttpClient();
 
-                            foreach (var item in finalUserdetails)
+                            HttpResponseMessage responsfinal = clientuser.GetAsync(apiUrl + "/Assessment/GetUploadedUserDetail?UserDetailId=" + userDetailId).Result;
+                            if (responsfinal.IsSuccessStatusCode)
                             {
-                                if (item != null)
+                                Result = responsfinal.Content.ReadAsStringAsync().Result;
+
+
+
+                                Result = responsfinal.Content.ReadAsStringAsync().Result;
+
+                                var finalUserdetails = JsonConvert.DeserializeObject<List<UsersDetailsModel>>(Result);
+
+                                foreach (var item in finalUserdetails)
                                 {
+                                    if (item != null)
+                                    {
 
 
-                                    var password = item.Password;
+                                        var password = item.Password;
 
-                                    GoogleMail mail = new GoogleMail();
-                                    mail.Body = "Hi " + item.Name + ", Password  - " + password;
-                                    mail.Subject = "Forgot Password";
-                                    mail.ToMail = item.Email;
-                                    var data = JsonConvert.SerializeObject(mail);
-                                    response = client.PostAsJsonAsync(apiUrl + "/GoogleMail/SendGoogleMail", mail).Result;
-                                    result = response.Content.ReadAsStringAsync().Result;
-                                    result = JsonConvert.DeserializeObject<string>(result);
+                                        GoogleMail mail = new GoogleMail();
+                                        mail.Body = "Hi " + item.Name + ", Password  - " + password;
+                                        mail.Subject = "Forgot Password";
+                                        mail.ToMail = item.Email;
+                                        var data = JsonConvert.SerializeObject(mail);
+                                        response = client.PostAsJsonAsync(apiUrl + "/GoogleMail/SendGoogleMail", mail).Result;
+                                        result = response.Content.ReadAsStringAsync().Result;
+                                        result = JsonConvert.DeserializeObject<string>(result);
 
+                                    }
                                 }
                             }
-                        }
 
+                        }
                     }
-                    else if(postAssessmentModal.SingleScheduleModal !=null)
+                    else if (postAssessmentModal.SingleScheduleModal != null)
                     {
                         GoogleMail mail = new GoogleMail();
-                        mail.Body = "Hi " + postAssessmentModal.SingleScheduleModal.FirstName + ", Password  - " + postAssessmentModal.SingleScheduleModal.Password;
+                        string url = ConfigurationManager.AppSettings["ExamPortalUrl"] + assessmentID;
+                        mail.Body = "Hi " + postAssessmentModal.SingleScheduleModal.FirstName + ",UserName -" + postAssessmentModal.SingleScheduleModal.UserName + " Password  - " + postAssessmentModal.SingleScheduleModal.Password + "<a href=\""+ url + "\">Click Here</a>";
                         mail.Subject = "Assessment Detail";
                         mail.ToMail = postAssessmentModal.SingleScheduleModal.Email;
                         var data = JsonConvert.SerializeObject(mail);
@@ -311,8 +316,11 @@ namespace Quiz.Web.UI.Controllers
                         result = JsonConvert.DeserializeObject<string>(result);
 
                     }
+                    if (assessmentID.ToUpper() != "FAILED")
+                    {
+                        result = "SUCCESS";
+                    }
 
-                    result = JsonConvert.DeserializeObject<string>(retresult);
                 }
             }
             catch (Exception ex)

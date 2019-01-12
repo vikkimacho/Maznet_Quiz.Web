@@ -40,8 +40,12 @@ namespace Quiz.Web.API.Controllers
             {
                 var newAssessemntGuid = Guid.NewGuid();
                 //Need to send notification emails based on the selection.
-
-                return ObjAssessmentBll.PostCreateAssessment(postAssessmentModal, newAssessemntGuid);
+                string result = ObjAssessmentBll.PostCreateAssessment(postAssessmentModal, newAssessemntGuid);
+                if (result.ToUpper() == "SUCCESS")
+                {
+                    result = Convert.ToString(newAssessemntGuid);
+                }
+                return result;
             }
             catch (Exception ex)
             {
@@ -144,7 +148,7 @@ namespace Quiz.Web.API.Controllers
             {
                 return ObjAssessmentBll.GetUploadedUserDetail(UserDetailId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
