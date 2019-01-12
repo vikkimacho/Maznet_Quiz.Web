@@ -232,7 +232,7 @@ namespace Quiz.Web.ExamPortal.Controllers
             {
                 var result = response.Content.ReadAsStringAsync().Result;
                 questions = JsonConvert.DeserializeObject<List<Questions>>(result);
-                ShuffleList(questions);
+                questions = ShuffleList(questions);
                 var limitedQus = questions.Take(1).Skip(0).ToList();
                 Session["QuestionsList"] = questions;
                 ViewBag.LoginStatus = result;
