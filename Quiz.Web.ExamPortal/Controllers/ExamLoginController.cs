@@ -232,8 +232,9 @@ namespace Quiz.Web.ExamPortal.Controllers
             {
                 var result = response.Content.ReadAsStringAsync().Result;
                 questions = JsonConvert.DeserializeObject<List<Questions>>(result);
+                ShuffleList(questions);
                 var limitedQus = questions.Take(1).Skip(0).ToList();
-                Session["QuestionsList"] = result;
+                Session["QuestionsList"] = questions;
                 ViewBag.LoginStatus = result;
                 return View();
             }
@@ -241,20 +242,16 @@ namespace Quiz.Web.ExamPortal.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetQuestion(int skip,int take)
+        public ActionResult GetQuestion(int skip, int take)
         {
             List<Questions> qusList = new List<Questions>();
             ViewBag.Skip = skip;
             ViewBag.Take = take;
             try
             {
-                string qusJSON = Session["QuestionsList"] as string;
-                if (!string.IsNullOrEmpty(qusJSON))
-                {
-                    var questions = JsonConvert.DeserializeObject<List<Questions>>(qusJSON);
-                    qusList = questions.Take(take).Skip(skip).ToList();
-                    ViewBag.Questions = questions.Count();
-                }
+                qusList = Session["QuestionsList"] as List<Questions>;
+                qusList = qusList.Take(take).Skip(skip).ToList();
+                ViewBag.Questions = qusList.Count();
             }
             catch (Exception)
             {
@@ -263,6 +260,22 @@ namespace Quiz.Web.ExamPortal.Controllers
             return PartialView("_Exam", qusList);
         }
 
-    }
+        private List<Questions> ShuffleList(List<Questions> inputList)
+        {
+            List<Questions> randomList = new List<Questions>();
+
+            Random r = new Random();
+            int randomIndex = 0;
+            while (inputList.Count > 0)
+            {
+                randomIndex = r.Next(0, inputList.Count); //Choose a random object in the list
+                randomList.Add(inputList[randomIndex]); //add it to the new, random list
+                inputList.RemoveAt(randomIndex); //remove to avoid duplicates
+            }
+
+            return randomList; //return the new random list
+        }
 
     }
+
+}

@@ -1177,6 +1177,7 @@
         var IsDirectEnvironment = false;
 
         function ShowStep2() {
+            debugger;
             var validateStatus = false;
             if (IsDirectEnvironment == false) {
                 validateStatus = ValidateStep2();
@@ -1206,7 +1207,7 @@
 
 
                 }
-
+                debugger;
                 if (IsDirectEnvironment == true) {
                     $("p[id^=p_slider_]").hide();
                     $("div[id^=slider-range_]").hide();
@@ -1218,6 +1219,8 @@
                 }
                 else {
                     $('.chkExamSubjectSelection').each(function (i, obj) {
+                        debugger;
+                        console.log(obj.id);
                         if ($('#' + obj.id).is(':checked')) {
                             $('#p_slider_' + obj.id).show();
                             $('#slider-range_' + obj.id).show();
@@ -1332,6 +1335,7 @@
 
 
         function ShowStep3() {
+            debugger;
             var validateStatus = ValidateStep3();
             if (validateStatus) {
                 $('#divStep1').hide();
