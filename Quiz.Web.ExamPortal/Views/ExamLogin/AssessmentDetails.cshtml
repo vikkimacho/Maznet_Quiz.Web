@@ -2,26 +2,42 @@
 @{
     ViewBag.Title = "AssessmentDetails";
 }
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="blue-title ml-3">Module Description</h3>
+    </div>
+    <div class="col-md-12">
+        <div class="clearfix user-details">
+            <h2>Hi User , Your Assesssment Details as below</h2>
 
-<h2>Hi User , Your Assesssment Details as below</h2>
 
+            <table class="table table-bg">
+                <thead>
+                    <tr>
+                        <th>Question Bank Name</th>
+                        <th>Duration</th>
+                        <th>No. Of Questions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var Item in Model)
+                    {
 
-<table style="width:100%">
-    <tr>
-        <th><h3>Question Bank Name</h3></th>
-        <th><h3>Duration</h3></th>
-        <th><h3>No. Of Questions</h3></th>
-    </tr>
-    @foreach (var Item in Model)
-    {
-    <tr>
-        <td><h3>@Item.QuestionBankName</h3></td>
-        <td><h3>@Item.Duration</h3></td>
-        <td><h3>@Item.NOOFQUESTIONS</h3></td>
-    </tr>
-    }
-</table>
-<input type="button" onclick="StartExam()" value="Start Test"/>
+                        <tr>
+                            <td>@Item.QuestionBankName</td>
+                            <td>@Item.Duration</td>
+                            <td>@Item.NOOFQUESTIONS</td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+            <div class="start test pull-right">
+                <span class="start-txt">Click here to begin the test</span><button class="btn btn-primary" type="button" onclick="StartExam()" value="Start Test">Start Test</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 
     function StartExam() {

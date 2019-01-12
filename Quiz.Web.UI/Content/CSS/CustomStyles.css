@@ -363,4 +363,70 @@ td a .delete-icon {
     border-bottom: 1px solid #b7b7b7;
     border-top: none;
 }
+.table-white {
+    background:#fff;
+    border:1px solid #b7b7b7;
+}
+#tblCandidateForms_wrapper {
+    background:#fff
+}
+.cn-table thead tr th {
+    border-right:1px solid #b7b7b7;
+}
+
+.nav-tabs > li > a {
+   
+    color: #fff;
+    background: #585858;
+    font-weight: 600;
+    letter-spacing: .4px;
+}
+    .nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
+        background: #585858;
+        border: 1px solid #585858;
+    }
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    color: #fff;
+    cursor: default;
+    background-color: #207bb2;
+    border: 1px solid #207bb2;
+    border-bottom-color: transparent;
+}
+.nav-tabs {
+    border-bottom: 0px solid #ddd;
+    
+}
+#myTabContent {
+    border: 1px solid #ddd;
+    margin-bottom: 25px;
+    padding: 20px 15px;
+}
+#txtAreaAlertEmail {
+    margin:25px 0px;
+}
+.in-label {
+    float: left;
+    padding-left: 20px;
+    padding-top: 8px;
+    padding-right: 15px;
+    color: #585858;
+}
+  .date-time-row input{
+border-right:0;
+box-shadow:none;
+}
+    .date-time-row input:focus {
+        outline: 0;
+        box-shadow: none;
+        border-color: #ccc;
+    }
+.date-time-row .input-group-addon {
+    color: #207bb2;
+    background:#fff;
+}
+.date-time-row {
+    margin: 0;
+    background: rgb(242,242,242);
+    padding: 25px 0;
+}
 /*End Here*/

@@ -355,191 +355,207 @@
 </script>
 @if (Model.Count > 0)
 {
-    <table>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="blue-title">Personal Information</h3>
+    </div>
+    <div class="col-md-12 gray-bg">
+        
+    <form class="form-horizontal register-form">
         @foreach (var item in Model)
         {
             i++;
             if (item.FieldName == "EmailId")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>@item.DisplayFieldName</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtEmail" placeholder="@item.DisplayFieldName" /> <span id="spnemail" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control @isMandatory" id="txtEmail" placeholder="@item.DisplayFieldName" /> <span id="spnemail" style="display:none">*required</span>
+                    </div>
+                    </div>
             }
 
             else if (item.FieldName == "Name")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>@item.DisplayFieldName</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtName" placeholder="@item.DisplayFieldName" /> <span id="spnname" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtName" placeholder="@item.DisplayFieldName" /> <span id="spnname" style="display:none">*required</span></div>
+                </div>
             }
 
             else if (item.FieldName == "LastName")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>@item.DisplayFieldName</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtLastName" placeholder="@item.DisplayFieldName" /> <span id="spnlastname" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtLastName" placeholder="@item.DisplayFieldName" /> <span id="spnlastname" style="display:none">*required</span></div>
+                </div>
             }
 
             else if (item.FieldName == "Gender")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>@item.DisplayFieldName</label></td>
-                    <td>
-                        <input type="radio" class="form-control @isMandatory" name="gender" value="Male" />
-                        <input type="radio" class="form-control @isMandatory" name="gender" value="Female" />
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
+                    <div class="col-sm-9">
+                        <label class="radio-inline">
+                            <input type="radio" class="@isMandatory" name="gender" value="Male" /> Male
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" class="@isMandatory" name="gender" value="Female" /> Female
+                        </label>
+                        
                         <span id="spngender" style="display:none">*required</span>
-                    </td>
-                </tr>
+                    </div>
+                </div>
             }
 
             else if (item.FieldName == "MobileNo")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>@item.DisplayFieldName</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtMobileNo" /> <span id="spnmobile" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtMobileNo" /> <span id="spnmobile" style="display:none">*required</span></div>
+                </div>
             }
 
             else if (item.FieldName == "DateofBirth")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>@item.DisplayFieldName</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtDateofBirth" placeholder="DD/MM/YYYY" /> <span id="spndob" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtDateofBirth" placeholder="DD/MM/YYYY" /> <span id="spndob" style="display:none">*required</span></div>
+                </div>
             }
             else if (item.FieldName == "10thBoardName")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>@item.DisplayFieldName</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtSSLCBoard" placeholder="@item.DisplayFieldName" /> <span id="spnsslcboard" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtSSLCBoard" placeholder="@item.DisplayFieldName" /> <span id="spnsslcboard" style="display:none">*required</span></div>
+                </div>
             }
             else if (item.FieldName == "10thPassingYear")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>10th Passedout Year</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtSSLCYear" placeholder="(Ex - 2018)" /> <span id="spnsslcyear" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">10th Passedout Year</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtSSLCYear" placeholder="(Ex - 2018)" /> <span id="spnsslcyear" style="display:none">*required</span></div>
+                </div>
             }
             else if (item.FieldName == "10thPercentage")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>@item.DisplayFieldName</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtSSLCPerentage" placeholder="(Ex - 80%)" /> <span id="spnsslcperentage" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtSSLCPerentage" placeholder="(Ex - 80%)" /> <span id="spnsslcperentage" style="display:none">*required</span></div>
+                </div>
             }
             else if (item.FieldName == "12thBoardName")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>@item.DisplayFieldName</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtHSCBoard" placeholder="@item.DisplayFieldName" /> <span id="spnhscboard" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtHSCBoard" placeholder="@item.DisplayFieldName" /> <span id="spnhscboard" style="display:none">*required</span></div>
+                </div>
             }
             else if (item.FieldName == "12thPassingYear")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>@item.DisplayFieldName</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtHSCYear" placeholder="@item.DisplayFieldName" /> <span id="spnhscyear" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtHSCYear" placeholder="@item.DisplayFieldName" /> <span id="spnhscyear" style="display:none">*required</span></div>
+                </div>
             }
             else if (item.FieldName == "12thPercentage")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>@item.DisplayFieldName</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtHSCPercentage" placeholder="@item.DisplayFieldName" /> <span id="spnhscpercentage" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtHSCPercentage" placeholder="@item.DisplayFieldName" /> <span id="spnhscpercentage" style="display:none">*required</span></div>
+                </div>
             }
 
             else if (item.FieldName == "Degree")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>@item.DisplayFieldName</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtDegree" placeholder="@item.DisplayFieldName" /><span id="spndegree" style="display:none">*required</span> </td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtDegree" placeholder="@item.DisplayFieldName" /><span id="spndegree" style="display:none">*required</span> </div>
+                </div>
             }
             else if (item.FieldName == "DegreeSpecialization")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>@item.DisplayFieldName</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtDegreeBranch" placeholder="(Ex - CSE)" /> <span id="spnbranch" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtDegreeBranch" placeholder="(Ex - CSE)" /> <span id="spnbranch" style="display:none">*required</span></div>
+                </div>
             }
             else if (item.FieldName == "CollegePercentage")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>@item.DisplayFieldName</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtDegreePercentage" placeholder="@item.DisplayFieldName" /> <span id="spndegreepercenatage" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtDegreePercentage" placeholder="@item.DisplayFieldName" /> <span id="spndegreepercenatage" style="display:none">*required</span></div>
+                </div>
             }
             else if (item.FieldName == "DegreePassOutYear")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>@item.DisplayFieldName</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtDegreeYear" placeholder="(Ex - 2019)" /> <span id="spndegreeyear" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtDegreeYear" placeholder="(Ex - 2019)" /> <span id="spndegreeyear" style="display:none">*required</span></div>
+                </div>
             }
             else if (item.FieldName == "CollegeName")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>@item.DisplayFieldName</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtCollege" placeholder="@item.DisplayFieldName" /> <span id="spncollege" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtCollege" placeholder="@item.DisplayFieldName" /> <span id="spncollege" style="display:none">*required</span></div>
+                </div>
             }
             else if (item.FieldName == "TechnicalSkills")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>@item.DisplayFieldName</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtTechSkills" placeholder="@item.DisplayFieldName" /> <span id="spntech" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtTechSkills" placeholder="@item.DisplayFieldName" /> <span id="spntech" style="display:none">*required</span></div>
+                </div>
             }
             else if (item.FieldName == "CurrentCity")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>City</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtCity" placeholder="City" /> <span id="spncity" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">City</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtCity" placeholder="City" /> <span id="spncity" style="display:none">*required</span></div>
+                </div>
             }
             else if (item.FieldName == "CurrentState")
             {
                 string isMandatory = item.IsMandatory ? "mandatory" : string.Empty;
-                <tr>
-                    <td><label>State</label></td>
-                    <td><input type="text" class="form-control @isMandatory" id="txtState" placeholder="State" /> <span id="spnstate" style="display:none">*required</span></td>
-                </tr>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">State</label>
+                    <div class="col-sm-9"><input type="text" class="form-control @isMandatory" id="txtState" placeholder="State" /> <span id="spnstate" style="display:none">*required</span></div>
+                </div>
             }
 
             if (i == Model.Count())
             {
-                <tr>
-                    <td>
-                        <input type="button" value="Register" id="btnRegister" />
-                    </td>
-                </tr>
+                <div class="form-group">
+                    <div class="row text-right">
+                        <button class="btn btn-primary btn-blue" type="button" value="Register" id="btnRegister">Continue</button>
+                        <button class="btn btn-secondary btn-gray" type="button" value="" id="">Cancel</button>
+                    </div>
+                </div>
 
             }
         }
-    </table>
+    </form>
+    </div>
+</div>
 }
 
