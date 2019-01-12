@@ -188,8 +188,11 @@ namespace Quiz.Web.UI.Controllers
                         for (int i = 0; i < rowCount; i++)
                         {
                             QuestionsDetailsView questionDetail = new QuestionsDetailsView();
-                            string MasterQuestion = dt.Rows[i]["MasterQuestion"] != DBNull.Value ? dt.Rows[i]["MasterQuestion"].ToString().Trim().ToUpper() : string.Empty;
-                            questionDetail.MasterQuestion = MasterQuestion.Trim();
+                            if (!string.IsNullOrEmpty(dt.Rows[i].ItemArray[0].ToString()))
+                            {
+                                string MasterQuestion = dt.Rows[i]["MasterQuestion"] != DBNull.Value ? dt.Rows[i]["MasterQuestion"].ToString().Trim().ToUpper() : string.Empty;
+                                questionDetail.MasterQuestion = MasterQuestion.Trim();
+                            }
                             string Question = dt.Rows[i]["Question"] != DBNull.Value ? dt.Rows[i]["Question"].ToString().Trim().ToUpper() : string.Empty;
                             questionDetail.Question = Question.Trim();
                             string OptionA = dt.Rows[i]["OptionA"] != DBNull.Value ? dt.Rows[i]["OptionA"].ToString().Trim().ToUpper() : string.Empty;
@@ -309,7 +312,7 @@ namespace Quiz.Web.UI.Controllers
                                 questionBankDetail.questionsDetailsViews = questionBankDetail.questionsDetailsViews.Where(x => string.IsNullOrEmpty(x.MasterQuestion)).ToList();
                                 foreach (var items in masterlist)
                                 {
-                                    for(var i = 0; i <= masterlist.Count; i++)
+                                    for(var i = 0; i <= masterlist.Count - 1; i++)
                                     {
                                         if(items.MasterQuestion == masterlist[i].MasterQuestion)
                                         {
