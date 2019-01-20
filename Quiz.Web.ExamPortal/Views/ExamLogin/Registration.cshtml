@@ -7,7 +7,7 @@
 <script>
     $(document).ready(function () {
         $('#btnRegister').click(function () {
-            debugger;
+            
             var status = true;
             var txtEmail = $('#txtEmail').val();
             if (!txtEmail) {
@@ -293,30 +293,24 @@
                     'Major': txtDegreeBranch
 
                 }
+                debugger;
+                           
 
                 $.ajax({
-                    type: "POST",
-                    //url: '@Url.Action("UpdateUser", "ExamLogin")?usersDetailsModel=' + data + "&assessmentID=" + '@assessmentID',
-                    url: '/ExamLogin/UpdateUser',
-                    data: JSON.stringify(data),
+                    url: '@Url.Action("UpdateUser", "ExamLogin")?obj=' +JSON.stringify(data),
+                    type: "POST",            
                     contentType: "application/json",
                     dataType: "json",
-                    success: function (Result) {
-                        if (Result.Result == true) {
-                            window.location.href = "/ExamLogin/AssessmentDetails";
-                        }
-                        else {
-                            alert("Update Failed");
-                        }
-                        //window.location.reload();
+                    success: function (result) {
+                        if (result.Message != "FAILED") {
+                        AssessmentDetails();
+                    }
                     },
-                    error: function (xhr, status, p3, p4) {
-                        var err = "Error " + " " + status + " " + p3 + " " + p4;
-                        if (xhr.responseText && xhr.responseText[0] == "{")
-                            err = JSON.parse(xhr.responseText).Message;
-
+                    error: function (status) {
+                    debugger;
                     },
-                    cache: false
+                    cache: false,
+                    async: false
                 });
 
             }
@@ -327,17 +321,13 @@
 
             $.ajax({
                     type: "POST",
-                    url: '/ExamLogin/AssessmentDetails',
-                    contentType: "application/json",
-                    dataType: "json",
-                    success: function (Result) {
-                        if (Result.Result == true) {
-
-                        }
-                        else {
-
-                        }
-                        window.location.reload();
+                    url: '@Url.Action("AssessmentDetails", "ExamLogin")',
+                    contentType: "application/html",
+                    dataType: "html",
+                success: function (Result) {
+                    $('#divRegistration').hide();
+                    $('#divAssessment').html(Result);
+                        //window.location.reload();
                     },
                     error: function (xhr, status, p3, p4) {
                         var err = "Error " + " " + status + " " + p3 + " " + p4;
@@ -355,7 +345,7 @@
 </script>
 @if (Model.Count > 0)
 {
-<div class="row">
+<div class="row" id="divRegistration">
     <div class="col-md-12">
         <h3 class="blue-title">Personal Information</h3>
     </div>
@@ -557,5 +547,8 @@
     </form>
     </div>
 </div>
+
+    <div id="divAssessment"></div>
+    
 }
 

@@ -147,14 +147,14 @@ namespace Quiz.Web.ExamPortal.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateUser(UsersDetailsModel usersDetailsModel)
+        public ActionResult UpdateUser(string obj)
         {
-
-
+            APIResponse = new APIResponse();
             try
             {
+                UsersDetailsModel usersDetailsModel = JsonConvert.DeserializeObject<UsersDetailsModel>(obj);
                 HttpClient client = new HttpClient();
-                usersDetailsModel.Id = SessionHelper.sessionObjects.UserID;
+                usersDetailsModel.Id = SessionHelper.sessionObjects.UserID;          
                 usersDetailsModel.assessmentID = SessionHelper.sessionObjects.AssessmentID;
                 var result = client.PostAsJsonAsync(apiUrl + "/UserManagement/UpdateUser", usersDetailsModel).Result;
                 if (result.IsSuccessStatusCode)
@@ -164,10 +164,10 @@ namespace Quiz.Web.ExamPortal.Controllers
                     APIResponse = JsonConvert.DeserializeObject<APIResponse>(Result);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+
             }
 
             return Json(APIResponse, JsonRequestBehavior.AllowGet);
@@ -196,6 +196,32 @@ namespace Quiz.Web.ExamPortal.Controllers
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SubmitExam()
+        {
+            APIResponse result = new APIResponse();
+            try
+            {
+                    HttpClient client = new HttpClient();
+                    Guid assessmentID = SessionHelper.sessionObjects.AssessmentID;
+                    Guid userID = SessionHelper.sessionObjects.UserID;
+                    if (assessmentID != Guid.Empty && userID != Guid.Empty)
+                    {
+                        var response = client.PostAsJsonAsync(apiUrl + "/Exam/SubmitExam?assesmentID=" + assessmentID + "&userID="
+                            + userID, string.Empty).Result;
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var responseString = response.Content.ReadAsStringAsync().Result;
+                            result = JsonConvert.DeserializeObject<APIResponse>(responseString);
+                        }
+                    }                
             }
             catch (Exception ex)
             {
@@ -250,8 +276,9 @@ namespace Quiz.Web.ExamPortal.Controllers
             try
             {
                 qusList = Session["QuestionsList"] as List<Questions>;
-                qusList = qusList.Take(take).Skip(skip).ToList();
                 ViewBag.Questions = qusList.Count();
+                qusList = qusList.Take(take).Skip(skip).ToList();
+                
             }
             catch (Exception)
             {
@@ -274,6 +301,11 @@ namespace Quiz.Web.ExamPortal.Controllers
             }
 
             return randomList; //return the new random list
+        }
+
+        public ActionResult ThankYou()
+        {
+            return View();
         }
 
     }

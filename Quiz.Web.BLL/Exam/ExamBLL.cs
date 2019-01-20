@@ -111,6 +111,20 @@ namespace Quiz.Web.BLL.Exam
             return result;
         }
 
+        public APIResponse SubmitExam(Guid assesmentID, Guid userID)
+        {
+            APIResponse result = new APIResponse();
+            try
+            {
+                result = examDAL.SubmitExam(assesmentID, userID);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
+
         public List<Questions> GetAssesmentQuestions(Guid assesmentID)
         {
             List<Questions> questionslists = new List<Questions>();

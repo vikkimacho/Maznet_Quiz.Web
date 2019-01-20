@@ -44,9 +44,12 @@ namespace Quiz.Web.DAL.DAL
                            , new SqlParameter("@Username", username)
                            , new SqlParameter("@Password", password)
                            ).FirstOrDefault();
-                    result.Result = true;
-                    result.Message = "SUCCESS";
-                    result.Guid = validateResult;
+                    if(validateResult.ToString() != "00000000-0000-0000-0000-000000000000")
+                    {
+                        result.Result = true;
+                        result.Message = "SUCCESS";
+                        result.Guid = validateResult;
+                    }
 
                 }
             }
@@ -119,6 +122,24 @@ namespace Quiz.Web.DAL.DAL
                             }
                         }
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
+
+        public APIResponse SubmitExam(Guid assesmentID, Guid userID)
+        {
+            APIResponse result = new APIResponse();
+            try
+            {
+                using (DBEntities dbEntities = new DBEntities())
+                {
+                    var SubmitExam = dbEntities.DefaultRegistations.FirstOrDefault(x => x.ID == userID);
+                    SubmitExam.IsExamCompleted = true;
                 }
             }
             catch (Exception ex)

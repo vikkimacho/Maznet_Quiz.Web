@@ -100,6 +100,7 @@ namespace Quiz.Web.DAL.DAL
                         defaultRegistation.ModifiedDate = dateTime;;
                         defaultRegistation.CreatedDate = dateTime;;
                         defaultRegistation.IsDeleted = false;
+                        defaultRegistation.IsExamCompleted = false;
                         defaultRegistation.UserName = item.Email;
                         testEngineEntities.DefaultRegistations.Add(defaultRegistation);
 
@@ -202,6 +203,8 @@ namespace Quiz.Web.DAL.DAL
                         data.ModifiedDate = dateTime;;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
+                        response.Message = "SUCCESS";
+                        
                     }
 
                 }

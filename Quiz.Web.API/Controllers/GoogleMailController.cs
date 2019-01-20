@@ -42,13 +42,14 @@ namespace Quiz.Web.API.Controllers
             try
             {
                 string credentialsPath = ConfigurationManager.AppSettings["GSuiteCredntial"];
-                 
+                string credentialsPathNew = ConfigurationManager.AppSettings["GSuiteCredentialNew"];
+
                 UserCredential credential;
                 //read credentials file
                 using (FileStream stream = new FileStream(credentialsPath, FileMode.Open, FileAccess.Read))
                 {
                     string credPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                    credPath = @"\packagejson\credentialsnew.json";
+                    credPath = credentialsPathNew;
                     credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets, Scopes, "user", CancellationToken.None, new FileDataStore(credPath, true)).Result;
                 }
 

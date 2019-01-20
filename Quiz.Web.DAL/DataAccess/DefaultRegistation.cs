@@ -41,6 +41,7 @@ namespace Quiz.Web.DAL.DataAccess
         public Nullable<bool> IsDeleted { get; set; }
         public string UserName { get; set; }
         public string SSLCPassedOutYear { get; set; }
+        public Nullable<bool> IsExamCompleted { get; set; }
     
         public virtual UserDetailMaster UserDetailMaster { get; set; }
     }

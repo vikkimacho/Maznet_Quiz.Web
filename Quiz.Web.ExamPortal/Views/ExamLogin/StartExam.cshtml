@@ -55,4 +55,33 @@
             display = document.querySelector('#time');
         startTimer(fiveMinutes, display);
     };
+
+
+    
+ 
+
+        @*function SubmitExam() {
+
+        var status = "FAILED";
+        
+            $.ajax({
+                url: '@Url.Action("SubmitExam", "ExamLogin")',
+                type: "POST",
+                async: false,
+                contentType: "application/json",
+                dataType: "HTML",
+                success: function (result) {
+                    if (result.Result) {
+                        @Url.Action("ThankYou", "ExamLogin")
+                    }                   
+                },
+
+                error: function (status) {
+                },
+                cache: false,
+                async: false
+            });
+
+        return status;
+    }*@
 </script>

@@ -202,7 +202,8 @@ namespace Quiz.Web.DAL.Home
                         defaultRegistation.Password = postAssessmentModal.SingleScheduleModal.Password;
                         defaultRegistation.MobileNumber = postAssessmentModal.SingleScheduleModal.Mobile;
                         defaultRegistation.UserName = postAssessmentModal.SingleScheduleModal.UserName;
-
+                        defaultRegistation.IsDeleted = false;
+                        defaultRegistation.IsExamCompleted = false;
                         TestEngineDBContext.DefaultRegistations.Add(defaultRegistation);
 
                         AssessmentUserDetail assessmentUserDetail = new AssessmentUserDetail();
@@ -243,6 +244,8 @@ namespace Quiz.Web.DAL.Home
                                     defaultRegistation.Email = postAssessmentModal.SingleScheduleModal.Email;
                                     defaultRegistation.Password = postAssessmentModal.SingleScheduleModal.Password;
                                     defaultRegistation.MobileNumber = postAssessmentModal.SingleScheduleModal.Mobile;
+                                    defaultRegistation.IsDeleted = false;
+                                    defaultRegistation.IsExamCompleted = false;
                                     lstDefaultReg.Add(defaultRegistation);
                                 }
                             }

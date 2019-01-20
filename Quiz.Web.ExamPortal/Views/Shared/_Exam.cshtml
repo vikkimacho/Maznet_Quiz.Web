@@ -70,21 +70,26 @@
 
 
                 }
-<div class="clearfix btn-center">
-                @if (ViewBag.Take > 1)
-                {
-                    <button class="btn btn-secondary btn-gray" type="button" value="Previous" onclick="GetQuestion('@prevSkip','@prevTake')">Previous</button>
-                }
-                <button class="btn btn-primary btn-blue" type="button" value="Submit" onclick="SaveExamAnswer('@Model.FirstOrDefault().MasterQuestionId') ">Submit Answer </button>
+        <div class="clearfix btn-center">
+            @if (ViewBag.Take > 1)
+            {
+                <button class="btn btn-secondary btn-gray" type="button" value="Previous" onclick="GetQuestion('@prevSkip','@prevTake')">Previous</button>
+            }
+            <button class="btn btn-primary btn-blue" type="button" value="Submit" onclick="SaveExamAnswer('@Model.FirstOrDefault().MasterQuestionId') ">Submit Answer </button>
 
-                @if (ViewBag.Questions != ViewBag.Take)
-                {
-                    <button class="btn btn-secondary btn-gray" type="button" value="Next" onclick="GetQuestion('@nxtSkip','@nxtTake')">Next</button>
-                }
-    </div>
+            @if (ViewBag.Questions != ViewBag.Take)
+            {
+                <button class="btn btn-secondary btn-gray" type="button" value="Next" onclick="GetQuestion('@nxtSkip','@nxtTake')">Next</button>
+            }
+
+            @if (ViewBag.Questions == ViewBag.Take)
+            {
+                <button class="btn btn-secondary btn-success" type="button" value="Next" onclick="SubmitExam()">Submit Exam</button>
+            }
+        </div>
                 <script>
 
-    function SaveExamAnswer(quesID) {
+   function SaveExamAnswer(quesID) {
 
         var questionId = '@QuestionId';
         var answer = $("input[name='" + questionId + "']:checked").val();
@@ -110,7 +115,33 @@
 
         }
         return status;
+      }
+
+     function SubmitExam() {
+
+        var status = "FAILED";
+        
+            $.ajax({
+                url: '@Url.Action("SubmitExam", "ExamLogin")',
+                type: "POST",
+                async: false,
+                contentType: "application/json",
+                dataType: "HTML",
+                success: function (result) {
+                    if (result.Result) {
+                        @Url.Action("ThankYou", "ExamLogin")
+                    }                   
+                },
+
+                error: function (status) {
+                },
+                cache: false,
+                async: false
+            });
+
+        return status;
     }
+
     function copyToClipboard() {
 
         var aux = document.createElement("input");

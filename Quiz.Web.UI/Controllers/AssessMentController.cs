@@ -266,16 +266,11 @@ namespace Quiz.Web.UI.Controllers
                         {
                             var userDetailId = postAssessmentModal.lstBulkScheduleIds.FirstOrDefault();
 
-
                             HttpClient clientuser = new HttpClient();
 
                             HttpResponseMessage responsfinal = clientuser.GetAsync(apiUrl + "/Assessment/GetUploadedUserDetail?UserDetailId=" + userDetailId).Result;
                             if (responsfinal.IsSuccessStatusCode)
                             {
-                                Result = responsfinal.Content.ReadAsStringAsync().Result;
-
-
-
                                 Result = responsfinal.Content.ReadAsStringAsync().Result;
 
                                 var finalUserdetails = JsonConvert.DeserializeObject<List<UsersDetailsModel>>(Result);
@@ -284,10 +279,7 @@ namespace Quiz.Web.UI.Controllers
                                 {
                                     if (item != null)
                                     {
-
-
                                         var password = item.Password;
-
                                         GoogleMail mail = new GoogleMail();
                                         mail.Body = "Hi " + item.Name + ", Password  - " + password;
                                         mail.Subject = "Forgot Password";
@@ -310,8 +302,9 @@ namespace Quiz.Web.UI.Controllers
                         mail.Body = "Hi " + postAssessmentModal.SingleScheduleModal.FirstName + ",UserName -" + postAssessmentModal.SingleScheduleModal.UserName + " Password  - " + postAssessmentModal.SingleScheduleModal.Password + "<a href=\""+ url + "\">Click Here</a>";
                         mail.Subject = "Assessment Detail";
                         mail.ToMail = postAssessmentModal.SingleScheduleModal.Email;
-                        var data = JsonConvert.SerializeObject(mail);
-                        response = client.PostAsJsonAsync(apiUrl + "/GoogleMail/SendGoogleMail", mail).Result;
+                        logger.WriteToLogFile("PostCreateAssessment Google Mail -" + " Mail Body : " + mail.Body + "Mail To : " + mail.ToMail);
+                        //var data = JsonConvert.SerializeObject(mail);
+                        response = client.PostAsJsonAsync(apiUrl + "/GoogleMail/SendGoogleMail",mail).Result;
                         result = response.Content.ReadAsStringAsync().Result;
                         result = JsonConvert.DeserializeObject<string>(result);
 

@@ -66,6 +66,21 @@ namespace Quiz.Web.API.Controllers
             return result;
         }
 
+        [HttpPost]
+        public APIResponse SubmitExam(Guid assesmentID, Guid userID)
+        {
+            APIResponse result = new APIResponse();
+            try
+            {
+                result = examBLL.SubmitExam(assesmentID, userID);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
+
         [HttpGet]
         public List<Questions> GetAssesmentQuestions(Guid assesmentID)
         {
