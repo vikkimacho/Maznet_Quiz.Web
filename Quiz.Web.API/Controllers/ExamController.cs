@@ -82,12 +82,12 @@ namespace Quiz.Web.API.Controllers
         }
 
         [HttpGet]
-        public List<Questions> GetAssesmentQuestions(Guid assesmentID)
+        public List<Questions> GetAssesmentQuestions(Guid assesmentID,Guid UserID)
         {
             List<Questions> questions = new List<Questions>();
             try
             {
-                questions = examBLL.GetAssesmentQuestions(assesmentID);
+                questions = examBLL.GetAssesmentQuestions(assesmentID, UserID);
             }
             catch (Exception ex)
             {

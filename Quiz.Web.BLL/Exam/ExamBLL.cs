@@ -125,13 +125,13 @@ namespace Quiz.Web.BLL.Exam
             return result;
         }
 
-        public List<Questions> GetAssesmentQuestions(Guid assesmentID)
+        public List<Questions> GetAssesmentQuestions(Guid assesmentID,Guid UserID)
         {
             List<Questions> questionslists = new List<Questions>();
             
             try
             {
-                var questionlist = examDAL.GetAssesmentQuestions(assesmentID);
+                var questionlist = examDAL.GetAssesmentQuestions(assesmentID, UserID);
 
                 if(questionlist.Count > 0)
                 {

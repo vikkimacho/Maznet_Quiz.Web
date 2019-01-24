@@ -194,6 +194,12 @@ namespace Quiz.Web.DAL.Home
                         TestEngineDBContext.UserDetailMasters.Add(UserDetailMaster);
 
 
+                        ExaminerMaster examinerMaster = new ExaminerMaster();
+                        examinerMaster.AssessmentId = assesmentDetailMaster.ID;
+                        examinerMaster.UserDetailId = UserDetailMaster.Id;
+                        TestEngineDBContext.ExaminerMasters.Add(examinerMaster);
+
+
                         DefaultRegistation defaultRegistation = new DefaultRegistation();
                         defaultRegistation.UserDetailId = UserDetailMaster.Id;
                         defaultRegistation.ID = Guid.NewGuid();
@@ -231,6 +237,12 @@ namespace Quiz.Web.DAL.Home
                             UserDetailMaster.ModifiedDate = dateTime;
                             UserDetailMaster.UserTitle = assesmentDetailMaster.AssessmentName + " - Assessment";
                             TestEngineDBContext.UserDetailMasters.Add(UserDetailMaster);
+
+
+                            ExaminerMaster examinerMaster = new ExaminerMaster();
+                            examinerMaster.AssessmentId = assesmentDetailMaster.ID;
+                            examinerMaster.UserDetailId = UserDetailMaster.Id;
+                            TestEngineDBContext.ExaminerMasters.Add(examinerMaster);
 
                             List<DefaultRegistation> lstDefaultReg = new List<DefaultRegistation>();
                             if (postAssessmentModal.CommonLoginModal.CLSendLoginDetailsto != null)

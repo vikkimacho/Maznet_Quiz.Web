@@ -140,6 +140,8 @@ namespace Quiz.Web.DAL.DAL
                 {
                     var SubmitExam = dbEntities.DefaultRegistations.FirstOrDefault(x => x.ID == userID);
                     SubmitExam.IsExamCompleted = true;
+                    dbEntities.SaveChanges();
+                    result.Result = true;
                 }
             }
             catch (Exception ex)
@@ -149,7 +151,7 @@ namespace Quiz.Web.DAL.DAL
             return result;
         }
 
-        public List<QuestionsDetail> GetAssesmentQuestions(Guid assesmentID)
+        public List<QuestionsDetail> GetAssesmentQuestions(Guid assesmentID,Guid UserID)
         {
             List<QuestionsDetail> questionlist = new List<QuestionsDetail>();
             try
@@ -157,12 +159,9 @@ namespace Quiz.Web.DAL.DAL
                 using (DBEntities dbEntities = new DBEntities())
                 {
                     questionlist = (from x in dbEntities.QuestionsDetails
-                                 join y in dbEntities.AssessmentQuestionBankDetails on x.QuestionBankID equals y.QuestionBankID
+                                 join y in dbEntities.AssessmentQuestionBankDetails on x.QuestionBankID equals y.QuestionBankID   
                                  where x.IsDeleted == false && y.IsDeleted == false && y.AssessmentID == assesmentID
-                                 select x).ToList();
-
-
-                    
+                                 select x).ToList();                   
                  }
             }
             catch (Exception ex)

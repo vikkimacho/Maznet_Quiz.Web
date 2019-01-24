@@ -253,7 +253,8 @@ namespace Quiz.Web.ExamPortal.Controllers
             HttpClient client = new HttpClient();
             List<Questions> questions = new List<Questions>();
             Guid assesmentID = SessionHelper.sessionObjects.AssessmentID;
-            HttpResponseMessage response = client.GetAsync(apiUrl + "/Exam/GetAssesmentQuestions?assesmentID=" + assesmentID).Result;
+            Guid UserID = SessionHelper.sessionObjects.UserID;
+            HttpResponseMessage response = client.GetAsync(apiUrl + "/Exam/GetAssesmentQuestions?assesmentID=" + assesmentID + "&UserID="+ UserID).Result;
             if (response.IsSuccessStatusCode)
             {
                 var result = response.Content.ReadAsStringAsync().Result;
