@@ -281,6 +281,7 @@
     <Content Include="Views\QuestionBank\QuestionsList.cshtml" />
     <Content Include="Views\AssessMent\LoadMyAssesments.cshtml" />
     <Content Include="Views\Login\forgot_password.cshtml" />
+    <Content Include="Views\AssessMent\CandidateDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

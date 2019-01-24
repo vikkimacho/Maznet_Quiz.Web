@@ -163,7 +163,7 @@ namespace Quiz.Web.DAL.Home
                     //Schedule plan updation
                     TestEngineDBContext.AssessmentDetailMasters.Add(assesmentDetailMaster);
 
-                    if(postAssessmentModal.lstBulkScheduleIds!=null)
+                    if (postAssessmentModal.lstBulkScheduleIds != null)
                     {
                         if (postAssessmentModal.lstBulkScheduleIds.Any())
                         {
@@ -182,7 +182,7 @@ namespace Quiz.Web.DAL.Home
                             TestEngineDBContext.AssessmentUserDetails.AddRange(lstAssesmentdetailMaster);
                         }
                     }
-                    
+
                     if (postAssessmentModal.SingleScheduleModal != null)
                     {
                         UserDetailMaster UserDetailMaster = new UserDetailMaster();
@@ -450,6 +450,63 @@ namespace Quiz.Web.DAL.Home
             return questionBankDetailList;
         }
 
+        public List<CandidateDetailsReport> GetCandidateDetails(Guid assessmentID)
+        {
+            List<CandidateDetailsReport> UsersDetailsModellist = new List<CandidateDetailsReport>();
+            try
+            {
+                using (DBEntities dBEntities = new DBEntities())
+                {
+                    var assessmentUsermasterDetail = dBEntities.AssessmentUserDetails.FirstOrDefault(x => x.AssessmentID == assessmentID);
+                    if (assessmentUsermasterDetail != null)
+                    {
+                        var userDetails = dBEntities.DefaultRegistations.Where(x => x.UserDetailId == assessmentUsermasterDetail.UserID).ToList();
+                        if (userDetails.Count() > 0)
+                        {
+                            userDetails.ForEach(x =>
+                            {
+                                CandidateDetailsReport usersDetails = new CandidateDetailsReport();
+                                usersDetails.AssessmentID = assessmentID;
+                                usersDetails.Email = x.Email;
+                                usersDetails.IsExamCompleted = x.IsExamCompleted ?? false;
+                                usersDetails.MobileNumber = x.MobileNumber;
+                                usersDetails.Name = x.Name;
+                                usersDetails.UserID = x.ID;
+                                usersDetails.TestDetails = GetTestDetails(assessmentID, x.ID);
+                                UsersDetailsModellist.Add(usersDetails);
+                            });
+                        }
+                    }
+                }
 
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return UsersDetailsModellist;
+        }
+
+        public List<TestDetails> GetTestDetails(Guid assessmentID, Guid userID)
+        {
+            List<TestDetails> testDetails = new List<TestDetails>();
+            try
+            {
+                using (DBEntities dBEntities = new DBEntities())
+                {
+                    var examinerMaster = dBEntities.ExaminerMasters.FirstOrDefault(x => x.AssessmentId == assessmentID);
+                    if (examinerMaster != null)
+                    {
+                        var examinerMasterDetail = dBEntities.ExaminerMasterDetails.FirstOrDefault(x => x.ExaminerMasterId == examinerMaster.ID);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return testDetails;
+        }
     }
 }

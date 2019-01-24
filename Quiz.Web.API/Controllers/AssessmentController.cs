@@ -154,5 +154,19 @@ namespace Quiz.Web.API.Controllers
             }
         }
 
+        [HttpGet]
+        public List<CandidateDetailsReport> GetCandidateDetails(Guid assessmentID)
+        {
+            try
+            {
+                return ObjAssessmentBll.GetCandidateDetails(assessmentID);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

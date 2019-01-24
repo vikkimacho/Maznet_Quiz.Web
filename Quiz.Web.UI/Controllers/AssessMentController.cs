@@ -433,6 +433,29 @@ namespace Quiz.Web.UI.Controllers
             return new string(chars);
         }
 
+        public ActionResult GetCandidateDetails(Guid assessmentID)
+        {
+            List<CandidateDetailsReport> candidateDetailsReport = new List<CandidateDetailsReport>();
+            try
+            {
+                string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = client.GetAsync(apiUrl + "/Assessment/GetCandidateDetails?assessmentId=" + assessmentID).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var retresult = response.Content.ReadAsStringAsync().Result;
+                    candidateDetailsReport = JsonConvert.DeserializeObject<List<CandidateDetailsReport>>(retresult);
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+               
+            }
+            return View("CandidateDetails", candidateDetailsReport);
+        }
     }
 
     public class CandidateFileFields
