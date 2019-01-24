@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Quiz.Web.DTO.Models.CandidateDetailsReport>
+@{
+    ViewBag.Title = "CandidateDetails";
+}
+
+<h2>Candidate Details</h2>
+<script>
+    $(document).ready(function () {
+        $('#CandidateDetails').DataTable();
+    });
+    function GetReport(id) {
+
+    }
+</script>
+<div class="container-fluid">
+    <table class="table" id="CandidateDetails">
+        <thead>
+            <tr>
+                <td>
+                    Status
+                </td>
+                <td>
+                    Name
+                </td>
+                <td>
+                    Contact
+                </td>
+                <td>
+                    Test Score
+                </td>
+
+                <td>
+                    Action
+                </td>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td></td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    <span>@item.Email</span>,<br />
+                    <span>@item.MobileNumber</span>
+                </td>
+                <td>
+                    @foreach (var testItem in item.TestDetails)
+                    {
+                        <span>@testItem.QuestionBankName</span> <span>-</span> <span>@testItem.Score</span>
+                    }
+                </td>
+                <td>
+                    <a onclick="GetReport('@item.UserID')">Report</a>
+                </td>
+            </tr>
+
+        }
+
+    </table>
+</div>
+
+

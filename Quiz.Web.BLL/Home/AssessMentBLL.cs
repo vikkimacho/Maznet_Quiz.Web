@@ -81,6 +81,12 @@ namespace Quiz.Web.BLL.Home
             var uploadDetail = ObjAssessMentDAL.GetUploadedUserDetails(userDetailId);
             return uploadDetail;
         }
+
+        public List<CandidateDetailsReport> GetCandidateDetails(Guid assessmentID)
+        {
+            var uploadDetail = ObjAssessMentDAL.GetCandidateDetails(assessmentID);
+            return uploadDetail;
+        }
     }
 
 }
