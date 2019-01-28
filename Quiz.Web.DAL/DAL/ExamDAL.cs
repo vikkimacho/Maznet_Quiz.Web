@@ -93,7 +93,7 @@ namespace Quiz.Web.DAL.DAL
                         var questionDetails = dbEntities.QuestionsDetails.FirstOrDefault(x => x.ID == qusID);
                         if (examinerDetails != null && questionDetails != null)
                         {
-                            var examinerAssessmentDetail = dbEntities.ExaminerAssessmentDetails.FirstOrDefault(x => x.ExaminerMasterDetailId == examinerMaster.ID && x.QuestionBankID == questionDetails.QuestionBankID);
+                            var examinerAssessmentDetail = dbEntities.ExaminerAssessmentDetails.FirstOrDefault(x => x.ExaminerMasterDetailId == examinerDetails.ID && x.QuestionBankID == questionDetails.QuestionBankID);
                             if (examinerAssessmentDetail != null)
                             {
                                 var examinerQuestionExisting = dbEntities.ExaminerQuestionDetails.FirstOrDefault(x => x.ExaminerAssessmentDetailId == examinerAssessmentDetail.ID && x.QuestionId == qusID);
@@ -119,6 +119,18 @@ namespace Quiz.Web.DAL.DAL
                                     result = "SUCCESS";
                                 }
                                 
+                            }
+                            else
+                            {
+                                ExaminerAssessmentDetail examinerAssessment = new ExaminerAssessmentDetail();
+                                examinerAssessment.CreatedDate = DateTime.UtcNow.AddHours(5).AddMinutes(30);
+                                examinerAssessment.ExaminerMasterDetailId = examinerDetails.ID;
+                                examinerAssessment.QuestionBankID = questionDetails.QuestionBankID;
+                                examinerAssessment.ID = Guid.NewGuid();
+                                examinerAssessment.ModifiedDate = DateTime.UtcNow.AddHours(5).AddMinutes(30);
+                                dbEntities.ExaminerAssessmentDetails.Add(examinerAssessment);
+                                dbEntities.SaveChanges();
+                                result = SaveExamAnswers(assesmentID, userID, qusID, answer);
                             }
                         }
                     }

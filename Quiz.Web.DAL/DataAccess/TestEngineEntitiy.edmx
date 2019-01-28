@@ -474,7 +474,7 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="ExaminerMasterDetails">
-              <PropertyRef Name="UserId" />
+              <PropertyRef Name="ExaminerMasterId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1277,17 +1277,11 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="ExaminerAssessmentDetails" EntityType="TestEngineDB.ExaminerAssessmentDetail" />
-          <EntitySet Name="ExaminerMasters" EntityType="TestEngineDB.ExaminerMaster" />
-          <EntitySet Name="ExaminerMasterDetails" EntityType="TestEngineDB.ExaminerMasterDetail" />
           <EntitySet Name="ExaminerQuestionDetails" EntityType="TestEngineDB.ExaminerQuestionDetail" />
           <EntitySet Name="UserDetailMasters" EntityType="TestEngineDB.UserDetailMaster" />
           <AssociationSet Name="FK_AssessmentUserDetail_UserDetailMaster" Association="TestEngineDB.FK_AssessmentUserDetail_UserDetailMaster">
             <End Role="UserDetailMaster" EntitySet="UserDetailMasters" />
             <End Role="AssessmentUserDetail" EntitySet="AssessmentUserDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ExaminerMasterDetails_ExaminerMaster" Association="TestEngineDB.FK_ExaminerMasterDetails_ExaminerMaster">
-            <End Role="ExaminerMaster" EntitySet="ExaminerMasters" />
-            <End Role="ExaminerMasterDetail" EntitySet="ExaminerMasterDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_UserAssessmentAnswerdetail_UserDetailMaster" Association="TestEngineDB.FK_UserAssessmentAnswerdetail_UserDetailMaster">
             <End Role="UserDetailMaster" EntitySet="UserDetailMasters" />
@@ -1297,6 +1291,12 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <AssociationSet Name="FK_DefaultRegistation_UserDetailMaster" Association="TestEngineDB.FK_DefaultRegistation_UserDetailMaster">
             <End Role="UserDetailMaster" EntitySet="UserDetailMasters" />
             <End Role="DefaultRegistation" EntitySet="DefaultRegistations" />
+          </AssociationSet>
+          <EntitySet Name="ExaminerMasters" EntityType="TestEngineDB.ExaminerMaster" />
+          <EntitySet Name="ExaminerMasterDetails" EntityType="TestEngineDB.ExaminerMasterDetail" />
+          <AssociationSet Name="FK_ExaminerMasterDetails_ExaminerMaster" Association="TestEngineDB.FK_ExaminerMasterDetails_ExaminerMaster">
+            <End Role="ExaminerMaster" EntitySet="ExaminerMasters" />
+            <End Role="ExaminerMasterDetail" EntitySet="ExaminerMasterDetails" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="Assesmentpagemodal_Result">
@@ -1457,28 +1457,6 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="ExaminerMaster">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="AssessmentId" Type="Guid" />
-          <Property Name="UserDetailId" Type="Guid" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ExaminerMasterDetails" Relationship="TestEngineDB.FK_ExaminerMasterDetails_ExaminerMaster" FromRole="ExaminerMaster" ToRole="ExaminerMasterDetail" />
-        </EntityType>
-        <EntityType Name="ExaminerMasterDetail">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="ExaminerMasterId" Type="Guid" />
-          <Property Name="UserId" Type="Guid" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ExaminerMaster" Relationship="TestEngineDB.FK_ExaminerMasterDetails_ExaminerMaster" FromRole="ExaminerMasterDetail" ToRole="ExaminerMaster" />
-        </EntityType>
         <EntityType Name="ExaminerQuestionDetail">
           <Key>
             <PropertyRef Name="ID" />
@@ -1514,18 +1492,6 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
             </Principal>
             <Dependent Role="AssessmentUserDetail">
               <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ExaminerMasterDetails_ExaminerMaster">
-          <End Type="TestEngineDB.ExaminerMaster" Role="ExaminerMaster" Multiplicity="0..1" />
-          <End Type="TestEngineDB.ExaminerMasterDetail" Role="ExaminerMasterDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ExaminerMaster">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ExaminerMasterDetail">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1584,6 +1550,40 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
             </Principal>
             <Dependent Role="DefaultRegistation">
               <PropertyRef Name="UserDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ExaminerMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="AssessmentId" Type="Guid" />
+          <Property Name="UserDetailId" Type="Guid" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ExaminerMasterDetails" Relationship="TestEngineDB.FK_ExaminerMasterDetails_ExaminerMaster" FromRole="ExaminerMaster" ToRole="ExaminerMasterDetail" />
+        </EntityType>
+        <EntityType Name="ExaminerMasterDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="ExaminerMasterId" Type="Guid" />
+          <Property Name="UserId" Type="Guid" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ExaminerMaster" Relationship="TestEngineDB.FK_ExaminerMasterDetails_ExaminerMaster" FromRole="ExaminerMasterDetail" ToRole="ExaminerMaster" />
+        </EntityType>
+        <Association Name="FK_ExaminerMasterDetails_ExaminerMaster">
+          <End Type="TestEngineDB.ExaminerMaster" Role="ExaminerMaster" Multiplicity="0..1" />
+          <End Type="TestEngineDB.ExaminerMasterDetail" Role="ExaminerMasterDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExaminerMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExaminerMasterDetail">
+              <PropertyRef Name="ExaminerMasterId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2061,28 +2061,6 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ExaminerMasters">
-            <EntityTypeMapping TypeName="TestEngineDB.ExaminerMaster">
-              <MappingFragment StoreEntitySet="ExaminerMaster">
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UserDetailId" ColumnName="UserDetailId" />
-                <ScalarProperty Name="AssessmentId" ColumnName="AssessmentId" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ExaminerMasterDetails">
-            <EntityTypeMapping TypeName="TestEngineDB.ExaminerMasterDetail">
-              <MappingFragment StoreEntitySet="ExaminerMasterDetails">
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ExaminerMasterId" ColumnName="ExaminerMasterId" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ExaminerQuestionDetails">
             <EntityTypeMapping TypeName="TestEngineDB.ExaminerQuestionDetail">
               <MappingFragment StoreEntitySet="ExaminerQuestionDetails">
@@ -2138,6 +2116,28 @@ warning 6002: The table/view 'TestEngineDB_DEV.dbo.AssesmentMasterDetailsForm' d
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="UserDetailId" ColumnName="UserDetailId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExaminerMasters">
+            <EntityTypeMapping TypeName="TestEngineDB.ExaminerMaster">
+              <MappingFragment StoreEntitySet="ExaminerMaster">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UserDetailId" ColumnName="UserDetailId" />
+                <ScalarProperty Name="AssessmentId" ColumnName="AssessmentId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExaminerMasterDetails">
+            <EntityTypeMapping TypeName="TestEngineDB.ExaminerMasterDetail">
+              <MappingFragment StoreEntitySet="ExaminerMasterDetails">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ExaminerMasterId" ColumnName="ExaminerMasterId" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

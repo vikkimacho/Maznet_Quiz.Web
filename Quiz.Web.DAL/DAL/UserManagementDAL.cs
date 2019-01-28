@@ -97,8 +97,8 @@ namespace Quiz.Web.DAL.DAL
                         defaultRegistation.DegreePassedOutYear = item.DegreePassedOutYear;
                         defaultRegistation.HSCBoardName = item.HSCBoardName;
                         defaultRegistation.HSCPassedOutYear = item.HSCPassedOutYear;
-                        defaultRegistation.ModifiedDate = dateTime;;
-                        defaultRegistation.CreatedDate = dateTime;;
+                        defaultRegistation.ModifiedDate = dateTime; ;
+                        defaultRegistation.CreatedDate = dateTime; ;
                         defaultRegistation.IsDeleted = false;
                         defaultRegistation.IsExamCompleted = false;
                         defaultRegistation.UserName = item.Email;
@@ -153,7 +153,7 @@ namespace Quiz.Web.DAL.DAL
                     if (data != null)
                     {
                         data.IsDeleted = true;
-                        data.ModifiedDate = dateTime;;
+                        data.ModifiedDate = dateTime; ;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
                     }
@@ -177,7 +177,7 @@ namespace Quiz.Web.DAL.DAL
             {
                 using (DBEntities testEngineEntities = new DBEntities())
                 {
-                    var data = testEngineEntities.DefaultRegistations.Where(x => x.ID == usersDetailsModel.Id && x.IsDeleted == false).FirstOrDefault();                    
+                    var data = testEngineEntities.DefaultRegistations.Where(x => x.ID == usersDetailsModel.Id && x.IsDeleted == false).FirstOrDefault();
                     if (data != null)
                     {
                         data.Name = string.IsNullOrEmpty(usersDetailsModel.Name) ? data.Name : usersDetailsModel.Name;
@@ -200,11 +200,36 @@ namespace Quiz.Web.DAL.DAL
                         data.DegreePassedOutYear = string.IsNullOrEmpty(usersDetailsModel.DegreePassedOutYear) ? data.DegreePassedOutYear : usersDetailsModel.DegreePassedOutYear;
                         data.HSCBoardName = string.IsNullOrEmpty(usersDetailsModel.HSCBoardName) ? data.HSCBoardName : usersDetailsModel.HSCBoardName;
                         data.HSCPassedOutYear = string.IsNullOrEmpty(usersDetailsModel.HSCPassedOutYear) ? data.HSCPassedOutYear : usersDetailsModel.HSCPassedOutYear;
-                        data.ModifiedDate = dateTime;;
+                        data.ModifiedDate = dateTime;
+
+                        var userDetail = testEngineEntities.UserDetailMasters.FirstOrDefault(x => x.Id == data.UserDetailId);
+                        if (userDetail != null)
+                        {
+                            var assessmentUserDetail = testEngineEntities.AssessmentUserDetails.FirstOrDefault(x => x.UserID == userDetail.Id);
+                            if (assessmentUserDetail != null)
+                            {
+                                var examinarMaster = testEngineEntities.ExaminerMasters.FirstOrDefault(x => x.AssessmentId == assessmentUserDetail.AssessmentID);
+                                if (examinarMaster != null)
+                                {
+                                    var examinerMasterDetails = testEngineEntities.ExaminerMasterDetails.FirstOrDefault(x => x.ExaminerMasterId == examinarMaster.ID && x.UserId == data.ID);
+                                    if (examinerMasterDetails == null)
+                                    {
+                                        ExaminerMasterDetail examinerMasterDetail = new ExaminerMasterDetail();
+                                        examinerMasterDetail.CreatedDate = dateTime;
+                                        examinerMasterDetail.ExaminerMasterId = examinarMaster.ID;
+                                        examinerMasterDetail.ID = Guid.NewGuid();
+                                        examinerMasterDetail.ModifiedDate = dateTime;
+                                        examinerMasterDetail.UserId = data.ID;
+                                        testEngineEntities.ExaminerMasterDetails.Add(examinerMasterDetail);
+                                        testEngineEntities.SaveChanges();
+                                    }
+                                }
+                            }
+                        }
                         testEngineEntities.SaveChanges();
                         response.Result = true;
                         response.Message = "SUCCESS";
-                        
+
                     }
 
                 }
@@ -252,14 +277,14 @@ namespace Quiz.Web.DAL.DAL
                     if (data != null)
                     {
                         data.IsDeleted = true;
-                        data.ModifiedDate = dateTime;;
+                        data.ModifiedDate = dateTime; ;
                         testEngineEntities.SaveChanges();
                         response.Result = true;
 
                         if (Users != null)
                         {
                             Users.IsDeleted = true;
-                            Users.ModifiedDate = dateTime;;
+                            Users.ModifiedDate = dateTime; ;
                             testEngineEntities.SaveChanges();
                             response.Result = true;
 
