@@ -960,8 +960,8 @@
             var IsPrintScreenLockEnabled = $('#chkPrintScreenLockOn').is(':checked');
             var LstCandidateFormSelectedFields = GetLstCandidateFormSelectedFields();
             var SelectedShortListCriteria = $('#hdnSelectedShortListCriteria').val();
-            var ScheduleFrom = $('#txtDtFrom').val();
-            var ScheduleTo = $('#txtDtTo').val();
+            var ScheduleFrom = new Date($('#txtDtFrom').val());
+            var ScheduleTo = new Date($('#txtDtTo').val());
             var schedulePlan = $('#hdnSchedulePlan').val();
 
             var lstBulkScheduleIds = GetBulkUploadStudentData();

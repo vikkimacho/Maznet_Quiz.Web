@@ -195,8 +195,11 @@ namespace Quiz.Web.DAL.Home
 
 
                         ExaminerMaster examinerMaster = new ExaminerMaster();
+                        examinerMaster.ID = Guid.NewGuid();
                         examinerMaster.AssessmentId = assesmentDetailMaster.ID;
                         examinerMaster.UserDetailId = UserDetailMaster.Id;
+                        examinerMaster.CreatedDate = DateTime.UtcNow.AddHours(5).AddMinutes(30);
+                        examinerMaster.ModifiedDate = DateTime.UtcNow.AddHours(5).AddMinutes(30);
                         TestEngineDBContext.ExaminerMasters.Add(examinerMaster);
 
 
@@ -240,8 +243,11 @@ namespace Quiz.Web.DAL.Home
 
 
                             ExaminerMaster examinerMaster = new ExaminerMaster();
+                            examinerMaster.ID = Guid.NewGuid();
                             examinerMaster.AssessmentId = assesmentDetailMaster.ID;
                             examinerMaster.UserDetailId = UserDetailMaster.Id;
+                            examinerMaster.CreatedDate = DateTime.UtcNow.AddHours(5).AddMinutes(30);
+                            examinerMaster.ModifiedDate = DateTime.UtcNow.AddHours(5).AddMinutes(30);
                             TestEngineDBContext.ExaminerMasters.Add(examinerMaster);
 
                             List<DefaultRegistation> lstDefaultReg = new List<DefaultRegistation>();
