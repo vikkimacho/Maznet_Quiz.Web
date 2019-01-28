@@ -299,12 +299,12 @@ namespace Quiz.Web.UI.Controllers
                     {
                         GoogleMail mail = new GoogleMail();
                         string url = ConfigurationManager.AppSettings["ExamPortalUrl"] + assessmentID;
-                        mail.Body = "Hi " + postAssessmentModal.SingleScheduleModal.FirstName + ",UserName -" + postAssessmentModal.SingleScheduleModal.UserName + " Password  - " + postAssessmentModal.SingleScheduleModal.Password + "<a href=\""+ url + "\">Click Here</a>";
+                        mail.Body = "Hi " + postAssessmentModal.SingleScheduleModal.FirstName + ",UserName -" + postAssessmentModal.SingleScheduleModal.UserName + " Password  - " + postAssessmentModal.SingleScheduleModal.Password + "<a href=\"" + url + "\">Click Here</a>";
                         mail.Subject = "Assessment Detail";
                         mail.ToMail = postAssessmentModal.SingleScheduleModal.Email;
                         logger.WriteToLogFile("PostCreateAssessment Google Mail -" + " Mail Body : " + mail.Body + "Mail To : " + mail.ToMail);
                         //var data = JsonConvert.SerializeObject(mail);
-                        response = client.PostAsJsonAsync(apiUrl + "/GoogleMail/SendGoogleMail",mail).Result;
+                        response = client.PostAsJsonAsync(apiUrl + "/GoogleMail/SendGoogleMail", mail).Result;
                         result = response.Content.ReadAsStringAsync().Result;
                         result = JsonConvert.DeserializeObject<string>(result);
 
@@ -452,9 +452,23 @@ namespace Quiz.Web.UI.Controllers
             catch (Exception ex)
             {
 
-               
+
             }
             return View("CandidateDetails", candidateDetailsReport);
+        }
+
+        public ActionResult GetIndividualReport(Guid userID, Guid assessmentID)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return View();
         }
     }
 

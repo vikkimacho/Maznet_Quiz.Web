@@ -8,7 +8,7 @@
     $(document).ready(function () {
         $('#CandidateDetails').DataTable();
     });
-    function GetReport(id) {
+    function GetReport(userid, assessmentID) {
 
     }
 </script>
@@ -52,9 +52,12 @@
                         <span>@testItem.QuestionBankName</span> <span>-</span> <span>@testItem.Score</span>
                     }
                 </td>
-                <td>
-                    <a onclick="GetReport('@item.UserID')">Report</a>
-                </td>
+                @if (item.IsExamCompleted)
+                {
+                    <td>
+                        <a onclick="GetReport('@item.UserID','@item.AssessmentID')">Report</a>
+                    </td>
+                }
             </tr>
 
         }

@@ -54,11 +54,16 @@ namespace Quiz.Web.DTO.Models
         public string Status { get; set; }
         public string MobileNumber { get; set; }
         public List<TestDetails> TestDetails { get; set; }
-        public bool IsExamCompleted { get; set; }
+        public bool IsExamCompleted { get; set; }      
     }
     public class TestDetails
     {
         public string QuestionBankName { get; set; }
         public string Score { get; set; }
+    }
+
+    public class CandidateFinalReport
+    {
+
     }
 }

@@ -508,15 +508,34 @@ namespace Quiz.Web.DAL.Home
 
         public List<TestDetails> GetTestDetails(Guid assessmentID, Guid userID)
         {
-            List<TestDetails> testDetails = new List<TestDetails>();
+            List<TestDetails> testDetailsList = new List<TestDetails>();
             try
             {
                 using (DBEntities dBEntities = new DBEntities())
                 {
+                    dBEntities.Configuration.ProxyCreationEnabled = false;
                     var examinerMaster = dBEntities.ExaminerMasters.FirstOrDefault(x => x.AssessmentId == assessmentID);
                     if (examinerMaster != null)
                     {
-                        var examinerMasterDetail = dBEntities.ExaminerMasterDetails.FirstOrDefault(x => x.ExaminerMasterId == examinerMaster.ID);
+                        var examinerMasterDetail = dBEntities.ExaminerMasterDetails.FirstOrDefault(x => x.ExaminerMasterId == examinerMaster.ID && x.UserId == userID);
+                        if (examinerMasterDetail != null)
+                        {
+                            var examinerAssessmentDetail = dBEntities.ExaminerAssessmentDetails.Where(x => x.ExaminerMasterDetailId == examinerMasterDetail.ID).ToList();
+                            foreach (var item in examinerAssessmentDetail)
+                            {
+                                var questionBank = dBEntities.QuestionBankMasters.Where(x => x.ID == item.QuestionBankID).FirstOrDefault();
+                                var examinerQuestion = dBEntities.ExaminerQuestionDetails.Where(x => x.ExaminerAssessmentDetailId == item.ID).ToList();
+                                TestDetails testDetails = new TestDetails();
+                                if (questionBank != null && examinerQuestion.Count() > 0)
+                                {
+                                    int score = examinerQuestion.Where(x => x.AnswerStatus == true).ToList().Count();
+                                    int totalQues = dBEntities.QuestionBankMasters.Where(x => x.ID == item.QuestionBankID).ToList().Count();
+                                    testDetails.QuestionBankName = questionBank.QuestionBankName;
+                                    testDetails.Score = Convert.ToString(score) + "/" + Convert.ToString(totalQues);
+                                    testDetailsList.Add(testDetails);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -524,7 +543,7 @@ namespace Quiz.Web.DAL.Home
             {
                 throw;
             }
-            return testDetails;
+            return testDetailsList;
         }
     }
 }
