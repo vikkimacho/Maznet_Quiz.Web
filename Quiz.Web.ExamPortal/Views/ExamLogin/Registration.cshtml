@@ -391,10 +391,10 @@
                     <label class="col-sm-3 control-label">@item.DisplayFieldName</label>
                     <div class="col-sm-9">
                         <label class="radio-inline">
-                            <input type="radio" class="@isMandatory" name="gender" value="Male" /> Male
+                            <input type="radio" class="@isMandatory" name="gender" value="Male" id="Male"/> Male
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" class="@isMandatory" name="gender" value="Female" /> Female
+                            <input type="radio" class="@isMandatory" name="gender" value="Female" id="Female"/> Female
                         </label>
                         
                         <span id="spngender" style="display:none">*required</span>
@@ -552,3 +552,59 @@
     
 }
 
+<script>
+
+    $(document).ready(function () {
+        GetUserEdit('@Quiz.Web.ExamPortal.Helper.SessionHelper.sessionObjects.UserID')
+    });
+    
+     function GetUserEdit(UserId) {
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("UserEdit", "ExamLogin")?UserId=' + UserId,
+            contentType: false,
+            processData: false,
+            async: false,
+            success: function (result) {
+                if (result) {
+                    $("#UserId").val(result.Id);
+                    $("#txtName").val(result.Name);
+                    $("#txtEmail").val(result.Email);
+                    $("#txtMobileNo").val(result.MobileNumber);
+                    $("#txtDegree").val(result.Degree);
+                    $("#txtCollege").val(result.Institution);
+                    $("#txtDegreePercentage").val(result.Percentage);
+                    if (result.Gender) {
+                        if (result.Gender = "Male") {
+                            $("#Male").prop('checked', true);
+                        }
+                        else if (result.Gender = "Female") {
+                            $("#Female").prop('checked', true);
+                        }
+
+                    }
+                    $("#txtSSLCYear").val(result.SSLCPassedOutYear);
+                    $("#txtSSLCPerentage").val(result.SSLCPercentage);
+                    $("#txtSSLCBoard").val(result.SSLCBoardName);
+                    $("#txtTechSkills").val(result.TechnicalSkills);
+                    $("#txtHSCPercentage").val(result.HSCPercentage);
+                    $("#txtLastName").val(result.LastName);
+                    $("#txtDateofBirth").val(result.DOB);
+                    $("#txtState").val(result.State);
+                    $("#txtDegreeYear").val(result.DegreePassedOutYear);
+                    $("#txtHSCBoard").val(result.HSCBoardName);
+                    $('#txtHSCYear').val(result.HSCPassedOutYear);
+                }
+            },
+            error: function (xhr, status, p3, p4) {
+                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                if (xhr.responseText && xhr.responseText[0] == "{")
+                    err = JSON.parse(xhr.responseText).Message;
+
+            },
+            cache: false
+        });
+
+    }
+</script>

@@ -45,11 +45,11 @@ namespace Quiz.Web.DAL.DataAccess
         public virtual DbSet<UserAssessmentAnswerdetail> UserAssessmentAnswerdetails { get; set; }
         public virtual DbSet<AssesmentMasterDetailsForm> AssesmentMasterDetailsForms { get; set; }
         public virtual DbSet<ExaminerAssessmentDetail> ExaminerAssessmentDetails { get; set; }
-        public virtual DbSet<ExaminerMaster> ExaminerMasters { get; set; }
-        public virtual DbSet<ExaminerMasterDetail> ExaminerMasterDetails { get; set; }
         public virtual DbSet<ExaminerQuestionDetail> ExaminerQuestionDetails { get; set; }
         public virtual DbSet<UserDetailMaster> UserDetailMasters { get; set; }
         public virtual DbSet<DefaultRegistation> DefaultRegistations { get; set; }
+        public virtual DbSet<ExaminerMaster> ExaminerMasters { get; set; }
+        public virtual DbSet<ExaminerMasterDetail> ExaminerMasterDetails { get; set; }
     
         public virtual ObjectResult<Assesmentpagemodal_Result> Assesmentpagemodal()
         {

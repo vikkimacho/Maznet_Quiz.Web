@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="adc6828e035d4bdb8d538651a8edcd4b" Name="Diagram1">
+      <Diagram DiagramId="adc6828e035d4bdb8d538651a8edcd4b" Name="Diagram1" ZoomLevel="114">
         <EntityTypeShape EntityType="TestEngineDB.AdminDetail" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TestEngineDB.AssessmentAdminEmailNotification" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="TestEngineDB.AssessmentDetailMaster" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
@@ -36,15 +36,15 @@
         <AssociationConnector Association="TestEngineDB.FK__Questions__Quest__2AD55B43" ManuallyRouted="false" />
         <AssociationConnector Association="TestEngineDB.FK_UserAssessmentAnswerdetail_QuestionBankMaster" ManuallyRouted="false" />
         <EntityTypeShape EntityType="TestEngineDB.ExaminerAssessmentDetail" Width="1.5" PointX="0.75" PointY="4.75" />
-        <EntityTypeShape EntityType="TestEngineDB.ExaminerMaster" Width="1.5" PointX="8.75" PointY="0.875" />
-        <EntityTypeShape EntityType="TestEngineDB.ExaminerMasterDetail" Width="1.5" PointX="11" PointY="0.875" />
         <EntityTypeShape EntityType="TestEngineDB.ExaminerQuestionDetail" Width="1.5" PointX="13.75" PointY="0.75" />
         <EntityTypeShape EntityType="TestEngineDB.UserDetailMaster" Width="1.5" PointX="1.125" PointY="18.125" />
         <AssociationConnector Association="TestEngineDB.FK_AssessmentUserDetail_UserDetailMaster" />
-        <AssociationConnector Association="TestEngineDB.FK_ExaminerMasterDetails_ExaminerMaster" />
         <AssociationConnector Association="TestEngineDB.FK_UserAssessmentAnswerdetail_UserDetailMaster" />
         <EntityTypeShape EntityType="TestEngineDB.DefaultRegistation" Width="1.5" PointX="3.375" PointY="20.25" />
         <AssociationConnector Association="TestEngineDB.FK_DefaultRegistation_UserDetailMaster" />
+        <EntityTypeShape EntityType="TestEngineDB.ExaminerMaster" Width="1.5" PointX="13.375" PointY="4.875" />
+        <EntityTypeShape EntityType="TestEngineDB.ExaminerMasterDetail" Width="1.5" PointX="15.625" PointY="4.875" />
+        <AssociationConnector Association="TestEngineDB.FK_ExaminerMasterDetails_ExaminerMaster" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -129,18 +129,11 @@ namespace Quiz.Web.ExamPortal.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var result = response.Content.ReadAsStringAsync().Result;
-                    customRegistration = JsonConvert.DeserializeObject<List<CustomRegistration>>(result);
-                    response = client.GetAsync(apiUrl + "/Exam/GetRegistration?assessmentID=" + assessmentID).Result;
-                    if (response.IsSuccessStatusCode)
-                    {
-                        result = response.Content.ReadAsStringAsync().Result;
-                        var usersDetails = JsonConvert.DeserializeObject<UsersDetailsModel>(result);
-                    }
+                    customRegistration = JsonConvert.DeserializeObject<List<CustomRegistration>>(result);               
                 }
             }
             catch (Exception ex)
             {
-
 
             }
             return View("Registration", customRegistration);
@@ -302,6 +295,23 @@ namespace Quiz.Web.ExamPortal.Controllers
             }
 
             return randomList; //return the new random list
+        }
+
+        public ActionResult UserEdit(Guid? UserId)
+        {
+            UsersDetailsModel usersDetailsModel = new UsersDetailsModel();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiUrl);
+                var result = client.GetAsync(apiUrl + "/UserManagement/UserEdit?UserId=" + UserId).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var Result = result.Content.ReadAsStringAsync().Result;
+
+                    usersDetailsModel = JsonConvert.DeserializeObject<UsersDetailsModel>(Result);
+                }
+            }
+            return Json(usersDetailsModel, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult ThankYou()
