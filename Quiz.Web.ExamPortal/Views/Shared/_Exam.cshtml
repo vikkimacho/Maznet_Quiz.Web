@@ -116,15 +116,15 @@
                 <button class="btn btn-primary btn-blue" type="button" value="Submit" id="btnSubmitAns">Submit Answer </button>
             }
 
-                @if (ViewBag.Questions != ViewBag.Take)
-                {
-                    <button class="btn btn-secondary btn-gray" type="button" value="Next" onclick="GetQuestion('@nxtSkip','@nxtTake')">Next</button>
-                }
+            @if (ViewBag.Questions != ViewBag.Take)
+            {
+                <button class="btn btn-secondary btn-gray" type="button" value="Next" onclick="GetQuestion('@nxtSkip','@nxtTake')">Next</button>
+            }
 
-                @if (ViewBag.Questions == ViewBag.Take)
-                {
-                    <button class="btn btn-secondary btn-success" type="button" value="SubmitExam" id="btnSubmitExam">Submit Exam</button>
-                }
+            @if (ViewBag.Questions == ViewBag.Take)
+            {
+                <button class="btn btn-secondary btn-success" type="button" value="SubmitExam" id="btnSubmitExam">Submit Exam</button>
+            }
             </div>
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script>
@@ -168,7 +168,7 @@
         }
 
         function SubmitExam(questionId) {
-            debugger;
+
             var status = "FAILED";            
             var answer = $("input[name='" + questionId + "']:checked").val();            
             var status = "FAILED";

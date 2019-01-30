@@ -136,6 +136,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\AuthorizationFilter.cs" />
+    <Compile Include="Helper\Logger.cs" />
     <Compile Include="Helper\SessionHelper.cs" />
     <Compile Include="Models\Custom.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
