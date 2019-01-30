@@ -168,5 +168,21 @@ namespace Quiz.Web.API.Controllers
             }
         }
 
+        [HttpGet]
+        public ExamReport GetIndividualCustomerReport(Guid assessmentID, Guid userID)
+        {
+
+            try
+            {
+                return ObjAssessmentBll.GetIndividualCustomerReport(assessmentID, userID);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
     }
 }

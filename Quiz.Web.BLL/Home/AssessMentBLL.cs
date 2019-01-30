@@ -15,7 +15,7 @@ namespace Quiz.Web.BLL.Home
         private AssessMentDAL ObjAssessMentDAL = new AssessMentDAL();
         public string CreateAssessMent()
         {
-            var result= ObjAssessMentDAL.CreateAssessMent();
+            var result = ObjAssessMentDAL.CreateAssessMent();
             return result;
         }
 
@@ -26,7 +26,7 @@ namespace Quiz.Web.BLL.Home
         }
 
 
-        public string PostCreateAssessment(PostAssessmentModal postAssessmentModal,Guid AssessmentId)
+        public string PostCreateAssessment(PostAssessmentModal postAssessmentModal, Guid AssessmentId)
         {
             var result = ObjAssessMentDAL.PostCreateAssessment(postAssessmentModal, AssessmentId);
             //Need to send notification emails based on the selection.
@@ -39,7 +39,7 @@ namespace Quiz.Web.BLL.Home
         public string PostUpdateEligibleCriteria(List<PostEligibilityCriteria> lstpostAssessmentModal)
         {
             var result = ObjAssessMentDAL.PostUpdateEligibleCriteria(lstpostAssessmentModal);
-     
+
 
             return result;
         }
@@ -86,6 +86,12 @@ namespace Quiz.Web.BLL.Home
         {
             var uploadDetail = ObjAssessMentDAL.GetCandidateDetails(assessmentID);
             return uploadDetail;
+        }
+
+        public ExamReport GetIndividualCustomerReport(Guid assessmentID, Guid userID)
+        {
+            var examReport = ObjAssessMentDAL.GetIndividualCustomerReport(assessmentID, userID);
+            return examReport;
         }
     }
 

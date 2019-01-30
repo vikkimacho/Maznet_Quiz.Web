@@ -9,7 +9,7 @@
         $('#CandidateDetails').DataTable();
     });
     function GetReport(userid, assessmentID) {
-
+        window.open('@Url.Action("GetIndividualReport", "AssessMent")?userID=' + userid + '&assessmentID=' + assessmentID , 'PDF_Invoice', 'titlebar=no,scrollbars=yes,resizable=yes, width=1000, height=1000');
     }
 </script>
 <div class="container-fluid">
@@ -49,7 +49,7 @@
                 <td>
                     @foreach (var testItem in item.TestDetails)
                     {
-                        <span>@testItem.QuestionBankName</span> <span>-</span> <span>@testItem.Score</span>
+                        <span>@testItem.QuestionBankName</span> <span>-</span> <span>@testItem.Score</span><span>/ @testItem.TotalQuestions</span>
                     }
                 </td>
                 @if (item.IsExamCompleted)

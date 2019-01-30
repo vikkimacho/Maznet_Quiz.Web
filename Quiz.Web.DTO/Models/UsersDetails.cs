@@ -60,10 +60,25 @@ namespace Quiz.Web.DTO.Models
     {
         public string QuestionBankName { get; set; }
         public string Score { get; set; }
+        public string TotalQuestions { get; set; }
+        public string UnAnsweredQuestions { get; set; }
+        public string WrongAnswered { get; set; }
     }
 
-    public class CandidateFinalReport
+    public class ExamReport
     {
-
+        public Guid AssessMentID { get; set; }
+        public Guid UserID { get; set; }
+        public string CandidateName { get; set; }
+        public string CandidateEmail { get; set; }
+        public DateTime TestDate { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string DOB { get; set; }
+        public string Gender { get; set; }
+        public string Phone { get; set; }
+        public string Country { get; set; }
+        public List<TestDetails> TestDetails { get; set; }
     }
 }
