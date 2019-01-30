@@ -270,15 +270,30 @@ namespace Quiz.Web.ExamPortal.Controllers
             try
             {
                 qusList = Session["QuestionsList"] as List<Questions>;
+                HttpClient client = new HttpClient();
+                Questions questions = new Questions();
+                Guid assesmentID = SessionHelper.sessionObjects.AssessmentID;
+                Guid UserID = SessionHelper.sessionObjects.UserID;
                 ViewBag.Questions = qusList.Count();
                 qusList = qusList.Take(take).Skip(skip).ToList();
-                
+                if (qusList.Count > 0)
+                {
+                HttpResponseMessage response = client.GetAsync(apiUrl + "/Exam/GetAssesmentQuestionDetail?assesmentID=" + assesmentID + "&UserID=" + UserID + "&QuestionId=" + qusList.FirstOrDefault().ID).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = response.Content.ReadAsStringAsync().Result;
+                    questions = JsonConvert.DeserializeObject<Questions>(result);
+                }
+
+                qusList.FirstOrDefault().Answer = questions.Answer;
             }
-            catch (Exception)
+
+            }
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
-            return PartialView("_Exam", qusList);
+                return PartialView("_Exam", qusList);
         }
 
         private List<Questions> ShuffleList(List<Questions> inputList)

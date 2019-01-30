@@ -231,7 +231,7 @@ namespace Quiz.Web.DTO.Models
 
     public class Questions
     {
-        public System.Guid ID { get; set; }
+        public Guid? ID { get; set; }
         public Nullable<System.Guid> QuestionBankID { get; set; }
         public string Question { get; set; }
         public string MasterQuestion { get; set; }

@@ -5,8 +5,11 @@
     int prevSkip = Convert.ToInt32(ViewBag.Skip) == 0 ? Convert.ToInt32(ViewBag.Skip) : Convert.ToInt32(ViewBag.Skip) - 1;
     int nxtTake = Convert.ToInt32(ViewBag.Take) + 1;
     int prevTake = Convert.ToInt32(ViewBag.Take) == 1 ? Convert.ToInt32(ViewBag.Take) : Convert.ToInt32(ViewBag.Take) - 1;
-    Guid QuestionId = Model.FirstOrDefault().ID;
-
+    Guid? QuestionId = null;
+    if(Model.Count > 0)
+    {
+        QuestionId = Model.FirstOrDefault().ID;
+    }
 }
 
 <h2>Showing Question @ViewBag.Take of  @ViewBag.Questions</h2>
@@ -27,14 +30,28 @@
     if (!String.IsNullOrEmpty(items.OptionA))
     {
         <label>
-            <input type="radio" name="@items.ID" value="A">
+            @if (items.Answer == "A")
+            {
+                <input type="radio" name="@items.ID" value="A" checked>
+            }
+            else
+            {
+                <input type="radio" name="@items.ID" value="A">
+            }
             <span>@items.OptionA</span>
         </label>
     }
     if (!String.IsNullOrEmpty(items.OptionB))
     {
         <label>
-            <input type="radio" name="@items.ID" value="B">
+            @if (items.Answer == "B")
+            {
+                <input type="radio" name="@items.ID" value="B" checked>
+            }
+            else
+            {
+                <input type="radio" name="@items.ID" value="B">
+            }
             <span>
                 @items.OptionB
             </span>
@@ -43,7 +60,14 @@
     if (!String.IsNullOrEmpty(items.OptionC))
     {
         <label>
-            <input type="radio" name="@items.ID" value="C">
+            @if (items.Answer == "C")
+            {
+                <input type="radio" name="@items.ID" value="C" checked>
+            }
+            else
+            {
+                <input type="radio" name="@items.ID" value="C">
+            }
             <span>
                 @items.OptionC
             </span>
@@ -52,7 +76,14 @@
     if (!String.IsNullOrEmpty(items.OptionD))
     {
         <label>
-            <input type="radio" name="@items.ID" value="D">
+            @if (items.Answer == "D")
+            {
+                <input type="radio" name="@items.ID" value="D" checked>
+            }
+            else
+            {
+                <input type="radio" name="@items.ID" value="D">
+            }
             <span>
                 @items.OptionD
             </span>
@@ -61,32 +92,40 @@
     if (!String.IsNullOrEmpty(items.OptionE))
     {
         <label>
-            <input type="radio" name="@items.ID" value="E">
+            @if (items.Answer == "E")
+            {
+                <input type="radio" name="@items.ID" value="E" checked>
+            }
+            else
+            {
+                <input type="radio" name="@items.ID" value="E">
+            }
             <span>
                 @items.OptionE
             </span>
         </label>
     }
-
-
 }
-<div class="clearfix btn-center">
-    @if (ViewBag.Take > 1)
-    {
-        <button class="btn btn-secondary btn-gray" type="button" value="Previous" onclick="GetQuestion('@prevSkip','@prevTake')">Previous</button>
-    }
-    <button class="btn btn-primary btn-blue" type="button" value="Submit" id="btnSubmitAns">Submit Answer </button>
+        <div class="clearfix btn-center">
+            @if (ViewBag.Take > 1)
+            {
+                <button class="btn btn-secondary btn-gray" type="button" value="Previous" onclick="GetQuestion('@prevSkip','@prevTake')">Previous</button>
+            }
+            @if (ViewBag.Questions =! ViewBag.Take)
+            {
+                <button class="btn btn-primary btn-blue" type="button" value="Submit" id="btnSubmitAns">Submit Answer </button>
+            }
 
-    @if (ViewBag.Questions != ViewBag.Take)
-    {
-        <button class="btn btn-secondary btn-gray" type="button" value="Next" onclick="GetQuestion('@nxtSkip','@nxtTake')">Next</button>
-    }
+                @if (ViewBag.Questions != ViewBag.Take)
+                {
+                    <button class="btn btn-secondary btn-gray" type="button" value="Next" onclick="GetQuestion('@nxtSkip','@nxtTake')">Next</button>
+                }
 
-    @if (ViewBag.Questions == ViewBag.Take)
-    {
-        <button class="btn btn-secondary btn-success" type="button" value="SubmitExam" id="btnSubmitExam">Submit Exam</button>
-    }
-</div>
+                @if (ViewBag.Questions == ViewBag.Take)
+                {
+                    <button class="btn btn-secondary btn-success" type="button" value="SubmitExam" id="btnSubmitExam">Submit Exam</button>
+                }
+            </div>
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -100,9 +139,8 @@
               SubmitExam();
         });
 
-        function SaveExamAnswer(questionId) {
-            debugger;
-            
+        function SaveExamAnswer(questionId) {            
+
             var answer = $("input[name='" + questionId + "']:checked").val();
             debugger;
             var status = "FAILED";
@@ -130,25 +168,44 @@
 
         function SubmitExam() {
 
+            var status = "FAILED";            
+            var answer = $("input[name='" + questionId + "']:checked").val();            
             var status = "FAILED";
+            if (answer) {
 
-            $.ajax({
-                url: '@Url.Action("SubmitExam", "ExamLogin")',
-                type: "POST",
-                async: false,
-                contentType: "application/json",
-                success: function (result) {
-                    debugger;
-                    if (result.Result) {
-                        window.location = "/ExamLogin/ThankYou";
-                    }
-                },
+                $.ajax({
+                    url: '@Url.Action("SaveExamAnswer", "ExamLogin")?quesID=' + questionId + '&answer=' + answer,
+                    type: "POST",
+                    async: false,
+                    contentType: "application/json",
+                    dataType: "HTML",
+                    success: function (result) { 
+                    $.ajax({
+                        url: '@Url.Action("SubmitExam", "ExamLogin")',
+                        type: "POST",
+                        async: false,
+                        contentType: "application/json",
+                        success: function (result) {
+                            debugger;
+                            if (result.Result) {
+                                window.location = "/ExamLogin/ThankYou";
+                            }
+                        },
 
-                error: function (status) {
-                },
-                cache: false,
-                async: false
-            });
+                        error: function (status) {
+                        },
+                        cache: false,
+                        async: false
+                    });
+                    },
+
+                    error: function (status) {
+                    },
+                    cache: false,
+                    async: false
+                });
+
+            }
 
             return status;
         }

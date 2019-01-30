@@ -161,5 +161,19 @@ namespace Quiz.Web.BLL.Exam
             }
             return questionslists;
         }
+
+        public Questions GetAssesmentQuestionDetail(Guid assesmentID, Guid UserID, Guid QuestionId)
+        {
+            Questions questions = new Questions();
+            try
+            {
+                questions = examDAL.GetAssesmentQuestionDetail(assesmentID, UserID, QuestionId);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return questions;
+        }
     }
 }

@@ -101,6 +101,7 @@ namespace Quiz.Web.DAL.DAL
                                 {
                                     bool ansStatus = questionDetails.Answer.Trim().ToUpper() == answer.Trim().ToUpper() ? true : false;
                                     ExaminerQuestionDetail examinerQuestion = new ExaminerQuestionDetail();
+                                    examinerQuestion.ID = Guid.NewGuid();
                                     examinerQuestion.Answer = answer;
                                     examinerQuestion.AnswerStatus = ansStatus;
                                     examinerQuestion.CreatedDate = DateTime.UtcNow.AddHours(5).AddMinutes(30);
@@ -173,14 +174,42 @@ namespace Quiz.Web.DAL.DAL
                     questionlist = (from x in dbEntities.QuestionsDetails
                                  join y in dbEntities.AssessmentQuestionBankDetails on x.QuestionBankID equals y.QuestionBankID   
                                  where x.IsDeleted == false && y.IsDeleted == false && y.AssessmentID == assesmentID
-                                 select x).ToList();                   
-                 }
+                                 select x).ToList();
+                                    }
             }
             catch (Exception ex)
             {
 
             }
             return questionlist;
+        }
+
+        public Questions GetAssesmentQuestionDetail(Guid assesmentID, Guid UserID, Guid QuestionId)
+        {
+            Questions questions = new Questions();
+            try
+            {
+                using (DBEntities dbEntities = new DBEntities())
+                {
+                    var Answer = (from x in dbEntities.ExaminerMasters
+                                           join y in dbEntities.ExaminerMasterDetails on x.ID equals y.ExaminerMasterId
+                                           join z in dbEntities.ExaminerAssessmentDetails on y.ID equals z.ExaminerMasterDetailId
+                                           join a in dbEntities.ExaminerQuestionDetails on z.ID equals a.ExaminerAssessmentDetailId
+                                           where x.AssessmentId == assesmentID && y.UserId == UserID && a.QuestionId == QuestionId
+                                           select a).ToList();
+
+                    questions.Answer = Answer.FirstOrDefault().Answer;
+                    questions.ID = Answer.FirstOrDefault().QuestionId;
+                }
+
+                
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return questions;
         }
 
     }

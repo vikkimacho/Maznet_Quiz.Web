@@ -97,6 +97,21 @@ namespace Quiz.Web.API.Controllers
         }
 
         [HttpGet]
+        public Questions GetAssesmentQuestionDetail(Guid assesmentID, Guid UserID,Guid QuestionId)
+        {
+            Questions questions = new Questions();
+            try
+            {
+                questions = examBLL.GetAssesmentQuestionDetail(assesmentID, UserID, QuestionId);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return questions;
+        }
+
+        [HttpGet]
         public List<ExamAssessmentDetails> GetAssessmentDetails(Guid assessmentID)
         {
             List<ExamAssessmentDetails> examAssessmentDetails = new List<ExamAssessmentDetails>();
