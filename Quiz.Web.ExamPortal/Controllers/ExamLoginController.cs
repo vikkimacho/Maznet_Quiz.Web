@@ -11,9 +11,11 @@ using System.Security.Principal;
 using Newtonsoft.Json;
 using System.Web.Security;
 using Quiz.Web.ExamPortal.Helper;
+using Quiz.Web.UI.Helper;
 
 namespace Quiz.Web.ExamPortal.Controllers
 {
+    
     public class ExamLoginController : Controller
     {
         // GET: ExamLogin
@@ -23,6 +25,7 @@ namespace Quiz.Web.ExamPortal.Controllers
         private readonly string Failed = "FAILED";
         string apiUrl = ConfigurationManager.AppSettings["WebApiUrl"];
         private APIResponse APIResponse = new APIResponse();
+        Logger logger = new Logger();
         #endregion
 
         public ActionResult ExamLogin(Guid assessmentid)
@@ -332,6 +335,32 @@ namespace Quiz.Web.ExamPortal.Controllers
         public ActionResult ThankYou()
         {
             return View();
+        }
+
+        public ActionResult LogOut()
+        {
+            var AssessmentID = SessionHelper.sessionObjects.AssessmentID;
+            try
+            {
+                Response.Cache.SetExpires(DateTime.Now.AddMinutes(-1));
+                Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+                Response.Cache.SetNoStore();
+                Session.Clear();
+                Session.Abandon();
+                FormsAuthentication.SignOut();
+                System.Web.HttpContext.Current.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
+                return RedirectToAction("ExamLogin", new { assessmentid = AssessmentID });
+            }
+            catch (Exception ex)
+            {
+                logger.WriteToLogFile(ex.ToString());
+                if (ex.InnerException != null)
+                {
+                    logger.WriteToLogFile(ex.InnerException.ToString());
+                }
+
+                return RedirectToAction("ExamLogin", new { assessmentid = AssessmentID });
+            }
         }
 
     }
