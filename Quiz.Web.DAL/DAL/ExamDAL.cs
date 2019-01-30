@@ -176,6 +176,7 @@ namespace Quiz.Web.DAL.DAL
                                  where x.IsDeleted == false && y.IsDeleted == false && y.AssessmentID == assesmentID
                                  select x).ToList();
                                     }
+                questionlist.Select(c => { c.Answer = null; return c; }).ToList();
             }
             catch (Exception ex)
             {
