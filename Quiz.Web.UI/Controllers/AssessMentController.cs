@@ -13,6 +13,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Configuration;
+using Rotativa;
 
 namespace Quiz.Web.UI.Controllers
 {
@@ -473,16 +474,26 @@ namespace Quiz.Web.UI.Controllers
 
         public ActionResult GetIndividualReport(Guid userID, Guid assessmentID)
         {
+            ExamReport examReport = new ExamReport();
             try
             {
+                string apiUrl = System.Configuration.ConfigurationManager.AppSettings["WebApiUrl"];
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = client.GetAsync(apiUrl + "/Assessment/GetIndividualCustomerReport?assessmentId=" + assessmentID + "&userID=" + userID).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var retresult = response.Content.ReadAsStringAsync().Result;
+                    examReport = JsonConvert.DeserializeObject<ExamReport>(retresult);
 
+                }
             }
             catch (Exception ex)
             {
 
                 throw;
             }
-            return View();
+            //return new ViewAsPdf("_CustomerInvoice", examReport);
+            return PartialView("_CustomerInvoice", examReport);
         }
     }
 

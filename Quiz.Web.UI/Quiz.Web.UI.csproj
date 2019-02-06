@@ -65,6 +65,9 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.7.3\lib\net461\Rotativa.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -160,9 +163,18 @@
     <Content Include="Content\Images\LoginImage.jpg" />
     <Content Include="Content\JS\jquery.simpleswitch.min.js" />
     <Content Include="Content\login.css" />
+    <Content Include="Content\report.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\CSS\sb-admin.css" />
     <Content Include="Global.asax" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\r1.png" />
+    <Content Include="Images\r2.png" />
+    <Content Include="Images\r3.png" />
+    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -215,6 +227,7 @@
     <Content Include="Files\QuestionBank\Untitled spreadsheet%282%29.xlsx" />
     <Content Include="Files\QuestionBank\Untitled spreadsheet%283%29.xlsx" />
     <Content Include="Files\QuestionBank\Untitled spreadsheet.xlsx" />
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -229,6 +242,7 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\svg-donut-chart-framework.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
@@ -282,6 +296,7 @@
     <Content Include="Views\AssessMent\LoadMyAssesments.cshtml" />
     <Content Include="Views\Login\forgot_password.cshtml" />
     <Content Include="Views\AssessMent\CandidateDetails.cshtml" />
+    <Content Include="Views\AssessMent\_CustomerInvoice.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

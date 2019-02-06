@@ -529,9 +529,13 @@ namespace Quiz.Web.DAL.Home
                                 if (questionBank != null && examinerQuestion.Count() > 0)
                                 {
                                     int score = examinerQuestion.Where(x => x.AnswerStatus == true).ToList().Count();
-                                    int totalQues = dBEntities.QuestionBankMasters.Where(x => x.ID == item.QuestionBankID).ToList().Count();
+                                    int wrongAns = examinerQuestion.Where(x => x.AnswerStatus == false).ToList().Count();
+                                    int totalQues = dBEntities.QuestionsDetails.Where(x => x.QuestionBankID == item.QuestionBankID).ToList().Count();
                                     testDetails.QuestionBankName = questionBank.QuestionBankName;
-                                    testDetails.Score = Convert.ToString(score) + "/" + Convert.ToString(totalQues);
+                                    testDetails.Score = Convert.ToString(score);
+                                    testDetails.TotalQuestions = Convert.ToString(totalQues);
+                                    testDetails.UnAnsweredQuestions = Convert.ToString(totalQues - (score + wrongAns));
+                                    testDetails.WrongAnswered = Convert.ToString(wrongAns);
                                     testDetailsList.Add(testDetails);
                                 }
                             }
@@ -544,6 +548,40 @@ namespace Quiz.Web.DAL.Home
                 throw;
             }
             return testDetailsList;
+        }
+
+        public ExamReport GetIndividualCustomerReport(Guid assessmentID, Guid userID)
+        {
+            ExamReport examReport = new ExamReport();
+            try
+            {
+                examReport.UserID = userID;
+                examReport.AssessMentID = assessmentID;
+                using (DBEntities dBEntities = new DBEntities())
+                {
+                    dBEntities.Configuration.ProxyCreationEnabled = false;
+                    var userDetails = dBEntities.DefaultRegistations.FirstOrDefault(x => x.ID == userID);
+                    var assessmentMaster = dBEntities.AssessmentDetailMasters.FirstOrDefault(x => x.ID == assessmentID);
+                    if (userDetails != null)
+                    {
+                        examReport.Address = userDetails.Address;
+                        examReport.CandidateEmail = userDetails.Email;
+                        examReport.CandidateName = userDetails.Name;
+                        examReport.State = userDetails.State;
+                        examReport.TestDate = Convert.ToDateTime(assessmentMaster.ScheduledEndDatetime);
+                        examReport.TestDetails = GetTestDetails(assessmentID, userID);
+                        examReport.AssessmentName = assessmentMaster.AssessmentName;
+
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return examReport;
         }
     }
 }
