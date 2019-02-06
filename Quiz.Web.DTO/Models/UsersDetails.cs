@@ -80,5 +80,6 @@ namespace Quiz.Web.DTO.Models
         public string Phone { get; set; }
         public string Country { get; set; }
         public List<TestDetails> TestDetails { get; set; }
+        public string AssessmentName { get; set; }
     }
 }

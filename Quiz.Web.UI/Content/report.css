@@ -1,0 +1,114 @@
+.report-first-table tbody tr td{
+	border:none
+}
+.registration-details thead tr th, .overall-summary thead tr th{
+	    text-align: center;
+    font-size: 22px;
+    background: #f7f7f7;
+    border-top: 1px solid #ddd!important;
+    border-bottom: 1px solid #ddd;
+}
+.overall-summary tbody tr td{
+
+	border: none;
+	text-align:center;
+	border-right:2px solid #ddd;
+}
+.overall-summary tbody tr .overalltd{
+
+	border-right: none!important;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #585858;
+    padding-bottom: 40px;
+    padding-top: 40px;
+
+}
+.overall-summary tbody tr td:first-child{
+
+	border-right: 1px dotted #ddd;
+}
+.overall-summary tbody tr .overalllast-td{
+	padding-top: 20px;
+	padding-top: 20px;
+	color:#999;
+
+}
+.overall-summary tbody tr:last-child{
+
+	background:#f7f7f7;
+}
+#svg {
+			width: 500px;
+			height: 300px;
+			}
+
+.resulttable tbody tr td .result-grid{
+	border: 1px solid #ddd;
+    display: inline-block;
+    font-weight: 600;
+    color: #585858;
+    padding: 20px 40px;
+
+}
+.resulttable thead tr .time-title{
+text-align: center;
+    text-transform: uppercase;
+    font-size: 17px;
+    padding-bottom: 18px;
+
+}
+.resulttable tbody tr .graygrid{
+color: #999;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    vertical-align: middle;
+	
+}
+.resulttable tbody tr .totalgrid{
+
+	    padding-bottom: 20px;
+	    text-transform: uppercase;
+}
+.overall-summary tbody tr td img{
+
+	max-width: 40px;
+    margin: 0 auto;
+}
+#reportsummary{
+	    max-width: 900px;
+    margin: 0 auto;
+}
+.registration-details tbody tr td table tbody tr td:first-child{
+
+	color:#004448;
+}
+.registration-details tbody tr td table tbody tr td{
+
+	border:none;
+}
+.pullright img{
+
+	float:right;
+}
+.graytxt{
+	color:#999;
+}
+.summarytitle{
+	font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.mr-30{
+	margin-top:30px;
+}
+.section-details-title{
+	    text-align: center;
+    margin-bottom: 20px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    background: #f7f7f7;
+    font-size: 22px;
+}

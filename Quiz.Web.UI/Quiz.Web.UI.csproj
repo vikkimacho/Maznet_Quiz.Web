@@ -163,9 +163,14 @@
     <Content Include="Content\Images\LoginImage.jpg" />
     <Content Include="Content\JS\jquery.simpleswitch.min.js" />
     <Content Include="Content\login.css" />
+    <Content Include="Content\report.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\CSS\sb-admin.css" />
     <Content Include="Global.asax" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\r1.png" />
+    <Content Include="Images\r2.png" />
+    <Content Include="Images\r3.png" />
     <Content Include="Rotativa\help-wkhtmltoimage.txt" />
     <Content Include="Rotativa\help-wkhtmltopdf.txt" />
     <Content Include="Rotativa\wkhtmltoimage.exe" />
@@ -237,6 +242,7 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\svg-donut-chart-framework.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />

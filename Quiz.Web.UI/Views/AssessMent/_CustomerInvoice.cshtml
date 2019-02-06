@@ -1,7 +1,263 @@
 ﻿@model Quiz.Web.DTO.Models.ExamReport
 @{
     ViewBag.Title = "_CustomerInvoice";
+    decimal correct = 0;
+    decimal wrong = 0;
+    decimal unattened = 0;
+    decimal totalQues = 0;
+    foreach (var item in Model.TestDetails)
+    {
+        correct += Convert.ToDecimal(item.Score);
+        wrong += Convert.ToDecimal(item.WrongAnswered);
+        unattened += Convert.ToDecimal(item.UnAnsweredQuestions);
+        totalQues += Convert.ToDecimal(item.TotalQuestions);
+    }
+
+    decimal correctPer = Math.Round((correct / totalQues) * 100);
+    decimal wrongPer = Math.Round((wrong / totalQues) * 100);
+    decimal unatndPer = Math.Round((unattened / totalQues) * 100);
+
 }
 
-<h2>_CustomerInvoice</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Report</title>
+
+    <!-- Bootstrap -->
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/report.css" rel="stylesheet" />
+</head>
+<body>
+    <section id="report">
+        <div class="container" id="reportsummary">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-8 col-sm-8 main-title">
+                        <h4>
+                            @Model.AssessmentName
+                        </h4>
+                    </div>
+                    <div class="col-md-4 col-sm-4 site-logo pull-right pullright">
+                        <img src="~/Images/logo.png" alt="website Logo" class="img-responsive" />
+
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <table class="table report-first-table">
+                        <tbody>
+                            <tr>
+                                <td><b>@Model.CandidateName</b></td>
+                                <td class="pull-right"><b>Test Taken On:</b>@Model.TestDate.ToString("dd-MM-yyyy")</td>
+                            </tr>
+                            <tr>
+                                <td>@Model.CandidateEmail</td>
+                                <td class="pull-right">@*<b>Finish State: Auto Submit</b>*@</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table registration-details">
+                        <thead>
+                            <tr>
+                                <th class="text-center" colspan="2">Registration Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td width="50%">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td><b>Email Address:</b></td>
+                                                <td>@Model.CandidateEmail</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Date of Birth:</b></td>
+                                                <td>@Model.DOB</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Gender</b></td>
+                                                <td>@Model.Gender</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td width="50%">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td><b>Name:</b></td>
+                                                <td>@Model.CandidateName</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Contact NO</b></td>
+                                                <td>@Model.Phone</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Country</b></td>
+                                                <td>India</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table overall-summary">
+                        <thead>
+                            <tr>
+                                <th class="text-center" colspan="4">Overall Summary</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center overalltd" colspan="4">Marks Scored</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <img src="~/Images/r1.png" class="img-responsive" alt="Score"><br>
+                                    <span>Score</span>
+                                </td>
+                                @*<td><img src="~/Images/r2.png" class="img-responsive" alt="Percentile"><br><span>Percentile</span></td>*@
+                                <td><img src="~/Images/r3.png" class="img-responsive" alt="Percentage"><br><span>Percentage</span></td>
+                            </tr>
+                            @foreach (var item in Model.TestDetails)
+                            {
+                                var percenatage = Math.Round((Convert.ToDecimal(item.Score) / Convert.ToDecimal(item.TotalQuestions)) * 100, 2, MidpointRounding.AwayFromZero);
+                                <tr>
+                                    <td>@item.QuestionBankName</td>
+                                    <td>
+                                        @item.Score <span>/</span> @item.TotalQuestions
+                                    </td>
+
+                                    <td>@percenatage</td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                    @*<p class="text-center graytxt">
+                        Please Paste text here
+                    </p>*@
+                </div>
+            </div>
+            <div class="row mr-30">
+                <div class="col-md-7 col-sm-7">
+                    <div>
+                        <div class="frame">
+                            <div class="content">
+                                <h1 class="summarytitle">Summary of Attempts</h1>
+                                <svg id="svg"></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                @*<div class="col-md-5 col-sm-5">
+                    <div>
+                        <table class="text-center resulttable">
+                            <thead>
+                                <tr>
+                                    <th class="time-title" colspan="2">Time Taken</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*<tr>
+                                    <td><span class="result-grid">1<br>Hr</span></td>
+                                    <td><span class="result-grid">0<br>min</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="graygrid" colspan="2">Available time: </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="totalgrid" colspan="2"><b>Total Questions</b></td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><span class="result-grid final-grid"><b>totalQues</b></span></td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>*@
+            </div>
+            @*<div class="row">
+                <div class="col-md-12">
+                    <h3 class="section-details-title">Section Wise Details</h3>
+                </div>
+            </div>*@
+        </div>
+    </section>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.3.0/snap.svg-min.js'></script>
+    <script>
+        debugger;
+        var correct = '@correctPer';
+        var wrong = '@wrongPer';
+        var unattened = '@unatndPer';
+        var programmingSkills;
+        if (parseInt(unattened) == 0) {
+            programmingSkills = [
+                {
+                    value: correct,
+                    label: 'Correct Answer',
+                    color: '#04ff00'
+                },
+                {
+                    value: wrong,
+                    label: 'Not Attempted',
+                    color: '#3399FF'
+                },
+                {
+                    value: unattened,
+                    label: 'Wrong Answer',
+                    color: '#FF3300'
+                }
+            ];
+        }
+        else {
+            programmingSkills = [
+                {
+                    value: correct,
+                    label: 'Correct Answer',
+                    color: '#04ff00'
+                },
+                {
+                    value: wrong,
+                    label: 'Wrong Answer',
+                    color: '#FF3300'
+                },
+                {
+                    value: unattened,
+                    label: 'Not Attempted',
+                    color: '#3399FF'
+                }
+            ];
+        }
+         
+    </script>
+    <script src="~/Scripts/svg-donut-chart-framework.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
 

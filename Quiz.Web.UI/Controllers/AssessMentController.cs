@@ -478,7 +478,8 @@ namespace Quiz.Web.UI.Controllers
 
                 throw;
             }
-            return new ViewAsPdf("_CustomerInvoice", examReport);
+            //return new ViewAsPdf("_CustomerInvoice", examReport);
+            return PartialView("_CustomerInvoice", examReport);
         }
     }
 

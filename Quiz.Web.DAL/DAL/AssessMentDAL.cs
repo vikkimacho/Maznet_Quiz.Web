@@ -570,6 +570,7 @@ namespace Quiz.Web.DAL.Home
                         examReport.State = userDetails.State;
                         examReport.TestDate = Convert.ToDateTime(assessmentMaster.ScheduledEndDatetime);
                         examReport.TestDetails = GetTestDetails(assessmentID, userID);
+                        examReport.AssessmentName = assessmentMaster.AssessmentName;
 
                     }
                 }
