@@ -241,6 +241,7 @@ namespace Quiz.Web.UI.Controllers
         public ActionResult PostCreateAssessment(PostAssessmentModal postAssessmentModal)
         {
             string result = "Failed";
+
             string Result = "Failed";
             try
             {
@@ -281,10 +282,11 @@ namespace Quiz.Web.UI.Controllers
                                     {
                                         var password = item.Password;
                                         GoogleMail mail = new GoogleMail();
-                                        mail.Body = "Hi " + item.Name + ", Password  - " + password;
-                                        mail.Subject = "Forgot Password";
+                                        string url = ConfigurationManager.AppSettings["ExamPortalUrl"] + assessmentID;
+                                        mail.Body = "Hi " + item.Name + ",UserName -" + item.Email + " Password  - " + item.Password + "<a href=\"" + url + "\">Click Here</a>";
+                                        mail.Subject = "Assessment Detail";
                                         mail.ToMail = item.Email;
-                                        var data = JsonConvert.SerializeObject(mail);
+                                        logger.WriteToLogFile("PostCreateAssessment Google Mail -" + " Mail Body : " + mail.Body + "Mail To : " + mail.ToMail);
                                         response = client.PostAsJsonAsync(apiUrl + "/GoogleMail/SendGoogleMail", mail).Result;
                                         result = response.Content.ReadAsStringAsync().Result;
                                         result = JsonConvert.DeserializeObject<string>(result);
@@ -367,13 +369,25 @@ namespace Quiz.Web.UI.Controllers
                         UsersDetailsModel UsersDetails = new UsersDetailsModel();
                         UsersDetails.Name = dt.Rows[i]["Name"] != DBNull.Value ? dt.Rows[i]["Name"].ToString().Trim().ToUpper() : string.Empty;
                         UsersDetails.Email = dt.Rows[i]["Email"] != DBNull.Value ? dt.Rows[i]["Email"].ToString().Trim().ToUpper() : string.Empty;
-                        UsersDetails.Password = dt.Rows[i]["Password"] != DBNull.Value ? dt.Rows[i]["Password"].ToString() : string.Empty;
-                        if (string.IsNullOrEmpty(UsersDetails.Password))
-                        {
-                            UsersDetails.Password = CreateRandomPassword(8);
-                        }
+                        UsersDetails.Password = dt.Rows[i]["Password"] != DBNull.Value ? dt.Rows[i]["Password"].ToString().Trim().ToUpper() : string.Empty;
                         UsersDetails.MobileNumber = dt.Rows[i]["MobileNumber"] != DBNull.Value ? dt.Rows[i]["MobileNumber"].ToString().Trim().ToUpper() : string.Empty;
-
+                        UsersDetails.Degree = dt.Rows[i]["Degree"] != DBNull.Value ? dt.Rows[i]["Degree"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.Institution = dt.Rows[i]["Institution"] != DBNull.Value ? dt.Rows[i]["Institution"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.Major = dt.Rows[i]["Major"] != DBNull.Value ? dt.Rows[i]["Major"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.Percentage = dt.Rows[i]["Percentage"] != DBNull.Value ? dt.Rows[i]["Percentage"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.Gender = dt.Rows[i]["Gender"] != DBNull.Value ? dt.Rows[i]["Gender"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.Address = dt.Rows[i]["Address"] != DBNull.Value ? dt.Rows[i]["Address"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.SSLCPercentage = dt.Rows[i]["SSLCPercentage"] != DBNull.Value ? dt.Rows[i]["SSLCPercentage"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.SSLCBoardName = dt.Rows[i]["SSLCBoardName"] != DBNull.Value ? dt.Rows[i]["SSLCBoardName"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.TechnicalSkills = dt.Rows[i]["TechnicalSkills"] != DBNull.Value ? dt.Rows[i]["TechnicalSkills"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.HSCPercentage = dt.Rows[i]["HSCPercentage"] != DBNull.Value ? dt.Rows[i]["HSCPercentage"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.LastName = dt.Rows[i]["LastName"] != DBNull.Value ? dt.Rows[i]["LastName"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.DOB = dt.Rows[i]["DOB"] != DBNull.Value ? dt.Rows[i]["DOB"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.State = dt.Rows[i]["State"] != DBNull.Value ? dt.Rows[i]["State"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.DegreePassedOutYear = dt.Rows[i]["DegreePassedOutYear"] != DBNull.Value ? dt.Rows[i]["DegreePassedOutYear"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.HSCBoardName = dt.Rows[i]["HSCBoardName"] != DBNull.Value ? dt.Rows[i]["HSCBoardName"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.HSCPassedOutYear = dt.Rows[i]["HSCPassedOutYear"] != DBNull.Value ? dt.Rows[i]["HSCPassedOutYear"].ToString().Trim().ToUpper() : string.Empty;
+                        UsersDetails.SSLCPassedOutYear = dt.Rows[i]["SSLCPassedOutYear"] != DBNull.Value ? dt.Rows[i]["SSLCPassedOutYear"].ToString().Trim().ToUpper() : string.Empty;
 
                         if (UsersDetails != null)
                         {

@@ -796,28 +796,20 @@
 
                     <div class="form-group">
                         Download Sample
-                        <a id="lnkDownloadSample" href="~/Content/sample.xlsx">Download here</a>
+                        <a id="lnkDownloadSample">Download here</a>
                     </div>
 
                     <table class="table table-striped" id="tblUploadedUserData" style="display:none;">
                         <thead>
                             <tr class="tableHeaderBlue">
                                 <th>
+                                    Name
+                                </th>
+                                <th>
                                     User Name
                                 </th>
                                 <th>
                                     Password
-                                </th>
-                                <th>Email</th>
-                                <th>
-                                    Mobile Number
-                                </th>
-                                <th>
-                                    First Name
-
-                                </th>
-                                <th>
-                                    Last Name
                                 </th>
                             </tr>
                         </thead>
@@ -934,7 +926,7 @@
 
         function ConstructJsonModal()
         {
-            debugger;
+            //debugger;
             var assesmentName = $('#txtAssessmentName').val();
             if (assesmentName == "") {
                 assesmentName = $("#txtExistingAssessmentName").val();
@@ -997,7 +989,7 @@
 
         function GetCommonLoginModal()
         {
-            debugger;
+            //debugger;
             var txtCommonLoginUserName = $('#txtCommonLoginUserName').val();
             var txtCommonLoginPassword = $('#txtCommonLoginPassword').val();
             var txtCLNoOfCandidates = $('#txtCLNoOfCandidates').val();
@@ -1011,7 +1003,7 @@
 
         function GetLstCandidateFormSelectedFields()
         {
-            debugger;
+            //debugger;
             var postData = new Array();
             $('.clsFormSelection').each(function (i, obj) {
                 var elementId = obj.id;
@@ -1043,7 +1035,7 @@
 
         function GetSingleScheduleModal()
         {
-            debugger;
+            //debugger;
             var FirstName = $('#txtFirstName').val();
             var LastName = $('#txtLastName').val();
             var Email = $('#txtEmail').val();
@@ -1080,14 +1072,14 @@
 
         function ValidateFormSubmission()
         {
-            debugger;
+            //debugger;
             return true;
         }
 
 
         function submitData()
         {
-            debugger;
+            //debugger;
             if(ValidateFormSubmission())
             {
                 var postData =  ConstructJsonModal();
@@ -1108,10 +1100,11 @@
 
                         },
                         success: function (data) {
-                            debugger;
+                            //debugger;
                             if (data.Result == 'SUCCESS')
                             {
                                 successFulAlert("Assessment Created Successfully.");
+                                alert("Assessment Created Successfully.");
                                 window.location.reload();
                             }
                             else {
@@ -1177,7 +1170,7 @@
         var IsDirectEnvironment = false;
 
         function ShowStep2() {
-            debugger;
+            //debugger;
             var validateStatus = false;
             if (IsDirectEnvironment == false) {
                 validateStatus = ValidateStep2();
@@ -1191,7 +1184,7 @@
                 $('#divStep2').show();
                 $('#divStep3').hide();
                 $('#divStep4').hide();
-                debugger;
+                //debugger;
                 $('#tbodySelectedAssesments').empty();
                 for (var i = 0; i < selectedExamSyllabus.length; i++)
                 {
@@ -1207,7 +1200,7 @@
 
 
                 }
-                debugger;
+                //debugger;
                 if (IsDirectEnvironment == true) {
                     $("p[id^=p_slider_]").hide();
                     $("div[id^=slider-range_]").hide();
@@ -1219,7 +1212,7 @@
                 }
                 else {
                     $('.chkExamSubjectSelection').each(function (i, obj) {
-                        debugger;
+                        //debugger;
                         console.log(obj.id);
                         if ($('#' + obj.id).is(':checked')) {
                             $('#p_slider_' + obj.id).show();
@@ -1288,7 +1281,7 @@
         function ValidateAssesmentName(assesmentName)
         {
             var returnResult = true;
-            debugger;
+            //debugger;
             var postUserData = JSON.stringify({ 'AssesmentName': assesmentName });
 
             $.ajax({
@@ -1303,14 +1296,14 @@
 
                 },
                 success: function (data) {
-                    debugger;
+                    //debugger;
                     if(data.Result == 'AVAILABLE')
                     {
                         returnResult = false;
                     }
 
                 },
-                error: function (xhr, ajaxOptions, thrownError) {  debugger;
+                error: function (xhr, ajaxOptions, thrownError) {  //debugger;
                     console.log(xhr.status);
                     console.log(xhr.responseText);
                     console.log(thrownError);
@@ -1335,7 +1328,7 @@
 
 
         function ShowStep3() {
-            debugger;
+            //debugger;
             var validateStatus = ValidateStep3();
             if (validateStatus) {
                 $('#divStep1').hide();
@@ -1376,7 +1369,7 @@
         }
 
         function ValidateStep4() {
-            debugger;
+            //debugger;
             var returnStatus = true;
             var selectedShortList = $('input[name=ShortListCriteria][type="radio"]:checked').val();
             if(selectedShortList == 'EXISTING')
@@ -1421,12 +1414,17 @@
 
 
         $(document).ready(function () {
+
+            $("#lnkDownloadSample").click(function() {        
+                window.open('@Url.Action("DownloadTemplate", "UserManagement")', "_blank", "", true);
+            })
+
             $('[data-toggle="tooltip"]').tooltip();
             $(".switchdemo").simpleSwitch();
 
             var files;
             $(document).on('change', '#flUsersUpload', function (e) {
-                debugger;
+                //debugger;
                 files = e.target.files;
                 var isValidFiles = true;
                 var UserTitle = $("#txtUserTitle").val();
@@ -1466,14 +1464,13 @@
 
                     },
                     success: function (result) {
-                        debugger;
+                        //debugger;
                         if (result!=null) {
 
                             var resultList = result.data;
-                            var appendData = "";
                             for (var i = 0; i < resultList.length; i++) {
-
-                                appendData += "<tr><td class=clsUploadedStudents id=" + resultList[i].UserDetailId + ">" + resultList[i].Name + "</td><td>" + resultList[i].Email + "</td><td></td><td></td></tr>"
+                                var appendData = "";
+                                appendData += "<tr><td class=clsUploadedStudents id=" + resultList[i].UserDetailId + ">" + resultList[i].Name + "</td><td>" + resultList[i].Email + "</td><td>" + resultList[i].Password + "</td><td></td></tr>"
                                 $("#tbodyUploadedUserDetail").append(appendData);
                                 $("#tblUploadedUserData").show();
                             }
@@ -1519,7 +1516,7 @@
 
 
             $("#txtAssessmentName").keypress(function () {
-                debugger
+               // debugger
                 var assesmentName =  $("#txtAssessmentName").val();
                 if(assesmentName != '')
                 {
@@ -1561,7 +1558,7 @@
                         data: { term: request.term,  maxNoRecord: 10},
                         dataFilter: function (data) { return data; },
                         success: function (data) {
-                            debugger;
+                            //debugger;
                             response($.map(data, function (item) {
                                 return { label: item.QuestionBankName, value: item.QuestionBankName, id: item.Id };
                             }))
@@ -1569,7 +1566,7 @@
                     })
                 },
                 select: function (event, ui) {
-                    debugger;
+                    //debugger;
                     $("#txtQuestionBankSearch").val(ui.item.label);
                     $("#hdnQuestionBankSearch").val(ui.item.id);
 
@@ -1610,7 +1607,7 @@
 
 
             $('#txtQuestionBankSearch').change(function () {
-                debugger;
+                //debugger;
 
                 var elementValue = $('#txtQuestionBankSearch').val();
                 if(elementValue == '')
@@ -1626,7 +1623,7 @@
             });
 
             $('#ddlExistingShortListCriteria').change(function () {
-                debugger;
+                //debugger;
 
 
 
@@ -1698,7 +1695,7 @@
 
 
             $("input[name='ShortListCriteria']").change(function () {
-                debugger;
+                //debugger;
                 $('#spnSLErrorMsg').text('');
                 var selectedShortList = $('input[name=ShortListCriteria][type="radio"]:checked').val();
                 if(selectedShortList == 'EXISTING')
@@ -1783,7 +1780,7 @@
 
 
             $('.chkExamSubjectSelection').change(function () {
-                debugger;
+                //debugger;
                 selectedExamSyllabus = new Array();
                 var totalDuration = '00:00';
                 var t1 = "00:00";
@@ -1855,12 +1852,12 @@
 
         $(function () {
 
-            debugger;
+            //debugger;
             var modelListQB = @Html.Raw(Json.Encode(Model.LQuestionBankModal));
 
             for(var items = 0 ; items < modelListQB.length;items++ )
             {
-                debugger;
+                //debugger;
                 var halfScore =  modelListQB[items].NoOfQuestions / 2;
                 var fullScore = modelListQB[items].NoOfQuestions;
                 $("#slider-range_"+ modelListQB[items].Id).slider({
@@ -1901,7 +1898,7 @@
                         }
                     }
                 }).each(function () {
-                    debugger;
+                    //debugger;
                     // Add labels to slider whose values
                     // are specified by min, max
 
@@ -1962,7 +1959,7 @@
         function SaveCriteria()
         {
             $('#spnSLErrorMsg').text('');
-            debugger;
+            //debugger;
             var returnresult = false;
             var txtShortListCriteria = $('#txtShortListCriteria').val();
             if(txtShortListCriteria == '')
@@ -1996,7 +1993,7 @@
                     $('.chkExamSubjectSelection').each(function (i, obj) {
                         if ($('#' + obj.id).is(':checked')) {
                             //NotConsider	MayConsider	StrongConsider
-                            debugger;
+                            //debugger;
                             var sliderVal = $('#txtSlider_' + obj.id).val();
                             if (sliderVal != '') {
                                 var NotConsider = sliderVal.split("-")[0];
@@ -2058,7 +2055,7 @@
         }
 
         function GetExistingQuestionBankDetails(assessmentId) {
-            debugger;
+            //debugger;
             if (assessmentId != null && assessmentId != undefined && assessmentId != "") {
 
                 var assessmentName = $("#spnExistingQB_" + assessmentId).text();
@@ -2079,7 +2076,7 @@
                         ShowStep2();
                                             },
                     success: function (data) {
-                        debugger;
+                        //debugger;
                         console.log(data);
                         if (data.questions!=null) {
                             selectedExamSyllabus = new Array();

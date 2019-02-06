@@ -10,7 +10,7 @@
 
         $('#btnAddAdmin').click(function () { $('#dvModalAddAdmin').modal('show'); });
         $('#btnAdd').click(function () {
-            debugger;
+            //debugger;
             var name = $('#txtAddName').val();
             var username = $('#txtAddUserName').val();
             var role = $('#txtAddRole').val();
@@ -40,7 +40,7 @@
             }
         });
         $('#btnSave').click(function () {
-            debugger;
+            //debugger;
             var name = $('#txtEditName').val();
             var username = $('#txtEditUserName').val();
             var role = $('#txtEditRole').val();
@@ -99,7 +99,7 @@
             contentType: "application/json",
             dataType: "json",
             success: function (result) {
-                debugger;
+                //debugger;
                 if (result != null) {
                     fnDisplayEditModal(result);
                 }
@@ -155,7 +155,7 @@
         $('#dvModalEdit').modal("show");
     }
     function fnDeleteUser(id) {
-    debugger;
+    //debugger;
         $('#hdnID').val(id);
         $('#dvModalDelete').modal("show");
     }

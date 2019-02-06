@@ -39,13 +39,13 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#btnLogin").click(function () {
-            debugger;
+            //debugger;
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("AdminLogin", "Login")',
                 dataType: 'html',
                 success: function (data) {
-                    debugger;
+                    //debugger;
                     $("#dvLoginContent").empty();
                     $("#dvLoginContent").html(data);
                 },

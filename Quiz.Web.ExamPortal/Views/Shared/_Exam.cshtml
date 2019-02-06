@@ -143,7 +143,7 @@
         function SaveExamAnswer(questionId) {            
 
             var answer = $("input[name='" + questionId + "']:checked").val();
-            debugger;
+            //debugger;
             var status = "FAILED";
             if (answer) {
 
@@ -187,7 +187,7 @@
                         async: false,
                         contentType: "application/json",
                         success: function (result) {
-                            debugger;
+                            //debugger;
                             if (result.Result) {
                                 window.location = "/ExamLogin/ThankYou";
                             }
